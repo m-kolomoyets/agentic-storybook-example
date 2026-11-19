@@ -1,0 +1,69 @@
+{
+  "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+  "frameNodeId": "9430:65511",
+  "icons": [
+    {
+      "name": "bin-half-peaked",
+      "figmaName": "Illustration/Bin Half-Peaked",
+      "nodeId": "9428:64644",
+      "viewBox": "0 0 40 40",
+      "monochrome": false
+    },
+    {
+      "name": "bin-level",
+      "figmaName": "Illustration/Bin Level",
+      "nodeId": "9428:64550",
+      "viewBox": "0 0 40 40",
+      "monochrome": false
+    },
+    {
+      "name": "bin-peaked",
+      "figmaName": "Illustration/Bin Peaked",
+      "nodeId": "9428:64511",
+      "viewBox": "0 0 40 40",
+      "monochrome": false
+    },
+    {
+      "name": "concrete-bin",
+      "figmaName": "Icons/Concrete Bin",
+      "nodeId": "9817:117131",
+      "viewBox": "0 0 40 40",
+      "monochrome": false
+    },
+    {
+      "name": "half-inverted",
+      "figmaName": "Illustration/Half-Inverted",
+      "nodeId": "9428:64560",
+      "viewBox": "0 0 40 40",
+      "monochrome": false
+    },
+    {
+      "name": "hopper-bottom-bin",
+      "figmaName": "Icons/Hopper Bottom Bin",
+      "nodeId": "9816:117076",
+      "viewBox": "0 0 40 40",
+      "monochrome": false
+    },
+    {
+      "name": "inverted",
+      "figmaName": "Illustration/Inverted",
+      "nodeId": "9428:64562",
+      "viewBox": "0 0 40 40",
+      "monochrome": false
+    },
+    {
+      "name": "side-draw",
+      "figmaName": "Illustration/Side Draw",
+      "nodeId": "9428:64564",
+      "viewBox": "0 0 40 40",
+      "monochrome": false
+    },
+    {
+      "name": "steel-bin",
+      "figmaName": "Icons/Steel Bin",
+      "nodeId": "9816:117077",
+      "viewBox": "0 0 40 40",
+      "monochrome": false
+    }
+  ]
+}

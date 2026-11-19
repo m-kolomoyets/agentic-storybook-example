@@ -1,0 +1,9 @@
+**/node_modules
+**/dist
+**/tmp
+**/coverage
+**/storybook-static
+pnpm-lock.yaml
+src/routeTree.gen.ts
+src/lib/cn-tables.ts
+/public/mockServiceWorker.js

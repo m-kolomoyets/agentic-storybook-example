@@ -1,0 +1,48 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="72" height="72" fill="#F5F5F5"/>
+<g id="Icons">
+<rect x="-407" y="-1016" width="9110" height="1382" rx="24" fill="#141518"/>
+<g id="Container">
+<g id="Grain Bin Image">
+<rect x="-298.5" y="-19.5" width="390" height="305" rx="4.5" stroke="#9747FF" stroke-dasharray="10 5"/>
+<g id="Size=XL, Type=Other">
+<g id="final-4-other-wide-ribs 1" clip-path="url(#clip0_8006_6783)">
+<g id="Clip path group">
+<mask id="mask0_8006_6783" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+<g id="clip-final-4-other-wide-ribs">
+<path id="Vector" d="M64 0H8C3.58172 0 0 3.58172 0 8V64C0 68.4183 3.58172 72 8 72H64C68.4183 72 72 68.4183 72 64V8C72 3.58172 68.4183 0 64 0Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask0_8006_6783)">
+<g id="Group">
+<path id="Vector_2" d="M72 0H0V72H72V0Z" fill="#ACA4CD"/>
+<path id="Vector_3" d="M73.2 5.40002H-1.19995V8.40002H73.2V5.40002Z" fill="#A098C5"/>
+<path id="Vector_4" d="M73.2 8.40002H-1.19995V10.2H73.2V8.40002Z" fill="#B8B1D6"/>
+<path id="Vector_5" d="M73.2 16.2H-1.19995V19.2H73.2V16.2Z" fill="#A098C5"/>
+<path id="Vector_6" d="M73.2 19.2H-1.19995V21H73.2V19.2Z" fill="#B8B1D6"/>
+<path id="Vector_7" d="M73.2 27H-1.19995V30H73.2V27Z" fill="#A098C5"/>
+<path id="Vector_8" d="M73.2 30H-1.19995V31.8H73.2V30Z" fill="#B8B1D6"/>
+<path id="Vector_9" d="M73.2 37.7999H-1.19995V40.7999H73.2V37.7999Z" fill="#A098C5"/>
+<path id="Vector_10" d="M73.2 40.7999H-1.19995V42.5999H73.2V40.7999Z" fill="#B8B1D6"/>
+<path id="Vector_11" d="M73.2 48.6H-1.19995V51.6H73.2V48.6Z" fill="#A098C5"/>
+<path id="Vector_12" d="M73.2 51.6H-1.19995V53.4H73.2V51.6Z" fill="#B8B1D6"/>
+<path id="Vector_13" d="M73.2 59.4H-1.19995V62.4H73.2V59.4Z" fill="#A098C5"/>
+<path id="Vector_14" d="M73.2 62.4H-1.19995V64.2H73.2V62.4Z" fill="#B8B1D6"/>
+<path id="Vector_15" d="M73.2 70.2H-1.19995V73.2H73.2V70.2Z" fill="#A098C5"/>
+<path id="Vector_16" d="M23.7001 -1.80002C23.7001 -2.1314 23.4986 -2.40002 23.25 -2.40002C23.0015 -2.40002 22.8 -2.1314 22.8 -1.80002V29.4C22.8 29.7313 23.0015 30 23.25 30C23.4986 30 23.7001 29.7313 23.7001 29.4V-1.80002Z" fill="#948CBC"/>
+<path id="Vector_17" d="M47.7001 30.6C47.7001 30.2686 47.4986 30 47.25 30C47.0015 30 46.8 30.2686 46.8 30.6V61.8C46.8 62.1314 47.0015 62.4 47.25 62.4C47.4986 62.4 47.7001 62.1314 47.7001 61.8V30.6Z" fill="#948CBC"/>
+<path id="Vector_18" d="M23.7001 63C23.7001 62.6687 23.4986 62.4 23.25 62.4C23.0015 62.4 22.8 62.6687 22.8 63V94.2C22.8 94.5314 23.0015 94.8 23.25 94.8C23.4986 94.8 23.7001 94.5314 23.7001 94.2V63Z" fill="#948CBC"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_8006_6783">
+<rect width="72" height="72" fill="white"/>
+</clipPath>
+</defs>
+</svg>

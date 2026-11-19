@@ -1,0 +1,127 @@
+{
+  "version": 2,
+  "skills": {
+    "caveman": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "computedHash": "f3fa1416fca89f20c93d31b7a728ff752465a939ab9cb0a97d7ef7ca564b7f7b"
+    },
+    "code-review": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/code-review/SKILL.md",
+      "computedHash": "478e333e4026d3f96134b1a044d5b6645eb8fa649e8c798a134c0458972de8ed"
+    },
+    "component-docs": {
+      "source": "storybookjs/skills",
+      "ref": "v11.0.0-beta.3",
+      "commit": "50935c08d265ebbcfda54f0b87c5cb4df3541abe",
+      "sourceType": "github",
+      "skillPath": "skills/component-docs/SKILL.md",
+      "computedHash": "9a48761943ed65d101ca015475ae2e5471f903f7c74d426e541e676581f78707",
+      "installMode": "copy"
+    },
+    "domain-modeling": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/domain-modeling/SKILL.md",
+      "computedHash": "b774575abca4507e581d59cdf06b37f5340744dcdef55dd76bda64c00b476a11"
+    },
+    "grill-me": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/productivity/grill-me/SKILL.md",
+      "computedHash": "ab1acb9fbd9eaee03da254abb8a8de228d1e7a07475fe959da4a5eefa34ea4b9"
+    },
+    "grill-with-docs": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/grill-with-docs/SKILL.md",
+      "computedHash": "02e258f41d210f9b2e7cce9faf62b3c59e8fcebe5d2736369c3cd07d471324f8"
+    },
+    "grilling": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/productivity/grilling/SKILL.md",
+      "computedHash": "7e2b96501235f1cbfb2a8dad79cb89d40272004822a0ec461923a5b3a6606f87"
+    },
+    "implement": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/implement/SKILL.md",
+      "computedHash": "125de9503b6d2aec4eb4b5bbcdeadf7b68edd305a367dc5a14e08c543babd2ab"
+    },
+    "storybook-init": {
+      "source": "storybookjs/skills",
+      "ref": "v11.0.0-beta.3",
+      "commit": "50935c08d265ebbcfda54f0b87c5cb4df3541abe",
+      "sourceType": "github",
+      "skillPath": "skills/storybook-init/SKILL.md",
+      "computedHash": "5f69de886d5f079f02d3f111b8fe91f2497110d127d190c47f19ad235feaa42a",
+      "installMode": "copy"
+    },
+    "storybook-setup": {
+      "source": "storybookjs/skills",
+      "ref": "v11.0.0-beta.3",
+      "commit": "50935c08d265ebbcfda54f0b87c5cb4df3541abe",
+      "sourceType": "github",
+      "skillPath": "skills/storybook-setup/SKILL.md",
+      "computedHash": "a99378f2ef116d55987b5a477fccbbd75ef477ae63976be00d7c84667b66e705",
+      "installMode": "copy"
+    },
+    "storybook-upgrade": {
+      "source": "storybookjs/skills",
+      "ref": "v11.0.0-beta.3",
+      "commit": "50935c08d265ebbcfda54f0b87c5cb4df3541abe",
+      "sourceType": "github",
+      "skillPath": "skills/storybook-upgrade/SKILL.md",
+      "computedHash": "3c298ea76deed14e010d2ba4b03d2ad7c8a1fad567629ef565c997ff37737a91",
+      "installMode": "copy"
+    },
+    "test-stories": {
+      "source": "storybookjs/skills",
+      "ref": "v11.0.0-beta.3",
+      "commit": "50935c08d265ebbcfda54f0b87c5cb4df3541abe",
+      "sourceType": "github",
+      "skillPath": "skills/test-stories/SKILL.md",
+      "computedHash": "1e2251c7236f521269231246faf5db37404f2599a7d0b7ee28e3432bec74da7e",
+      "installMode": "copy"
+    },
+    "to-spec": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/to-spec/SKILL.md",
+      "computedHash": "eb934b5eda9523c7853a2741544bd4721ee1bea471f5a04f8397827f67bdbdda"
+    },
+    "to-tickets": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/to-tickets/SKILL.md",
+      "computedHash": "67fcce10b73648e720857e0035335523734755778f79ff0c66652e8a4046d887"
+    },
+    "ui-review": {
+      "source": "storybookjs/skills",
+      "ref": "v11.0.0-beta.3",
+      "commit": "50935c08d265ebbcfda54f0b87c5cb4df3541abe",
+      "sourceType": "github",
+      "skillPath": "skills/ui-review/SKILL.md",
+      "computedHash": "7c9d614841a239ae3c04eb1eb4cd98c145e6a86cd0719588836388103a826709",
+      "installMode": "copy"
+    },
+    "wayfinder": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/wayfinder/SKILL.md",
+      "computedHash": "c08f90c742637b3104c044e4889929664f64534af34b06c94134afdd248b3b64"
+    },
+    "write-stories": {
+      "source": "storybookjs/skills",
+      "ref": "v11.0.0-beta.3",
+      "commit": "50935c08d265ebbcfda54f0b87c5cb4df3541abe",
+      "sourceType": "github",
+      "skillPath": "skills/write-stories/SKILL.md",
+      "computedHash": "5fef3c6e4d91d77526561607c2a8aae755e1b1eadb1b03e58f3c7bd89c9af4ab",
+      "installMode": "copy"
+    }
+  }
+}

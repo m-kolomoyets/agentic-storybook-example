@@ -1,0 +1,1322 @@
+/* Hand-maintained tokens the generated Figma theme (tokens.css) lacks: shadows, off-scale steps,
+   animations, registered properties and multi-property utilities. Ported from amber-fe
+   core/style/tokens-supplement.css. Literal colours are allowed here and nowhere else. */
+
+@theme {
+  /* ---------------- Effect styles ---------------- */
+
+  /* The palette has no pure-black primitive (--color-*: initial drops Tailwind's, and the
+     Figma Primitives collection contributes none), so the #000000 layers below are the one
+     place a literal colour is permitted. The #ffffff layers resolve to the existing
+     white-alpha ladder — the palette's white is #fefefe, a 0.4% deviation not worth a token.
+     D16 bans literals in component files; this file exists so they sit in one reviewable
+     place. */
+
+  /* Figma effect style `Shadows for Buttons` — primary, primary-on-surface, secondary.
+     DROP_SHADOW  #000000 10% (0, 6) r18 spread -4
+     INNER_SHADOW #ffffff 4%  (0, 1) r2 */
+  --shadow-button: 0 6px 18px -4px rgb(0 0 0 / 10%);
+  --inset-shadow-button: inset 0 1px 2px var(--color-white-alpha-4);
+
+  /* Figma effect style `Gray Style Modes` — remote, combo (split button).
+     INNER_SHADOW #000000 20% (0, -2) r6
+     INNER_SHADOW #ffffff 10% (0, 1) r0
+     DROP_SHADOW  #000000 10% (0, 3) r6 */
+  --shadow-button-remote: 0 3px 6px rgb(0 0 0 / 10%);
+  --inset-shadow-button-remote:
+    inset 0 -2px 6px rgb(0 0 0 / 20%), inset 0 1px 0 var(--color-white-alpha-10);
+
+  /* `destructive` and `icon button` are assigned no effect style in Figma. That is reported
+     (spec.md `Figma issues`), not corrected — do not give them a shadow for consistency. */
+
+  /* ---------------- Off-scale steps (PROVISIONAL) ---------------- */
+
+  /* Values the Figma kit uses that the generated scale has no step for. Each is reported to
+     design; delete it once the kit moves onto an existing step. */
+  --spacing-on-surface-sm: 2.25rem; /* 36px — Primary On Surface, Size=Small; the ramp is otherwise 40/48/56 */
+  --spacing-split-divider: 0.875rem; /* 14px — the SplitButton divider rule; the scale runs 12 -> 16 */
+  --radius-icon-xs: 0.25rem; /* 4px — Figma Radius/xs; repo has --radius-xxs 2px and --radius-xs 6px */
+
+  /* 14px — Tab vertical padding, Platform=Desktop (Figma `Tab` 8711:12035, Big and Medium).
+     The spacing scale steps 12 (--spacing-l) -> 16 (--spacing-xl) with nothing between, and
+     Figma binds no variable here at all — it is a raw value on both cells, where every other
+     dimension in the set is bound. Delete once design moves it onto a step. */
+  --spacing-tab-y-desktop: 0.875rem;
+
+  /* 22px — Toggle track height (Figma `Toggle` 9506:75537). The spacing scale
+     steps 20 (--spacing-2xl) -> 24 (--spacing-3xl) with nothing between. */
+  --spacing-toggle-track: 1.375rem;
+
+  /* ---------------- Avatar sizes ---------------- */
+
+  /* The three sizes Figma draws for `Avatar` (10237:174118): 44, 48 and 80px. The spacing
+     scale has a step for 48 (--spacing-6xl) and none for 44 or 80 — it runs 40 -> 48 -> 56
+     -> 64 and stops.
+
+     All three are named here, including the one that duplicates an existing step. They are
+     a *set* the caller picks from — `Avatar` takes no `size` prop and the size is chosen by
+     class (spec D3) — and `size-avatar-sm / size-6xl / size-avatar-lg` would read as if the
+     middle one were a different kind of thing. The duplicate is the price of the set
+     reading as a set.
+
+     Not marked provisional, unlike the steps above: 44 and 80 are not a designer reaching
+     past the scale for one control, they are this component's own ramp. */
+  --spacing-avatar-sm: 2.75rem; /* 44px */
+  --spacing-avatar-md: 3rem; /* 48px — the same value as --spacing-6xl, deliberately */
+  --spacing-avatar-lg: 5rem; /* 80px */
+
+  /* ---------------- Header control height ---------------- */
+
+  /* 44px — the height every control in the bin header stands at (`HeaderContainer`
+     12591:368151): three `IconButton size=md` and the `+ Tickets` button beside them, now that
+     the cluster is drawn on the same row as the `Profile` block rather than above it.
+
+     `IconButton` builds its 44 from the padding (12 + 20 + 12) and needs no token. `Button` cannot
+     — Figma draws `+ Tickets` at py:10 with a 24px line box, and the shared size ramp is 40/48/56
+     with nothing between — so the one control that has to match a box it cannot derive gets the
+     box as a number.
+
+     The same value as --spacing-avatar-sm, and deliberately not an alias of it: that one is a step
+     on `Avatar`'s own ramp, and a button borrowing an avatar's name is how a later change to one
+     silently resizes the other. */
+  --spacing-header-control: 2.75rem;
+
+  /* ---------------- Home-indicator sizes ---------------- */
+
+  /* The block and pill Figma draws inside a bottom sheet's footer on both frames
+     (`8370:24957`, `8938:19311`): a 34px-tall block holding a 134x5 pill, 8px up from its
+     bottom edge (phase-9 D14). The spacing scale has a step for none of the three — it runs
+     32 (--spacing-4xl) -> 40 (--spacing-5xl) at that end, and 4 -> 6 at the other.
+
+     Named here rather than written as literals because a missing token is a gap to fill,
+     never a literal to paper over. Not marked provisional, and this is the one block
+     in this file that will never move onto a step: 34, 134 and 5 are the dimensions Apple
+     draws the iOS home indicator at. They are not a designer reaching past the scale — they
+     are a measurement of somebody else's OS chrome, which is exactly why the pill has to line
+     up with it and cannot be rounded to 32. */
+  --spacing-home-indicator: 2.125rem; /* 34px — the block */
+  --spacing-home-indicator-pill-width: 8.375rem; /* 134px */
+  --spacing-home-indicator-pill-height: 0.3125rem; /* 5px */
+
+  /* ---------------- MessageInput attachment sizes ---------------- */
+
+  /* 80px — the MessageInput photo card (Figma `Notes Input` 10556:201109). The generated
+     spacing scale runs 64 (--spacing-8xl) -> nothing. `--spacing-avatar-lg` is also 80px and is
+     deliberately not reused: a token is named for what it is, the same reason --spacing-avatar-md
+     duplicates 48px. */
+  --spacing-attachment-card: 5rem;
+
+  /* 18px — how far the MessageInput paperclip sits above the bottom of the box. Measured
+     identically in all thirteen `Notes Input` symbols; see phase-17 D10 and Figma issue 7. The
+     scale steps 16 (--spacing-xl) -> 20 (--spacing-2xl) with nothing between.
+
+     PROVISIONAL, unlike the card above. Consistent across all thirteen is what makes it
+     deliberate, not what makes it a system value: it also lands 4px below the last text line's
+     optical centre, which reads as a nudge. Figma issue 7 asks design to confirm it before it
+     becomes a token. Delete once design moves it onto a step or names it. */
+  --spacing-attachment-offset: 1.125rem;
+
+  /* ---------------- Option-list sizes (PROVISIONAL) ---------------- */
+
+  /* Inputs to the option list's max-height calc(). No component sets a row height from
+     them — rows size intrinsically from padding + line-height (phase-5 D13).
+     Delete when design states the popup's visible-row count as a token or a prop. */
+  --size-option-row: 48px;
+  --size-option-row-two-line: 50px;
+
+  /* The dropdown popup's floor. The panel matches its trigger (`--anchor-width`, D22),
+     and a trigger narrower than this leaves a popup too cramped for a search field and
+     a two-line row. Nothing in Figma draws it — every drawn trigger is 343px — so it is
+     provisional like the two above. Delete when design states a minimum. */
+  --size-dropdown-min-width: 300px;
+
+  /* ------------- Unnamed semantic colours (PROVISIONAL) ------------- */
+
+  /* Values the kit has in the palette but never gave a semantic name. Delete each once
+     design names one. */
+
+  /* Figma binds the raw primitive `Colors/white-alfa/16%` for the Toggle's
+     disabled thumb (9572:142613) — no semantic token exists for it. Components
+     never reference primitives directly, so the designer's shortcut is named
+     here instead of propagated. */
+  --color-surface-toggle-thumb-disabled: var(--color-white-alpha-16);
+
+  /* Figma binds the raw primitive `Colors/white-alfa/100%` for the Slider's thumb
+     (`Stepped slider` 9850:118472) — no semantic token exists for a control part at
+     full white. `--color-text-general-strong` carries the same value and is the
+     indicator's colour, but a thumb is not text, so the two are named apart rather
+     than aliased. Same shortcut, and same treatment, as the toggle thumb above. */
+  --color-surface-slider-thumb: var(--color-white-alpha-100);
+
+  /* Figma binds the raw primitive `Colors/dark-violet/1000` for the initials in every
+     `Avatar` fallback cell (10237:174119, 10516:198834, 10434:194351) — no semantic token
+     exists for it. `--color-text-on-surface-strong` is the nearest, and is dark-violet-*950*,
+     one step off; aliasing to it would render the initials silently off-colour against the
+     drawing. Same shortcut, and same treatment, as the two above. */
+  --color-text-avatar-fallback: var(--color-dark-violet-1000);
+
+  /* The tooltip card's fill. **The one literal hex in this file**, and it has to be: Figma
+     paints `Chart Toolptip/Tooltip` (11246:6661) `#38383a` as a raw value with no variable
+     bound, and that value is on no step of the palette — `--color-dark-violet-650` is
+     `#383842` and `--color-grey-600` is `#3a3e45`, both visibly different. Aliasing to either
+     would render the card silently off-colour against the drawing, and `bg-[#38383a]` at the
+     call site would be a literal in a component file, which this kit does not ship.
+
+     It also has to be **opaque**, which no `--color-surface-*` in the generated palette is —
+     every one of them is a `--color-white-alpha-*`. A tooltip is portalled over arbitrary
+     content, charts included, so a 4% white fill would let the plot read straight through the
+     text. The drawn value happens to be opaque, which is the one piece of luck in phase 14.
+
+     Delete this once design binds a variable (D8). */
+  --color-surface-tooltip: #38383a;
+
+  /* The dot of the Bin Simulation chart box's dotted grid (Figma `Bin Simulation` 11660:209640,
+     `Vector` 11347:6762): `#313235`, a raw fill with no variable bound and on no step of the
+     palette — `--color-dark-violet-700` is `#2c2c37`, `--color-grey-700` is `#303134`, both a
+     visible shift over 13,000 dots. The second literal hex in this file, for the tooltip's
+     reason. Delete once design binds a variable. */
+  --color-surface-chart-dot: #313235;
+
+  /* The progress bar's two fills. Figma binds the raw primitives `Colors/blue/650` and
+     `Colors/cyan/500` as the gradient's stops (`Progress Bar` 9273:43260) and
+     `Colors/white-alfa/12%` as the disabled fill (10173:170544) — no semantic token exists for
+     any of the three. Components never reference primitives directly, so the designer's
+     shortcut is named here instead of propagated, as the toggle thumb and the slider thumb
+     above already are.
+
+     `start` and `end` are the **gradient's** ends, not the bar's: the ramp runs `to left`
+     (`linear-gradient(-90deg, …)` in the file), so `start` is painted at the fill's right-hand
+     edge and `end` at its left.
+
+     `--color-surface-progress-disabled` carries the same value as
+     `--color-surface-toggle-unselected`, which is the **track** the disabled fill sits on. The
+     two are named apart rather than aliased deliberately: a fill and the ground under it are two
+     things, and that they are currently one colour is a defect we reported rather than a
+     relationship to encode (phase-15 figma issue 4 — the composited difference is ~22.6% white
+     against 12%, very likely under the WCAG 1.4.11 3:1 floor).
+
+     Delete these once design binds variables (D9). */
+  --color-surface-progress-fill-start: var(--color-blue-650);
+  --color-surface-progress-fill-end: var(--color-cyan-500);
+  --color-surface-progress-disabled: var(--color-white-alpha-12);
+
+  /* ---------------- Overlay ---------------- */
+
+  /* The blur behind every modal surface. Figma `Modal Overlay` 8228:8849 (instance
+     8227:9587) draws the backdrop as `Surface/control` (white 4%) over a 20px background
+     blur, and binds no variable for the blur — the radius is a raw value on the layer.
+     Named here so the utility below reads like every other value in the kit. */
+  --blur-overlay: 20px;
+
+  /* 2px — the wash the schedule card lays over its run windows when the fan has stopped or
+     failed to start (Figma `Schedule` 11085:137878's `Overlay` layer). Bound to nothing in the
+     file, exactly as --blur-overlay and --blur-toast are, and named here so the utility below
+     reads like the other two. Two pixels, not twenty: this blur softens what is under the wash
+     rather than erasing it — the wash is what obscures — and 11085:135921's 1px is a blur nobody
+     sees. See the `schedule-overlay` utility for the pair it belongs to. */
+  --blur-schedule-overlay: 2px;
+
+  /* ---------------- Toast ---------------- */
+
+  /* 10px — the status-icon wrapper's padding (Figma `Status Icon` 9312:64474, bound to
+     `Spacings/10`). The generated spacing scale runs 8 (--spacing-m) -> 12 (--spacing-l)
+     with nothing between, and tailwind.css resets --spacing-* to `initial`, so `p-2.5`
+     compiles to nothing at all, silently.
+
+     Named for what it is. `--spacing-toast-gap` would be a lie: 10px is this one
+     wrapper's padding and appears nowhere else in the component. */
+  --spacing-statusicon-p: 0.625rem;
+
+  /* 30px — the chromed page's top inset (the content column stands 30 from the top edge and 24
+     from every other). The generated spacing scale runs 24 (--spacing-3xl) -> 32
+     (--spacing-4xl) with nothing between, and tailwind.css resets --spacing-* to `initial`, so
+     `pt-7.5` emits no rule at all. Named for what it is: it is the page's inset, not a step. */
+  --spacing-content-top: 1.875rem;
+
+  /* 30px — the toast card's backdrop blur. Figma `Notification` 10768:10277 draws the card
+     as `Surface/tertiary` over a 30px background blur and binds no variable for the radius,
+     exactly as `Modal Overlay` does for --blur-overlay above (D14). */
+  --blur-toast: 30px;
+
+  /* ---------------- Badge ---------------- */
+
+  /* 4px — Figma `Radius/xs`, the badge's corner. The generated scale has --radius-xxs 2px
+     and --radius-xs 6px with nothing between. Deliberately NOT an alias of
+     --radius-icon-xs: that token carries the same value but is named for IconButton and is
+     marked provisional pending design moving 4px -> 6px, and the badge must not silently
+     follow that change. Same rule as --spacing-avatar-md vs --spacing-6xl. */
+  --radius-badge: 0.25rem;
+
+  /* 10px — Badge Size=Big horizontal padding (Figma `Spacings/10`). Same gap in the scale
+     as --spacing-statusicon-p above, and `px-2.5` emits no rule for the same reason. Not an
+     alias of it: that 10px is named for the status icon. */
+  --spacing-badge-px: 0.625rem;
+
+  /* The badge chip's pressed fill (P19 D15) — an invented state; Figma draws no pressed
+     badge. The surface-control family stops at --color-surface-control-pressed (6%), which
+     the badge uses for *hover* because its own default fill is the 4% below it. Ramp:
+     default 4% -> hover 6% -> pressed 10% -> selected 95%.
+
+     Deliberately not an alias of --color-surface-tag-senary, which carries the same
+     --color-white-alpha-10 and is the nearer trap: it is the badge's *own* `custom` variant
+     fill, so the two would read as coupled when a variant's fill and an interaction state
+     are two things. Delete this once design draws a pressed badge and binds a variable. */
+  --color-surface-badge-pressed: var(--color-white-alpha-10);
+
+  /* ---------------- Side menu ---------------- */
+
+  /* 10px — the nav and container row's vertical padding (`Spacings/10`). It is what puts those
+     rows on their drawn 44: 10 + the 24px line box of `Body/Medium` + 10, with no height set, so
+     the row cannot disagree with its own padding. Same gap in the generated scale as
+     --spacing-statusicon-p and --spacing-badge-px above — 8 (--spacing-m) -> 12 (--spacing-l) —
+     and `py-2.5` emits no rule for the same reason. Deliberately not an alias of either: those
+     are named for the status icon and the badge. */
+  --spacing-side-menu-row-y: 0.625rem;
+
+  /* 10px — the account switcher glyph tile's padding round its 20px glyph (12446:6418), a
+     40px tile. One component's padding, so not an alias of the other 10px tokens. */
+  --spacing-account-switcher-glyph-p: 0.625rem;
+
+  /* The user footer card (12439:90577). Figma grounds it in `Surface/elevated-primary` #1E2024
+     on mobile (it floats over the tree) and `Surface/elevated-secondary` #303134 on desktop
+     (12442:92702) — semantic tokens the generator does not emit — and binds the raw primitive
+     `Colors/white-alfa/4%` for its border and both rules. */
+  --color-surface-elevated-primary: var(--color-grey-950);
+  --color-surface-elevated-secondary: var(--color-grey-700);
+  --color-border-side-menu-footer: var(--color-white-alpha-4);
+
+  /* 10px — where a nested row draws its connector trunk, measured back from that row's own
+     indent. Half of the 20px ladder step (--spacing-2xl), so the dotted line runs up the middle
+     of the step the row was pushed across by, and the 8px stub (--spacing-m) reaches from it back
+     towards the label.
+
+     Its own token, not a third use of the two above: they are paddings and this is a position,
+     and the three are free to move apart. Half of a step is also not something a Tailwind
+     arbitrary value can express in place — `calc()` division inside a class name collides with
+     the modifier syntax — so the halving is done once, here. */
+  --spacing-side-menu-trunk: 0.625rem;
+
+  /* The tree's connectors — the vertical trunk and the elbow that leaves it for a row.
+
+     `hsla(220, 2%, 30%, 1)`, which is `#4A4B4D`: the stroke baked into `nav/tree-leaf.svg`,
+     the elbow this line has to meet. It is a **hex in an SVG**, so the two cannot be kept in
+     step by a token alone — this declaration is the place that records they are one colour, and
+     changing either without the other leaves a curve that does not match the line it continues.
+
+     Opaque, and deliberately not one of the `white-alpha-*` borders the rest of the menu uses:
+     an alpha line changes value with whatever is behind it, and the trunk runs across both the
+     rail's ground and the hover fill of every row it passes. */
+  --color-side-menu-connector: hsla(220, 2%, 30%, 1);
+
+  /* 11px — the width of `nav/tree-leaf.svg`, so a row that hangs off a branch can start its
+     label after the elbow instead of under it. A second number baked into that asset, kept here
+     for the same reason its stroke colour is. */
+  --spacing-side-menu-leaf: 0.6875rem;
+
+  /* ---------------- Header ---------------- */
+
+  /* 4px — Figma `Radius/xs`, the 40x40 container thumbnail's corner in the `Profile` block
+     (P20 D30). The same 2px/6px gap in the generated radius scale that --radius-badge and
+     --radius-icon-xs record, and deliberately not an alias of either: those are named for the
+     badge and for IconButton, and the thumbnail must not follow design moving one of them. */
+  --radius-thumbnail: 0.25rem;
+
+  /* ---------------- Fan status icon ---------------- */
+
+  /* The tile grounds of Figma's `Fan States` (13867:643998, 24px) and `Side Menu/Fan Icon`
+     (14026:847827, 12px). Running and error are raw fills with no variable bound and on no step
+     of the palette — the dark tints of `Icons/positive` and `Icons/negative`. Off is bound to
+     `Colors/grey/600` in both sets. Updating differs by size: the 24px tile is a raw `#8e8e8e`,
+     the 12px one is bound to Figma's `Colors/grey/400`, whose `#595f69` is this repo's
+     `--color-grey-500`. Delete the literals once design binds variables. */
+  --color-surface-fan-status-running: #1c4c33;
+  --color-surface-fan-status-error: #421d21;
+  --color-surface-fan-status-off: var(--color-grey-600);
+  --color-surface-fan-status-updating: #8e8e8e;
+  --color-surface-fan-status-updating-sm: var(--color-grey-500);
+
+  /* The `Updating` fan status badge's ground (13950:263102): a raw `#595f69` at 6%, Figma's
+     `Colors/grey/400` — this repo's --color-grey-500 — with no alpha step bound. */
+  --color-surface-fan-badge-updating: hsl(217.5 8.2% 38% / 0.06); /* #595f69 @ 6% */
+
+  /* The `Updating` banner's ground (`Note` 14696:483245, a restart in flight): a raw `#778296`
+     at 20% with no variable bound and on no step of the palette. Delete once design binds one. */
+  --color-surface-updating: hsl(218.6 11.9% 52.7% / 0.2); /* #778296 @ 20% */
+
+  /* ---------------- Dashboard section ---------------- */
+
+  /* 36px — a dashboard section's block padding, top AND bottom. Every section frame binds
+     `Spacings/36` as its vertical padding: `Airspace` desktop 11555:454271 is `py-36 px-24` and
+     mobile 10600:236463 is `py-36 px-12`, and `Weather Forecast` mobile 10600:236445 draws the
+     same pair. The generated spacing scale runs 32 (--spacing-4xl) -> 40 (--spacing-5xl) with
+     nothing between, and tailwind.css resets --spacing-* to `initial`, so `py-9` emits no rule
+     at all, silently.
+
+     Named `-y` rather than `-top`: it was read as a heading inset while only the top edge was
+     drawn on, and a section padded on one side only leaves its last row flush against the next
+     section's hairline. One token, spent twice, so the two edges cannot drift apart.
+
+     Deliberately NOT an alias of --spacing-on-surface-sm, which carries the same 36px but is
+     named for the Primary On Surface button's height. The header of this file records that value
+     as provisional against design moving it to 40; the section inset must not follow that move. */
+  --spacing-dashboard-section-y: 2.25rem;
+
+  /* The dashboard's decorative backlight (phase-22 D15): the radial wash at the top of every
+     section. Figma exports it as an SVG ellipse (`Backlight` 11555:436588) whose gradient runs
+     `#5d64d3` -> the same hue at zero alpha, under `opacity: 0.5` and `fill-opacity: 0.4`. We
+     draw it as a CSS gradient on a pseudo-element instead of shipping the asset, so the colour
+     needs a name.
+
+     `--color-violet-450` is that hex, and it is a raw palette step — util/cn.ts records that
+     components consume semantic tokens only, so the alias exists to keep that rule true rather
+     than to add a value. Design binds no variable on the layer; if one arrives, this becomes its
+     alias and nothing at the call site changes. */
+  --color-surface-backlight: var(--color-violet-450);
+
+  /* The backlight ellipse's two lengths, from the same layer: `Backlight` 11555:436607 draws it
+     `height: 296` at `y: -139`, so its centre sits 9px below the section's top edge and its upper
+     half is cut off by the section's clip. Both are transcribed Figma numbers on a decorative
+     layer that binds no variable, and ADR-0002 puts them here rather than in the class list:
+     "A missing token … is a gap, reported and filled in the token supplement file, never papered
+     over with a literal value."
+
+     On the spacing scale rather than a scale of their own so `h-` and `-top-` can consume them —
+     they are lengths, and the alternative is two one-member namespaces. Neither is a step: they
+     are this one ellipse's geometry, and nothing else may reach for them. */
+  --spacing-backlight-ellipse: 18.5rem; /* 296px — the ellipse's height */
+  --spacing-backlight-lift: 8.6875rem; /* 139px — how far it starts above the section */
+
+  /* The fan dial's PULSE, crest half.
+
+     Figma's `State=Running` and `State=Running/Filled` rows are one loop's two endpoints and
+     not two states (P25 D6), and the two centre circles differ by a whole group of layers —
+     a wash, a veil, a brighter rim and a brighter halo — rather than by a level. So the
+     crest is drawn as its own stacked group that cross-fades in and out over the resting
+     one, and this is the curve it fades on.
+
+     Deliberately the mirror of Tailwind's own `pulse`, to the easing and the phase:
+     `--animate-pulse` is `pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite` over
+     `50% { opacity: .5 }`, so its crest is at `0% / 100%` and its trough at `50%`. This one
+     runs `1 -> 0 -> 1` on the same schedule, so the crest group is fullest exactly when the
+     resting halo underneath it is brightest. Inverted, the dial would light its floor at the
+     moment its edge went dim, which reads as a flicker rather than a breath.
+
+     `3s` and not Tailwind's `2s` because `FanDial`'s `PULSE` overrides the duration to `3s`
+     — the slow end of the drawn 2.5–3s, because the dial sits behind text that has to stay
+     readable. Both elements must carry the *same* duration or the two halves of one breath
+     walk apart, so it is spelled into this value rather than left to a second
+     `[animation-duration:…]` at the call site.
+
+     Unguarded for reduced motion at the call site, like the pulse it belongs to: this is a
+     stationary change of light and not movement (`overlay-motion.ts`). */
+  --animate-fan-dial-fill: fan-dial-fill 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes fan-dial-fill {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* ---------------- Loading indicator ---------------- */
+
+  /* One perimeter square of `LoadingIndicator` (Preloader `14836:450133`). Eight steps of 125ms:
+     the front of the trail (100%), then 56%, 40%, 24%, 16% behind it, and the 8% floor for the
+     rest. Each square is delayed one step further clockwise, so the trail walks the ring.
+     `step-end`: the value jumps at each stop with no tween, so the cells stay crisp.
+
+     Unguarded for reduced motion, like `--animate-fan-dial-fill`: squares change light in
+     place, nothing travels. */
+  --animate-loading-snake: loading-snake 1s step-end infinite;
+
+  @keyframes loading-snake {
+    0% {
+      opacity: 1;
+    }
+    12.5% {
+      opacity: 0.56;
+    }
+    25% {
+      opacity: 0.4;
+    }
+    37.5% {
+      opacity: 0.24;
+    }
+    50% {
+      opacity: 0.16;
+    }
+    62.5%,
+    100% {
+      opacity: 0.08;
+    }
+  }
+
+  /* The soft light across "Loading…": a 200%-wide ramp whose bright band slides left to right,
+     one pass per grid cycle so the two stay in step. */
+  --animate-loading-sweep: loading-sweep 1s linear infinite;
+
+  @keyframes loading-sweep {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: -100% 0;
+    }
+  }
+
+  /* ---------------- Legacy schedule row ---------------- */
+
+  /* MUI's `Grow` as it was used on the legacy schedule row: one short scale-and-fade in. */
+  --animate-fade-in: fade-in 0.3s ease-out both;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* ---------------- Schedule window cell flip ---------------- */
+
+  /* The legacy run window's card flip (`CardFlip`): an empty cell turns over on its horizontal
+     centre line and the value comes up on the back. Two faces, one keyframe each; the delay is
+     the caller's (`ScheduleWindow`'s `entranceIndex`). Ends on `none` so the settled cell keeps
+     no transform — a transformed ancestor would trap the `Select` popup's positioning. */
+  --animate-schedule-cell-flip-in: schedule-cell-flip-in 0.6s ease-in-out both;
+  --animate-schedule-cell-flip-out: schedule-cell-flip-out 0.6s ease-in-out both;
+
+  @keyframes schedule-cell-flip-in {
+    from {
+      transform: perspective(1000px) rotateX(-180deg);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  @keyframes schedule-cell-flip-out {
+    from {
+      transform: perspective(1000px) rotateX(0deg);
+    }
+    to {
+      transform: perspective(1000px) rotateX(180deg);
+      visibility: hidden;
+    }
+  }
+
+  /* ---------------- Loader step entrance ---------------- */
+
+  /* A step joining a checklist (the Grain Details loader): a short fade with a 4px rise, the way
+     an agent's next step arrives. */
+  --animate-step-enter: step-enter 0.2s ease-out both;
+
+  @keyframes step-enter {
+    from {
+      opacity: 0;
+      transform: translateY(0.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ---------------- Lock-in orb ---------------- */
+
+  /* The lock-in orb's breath while `Start Automation` is in flight: a slow swell, so a slow
+     network reads as working rather than frozen. Movement, so guarded at the call site. */
+  --animate-lock-in-breathe: lock-in-breathe 1.8s ease-in-out infinite;
+
+  @keyframes lock-in-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.06);
+    }
+  }
+
+  /* ---------------- Meter / micro-display ---------------- */
+
+  /* 10px — the meter bar's height, and 2.5px its corner. Both are raw values on
+     `Score Bar Container` (UI kit I9256:44159;9256:44127) and on the layout's three instances;
+     Figma binds no variable for either. The generated spacing scale runs 8 (--spacing-m) -> 12
+     (--spacing-l) and the radius scale 2 (--radius-xxs) -> 6 (--radius-xs), so `h-2.5` and
+     `rounded-[2.5px]` are the alternatives: the first compiles to nothing (--spacing-* is reset
+     to `initial`), the second is a literal at the call site, which this kit does not ship.
+
+     Not an alias of --spacing-statusicon-p, which also carries 10px: that is one wrapper's
+     padding and this is a bar's height, and neither may follow the other when design moves it. */
+  --spacing-meter-track: 0.625rem;
+  --radius-meter: 0.15625rem;
+
+  /* 10px again — the gap between the bar and its caption inside `Micro-Display Container`
+     (I9256:44159). A third name for the same value, and deliberately so: this is the meter
+     block's internal gap, --spacing-meter-track is a height and --spacing-micro-display-p is
+     the card's padding. Design moving any one of the three must not drag the other two. */
+  --spacing-meter-gap: 0.625rem;
+
+  /* 12px — the pointer's box. It is a 12x12 triangle drawn at `top: 4`, i.e. overhanging the
+     10px bar by 6px at the bottom, so it is the pointer's own size rather than a step anything
+     else shares. --spacing-l is 12px and is deliberately not reused: this is an asset's
+     dimension, not the spacing scale. */
+  --spacing-meter-pointer: 0.75rem;
+
+  /* 5px — how far the pointer's box is dropped from the bar's top edge, so the triangle's apex
+     sits in the bar's lower half and its base overhangs the bottom edge. Figma's own offset on
+     `Icon Container` is 4; 5 is the drawn intent as design reads it on screen.
+
+     Not `--spacing-*`-scale material: the generated scale runs 4 (--spacing-xs) -> 6
+     (--spacing-s), and this is one asset's offset rather than a step anything else may reach for. */
+  --spacing-meter-pointer-drop: 0.3125rem;
+
+  /* The meter's two painted fills. Figma binds raw primitives for both — `Colors/blue/550` ->
+     `Colors/cyan/500` on the Fan bar and the four-stop score ramp on the Grain Risk bar — with
+     no semantic token for any stop, the same shortcut --color-surface-progress-* records above.
+
+     The score ramp is a `@utility` rather than four tokens (see below): it has no per-call
+     variation, exactly like `overlay-backdrop`. Its two ends are named here anyway because the
+     fill ramp's are, and because `from-`/`to-` need them. */
+  --color-surface-meter-fill-start: var(--color-blue-550);
+  --color-surface-meter-fill-end: var(--color-cyan-500);
+
+  /* 160px and 14px — the micro-display card's height and its corner, both drawn identically at
+     both widths (desktop `Fan` 11555:436602, mobile 10600:236393). The card's 10px padding and
+     10px inner gap are --spacing-meter-track's value but are the card's, not the bar's, so they
+     get their own name for the same reason the two 10px tokens above are kept apart.
+
+     `Radius/xl` is bound on the Medium size and is 14px in the UI kit file; the repo's
+     --radius-xl is 24px, so an alias would be wrong by 10px — the same name/value collision
+     --radius-badge and --radius-icon-xs record. */
+  /* The status dot's HALO, three ways. Figma draws it as two stacked drop shadows with zero blur
+     and no offset — `0 0 0 4px` and `0 0 0 2px` of the same 12% colour (`Icon` I11555:436602;
+     9256:44148 and its warning/negative siblings) — so the inner 2px reads at ~22% and the outer
+     ring at 12%. Both are transcribed, rather than collapsed into one ring, because that stacked
+     falloff is the drawing.
+
+     Effect styles are the half of this file that dies when sync-figma-icons.mjs learns to read
+     them; these belong with --shadow-button until then.
+
+     The warning halo is `--color-yellow-alpha-300-12`, i.e. the dot's own hue. Figma paints it
+     `#ffe100` at 12%, a yellow that is on no step of the palette and 6 hue-degrees off the
+     `Surface/datavis/dotindicator-warning` dot it surrounds — a halo in a different colour from
+     the thing it haloes is a file slip, not a design. */
+  --shadow-dot-positive:
+    0 0 0 4px var(--color-green-alpha-500-12), 0 0 0 2px var(--color-green-alpha-500-12);
+  --shadow-dot-warning:
+    0 0 0 4px var(--color-yellow-alpha-300-12), 0 0 0 2px var(--color-yellow-alpha-300-12);
+  --shadow-dot-negative:
+    0 0 0 4px var(--color-red-alpha-500-12), 0 0 0 2px var(--color-red-alpha-500-12);
+  /* The halo for a dot that reports no status — the fans overview's OFF. Figma draws no such
+     cell (`11555:437037` colours every dot); white-10% is the halo idiom at the surface's own
+     ink, around the micro-display's default grey. */
+  --shadow-dot-default:
+    0 0 0 4px var(--color-white-alpha-10), 0 0 0 2px var(--color-white-alpha-10);
+
+  /* The schedule window's two drawn columns, and the pair is one measurement: the desktop frame
+     `11329:7509` lays its `Events List` out as a 356px block of run-window lines, the drawn 12px
+     gap, and a 188px weather chart — 556 in total, which is exactly the content the 580px box has
+     after its 12px padding.
+
+     Tokens rather than `basis-[356px]` / `w-[188px]` at the call site because they are
+     load-bearing rather than decorative: `ScheduleWindow` has no container query to switch on
+     (P26 D9 forbids a `platform` prop), so the 356 is the flex *basis* that decides whether the
+     chart sits beside the lines or wraps under them. Change either number and the breakpoint
+     moves with it, which is the behaviour a call-site literal would hide.
+
+     Figma binds no variable for either — they are frame geometry, not a scale — and the generated
+     spacing scale stops at 64px (--spacing-8xl), so there is no step to reach for. */
+  --spacing-schedule-window-lines: 22.25rem; /* 356px */
+  /* The chart's floor, not its width: it grows into whatever the lines leave, and at 126 still
+     sits beside them in a 432px card rather than wrapping under. */
+  --spacing-schedule-window-chart: 7.875rem; /* 126px */
+
+  /* One run window input cell — the day box and the time box beside it — at the two widths the
+     product asks for: 92 on a phone and 84 on desktop (`md:`), where the chart beside the lines
+     needs the room. The third cell (`Event Details`) is not one of these: it takes what the two
+     inputs leave.
+
+     A pair of tokens rather than `w-[92px]` / `w-[84px]` at the call site, for the same reason
+     the two above are tokens: they are the numbers that decide whether `Today` and `1:00 PM` fit
+     their boxes. Figma binds no variable — frame geometry again — and the spacing scale stops at
+     64px. */
+  --spacing-schedule-window-input: 5.75rem; /* 92px */
+  --spacing-schedule-window-input-desktop: 5.25rem; /* 84px */
+
+  /* 132px — the height of one run window, and therefore the height of everything drawn *instead*
+     of one. The `Fan Failed to Stop` tile (`10605:8965`) and the `No Recommended Cooling Windows`
+     block (`10062:200895`) are both laid out at 132 in the frames although their own content is
+     ~100 and ~96 tall: they replace a window in the list, so they stand where one stood.
+
+     A token rather than `min-h-[132px]` twice, because the two heights are the same measurement —
+     if a window's two 48px lines and 12px gap and 12px padding ever change, both follow. Figma
+     binds no variable; this is frame geometry, and the generated spacing scale stops at 64px. */
+  --spacing-schedule-card-slab: 8.25rem; /* 132px */
+
+  /* ---------------- Schedule mode ---------------- */
+
+  /* The five aeration modes' ink, and the two gradients each of them paints — the running
+     window's stroke and rail (`ScheduleWindow`) and the schedule's progress bar
+     (`ScheduleCard`). Figma draws one layout per mode and binds a *style* (`Dry Mode`,
+     `Recondition Mode`, `Cool Mode`, `Custom Mode`, `Manual Mode`) rather than a variable, so the
+     stops are named here from the raw primitives the styles are built out of — the same shortcut
+     `--color-surface-progress-fill-*` above already stands for.
+
+     Frames: dry `11085:137991` · recondition `11085:138123` · cooling `11085:138399` · custom
+     `11085:138531` · manual `11085:138816`.
+
+     `stroke-start` -> `stroke-end` runs **to the bottom right**, which is how the box's 1px
+     stroke is drawn; `progress-start` -> `progress-end` runs **to the left**, which is the
+     direction `Progress` already paints (`start` is the fill's right-hand edge). The two are
+     therefore not always the same order, and that is as drawn: cooling and custom ramp the same
+     way in both, drying, recondition and manual ramp opposite ways. Sampled off the frames
+     rather than inferred, because no rule in the file predicts which.
+
+     Custom and manual are **swapped from the frames**: custom paints the chartreuse -> green pair
+     Figma draws for manual, and manual the pale blue -> grey pair Figma draws for custom. Every
+     surface that tints by mode (dial, mode dot, mode tile, chart band) follows the swap.
+
+     Manual has a stroke pair and **no bordered window**: `11085:138816` draws its run window in
+     `Border/primary` like any other and paints the mode's green only on the rail and the bar. */
+  --color-schedule-cooling-stroke-start: var(--color-blue-650);
+  --color-schedule-cooling-stroke-end: var(--color-cyan-500);
+  --color-schedule-cooling-progress-start: var(--color-blue-650);
+  --color-schedule-cooling-progress-end: var(--color-cyan-500);
+
+  --color-schedule-drying-stroke-start: var(--color-orange-600);
+  --color-schedule-drying-stroke-end: var(--color-yellow-250);
+  --color-schedule-drying-progress-start: var(--color-yellow-250);
+  --color-schedule-drying-progress-end: var(--color-orange-600);
+
+  --color-schedule-reconditioning-stroke-start: var(--color-purple-450);
+  --color-schedule-reconditioning-stroke-end: var(--color-blue-200);
+  --color-schedule-reconditioning-progress-start: var(--color-blue-200);
+  --color-schedule-reconditioning-progress-end: var(--color-purple-450);
+
+  --color-schedule-custom-stroke-start: var(--color-chartreuse-200);
+  --color-schedule-custom-stroke-end: var(--color-green-750);
+  --color-schedule-custom-progress-start: var(--color-chartreuse-200);
+  --color-schedule-custom-progress-end: var(--color-green-750);
+
+  --color-schedule-manual-stroke-start: var(--color-blue-50);
+  --color-schedule-manual-stroke-end: var(--color-neutral-grey-450);
+  --color-schedule-manual-progress-start: var(--color-neutral-grey-450);
+  --color-schedule-manual-progress-end: var(--color-blue-50);
+
+  --spacing-micro-display-h: 10rem;
+  --spacing-micro-display-p: 0.625rem;
+  /* 54px — the `Size=Medium` card's boxed value (`11555:437037`, `CO2 Value Container`), a fixed
+     height where the small card's box is sized by its 10px padding around a 24px line. */
+  --spacing-micro-display-value-h: 3.375rem;
+
+  /* 15px — the card's vertical rhythm, and it is a *gap*, not a distribution. Measured off
+     `Grain Risk` 12591:368155: the title row ends at y=24 and the value block starts at 39, which
+     ends at 103 with the meter block starting at 118. Two equal 15px gaps, and 14 + 15 + 64 + 15
+     + 32 + 2x10 padding is exactly the drawn 160.
+
+     Written as a gap rather than left to `justify-between`, which happens to produce the same
+     two numbers for these three children at this height and stops being 15 the moment any of
+     them changes height — a wrapped title, a two-line value, a card with no bar.
+
+     The generated spacing scale runs 12 (--spacing-l) -> 16 (--spacing-xl) with nothing between,
+     and tailwind.css resets --spacing-* to `initial`, so `gap-[15px]` is the alternative and this
+     kit does not ship literals at call sites. */
+  --spacing-micro-display-gap: 0.9375rem;
+
+  /* 36px — the gap between the micro-display row and the first section under it. Measured on
+     `Main Container` 11555:436593: `Header Container` ends at y=254 and `Main Horizontal
+     Container` begins at 290. It is *outside* the section, which then adds its own
+     --spacing-dashboard-section-y before its heading.
+
+     Its own name rather than an alias of --spacing-dashboard-section-y, which carries the same
+     36: that one is a section's internal padding, this is the page's gap under the masthead, and
+     design moving either must not drag the other. */
+  --spacing-dashboard-header-gap: 2.25rem;
+  --radius-micro-display: 0.875rem;
+
+  /* ---------------- Bin Simulation placeholder ---------------- */
+
+  /* 10px — a prerequisite row's vertical padding (`List Item` I11659:209780, bound to
+     `Spacings/10`), inside the Bin Simulation placeholder box and the Bin Simulation
+     Requirements dialog alike. Same 8 -> 12 gap in the generated scale as every other 10 in
+     this file, and its own name for the same reason: the status-icon padding and the meter
+     track happen to be 10 too, and design moving one must not move the rows. */
+  --spacing-prerequisite-row-y: 0.625rem;
+
+  /* The Computing cover's binary field (design's "Scene 2" motion): a 0/1 matrix printed twice
+     over, drifting up one copy's height per cycle so the seam never shows. Slow on purpose — the
+     cover sits for hours. It travels, so the call site guards it for reduced motion. */
+  --animate-computing-matrix: computing-matrix 60s linear infinite;
+
+  @keyframes computing-matrix {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+
+  /* One computing step: its pill lights on this, each step delayed one slot
+     (`--computing-step-slot`) further. The 10% window is one slot of ten — the cycle is ten slots
+     long, so `BinSimulationComputingCover`'s step list must stay ten long. Opacity only: light
+     changes in place, nothing travels, so it is unguarded like `--animate-loading-snake`. */
+  --animate-computing-step: computing-step 24s linear infinite both;
+  --computing-step-slot: 2.4s;
+
+  @keyframes computing-step {
+    0% {
+      opacity: 0;
+    }
+    1.5%,
+    9% {
+      opacity: 1;
+    }
+    10.5%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* The finish when a run completes (Scene 2's squares and line trim): the Computing cover fades
+     off the chart while square tiles flicker along its edges and a comet of light circles its
+     border inside a violet outline. The tile sweep also replays on a Bin Simulation tab switch. Tiles and stroke are
+     dropped under reduced motion at the call site; the fade stays. The cover lifts slowly on an
+     ease-in-out, settling back a hair as it goes; the rest waits for it (`--computing-reveal-delay`). */
+  --animate-computing-cover-exit: computing-cover-exit 1.1s cubic-bezier(0.65, 0, 0.35, 1) both;
+
+  @keyframes computing-cover-exit {
+    to {
+      opacity: 0;
+      scale: 0.985;
+    }
+  }
+
+  /* A tile pops in from a touch small on an ease-out, then flickers out. */
+  --animate-computing-reveal-tile: computing-reveal-tile 0.5s cubic-bezier(0.33, 1, 0.68, 1) both;
+
+  @keyframes computing-reveal-tile {
+    0% {
+      opacity: 0;
+      scale: 0.85;
+    }
+    100% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+      scale: 1;
+    }
+    45% {
+      opacity: 0.4;
+    }
+    65% {
+      opacity: 0.9;
+    }
+  }
+
+  /* The comet's lap, on a `pathLength="100"` border: slow, one lap in 5.5s. Each trail segment
+     sets `--trail-from`, how far behind the head it rides, so all of them travel as one comet. Steady
+     speed; only its fade in and out (`--animate-computing-trail-*`) ease. */
+  --animate-computing-stroke-run: computing-stroke-run 5.5s linear infinite;
+
+  @keyframes computing-stroke-run {
+    from {
+      stroke-dashoffset: calc(var(--trail-from, 0) * 1px);
+    }
+    to {
+      stroke-dashoffset: calc(var(--trail-from, 0) * 1px - 100px);
+    }
+  }
+
+  /* A trail segment arriving and leaving. Two properties, so the two can overlap on one element:
+     entry on `stroke-opacity`, exit on `opacity`. The call site staggers them — entry head to
+     tail, so the trail grows out behind the head; exit tail to head, so it shrinks back into it. */
+  --animate-computing-trail-in: computing-trail-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-computing-trail-out: computing-trail-out 0.5s cubic-bezier(0.32, 0, 0.67, 0) both;
+
+  @keyframes computing-trail-in {
+    from {
+      stroke-opacity: 0;
+    }
+    to {
+      stroke-opacity: 1;
+    }
+  }
+
+  @keyframes computing-trail-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* The outline's life over the finish's 6s: fades in while settling from 4% large, holds, then
+     fades out while easing 2% larger, so it neither pops in nor cuts off. */
+  --animate-computing-outline: computing-outline 6s both;
+
+  @keyframes computing-outline {
+    0% {
+      opacity: 0;
+      scale: 1.04;
+      animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    12% {
+      opacity: 1;
+      scale: 1;
+    }
+    80% {
+      opacity: 1;
+      scale: 1;
+      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    100% {
+      opacity: 0;
+      scale: 1.02;
+    }
+  }
+
+  /* A Bin Simulation tab switch: the two figures cross-fade under the tile sweep. Opacity only. */
+  --animate-bin-simulation-chart-in: bin-simulation-chart-in 0.45s cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+  --animate-bin-simulation-chart-out: bin-simulation-chart-out 0.45s cubic-bezier(0.32, 0, 0.67, 0)
+    both;
+
+  @keyframes bin-simulation-chart-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes bin-simulation-chart-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* Clocks: nothing visible changes; each one's end is when its owner unmounts. The sweep's
+     outlasts its last tile (`BinSimulationTileSweep`), the finish's matches the stroke. Both start
+     after `--computing-reveal-delay` (unset on a tab switch), so they end that much later too. */
+  --animate-computing-tile-sweep: computing-clock 1.6s linear both;
+  --animate-computing-reveal: computing-clock 6s linear both;
+
+  @keyframes computing-clock {
+    from,
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* ---------------- Container actions sheet ---------------- */
+
+  /* 18/26 Urbanist 500 — a sheet group's header (`Quick Access`, `Bin Settings`, on
+     `12885:363835`). Figma binds no text style here: the type ramp runs Body/Medium 16/24 ->
+     Heading/Small 20/28 with nothing between, and both values are raw on the layer. A text
+     token, so `text-sheet-group-header` carries size, leading and weight together, the way
+     the generated `--text-heading-*` steps do. Delete once design moves it onto a step. */
+  --text-sheet-group-header: 1.125rem;
+  --text-sheet-group-header--line-height: 1.625rem;
+  --text-sheet-group-header--font-weight: 500;
+  --text-sheet-group-header--letter-spacing: 0;
+
+  /* 18/20 Urbanist 500 — the account switcher's name (12446:6418). Raw on the layer like the
+     sheet group header, with a tighter 20px leading so name and caption fill the 40px glyph
+     tile's height. Delete once design moves it onto a step. */
+  --text-account-switcher-name: 1.125rem;
+  --text-account-switcher-name--line-height: 1.25rem;
+  --text-account-switcher-name--font-weight: 500;
+  --text-account-switcher-name--letter-spacing: 0;
+
+  /* ---------------- Robin note ---------------- */
+
+  /* Figma effect style `AI Border` — the glow around the Robin summary (`Note` 11755:42893).
+     DROP_SHADOW  Colors/lavender-alfa/200 25%  (0, 0) r12 spread 2
+     DROP_SHADOW  Colors/violet-alpha/450 15%   (0, 0) r24 spread 4
+
+     The lavender half is `#b6bbf2`, which the generated ladder carries at 0/10/40/50/67/70/87%
+     and not at 25%. The violet half is `#7e86dc` at 15%, and that hex is on no step of the
+     palette (`--color-violet-450` is `#5d64d3`; the UI-kit file's `violet-alpha/450` primitive is
+     a different colour from its own `violet/450`). Both are transcribed, so this is the second
+     place after the #000000 button shadows where a literal colour is permitted. Effect styles
+     are the half of this file that dies when the sync learns to read them. */
+  --shadow-ai-border: 0 0 12px 2px rgb(182 187 242 / 25%), 0 0 24px 4px rgb(126 134 220 / 15%);
+
+  /* The note's collapsed window: one line of title (Body/Small, 20px), the 6px gap and two lines
+     of details (Caption/Medium, 2 × 16px). The phone's title row is 21px, not 20, because the
+     inline logo (16×21) sets it — 59px there, 58px on desktop where the logo is a rail. A
+     summary that fits is shown whole; one that runs past keeps this height and gets `Show more`.
+     Neither is a step of the spacing scale: they are the height of a crop, not a shared rhythm. */
+  --spacing-ai-note-collapsed: 3.6875rem;
+  --spacing-ai-note-collapsed-desktop: 3.625rem;
+
+  /* The note's loading breath — the glow swells and settles while Robin is still thinking.
+     Figma draws no loading member of `Note`; this is the app's own tell, kept from the
+     pre-redesign banner (which spun a conic gradient round its border) and quietened to the
+     new drawing: a change of light on the ring the design already draws, not a moving part.
+     Tailwind's `pulse` schedule (2s, the same easing) so it breathes at the kit's tempo, and
+     opacity on a pseudo-element carrying the glow so the text never dims with it. Unguarded
+     for reduced motion, like `--animate-fan-dial-fill`: stationary light, not movement. */
+  --animate-ai-glow: ai-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes ai-glow {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  /* ---------------- Skeleton ---------------- */
+
+  /* Figma's `Skeleton/*` variables (Main Screen/Skeleton `14805:282768`). The UI kit file the
+     theme is generated from carries none of them, so they are aliased here onto the palette
+     steps they resolve to: base 4%, nested 10% (a block drawn on a base block), elevated the
+     opaque `#303134` used where a block sits on a raised surface (the side menu's footer card),
+     and the shimmer's 6% highlight. */
+  --color-skeleton-base: var(--color-white-alpha-4);
+  --color-skeleton-nested: var(--color-white-alpha-10);
+  --color-skeleton-elevated: var(--color-grey-700);
+  --color-skeleton-shimmer: var(--color-white-alpha-6);
+
+  /* The shimmer: a highlight band swept once across the block per cycle. Transform only, so it
+     runs on the compositor; the pause at the end of each cycle (60% → 100%) keeps the light
+     from reading as a constant crawl. Guarded for reduced motion at the call site — it travels. */
+  --animate-skeleton-shimmer: skeleton-shimmer 1.6s ease-in-out infinite;
+
+  @keyframes skeleton-shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    60%,
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
+
+/* THE BIN SIMULATION PLACEHOLDER'S GROUND, whole: Figma `Bin Simulation Default Gradient`, a
+   top-to-bottom ramp from `Colors/yellow/800` at 0% through `Colors/yellow/50` at 66.584% to
+   `Colors/yellow/50` at 81.333% (11659:209772). The frame draws a bin silhouette bitmap over
+   it; the phase-30 spec ships the gradient alone, as CSS, and no image asset.
+
+   A utility rather than `from-*`/`via-*`/`to-*` at the call site, for the reason the meter
+   gradients give: three stops with two transcribed offsets are numbers that drift when
+   retyped, and this is where transcribed numbers live. */
+@utility bin-simulation-placeholder-ground {
+  background-image: linear-gradient(
+    180deg,
+    var(--color-yellow-800) 0%,
+    var(--color-yellow-50) 66.584%,
+    var(--color-yellow-50) 81.333%
+  );
+  /* Size the gradient to the border box: at the default `padding-box` origin it tiles under the
+     translucent border, so the top edge shows the light end and the bottom edge the dark start. */
+  background-origin: border-box;
+}
+
+/* THE BIN SIMULATION CHART'S GROUND: `Surface/card` under a dotted grid (Figma `Bin Simulation`
+   11660:209640). The dots are `Vector` 11347:6762 — r≈0.88 on a 5.257px pitch, 13,000 of them
+   in a 3MB SVG — drawn as one `radial-gradient` tile instead. A utility for the placeholder
+   ground's reason: two transcribed sizes are numbers that drift when retyped. The trace is
+   transparent over it, so the headspace above the grain shows the dots. */
+@utility bin-simulation-chart-ground {
+  background-color: var(--color-surface-card);
+  background-image: radial-gradient(
+    circle,
+    var(--color-surface-chart-dot) 0.9px,
+    transparent 0.9px
+  );
+  background-size: 5.25px 5.25px;
+}
+
+/* THE FAN DIAL'S SWEEP ANGLE, and the repo's first `@property` rule (ADR-0012).
+
+   `--fan-dial-sweep` is how much of the **gauge arc** is drawn: `FanDial` writes it as an
+   inline style from its `progress` prop, and one `conic-gradient()` reads it for both the
+   gradient's `from` angle and its last colour stop, so the arc drains toward nothing as a
+   run completes.
+
+   Registration is what makes that *animate*. An unregistered custom property has the type
+   `<declaration-value>` — an untyped token stream — so the browser has no way to
+   interpolate between `120deg` and `90deg` and falls back to a discrete swap at the
+   midpoint of the transition. The arc then jumps in one step rather than draining, and the
+   `transition-[--fan-dial-sweep]` on the dial's root appears to do nothing at all. With
+   `syntax: "<angle>"` the same transition is free.
+
+   `inherits: true` because the property is declared once on the dial's root and read by a
+   descendant, and the dial's own colour properties inherit for the same reason.
+
+   Here rather than in `component/ui/` because this file is the Tailwind entry point and the
+   only hand-written CSS that reaches a document at all — a stylesheet next to the component
+   would be imported by no root and emit nothing, which is the failure this file's header
+   already records for a second `@theme`. It is deliberately NOT in `@theme`: `@property` is
+   a registration, not a token, and Tailwind emits no utility for it.
+
+   Not in `tailwind.css` for the reason nothing hand-written is: that file is generated by
+   `yarn sync:icons` and a hand edit is lost on the next sync, silently. */
+@property --fan-dial-sweep {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}
+
+/* THE FAN DIAL'S TINT, registered for the same reason its sweep is: so a state change is a
+   fade and not a cut.
+
+   `FanDial` says what it is by swapping a class — `FAN_DIAL_MODE_TINT[mode]` and
+   `FAN_DIAL_STATE_TINT[state]`, each a row of `[--fan-dial-*:…]` arbitrary properties on the
+   dial's root. Every layer below reads those properties out of a `conic-gradient()`, a
+   `radial-gradient()`, a `box-shadow` or a `color-mix()`.
+
+   None of that is transitionable on its own. `background-image` does not interpolate between
+   two gradients at all, and an *unregistered* custom property is an untyped token stream, so
+   the browser swaps it discretely at the midpoint. A dial going `running` -> `offline` cut
+   from blue to red in one frame, mid-drift, which reads as a re-render rather than as the
+   container having changed its mind.
+
+   Registered `<color>`, the properties interpolate, and the gradients that read them are
+   re-resolved every frame — so the ramp is free, exactly as `--fan-dial-sweep` gets a
+   draining arc for free. The transition list itself lives on the dial's root next to the
+   sweep's, because it is the same 500ms.
+
+   `initial-value: transparent` is load-bearing twice over. It is the right *drawn* default —
+   `Mode=No Mode` declares no `fill-*` and no `wash-*` and those layers are absent from the
+   cell, which is what a transparent ink paints. And it is why `FanDial` reads these with a
+   bare `var()`: a registered property is never unset, so a `var(--x, fallback)` fallback on
+   one is dead code. Two of these used to have one — `--fan-dial-live-line` and
+   `--fan-dial-live-bloom` fell back to `--fan-dial-arc-mid` / `--fan-dial-arc-bright` — and
+   registering them without moving the default into every `FAN_DIAL_MODE_TINT` row would have
+   resolved the liveness group to `transparent` on every mode-tinted cell.
+
+   `--fan-dial-orb-alpha` and `--fan-dial-live-alpha` are `<number>` rather than `<color>` and
+   carry the defaults that were their fallbacks: `0.4` is the drawn veil's opacity and `1` is
+   an un-dimmed rotating group, so an unset one still means what it meant.
+
+   `inherits: true` throughout: every one of these is declared once on the root and read by a
+   descendant. */
+@property --fan-dial-arc-bright {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-arc-mid {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-fill-glow {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-fill-orb {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-fill-wash {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-gauge-fade {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-gauge-head {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-gauge-mid {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-glow {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-live-bloom {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-live-line {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-orb {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-rim {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-wash-edge {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-wash-mid {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --fan-dial-orb-alpha {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0.4;
+}
+
+@property --fan-dial-live-alpha {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
+/* The drawn backdrop, whole: the wash and the blur together.
+
+   Both halves are required. White 4% alone is nearly invisible on this palette, and the
+   blur alone leaves the sheet's own edge unreadable against busy content behind it.
+
+   It is deliberately *not* a dark scrim. A light wash over a blur is what `Modal Overlay`
+   draws, and swapping in a scrim "for contrast" needs a named accessibility requirement,
+   not a quiet substitution (D12).
+
+   A utility rather than an exported constant (the `control-surface.ts` / `overlay-motion.ts`
+   pattern): it has no per-call variation and nothing for `cn` to merge. */
+@utility overlay-backdrop {
+  background-color: var(--color-surface-control);
+  backdrop-filter: blur(var(--blur-overlay));
+}
+
+/* The toast card's surface, whole: the drawn fill and the blur behind it.
+
+   Both halves are the drawing. `Surface/tertiary` is white at 95%, so the card is already
+   near-opaque; the 30px blur is what stops whatever shows through the remaining 5% from
+   reading as noise under the title (D14).
+
+   A utility rather than an exported constant, for the same reason as `overlay-backdrop`
+   above: no per-call variation and nothing for `cn` to merge. There is deliberately no
+   `BLUR` group in util/cn.ts — none exists today, --blur-overlay is consumed by the
+   hand-written rule above, and a merge group for one value is overhead with no caller. */
+/* The schedule card's overlay, whole: the wash and the blur together.
+
+   `Schedule` 11085:137878 (`Fan Failed to Start`) and 11085:135921 (`Scheduled Run Interrupted`)
+   both lay this layer over the run windows — `Colors/dark-violet-alpha/950` over a background
+   blur, with the status chip and its one line centred in it. The primitive is bound raw on both
+   layers; there is no semantic token for it in the file, which is why the primitive is named here
+   rather than aliased (`meter-track-score` above does the same with four palette steps).
+
+   **Semi-transparent on purpose.** The windows under it — and, on the desktop row, the weather
+   chart in each of them — must stay readable through it: the point of the overlay is to say the
+   run stopped while still showing the flat, zero-value graph underneath. That is what separates
+   it from `overlay-backdrop`, whose 20px blur is meant to make the content behind it unreadable.
+
+   **One wash for both statuses: 80% over a 2px blur, which is design's call.** The two cells
+   disagree — 11085:135921 draws 80% over 1px, 11085:137878 draws 50% over 2px — and the pair
+   shipped here is neither cell whole: the heavier wash of the one and the heavier blur of the
+   other. It is the wash that carries the message, and 80% still passes enough of the windows
+   through to say what the layer is over; the 2px stays because 1px is a blur nobody sees.
+
+   The 950 step is `#141518`, so at 80% the layer is nearly the card's own ground: what shows
+   through is the shape of the windows, not their text. That is the intent — read the message,
+   see that it is a schedule underneath — and it is the line to hold if this is ever retuned.
+
+   A utility rather than an exported constant, for the reason `overlay-backdrop` gives: no
+   per-call variation and nothing for `cn` to merge. */
+@utility schedule-overlay {
+  background-color: var(--color-dark-violet-alpha-950-80);
+  backdrop-filter: blur(var(--blur-schedule-overlay));
+}
+
+@utility toast-surface {
+  background-color: var(--color-surface-tertiary);
+  backdrop-filter: blur(var(--blur-toast));
+}
+
+/* The risk meter's TRACK, whole: the four-stop ramp `Score Bar Container` paints across its
+   entire width (UI kit I9256:44159;9256:44127, and the layout's `Grain Risk` instance
+   I11555:436604;9256:44159;11086:14574).
+
+   `linear-gradient(90deg, Colors/green/500 0%, Colors/yellow/300 40%, Colors/orange/550 80%,
+   Colors/red/550 100%)` — four raw palette steps, no variable bound on any of them. It is the
+   track rather than a fill: this bar has no filled region, and the value is carried by the
+   pointer alone, so the colour under the pointer is what the score reads as.
+
+   A utility rather than four tokens and a `bg-linear-*` at the call site, for the reason
+   `overlay-backdrop` gives: no per-call variation, and four stops with two of them at
+   non-obvious offsets is exactly the kind of value that drifts when it is retyped. The 40% and
+   80% stops are also what `toRiskMeterValue` anchors the two CO2 thresholds to, so they are one
+   drawing shared by a stylesheet and a pure function. */
+@utility meter-track-score {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-green-500) 0%,
+    var(--color-yellow-300) 40%,
+    var(--color-orange-550) 80%,
+    var(--color-red-550) 100%
+  );
+}
+
+/* The fan meter's FILL, whole: `linear-gradient(177.82deg, Colors/blue/550 16.6%,
+   Colors/cyan/500 84.73%)`, off `line` I11555:436602;9256:44159;11086:14545.
+
+   The angle is the drawing's and is very nearly vertical (177.8deg, i.e. top to bottom) on a
+   10px-tall bar, so the ramp reads as a single sheen across the fill's height rather than as a
+   left-to-right ramp — which is why it is transcribed rather than "corrected" to 90deg.
+
+   A utility rather than `bg-linear-[177.82deg,…]` at the call site: the angle and the two stop
+   offsets are three transcribed numbers, and this is where transcribed numbers live. */
+@utility meter-fill-progress {
+  background-image: linear-gradient(
+    177.82deg,
+    var(--color-surface-meter-fill-start) 16.6%,
+    var(--color-surface-meter-fill-end) 84.73%
+  );
+}
+
+/* THE PAIRED-HARDWARE CARD'S GROUND: Figma fill style `Gradient for Paired Hardware` on the
+   analyzer and automator cards (14566:443896) — a near-vertical (179.68deg) ramp from
+   `Colors/violet-alpha/450 0%` at 22.945% to `Colors/violet/450` at 20% at 99.78%, laid over
+   `Surface/card`. A utility for the meter gradients' reason: transcribed stops drift when retyped.
+   `Gradient for Cards v2` (the automation flow's metric cards, 14189:421448) has the same stops. */
+@utility paired-hardware-card-ground {
+  background-color: var(--color-surface-card);
+  background-image: linear-gradient(
+    179.68deg,
+    var(--color-violet-alpha-450-0) 22.945%,
+    color-mix(in srgb, var(--color-violet-450) 20%, transparent) 99.78%
+  );
+}

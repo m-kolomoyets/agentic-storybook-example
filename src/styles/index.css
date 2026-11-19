@@ -1,0 +1,58 @@
+/* Amber design system entry point. Dark theme only — the Figma kit draws a single mode.
+   tokens.css resets Tailwind's default colour/spacing/radius/type scales, so only kit tokens
+   generate utilities (`p-m`, `rounded-s`, `text-body-m`, `bg-surface-ground`). */
+@import "tailwindcss" source(none);
+@import "./fonts.css";
+@import "./tokens.css";
+@import "./tokens-supplement.css";
+
+@source "../../src";
+@source "../../index.html";
+
+@layer base {
+    html {
+        color-scheme: dark;
+        background-color: var(--color-surface-ground);
+        color: var(--color-text-general-strong);
+    }
+
+    /* iOS holds every tap to check for a double-tap zoom; `manipulation` drops that gesture so
+       the click fires on first touchend. Per element: touch-action stops at scroll containers. */
+    a[href],
+    button,
+    label,
+    summary,
+    input,
+    select,
+    textarea,
+    [role="button"],
+    [role="link"],
+    [role="option"],
+    [role="menuitem"],
+    [role="menuitemradio"],
+    [role="menuitemcheckbox"],
+    [role="tab"],
+    [role="switch"],
+    [role="checkbox"],
+    [role="radio"] {
+        touch-action: manipulation;
+    }
+
+    /* Kit icons are SVGR components without width/height. WebKit gives a flex-item svg with no
+       intrinsic size a width of 0, so dimensionless icons fill their slot instead. */
+    svg:not([width]) {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Focus floor for anything the kit does not draw itself: the kit's outset hairline. */
+    :focus-visible {
+        outline: 1px solid var(--color-border-focused);
+        outline-offset: 2px;
+    }
+
+    /* Base UI focuses a dialog popup on keyboard open; an outline around the whole sheet is noise. */
+    :where([role="dialog"], [role="alertdialog"]):focus-visible {
+        outline: none;
+    }
+}
