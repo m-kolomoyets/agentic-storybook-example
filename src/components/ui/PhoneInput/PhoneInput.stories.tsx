@@ -188,8 +188,9 @@ export const Open: Story = {
         // Flag is a lazily fetched, decorative asset `<img>` (the glob matched; it is not inlined).
         const flag = row.querySelector('img');
         await expect(flag).toHaveAttribute('alt', '');
-        // Dev serves `…/US.svg?no-inline`; a production build hashes it to `…/US-<hash>.svg`.
-        await expect(flag?.getAttribute('src')).toMatch(/\/US(-[\w-]+)?\.svg/);
+        // Not the file name: the build dedupes byte-identical assets, so US ships as `UM-<hash>.svg`.
+        await expect(flag?.getAttribute('src')).not.toMatch(/^data:/);
+        await expect(flag?.getAttribute('src')).toMatch(/\.svg(\?|$)/);
         await waitFor(() => {
             return expect(flag?.naturalWidth).toBeGreaterThan(0);
         });
