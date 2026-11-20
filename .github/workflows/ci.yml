@@ -16,8 +16,8 @@ jobs:
         # Pipeline lives in phenomenon-configs; fixes on the same major arrive automatically.
         uses: Phenomenon-Studio/phenomenon-configs/.github/workflows/node-ci.yml@v1
 
-    # Story tests (play functions + axe a11y) in Vitest browser mode. Separate job: the shared pipeline
-    # doesn't install Playwright browsers.
+    # Story tests (play functions + axe a11y) in Vitest browser mode, a required pre-merge check on `main`.
+    # Separate job: the shared pipeline doesn't install Playwright browsers.
     storybook:
         name: storybook tests
         runs-on: ubuntu-latest
@@ -41,8 +41,9 @@ jobs:
 
             - run: pnpm test:storybook
 
-    # Visual review on Chromatic. Billed per snapshot: only `Matrix` stories snapshot (`.storybook/preview.tsx`),
-    # and TurboSnap (`onlyChanged` in chromatic.config.json) skips stories whose dependencies didn't change.
+    # Visual review on Chromatic, a required pre-merge check on `main`. Billed per snapshot: only `Matrix` stories
+    # snapshot (`.storybook/preview.tsx`), and TurboSnap (`onlyChanged` in chromatic.config.json) skips stories whose
+    # dependencies didn't change.
     chromatic:
         name: chromatic
         runs-on: ubuntu-latest
@@ -69,7 +70,8 @@ jobs:
             - uses: chromaui/action@9cb4d65a86fe1c4c67a76a8d90f35a51a118e55f # v18.15.1
               with:
                   projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-                  # Changes go to review in the Chromatic UI instead of failing the job.
-                  exitZeroOnChanges: true
+                  # Unreviewed visual changes fail the job, so the PR can't merge until someone accepts them in
+                  # Chromatic (then re-run this job). Denied changes stay red.
+                  exitZeroOnChanges: false
                   # Merged changes become the new baseline.
                   autoAcceptChanges: main
