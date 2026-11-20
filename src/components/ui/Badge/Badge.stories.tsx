@@ -1,9 +1,14 @@
+import type { FigmaVariant } from '../../../../visual/figma/types';
 import type { BadgeSize, BadgeVariant } from './types';
 import { useState } from 'react';
 import GrainIcon from '@/assets/icons/grains.svg?react';
 import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Badge } from '.';
+import { figmaContent, KitIcon } from '../../../../visual/figma/content';
+import { FigmaMatrix as FigmaMatrixGrid } from '../../../../visual/figma/FigmaMatrix';
+import { FIGMA_SETS } from '../../../../visual/figma/sets';
+import { FIGMA_COMPARE_GLOBAL } from '../../../../visual/figma/types';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
@@ -229,6 +234,79 @@ export const Matrix = meta.story({
                     </Badge>
                 </div>
             </div>
+        );
+    },
+});
+
+/** Figma `Tone` (Type ≠ Mode) and `Mode` (Type = Mode) → code `variant`. Unlisted values have no code variant. */
+const FIGMA_TONE: Partial<Record<string, BadgeVariant>> = {
+    Neutral: 'neutral',
+    Positive: 'positive',
+    Negative: 'negative',
+    Info: 'info',
+    Warning: 'warning',
+};
+const FIGMA_MODE: Partial<Record<string, BadgeVariant>> = {
+    Cool: 'cool',
+    Dry: 'dry',
+    Recondition: 'recondition',
+    Custom: 'custom',
+};
+const FIGMA_SIZE: Record<string, BadgeSize> = { Big: 'lg', Medium: 'md', Small: 'sm' };
+/** States drawn as a plain badge; `Selected`/`Disabled` are chip states; the rest have no code equivalent. */
+const PLAIN_STATES = ['Default', 'Error', 'Running', 'Updating'];
+const FIGMA_BLOCK = { set: FIGMA_SETS.badge, layout: { sections: 'Type', columns: 'Size' } };
+
+/** One Figma `Badge` variant → the code badge, with the cell's own label and leading glyph. */
+function figmaBadge(cell: FigmaVariant) {
+    const isMode = cell.props.Type === 'Mode';
+    const variant = isMode ? FIGMA_MODE[cell.props.Mode ?? ''] : FIGMA_TONE[cell.props.Tone ?? ''];
+    const state = cell.props.State ?? 'Default';
+    if (!variant || !(PLAIN_STATES.includes(state) || state === 'Selected' || state === 'Disabled')) {
+        return null;
+    }
+    const content = figmaContent(cell);
+    // Aeration variants draw their own dot; other leading glyphs are kit icons.
+    const children = (
+        <>
+            {!isMode && content.leading && <KitIcon figma={content.leading} />}
+            {content.text}
+        </>
+    );
+    const size = FIGMA_SIZE[cell.props.Size ?? ''];
+    if (state === 'Selected' || state === 'Disabled') {
+        return (
+            <Badge size={size} selected={state === 'Selected'} disabled={state === 'Disabled'} onClick={fn()}>
+                {children}
+            </Badge>
+        );
+    }
+
+    return (
+        <Badge size={size} variant={variant}>
+            {children}
+        </Badge>
+    );
+}
+
+/**
+ * Every variant of Figma `Badge` (8673:4388): a sparse set (31 of its Size × State × Tone × Type × Leading × Mode
+ * combinations are drawn), grouped by Type with Size across, held to Figma per cell by `pnpm vrt figma`
+ * (visual/FIGMA-TESTING.md). Variants the code can't express show as "no code equivalent".
+ */
+export const FigmaMatrix = meta.story({
+    tags: ['figma', '!autodocs'],
+    parameters: {
+        layout: 'padded',
+        design: { type: 'figma', url: FIGMA_SETS.badge },
+        figmaMatrix: { blocks: [FIGMA_BLOCK] },
+    },
+    render: function FigmaMatrixStory(_args, { globals }) {
+        return (
+            <FigmaMatrixGrid
+                compare={globals[FIGMA_COMPARE_GLOBAL]}
+                blocks={[{ ...FIGMA_BLOCK, renderCell: figmaBadge }]}
+            />
         );
     },
 });

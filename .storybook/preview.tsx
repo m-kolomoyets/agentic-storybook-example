@@ -4,6 +4,7 @@ import addonDocs from '@storybook/addon-docs';
 import { definePreview } from '@storybook/react-vite';
 import { themes } from 'storybook/theming';
 import { Toast } from '@/components/ui/Toast';
+import { FIGMA_COMPARE_GLOBAL } from '../visual/figma/types';
 import '@/styles/index.css';
 
 // CSF Next: story files build on this via `preview.meta()` → `meta.story()` → `story.test()`.
@@ -27,6 +28,9 @@ export default definePreview({
         chromatic: { disableSnapshot: true },
     },
     tags: ['autodocs'],
+    // FigmaMatrix compare mode (visual/FIGMA-TESTING.md). Storybook drops undeclared globals, so the
+    // "Figma diff" panel can only set it once it's declared here.
+    initialGlobals: { [FIGMA_COMPARE_GLOBAL]: 'off' },
     decorators: [
         function withKitText(Story) {
             return (

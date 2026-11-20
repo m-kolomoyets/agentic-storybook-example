@@ -1,1 +1,6 @@
 * text=auto
+
+# Figma reference cache (visual/FIGMA-TESTING.md → "What's committed"): synced by `pnpm vrt figma`, never hand-edited.
+# Collapsed in PR diffs; a change here is a design update and is reviewed as one.
+visual/figma/__refs__/** linguist-generated=true
+visual/figma/__refs__/**/*.png binary

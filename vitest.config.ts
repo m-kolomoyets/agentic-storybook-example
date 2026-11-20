@@ -5,8 +5,8 @@ import { argosVitestPlugin } from '@argos-ci/storybook/vitest-plugin';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig, mergeConfig } from 'vitest/config';
-import { FIGMA_SCALE, figmaRef, figmaSaveResult } from './visual/figma/commands.ts';
-import { FIGMA_REFS_DIR, FIGMA_RESULTS_DIR } from './visual/figma/types.ts';
+import { figmaSaveFlatRef, figmaSaveStoryResult } from './visual/figma/commands.ts';
+import { FIGMA_FLAT_REFS_DIR, FIGMA_RESULTS_DIR, FIGMA_SCALE } from './visual/figma/types.ts';
 import viteConfig from './vite.config.ts';
 
 const configDir = path.join(import.meta.dirname, '.storybook');
@@ -121,14 +121,16 @@ function vrtProjects(): TestProjectInlineConfiguration[] {
             deviceScaleFactor: FIGMA_SCALE,
             test: {
                 setupFiles: ['./visual/figma/setup.ts'],
+                // Every cell of a matrix is captured in one afterEach (Button: ~120 cells).
+                hookTimeout: 300_000,
                 attachmentsDir: FIGMA_RESULTS_DIR,
                 api: { allowWrite: true },
                 browser: {
-                    commands: { figmaRef, figmaSaveResult },
+                    commands: { figmaSaveFlatRef, figmaSaveStoryResult },
                     expect: {
                         toMatchScreenshot: {
                             resolveScreenshotPath: ({ arg, ext, root }) => {
-                                return path.join(root, FIGMA_REFS_DIR, `${arg}${ext}`);
+                                return path.join(root, FIGMA_FLAT_REFS_DIR, `${arg}${ext}`);
                             },
                             resolveDiffPath: ({ arg, ext, root }) => {
                                 return path.join(root, FIGMA_RESULTS_DIR, `${arg}${ext}`);

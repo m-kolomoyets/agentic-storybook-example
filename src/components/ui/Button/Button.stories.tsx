@@ -1,11 +1,15 @@
-import type { ButtonProps, ButtonVariant } from './types';
+import type { FigmaMatrixBlock, FigmaVariant } from '../../../../visual/figma/types';
+import type { ButtonProps, ButtonSize, ButtonVariant } from './types';
 import AddIcon from '@/assets/icons/add.svg?react';
 import ChevronDownIcon from '@/assets/icons/chevron-down.svg?react';
 import PlayIcon from '@/assets/icons/play.svg?react';
-import StarFourIcon from '@/assets/icons/star-four.svg?react';
 import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Button } from '.';
+import { figmaContent, KitIcon } from '../../../../visual/figma/content';
+import { FigmaMatrix as FigmaMatrixGrid } from '../../../../visual/figma/FigmaMatrix';
+import { FIGMA_SETS } from '../../../../visual/figma/sets';
+import { FIGMA_COMPARE_GLOBAL } from '../../../../visual/figma/types';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
@@ -263,12 +267,104 @@ export const Matrix = meta.story({
     },
 });
 
-/** Held to Figma `Size=Medium, State=Default` (8728:14523) by `pnpm vrt figma` — content mirrors the Figma cell. */
-export const FigmaMdDefault = meta.story({
+/** Figma `Size` / `State` → props. Pointer states reuse the `FORCED` pins of `Matrix`. */
+const FIGMA_SIZE: Record<string, ButtonSize> = { Big: 'lg', Medium: 'md', Small: 'sm' };
+const FIGMA_STATE: Record<string, StateName> = {
+    Default: 'default',
+    Hover: 'hover',
+    Focused: 'focused',
+    Focus: 'focused',
+    Pressed: 'pressed',
+    Loading: 'loading',
+    Disabled: 'disabled',
+};
+/** Code variants without a `size` prop (one size only), and those without `lg` (types.ts). */
+const SIZELESS: ButtonVariant[] = ['remote', 'secondary-elevated'];
+const NO_LG: ButtonVariant[] = ['primary-on-surface', 'link-primary', 'link-secondary', 'link-tertiary'];
+
+const BY_SIZE = { sections: 'Size', columns: 'State' };
+const LINK_HIT_TARGET = {
+    reason: 'Links keep a 40/48px hit target (WCAG 2.5.8); Figma draws a 16–24px hug frame (utils/variants.ts).',
+};
+const FIGMA_BUTTONS: (FigmaMatrixBlock & { variant: ButtonVariant })[] = [
+    { variant: 'primary', set: FIGMA_SETS.buttonPrimary, layout: BY_SIZE },
+    {
+        variant: 'primary-on-surface',
+        set: FIGMA_SETS.buttonPrimaryOnSurface,
+        layout: BY_SIZE,
+        approved: [
+            {
+                when: { State: ['Focused', 'Loading'] },
+                reason: 'Figma 9642:177476 draws no focus stroke and no spinner; both added (WCAG 2.4.7; double activation).',
+            },
+        ],
+    },
+    { variant: 'secondary', set: FIGMA_SETS.buttonSecondary, layout: BY_SIZE },
+    {
+        variant: 'secondary-elevated',
+        set: FIGMA_SETS.buttonSecondaryElevated,
+        layout: { sections: null, columns: 'State' },
+    },
+    { variant: 'destructive', set: FIGMA_SETS.buttonDestructive, layout: BY_SIZE },
+    { variant: 'remote', set: FIGMA_SETS.buttonRemote, layout: { sections: null, columns: 'State' } },
+    { variant: 'link-primary', set: FIGMA_SETS.buttonLinkPrimary, layout: BY_SIZE, approved: [LINK_HIT_TARGET] },
+    { variant: 'link-secondary', set: FIGMA_SETS.buttonLinkSecondary, layout: BY_SIZE, approved: [LINK_HIT_TARGET] },
+    { variant: 'link-tertiary', set: FIGMA_SETS.buttonLinkTertiary, layout: BY_SIZE, approved: [LINK_HIT_TARGET] },
+];
+
+/** One Figma variant of a Button set → the code button, with the cell's own label and glyphs. */
+function figmaButton(variant: ButtonVariant) {
+    return function FigmaButtonCell(cell: FigmaVariant) {
+        const size = cell.props.Size === undefined ? undefined : FIGMA_SIZE[cell.props.Size];
+        // Undrawable in code (types.ts forbids it): reported as missing, not faked.
+        if (size === 'lg' && NO_LG.includes(variant)) {
+            return null;
+        }
+        const state = FIGMA_STATE[cell.props.State ?? ''] ?? 'default';
+        const content = figmaContent(cell);
+        // The union in types.ts can't follow runtime Figma data; legality is checked just above.
+        const props = {
+            variant,
+            size: SIZELESS.includes(variant) ? undefined : size,
+            loading: state === 'loading',
+            disabled: state === 'disabled',
+            startIcon: content.leading ? <KitIcon figma={content.leading} /> : undefined,
+            endIcon: content.trailing ? <KitIcon figma={content.trailing} /> : undefined,
+            className: FORCED[variant][state] ?? '',
+        } as ButtonProps;
+
+        return <Button {...props}>{content.text ?? cell.name}</Button>;
+    };
+}
+
+/**
+ * Every variant of every Figma Button set (one set per code `variant`), grouped by each set's own Size × State
+ * properties and held to Figma per cell by `pnpm vrt figma` (visual/FIGMA-TESTING.md). Labels and glyphs come from
+ * the Figma cells, so the pixels are comparable.
+ */
+export const FigmaMatrix = meta.story({
     tags: ['figma', '!autodocs'],
-    args: { size: 'md', children: 'Generate Automations', startIcon: <StarFourIcon />, endIcon: <StarFourIcon /> },
     parameters: {
-        design: { type: 'figma', url: `${FIGMA}8728-14523` },
-        figmaRef: { url: `${FIGMA}8728-14523` },
+        layout: 'padded',
+        design: FIGMA_BUTTONS.map(({ variant, set }) => {
+            return { name: variant, type: 'figma', url: set };
+        }),
+        figmaMatrix: { blocks: FIGMA_BUTTONS },
+        // Same contrast exception as `Matrix`: Figma-drawn white on `button-destructive-default`.
+        a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } },
+    },
+    render: function FigmaMatrixStory(_args, { globals }) {
+        return (
+            <FigmaMatrixGrid
+                compare={globals[FIGMA_COMPARE_GLOBAL]}
+                blocks={FIGMA_BUTTONS.map((block) => {
+                    return {
+                        ...block,
+                        title: `${block.variant} · Figma ${block.set.split('node-id=')[1]}`,
+                        renderCell: figmaButton(block.variant),
+                    };
+                })}
+            />
+        );
     },
 });

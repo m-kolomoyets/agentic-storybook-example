@@ -1,0 +1,1321 @@
+{
+    "source": {
+        "url": "https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=8038-2005",
+        "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+        "nodeId": "8038:2005",
+        "name": "Secondary Button",
+        "version": "2423344990798825378",
+        "lastModified": "2026-11-18T22:40:41Z"
+    },
+    "axes": [
+        {
+            "name": "State",
+            "options": [
+                "Default",
+                "Hover",
+                "Loading",
+                "Focused",
+                "Pressed",
+                "Disabled"
+            ]
+        },
+        {
+            "name": "Size",
+            "options": [
+                "Medium",
+                "Small",
+                "Big"
+            ]
+        }
+    ],
+    "booleans": [
+        {
+            "name": "Show Left Icon",
+            "default": true
+        },
+        {
+            "name": "Show Right Icon",
+            "default": true
+        }
+    ],
+    "variants": [
+        {
+            "id": "8019:355",
+            "name": "State=Default, Size=Medium",
+            "props": {
+                "State": "Default",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Size=Medium",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9153:36718",
+            "name": "State=Default, Size=Big",
+            "props": {
+                "State": "Default",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Size=Big",
+                    "width": 155,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 111,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9153:36727",
+            "name": "State=Hover, Size=Big",
+            "props": {
+                "State": "Hover",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Size=Big",
+                    "width": 155,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.06
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 111,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9153:36736",
+            "name": "State=Loading, Size=Big",
+            "props": {
+                "State": "Loading",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Loading, Size=Big",
+                    "width": 155,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 111,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9153:36761",
+            "name": "State=Focused, Size=Big",
+            "props": {
+                "State": "Focused",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Focused, Size=Big",
+                    "width": 155,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 111,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9153:36778",
+            "name": "State=Pressed, Size=Big",
+            "props": {
+                "State": "Pressed",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Pressed, Size=Big",
+                    "width": 155,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.08
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 111,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9153:36787",
+            "name": "State=Disabled, Size=Big",
+            "props": {
+                "State": "Disabled",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Size=Big",
+                    "width": 155,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 111,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8192:4834",
+            "name": "State=Hover, Size=Medium",
+            "props": {
+                "State": "Hover",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Size=Medium",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.06
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Right Icon Loading",
+                        "component": "Plus",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8192:4841",
+            "name": "State=Loading, Size=Medium",
+            "props": {
+                "State": "Loading",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Loading, Size=Medium",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8192:4848",
+            "name": "State=Focused, Size=Medium",
+            "props": {
+                "State": "Focused",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Focused, Size=Medium",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8192:4855",
+            "name": "State=Pressed, Size=Medium",
+            "props": {
+                "State": "Pressed",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Pressed, Size=Medium",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.08
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8192:4862",
+            "name": "State=Disabled, Size=Medium",
+            "props": {
+                "State": "Disabled",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Size=Medium",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8038:2013",
+            "name": "State=Default, Size=Small",
+            "props": {
+                "State": "Default",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Size=Small",
+                    "width": 113,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 49,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 85,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8196:426",
+            "name": "State=Hover, Size=Small",
+            "props": {
+                "State": "Hover",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Size=Small",
+                    "width": 113,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.06
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 49,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 85,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8196:435",
+            "name": "State=Loading, Size=Small",
+            "props": {
+                "State": "Loading",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Loading, Size=Small",
+                    "width": 113,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 49,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 85,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8196:444",
+            "name": "State=Focused, Size=Small",
+            "props": {
+                "State": "Focused",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Focused, Size=Small",
+                    "width": 113,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 49,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 85,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8196:453",
+            "name": "State=Pressed, Size=Small",
+            "props": {
+                "State": "Pressed",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Pressed, Size=Small",
+                    "width": 113,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.08
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 49,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 85,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8196:462",
+            "name": "State=Disabled, Size=Small",
+            "props": {
+                "State": "Disabled",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Size=Small",
+                    "width": 113,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 49,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 85,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

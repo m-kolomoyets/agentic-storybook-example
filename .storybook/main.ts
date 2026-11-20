@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import { visualResultsPlugin } from '../visual/figma/serve.ts';
 
 // Plugins from vite.config.ts that only make sense for the app build (index.html templating, bundle report).
 const APP_ONLY_PLUGINS = /^(vite:html|vite:minify-html|vite-plugin-html|visualizer)/;
@@ -22,9 +23,13 @@ const config: StorybookConfig = {
         experimentalTestSyntax: true,
     },
     viteFinal(viteConfig) {
-        viteConfig.plugins = viteConfig.plugins?.flat().filter((plugin) => {
-            return !(plugin && 'name' in plugin && APP_ONLY_PLUGINS.test(plugin.name));
-        });
+        viteConfig.plugins = [
+            ...(viteConfig.plugins ?? []).flat().filter((plugin) => {
+                return !(plugin && 'name' in plugin && APP_ONLY_PLUGINS.test(plugin.name));
+            }),
+            // Serves Figma reference results to the "Figma diff" panel (visual/FIGMA-TESTING.md).
+            visualResultsPlugin(),
+        ];
 
         return viteConfig;
     },

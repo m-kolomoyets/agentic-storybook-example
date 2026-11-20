@@ -1,0 +1,903 @@
+{
+    "source": {
+        "url": "https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=9183-5528",
+        "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+        "nodeId": "9183:5528",
+        "name": "Check box outline blank",
+        "version": "2423344990798825378",
+        "lastModified": "2026-11-18T22:40:41Z"
+    },
+    "axes": [
+        {
+            "name": "State",
+            "options": [
+                "Default",
+                "Hover",
+                "Active",
+                "Disabled"
+            ]
+        },
+        {
+            "name": "Status",
+            "options": [
+                "Unchecked",
+                "Checked",
+                "Indeterminate"
+            ]
+        },
+        {
+            "name": "Size",
+            "options": [
+                "Big",
+                "Medium"
+            ]
+        }
+    ],
+    "booleans": [],
+    "variants": [
+        {
+            "id": "9183:5527",
+            "name": "State=Default, Status=Unchecked, Size=Big",
+            "props": {
+                "State": "Default",
+                "Status": "Unchecked",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Unchecked, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox unchecked big",
+                        "component": "Check box outline blank",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4488",
+            "name": "State=Default, Status=Unchecked, Size=Medium",
+            "props": {
+                "State": "Default",
+                "Status": "Unchecked",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Unchecked, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox unchecked medium",
+                        "component": "Check box outline blank",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4492",
+            "name": "State=Hover, Status=Unchecked, Size=Medium",
+            "props": {
+                "State": "Hover",
+                "Status": "Unchecked",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Unchecked, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox unchecked medium",
+                        "component": "Check box outline blank",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4496",
+            "name": "State=Active, Status=Unchecked, Size=Medium",
+            "props": {
+                "State": "Active",
+                "Status": "Unchecked",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Unchecked, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox unchecked medium",
+                        "component": "Check box outline blank",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4500",
+            "name": "State=Disabled, Status=Unchecked, Size=Medium",
+            "props": {
+                "State": "Disabled",
+                "Status": "Unchecked",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Unchecked, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox unchecked medium",
+                        "component": "Check box outline blank",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5529",
+            "name": "State=Hover, Status=Unchecked, Size=Big",
+            "props": {
+                "State": "Hover",
+                "Status": "Unchecked",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Unchecked, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox unchecked big",
+                        "component": "Check box outline blank",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5532",
+            "name": "State=Active, Status=Unchecked, Size=Big",
+            "props": {
+                "State": "Active",
+                "Status": "Unchecked",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Unchecked, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox unchecked big",
+                        "component": "Check box outline blank",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5535",
+            "name": "State=Disabled, Status=Unchecked, Size=Big",
+            "props": {
+                "State": "Disabled",
+                "Status": "Unchecked",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Unchecked, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox unchecked big",
+                        "component": "Check box outline blank",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5526",
+            "name": "State=Default, Status=Checked, Size=Big",
+            "props": {
+                "State": "Default",
+                "Status": "Checked",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Checked, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox checked big",
+                        "component": "Check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4516",
+            "name": "State=Default, Status=Checked, Size=Medium",
+            "props": {
+                "State": "Default",
+                "Status": "Checked",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Checked, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox checked medium",
+                        "component": "Check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4443",
+            "name": "State=Hover, Status=Checked, Size=Big",
+            "props": {
+                "State": "Hover",
+                "Status": "Checked",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Checked, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox checked big",
+                        "component": "Check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4518",
+            "name": "State=Hover, Status=Checked, Size=Medium",
+            "props": {
+                "State": "Hover",
+                "Status": "Checked",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Checked, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox checked medium",
+                        "component": "Check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4446",
+            "name": "State=Active, Status=Checked, Size=Big",
+            "props": {
+                "State": "Active",
+                "Status": "Checked",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Checked, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox checked big",
+                        "component": "Check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4520",
+            "name": "State=Active, Status=Checked, Size=Medium",
+            "props": {
+                "State": "Active",
+                "Status": "Checked",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Checked, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox checked medium",
+                        "component": "Check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4449",
+            "name": "State=Disabled, Status=Checked, Size=Big",
+            "props": {
+                "State": "Disabled",
+                "Status": "Checked",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Checked, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox checked big",
+                        "component": "Check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4522",
+            "name": "State=Disabled, Status=Checked, Size=Medium",
+            "props": {
+                "State": "Disabled",
+                "Status": "Checked",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Checked, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox checked medium",
+                        "component": "Check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4452",
+            "name": "State=Default, Status=Indeterminate, Size=Big",
+            "props": {
+                "State": "Default",
+                "Status": "Indeterminate",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Indeterminate, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox indeterminate big",
+                        "component": "Indeterminate check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4584",
+            "name": "State=Default, Status=Indeterminate, Size=Medium",
+            "props": {
+                "State": "Default",
+                "Status": "Indeterminate",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Indeterminate, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox indeterminate medium",
+                        "component": "Indeterminate check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4460",
+            "name": "State=Hover, Status=Indeterminate, Size=Big",
+            "props": {
+                "State": "Hover",
+                "Status": "Indeterminate",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Indeterminate, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox indeterminate big",
+                        "component": "Indeterminate check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4586",
+            "name": "State=Hover, Status=Indeterminate, Size=Medium",
+            "props": {
+                "State": "Hover",
+                "Status": "Indeterminate",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Indeterminate, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox indeterminate medium",
+                        "component": "Indeterminate check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4468",
+            "name": "State=Active, Status=Indeterminate, Size=Big",
+            "props": {
+                "State": "Active",
+                "Status": "Indeterminate",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Indeterminate, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox indeterminate big",
+                        "component": "Indeterminate check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4588",
+            "name": "State=Active, Status=Indeterminate, Size=Medium",
+            "props": {
+                "State": "Active",
+                "Status": "Indeterminate",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Indeterminate, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox indeterminate medium",
+                        "component": "Indeterminate check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4476",
+            "name": "State=Disabled, Status=Indeterminate, Size=Big",
+            "props": {
+                "State": "Disabled",
+                "Status": "Indeterminate",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Indeterminate, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox indeterminate big",
+                        "component": "Indeterminate check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9185:4590",
+            "name": "State=Disabled, Status=Indeterminate, Size=Medium",
+            "props": {
+                "State": "Disabled",
+                "Status": "Indeterminate",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Indeterminate, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Checkbox indeterminate medium",
+                        "component": "Indeterminate check box",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

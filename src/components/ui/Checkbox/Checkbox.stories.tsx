@@ -1,9 +1,13 @@
 import type { ReactNode } from 'react';
+import type { FigmaVariant } from '../../../../visual/figma/types';
 import type { CheckboxSize } from './types';
 import { useState } from 'react';
 import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Checkbox } from '.';
+import { FigmaMatrix as FigmaMatrixGrid } from '../../../../visual/figma/FigmaMatrix';
+import { FIGMA_SETS } from '../../../../visual/figma/sets';
+import { FIGMA_COMPARE_GLOBAL } from '../../../../visual/figma/types';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
@@ -202,3 +206,52 @@ export const Matrix = meta.story({
         );
     },
 });
+
+/** Figma `State` → the `FORCED` pin of `Matrix` (Figma `Active` ships as focus-visible). */
+const FIGMA_STATE: Record<string, (typeof STATES)[number]> = {
+    Default: 'default',
+    Hover: 'hover',
+    Active: 'focused',
+    Disabled: 'disabled',
+};
+const FIGMA_SIZE: Record<string, CheckboxSize> = { Big: 'lg', Medium: 'md' };
+const FIGMA_BLOCK = { set: FIGMA_SETS.checkbox, layout: { sections: 'Size', columns: 'State' } };
+
+/**
+ * Every variant of Figma `Check box outline blank` (9183:5528), grouped by its own Size × Status × State properties
+ * and held to Figma per cell by `pnpm vrt figma` (visual/FIGMA-TESTING.md).
+ */
+export const FigmaMatrix = meta.story({
+    tags: ['figma', '!autodocs'],
+    parameters: {
+        design: { type: 'figma', url: FIGMA_SETS.checkbox },
+        figmaMatrix: { blocks: [FIGMA_BLOCK] },
+    },
+    render: function FigmaMatrixStory(_args, { globals }) {
+        return (
+            <FigmaMatrixGrid
+                compare={globals[FIGMA_COMPARE_GLOBAL]}
+                blocks={[{ ...FIGMA_BLOCK, renderCell: figmaCheckbox }]}
+            />
+        );
+    },
+});
+
+/** One Figma `Check box outline blank` variant → the code checkbox. */
+function figmaCheckbox(variant: FigmaVariant) {
+    const state = FIGMA_STATE[variant.props.State ?? ''] ?? 'default';
+    const status = variant.props.Status;
+
+    return (
+        <CheckboxLabel srOnly>
+            <Checkbox
+                size={FIGMA_SIZE[variant.props.Size ?? '']}
+                checked={status === 'Checked'}
+                indeterminate={status === 'Indeterminate'}
+                disabled={state === 'disabled'}
+                className={FORCED[state]}
+            />
+            <span className="sr-only">{variant.name}</span>
+        </CheckboxLabel>
+    );
+}

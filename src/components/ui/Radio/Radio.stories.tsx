@@ -1,9 +1,13 @@
 import type { ReactNode } from 'react';
+import type { FigmaVariant } from '../../../../visual/figma/types';
 import type { RadioProps, RadioSize } from './types';
 import preview from '#.storybook/preview';
 import { expect } from 'storybook/test';
 import { RadioGroup } from '@/components/ui/RadioGroup';
 import { Radio } from '.';
+import { FigmaMatrix as FigmaMatrixGrid } from '../../../../visual/figma/FigmaMatrix';
+import { FIGMA_SETS } from '../../../../visual/figma/sets';
+import { FIGMA_COMPARE_GLOBAL } from '../../../../visual/figma/types';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
@@ -169,6 +173,56 @@ export const Matrix = meta.story({
                     );
                 })}
             </div>
+        );
+    },
+});
+
+/** Figma `State` → the `FORCED` pin of `Matrix` (Figma `Active` ships as focus-visible). */
+const FIGMA_STATE: Record<string, (typeof STATES)[number]> = {
+    Default: 'default',
+    Hover: 'hover',
+    Active: 'focused',
+    Disabled: 'disabled',
+};
+const FIGMA_SIZE: Record<string, RadioSize> = { Big: 'lg', Medium: 'md', Small: 'sm' };
+const FIGMA_BLOCK = { set: FIGMA_SETS.radio, layout: { sections: 'Size', columns: 'State' } };
+
+/** One Figma `Radio button` variant → the code radio, in its own group so `Selected` is real selection. */
+function figmaRadio(variant: FigmaVariant) {
+    const state = FIGMA_STATE[variant.props.State ?? ''] ?? 'default';
+
+    return (
+        // `flex`: a block group would wrap the inline label in a taller line box.
+        <RadioGroup className="flex" value={variant.props.Status === 'Selected' ? 'on' : 'off'}>
+            <label className="inline-flex">
+                <Radio
+                    value="on"
+                    size={FIGMA_SIZE[variant.props.Size ?? '']}
+                    disabled={state === 'disabled'}
+                    className={FORCED[state]}
+                />
+                <span className="sr-only">{variant.name}</span>
+            </label>
+        </RadioGroup>
+    );
+}
+
+/**
+ * Every variant of Figma `Radio button` (9181:5758), grouped by its own Size × Status × State properties and held
+ * to Figma per cell by `pnpm vrt figma` (visual/FIGMA-TESTING.md).
+ */
+export const FigmaMatrix = meta.story({
+    tags: ['figma', '!autodocs'],
+    parameters: {
+        design: { type: 'figma', url: FIGMA_SETS.radio },
+        figmaMatrix: { blocks: [FIGMA_BLOCK] },
+    },
+    render: function FigmaMatrixStory(_args, { globals }) {
+        return (
+            <FigmaMatrixGrid
+                compare={globals[FIGMA_COMPARE_GLOBAL]}
+                blocks={[{ ...FIGMA_BLOCK, renderCell: figmaRadio }]}
+            />
         );
     },
 });

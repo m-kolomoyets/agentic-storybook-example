@@ -13,7 +13,11 @@
         "src/**/*.stories.tsx",
         "src/vite-env.d.ts",
         "visual/*/setup.ts",
-        "visual/figma/spec.ts"
+        "visual/figma/spec.ts",
+        "visual/figma/colors.ts",
+        "visual/figma/manifests.ts",
+        "visual/figma/FigmaMatrix.tsx",
+        "visual/figma/content.tsx"
     ],
     // Reset the stories exclude inherited from tsconfig.app.json.
     "exclude": []

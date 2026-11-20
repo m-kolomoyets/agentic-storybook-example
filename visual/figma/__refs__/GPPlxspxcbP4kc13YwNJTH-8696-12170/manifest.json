@@ -1,0 +1,1325 @@
+{
+    "source": {
+        "url": "https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=8696-12170",
+        "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+        "nodeId": "8696:12170",
+        "name": "Primary Button",
+        "version": "2423344990798825378",
+        "lastModified": "2026-11-18T22:40:41Z"
+    },
+    "axes": [
+        {
+            "name": "Size",
+            "options": [
+                "Big",
+                "Medium",
+                "Small"
+            ]
+        },
+        {
+            "name": "State",
+            "options": [
+                "Default",
+                "Hover",
+                "Loading",
+                "Focused",
+                "Pressed",
+                "Disabled"
+            ]
+        }
+    ],
+    "booleans": [
+        {
+            "name": "Show Right Icon",
+            "default": true
+        },
+        {
+            "name": "Show Left Icon",
+            "default": true
+        },
+        {
+            "name": "Show Label Text",
+            "default": true
+        }
+    ],
+    "variants": [
+        {
+            "id": "8882:16355",
+            "name": "Size=Big, State=Default",
+            "props": {
+                "Size": "Big",
+                "State": "Default"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Default",
+                    "width": 263,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 219,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8678:12772",
+            "name": "Size=Big, State=Hover",
+            "props": {
+                "Size": "Big",
+                "State": "Hover"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Hover",
+                    "width": 263,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 219,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8882:20873",
+            "name": "Size=Big, State=Focused",
+            "props": {
+                "Size": "Big",
+                "State": "Focused"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Focused",
+                    "width": 263,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 219,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8882:20882",
+            "name": "Size=Big, State=Pressed",
+            "props": {
+                "Size": "Big",
+                "State": "Pressed"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Pressed",
+                    "width": 263,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.92
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 219,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8882:20891",
+            "name": "Size=Big, State=Disabled",
+            "props": {
+                "Size": "Big",
+                "State": "Disabled"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Disabled",
+                    "width": 263,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.6
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 219,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8882:16364",
+            "name": "Size=Big, State=Loading",
+            "props": {
+                "Size": "Big",
+                "State": "Loading"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Loading",
+                    "width": 263,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Loader Primary Button",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "Loader Primary Button",
+                        "box": {
+                            "x": 219,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8728:14523",
+            "name": "Size=Medium, State=Default",
+            "props": {
+                "Size": "Medium",
+                "State": "Default"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default",
+                    "width": 247,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 211,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8958:37158",
+            "name": "Size=Small, State=Default",
+            "props": {
+                "Size": "Small",
+                "State": "Default"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Small, State=Default",
+                    "width": 210,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 142,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 182,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9153:31891",
+            "name": "Size=Small, State=Hover",
+            "props": {
+                "Size": "Small",
+                "State": "Hover"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Small, State=Hover",
+                    "width": 210,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 142,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 182,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9153:31900",
+            "name": "Size=Small, State=Loading",
+            "props": {
+                "Size": "Small",
+                "State": "Loading"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Small, State=Loading",
+                    "width": 210,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 142,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Loader Primary Button",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "Loader Primary Button",
+                        "box": {
+                            "x": 182,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9153:31917",
+            "name": "Size=Small, State=Focused",
+            "props": {
+                "Size": "Small",
+                "State": "Focused"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Small, State=Focused",
+                    "width": 210,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 142,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 182,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9153:31932",
+            "name": "Size=Small, State=Pressed",
+            "props": {
+                "Size": "Small",
+                "State": "Pressed"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Small, State=Pressed",
+                    "width": 210,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.92
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 142,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 182,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9153:31947",
+            "name": "Size=Small, State=Disabled",
+            "props": {
+                "Size": "Small",
+                "State": "Disabled"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Small, State=Disabled",
+                    "width": 210,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.6
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 142,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 182,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8883:16352",
+            "name": "Size=Medium, State=Hover",
+            "props": {
+                "Size": "Medium",
+                "State": "Hover"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Hover",
+                    "width": 247,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 211,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8883:16361",
+            "name": "Size=Medium, State=Loading",
+            "props": {
+                "Size": "Medium",
+                "State": "Loading"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Loading",
+                    "width": 247,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Loader Primary Button",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "Loader Primary Button",
+                        "box": {
+                            "x": 211,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8883:16370",
+            "name": "Size=Medium, State=Focused",
+            "props": {
+                "Size": "Medium",
+                "State": "Focused"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Focused",
+                    "width": 247,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 211,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8883:16379",
+            "name": "Size=Medium, State=Pressed",
+            "props": {
+                "Size": "Medium",
+                "State": "Pressed"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Pressed",
+                    "width": 247,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.92
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 211,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8883:16388",
+            "name": "Size=Medium, State=Disabled",
+            "props": {
+                "Size": "Medium",
+                "State": "Disabled"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Disabled",
+                    "width": 247,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.6
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Generate Automations",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 163,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 211,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,386 @@
+{
+    "source": {
+        "url": "https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=12963-8280",
+        "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+        "nodeId": "12963:8280",
+        "name": "Secondary Button",
+        "version": "2423344990798825378",
+        "lastModified": "2026-11-18T22:40:41Z"
+    },
+    "axes": [
+        {
+            "name": "State",
+            "options": [
+                "Default",
+                "Hover",
+                "Loading",
+                "Focus",
+                "Pressed",
+                "Disabled"
+            ]
+        }
+    ],
+    "booleans": [],
+    "variants": [
+        {
+            "id": "12963:8279",
+            "name": "State=Default",
+            "props": {
+                "State": "Default"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default",
+                    "width": 142,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 43,
+                        "g": 44,
+                        "b": 47,
+                        "a": 0.85
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Add Automator",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 98,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12963:8281",
+            "name": "State=Hover",
+            "props": {
+                "State": "Hover"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover",
+                    "width": 142,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 43,
+                        "g": 44,
+                        "b": 47,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Add Automator",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 98,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12963:8301",
+            "name": "State=Loading",
+            "props": {
+                "State": "Loading"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Loading",
+                    "width": 142,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 43,
+                        "g": 44,
+                        "b": 47,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Add Automator",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 98,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12963:8308",
+            "name": "State=Focus",
+            "props": {
+                "State": "Focus"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Focus",
+                    "width": 142,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 43,
+                        "g": 44,
+                        "b": 47,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Add Automator",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 98,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12963:8315",
+            "name": "State=Pressed",
+            "props": {
+                "State": "Pressed"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Pressed",
+                    "width": 142,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 43,
+                        "g": 44,
+                        "b": 47,
+                        "a": 0.9
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Add Automator",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 98,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12963:8322",
+            "name": "State=Disabled",
+            "props": {
+                "State": "Disabled"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled",
+                    "width": 142,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 43,
+                        "g": 44,
+                        "b": 47,
+                        "a": 0.85
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Add Automator",
+                        "box": {
+                            "x": 32,
+                            "y": 10,
+                            "width": 98,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "Plus",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

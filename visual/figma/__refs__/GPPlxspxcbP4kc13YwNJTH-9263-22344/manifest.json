@@ -1,0 +1,455 @@
+{
+    "source": {
+        "url": "https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=9263-22344",
+        "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+        "nodeId": "9263:22344",
+        "name": "Remote Button",
+        "version": "2423344990798825378",
+        "lastModified": "2026-11-18T22:40:41Z"
+    },
+    "axes": [
+        {
+            "name": "State",
+            "options": [
+                "Default",
+                "Hover",
+                "Loading",
+                "Focused",
+                "Pressed",
+                "Disabled"
+            ]
+        }
+    ],
+    "booleans": [
+        {
+            "name": "Show Left Icon",
+            "default": true
+        },
+        {
+            "name": "Show Right Icon",
+            "default": true
+        }
+    ],
+    "variants": [
+        {
+            "id": "9263:9048",
+            "name": "State=Default",
+            "props": {
+                "State": "Default"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "SlidersHorizontal",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "SlidersHorizontal",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9263:22345",
+            "name": "State=Hover",
+            "props": {
+                "State": "Hover"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.06
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "SlidersHorizontal",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "SlidersHorizontal",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9264:8068",
+            "name": "State=Loading",
+            "props": {
+                "State": "Loading"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Loading",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9264:8078",
+            "name": "State=Focused",
+            "props": {
+                "State": "Focused"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Focused",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "SlidersHorizontal",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "SlidersHorizontal",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9264:8088",
+            "name": "State=Pressed",
+            "props": {
+                "State": "Pressed"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Pressed",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 20,
+                        "g": 21,
+                        "b": 24,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "SlidersHorizontal",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "SlidersHorizontal",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9264:8098",
+            "name": "State=Disabled",
+            "props": {
+                "State": "Disabled"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled",
+                    "width": 139,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.02
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Custom",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 55,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Custom Button Left Icon",
+                        "component": "SlidersHorizontal",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Custom Button Right Icon",
+                        "component": "SlidersHorizontal",
+                        "box": {
+                            "x": 103,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

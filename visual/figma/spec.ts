@@ -2,30 +2,22 @@
 // Compares what survives DOM flattening (Figma auto-layout frames rarely map 1:1 to elements): the root box, each
 // visible text run (matched by its characters) and each icon (matched by left-to-right order). Returns readable
 // mismatch lines; an empty list means "matches Figma within tolerance".
-import type { FigmaSpec } from './commands.ts';
+import type { FigmaSpec, Rgba } from './types.ts';
+import { nearestToken, toHsl, toRgba } from './colors.ts';
 
 /** CSS px. Sub-pixel layout and font metrics differ between Figma and Chromium; 1px absorbs that, not real drift. */
 const PX = 1;
+/**
+ * Extra CSS px per character of text laid out before a measured edge. Linux Chromium (the pinned Docker browser)
+ * rounds every glyph advance to a whole pixel while Figma keeps fractions, so a label drifts up to ~0.2px per glyph
+ * ("Stop Recondition": 124px vs Figma's 121px) and moves everything after it. No Chromium flag or fontconfig setting
+ * changes this (visual/FIGMA-TESTING.md → Tolerances).
+ */
+const TEXT_ADVANCE = 0.25;
 /** Per 0–255 channel: Figma stores float colors, CSS rounds to bytes, color spaces round-trip. */
 const CHANNEL = 3;
 
-type Rgba = { r: number; g: number; b: number; a: number };
 type Box = { x: number; y: number; width: number; height: number };
-
-const canvas = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
-
-/** Any CSS color (oklch, color-mix, …) → sRGB bytes, via the canvas so the browser does the conversion. */
-function toRgba(cssColor: string): Rgba {
-    if (!canvas) {
-        throw new Error('2d canvas unavailable');
-    }
-    canvas.clearRect(0, 0, 1, 1);
-    canvas.fillStyle = cssColor;
-    canvas.fillRect(0, 0, 1, 1);
-    const [r = 0, g = 0, b = 0, a = 0] = canvas.getImageData(0, 0, 1, 1).data;
-
-    return { r, g, b, a: Math.round((a / 255) * 1000) / 1000 };
-}
 
 function colorDiff(actual: Rgba, expected: Rgba): boolean {
     return (
@@ -36,16 +28,32 @@ function colorDiff(actual: Rgba, expected: Rgba): boolean {
     );
 }
 
+/** Kit HSL + nearest token: `hsl(0 0% 99.6% / 0.12) [= --color-border-primary → --color-white-alpha-12]`. */
 function fmt(color: Rgba): string {
-    return `rgba(${color.r},${color.g},${color.b},${color.a})`;
+    return `${toHsl(color)} [${nearestToken(color, CHANNEL)}]`;
 }
 
 function relative(rect: DOMRect, origin: DOMRect): Box {
     return { x: rect.x - origin.x, y: rect.y - origin.y, width: rect.width, height: rect.height };
 }
 
-function near(actual: number, expected: number): boolean {
-    return Math.abs(actual - expected) <= PX;
+function near(actual: number, expected: number, slack = 0): boolean {
+    return Math.abs(actual - expected) <= PX + slack;
+}
+
+/** Text-advance allowance for an edge at Figma x `edge`: every text run that ends at or before it. */
+function textSlackBefore(spec: FigmaSpec, edge: number): number {
+    return spec.texts
+        .filter((text) => {
+            return text.box.x + text.box.width <= edge + 0.5;
+        })
+        .reduce((sum, text) => {
+            return sum + text.characters.length * TEXT_ADVANCE;
+        }, 0);
+}
+
+function allowance(slack: number): string {
+    return slack > 0 ? ` (±${round(PX + slack)}px)` : '';
 }
 
 function round(value: number): number {
@@ -65,11 +73,34 @@ function textRuns(root: Element): { text: string; node: Text }[] {
     return runs;
 }
 
+/**
+ * Glyphs in reading order, mirroring Figma's "instance with no text": every top-level <svg>, plus any visible leaf
+ * element with no text (CSS-drawn spinners, dots, masks). Layers stacked on the same box (a plate under an outline)
+ * are one glyph to Figma, so they count once.
+ */
 function icons(root: Element): Element[] {
-    return [...root.querySelectorAll('svg')]
-        .filter((svg) => {
-            // Nested <svg> inside an icon is part of that icon.
-            return svg.parentElement?.closest('svg') === null && svg.checkVisibility();
+    const visible = [...root.querySelectorAll('*')]
+        .filter((element) => {
+            if (element.closest('svg') !== null && element.tagName.toLowerCase() !== 'svg') {
+                return false;
+            }
+            if (element.tagName.toLowerCase() === 'svg') {
+                // Nested <svg> inside an icon is part of that icon.
+                return element.parentElement?.closest('svg') === null && element.checkVisibility();
+            }
+            const rect = element.getBoundingClientRect();
+            // Visually hidden form inputs (Base UI pairs one with every control) and 1px sr-only boxes aren't drawn.
+            if (element instanceof HTMLInputElement || rect.width <= 1 || rect.height <= 1) {
+                return false;
+            }
+
+            return (
+                element.childElementCount === 0 &&
+                !element.textContent?.trim() &&
+                rect.width > 0 &&
+                rect.height > 0 &&
+                element.checkVisibility()
+            );
         })
         .sort((a, b) => {
             const ra = a.getBoundingClientRect();
@@ -77,6 +108,21 @@ function icons(root: Element): Element[] {
 
             return ra.x - rb.x || ra.y - rb.y;
         });
+
+    return visible.filter((element, index) => {
+        const box = element.getBoundingClientRect();
+
+        return !visible.slice(0, index).some((earlier) => {
+            const other = earlier.getBoundingClientRect();
+
+            return (
+                Math.abs(other.x - box.x) < 0.5 &&
+                Math.abs(other.y - box.y) < 0.5 &&
+                Math.abs(other.width - box.width) < 0.5 &&
+                Math.abs(other.height - box.height) < 0.5
+            );
+        });
+    });
 }
 
 export function figmaSpecMismatches(root: Element, spec: FigmaSpec): string[] {
@@ -84,10 +130,11 @@ export function figmaSpecMismatches(root: Element, spec: FigmaSpec): string[] {
     const origin = root.getBoundingClientRect();
     const rootStyle = getComputedStyle(root);
 
-    // Root box.
-    if (!near(origin.width, spec.root.width) || !near(origin.height, spec.root.height)) {
+    // Root box. Hug-width components grow with their labels: width gets every run's text-advance allowance.
+    const widthSlack = textSlackBefore(spec, Infinity);
+    if (!near(origin.width, spec.root.width, widthSlack) || !near(origin.height, spec.root.height)) {
         out.push(
-            `root size ${round(origin.width)}×${round(origin.height)} ≠ Figma ${spec.root.width}×${spec.root.height}`
+            `root size ${round(origin.width)}×${round(origin.height)} ≠ Figma ${spec.root.width}×${spec.root.height}${allowance(widthSlack)}`
         );
     }
     const radius = [
@@ -135,8 +182,12 @@ export function figmaSpecMismatches(root: Element, spec: FigmaSpec): string[] {
         range.selectNodeContents(run.node);
         const box = relative(range.getBoundingClientRect(), origin);
         // Horizontal: ink box. Vertical: centre only — a Range is the font's content area, Figma's box is the line box.
-        if (!near(box.x, text.box.x) || !near(box.width, text.box.width)) {
-            out.push(`${label} x/width ${round(box.x)}/${round(box.width)} ≠ Figma ${text.box.x}/${text.box.width}`);
+        const xSlack = textSlackBefore(spec, text.box.x);
+        const runSlack = text.characters.length * TEXT_ADVANCE;
+        if (!near(box.x, text.box.x, xSlack) || !near(box.width, text.box.width, runSlack)) {
+            out.push(
+                `${label} x/width ${round(box.x)}/${round(box.width)} ≠ Figma ${text.box.x}/${text.box.width}${allowance(runSlack)}`
+            );
         }
         const centre = box.y + box.height / 2;
         const figmaCentre = text.box.y + text.box.height / 2;
@@ -174,10 +225,10 @@ export function figmaSpecMismatches(root: Element, spec: FigmaSpec): string[] {
     }
 
     // Icons, matched by reading order.
-    const svgs = icons(root);
-    if (svgs.length !== spec.icons.length) {
+    const glyphs = icons(root);
+    if (glyphs.length !== spec.icons.length) {
         out.push(
-            `icons: ${svgs.length} rendered ≠ Figma ${spec.icons.length} (${spec.icons
+            `icons: ${glyphs.length} rendered ≠ Figma ${spec.icons.length} (${spec.icons
                 .map((i) => {
                     return i.name;
                 })
@@ -185,22 +236,56 @@ export function figmaSpecMismatches(root: Element, spec: FigmaSpec): string[] {
         );
     }
     spec.icons.forEach((icon, index) => {
-        const svg = svgs[index];
-        if (!svg) {
+        const glyph = glyphs[index];
+        if (!glyph) {
             return;
         }
-        const box = relative(svg.getBoundingClientRect(), origin);
+        const box = relative(glyph.getBoundingClientRect(), origin);
+        const xSlack = textSlackBefore(spec, icon.box.x);
         if (
-            !near(box.x, icon.box.x) ||
+            !near(box.x, icon.box.x, xSlack) ||
             !near(box.y, icon.box.y) ||
             !near(box.width, icon.box.width) ||
             !near(box.height, icon.box.height)
         ) {
             out.push(
-                `icon #${index + 1} "${icon.name}" box ${round(box.x)},${round(box.y)} ${round(box.width)}×${round(box.height)} ≠ Figma ${icon.box.x},${icon.box.y} ${icon.box.width}×${icon.box.height}`
+                `icon #${index + 1} "${icon.name}" box ${round(box.x)},${round(box.y)} ${round(box.width)}×${round(box.height)} ≠ Figma ${icon.box.x},${icon.box.y} ${icon.box.width}×${icon.box.height}${allowance(xSlack)}`
             );
         }
     });
 
     return out;
+}
+
+/**
+ * Where text sits, on either side: per text run, Figma's box ∪ the rendered run's box, padded 1px, relative to
+ * `root`. The pixel comparison paints these identically on both images, so pixels judge fills, strokes, shadows and
+ * glyphs while text is judged here, by spec value (font, size, weight, colour, position). Text rasterisation and
+ * Linux whole-pixel advances otherwise dominate the pixel count.
+ */
+export function textMasks(root: Element, spec: FigmaSpec): Box[] {
+    const origin = root.getBoundingClientRect();
+    const runs = textRuns(root);
+
+    return spec.texts.map((text) => {
+        const run = runs.find((candidate) => {
+            return candidate.text === text.characters.trim();
+        });
+        let box = text.box;
+        if (run) {
+            const range = document.createRange();
+            range.selectNodeContents(run.node);
+            const rendered = relative(range.getBoundingClientRect(), origin);
+            const x = Math.min(box.x, rendered.x);
+            const y = Math.min(box.y, rendered.y);
+            box = {
+                x,
+                y,
+                width: Math.max(box.x + box.width, rendered.x + rendered.width) - x,
+                height: Math.max(box.y + box.height, rendered.y + rendered.height) - y,
+            };
+        }
+
+        return { x: box.x - 1, y: box.y - 1, width: box.width + 2, height: box.height + 2 };
+    });
 }

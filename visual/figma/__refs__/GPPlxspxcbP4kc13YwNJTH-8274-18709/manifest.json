@@ -1,0 +1,1321 @@
+{
+    "source": {
+        "url": "https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=8274-18709",
+        "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+        "nodeId": "8274:18709",
+        "name": "Destructive Button",
+        "version": "2423344990798825378",
+        "lastModified": "2026-11-18T22:40:41Z"
+    },
+    "axes": [
+        {
+            "name": "State",
+            "options": [
+                "Default",
+                "Hover",
+                "Loading",
+                "Focused",
+                "Pressed",
+                "Disabled"
+            ]
+        },
+        {
+            "name": "Size",
+            "options": [
+                "Medium",
+                "Small",
+                "Big"
+            ]
+        }
+    ],
+    "booleans": [
+        {
+            "name": "Show Left Icon",
+            "default": true
+        },
+        {
+            "name": "Show Right Icon",
+            "default": true
+        }
+    ],
+    "variants": [
+        {
+            "id": "8274:18708",
+            "name": "State=Default, Size=Medium",
+            "props": {
+                "State": "Default",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Size=Medium",
+                    "width": 205,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 169,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9155:36889",
+            "name": "State=Default, Size=Big",
+            "props": {
+                "State": "Default",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Size=Big",
+                    "width": 221,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 177,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8886:16146",
+            "name": "State=Default, Size=Small",
+            "props": {
+                "State": "Default",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Size=Small",
+                    "width": 174,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 146,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8886:16156",
+            "name": "State=Hover, Size=Small",
+            "props": {
+                "State": "Hover",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Size=Small",
+                    "width": 174,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 229,
+                        "g": 29,
+                        "b": 38,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 146,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8886:16200",
+            "name": "State=Focused, Size=Small",
+            "props": {
+                "State": "Focused",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Focused, Size=Small",
+                    "width": 174,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 146,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8886:16210",
+            "name": "State=Pressed, Size=Small",
+            "props": {
+                "State": "Pressed",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Pressed, Size=Small",
+                    "width": 174,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 193,
+                        "g": 20,
+                        "b": 28,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 146,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8886:16220",
+            "name": "State=Disabled, Size=Small",
+            "props": {
+                "State": "Disabled",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Size=Small",
+                    "width": 174,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 0.6
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 146,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8886:16166",
+            "name": "State=Loading, Size=Small",
+            "props": {
+                "State": "Loading",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Loading, Size=Small",
+                    "width": 174,
+                    "height": 40,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 34,
+                            "y": 10,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    },
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 146,
+                            "y": 12,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8274:18710",
+            "name": "State=Hover, Size=Medium",
+            "props": {
+                "State": "Hover",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Size=Medium",
+                    "width": 205,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 229,
+                        "g": 29,
+                        "b": 38,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 169,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9155:36909",
+            "name": "State=Hover, Size=Big",
+            "props": {
+                "State": "Hover",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Size=Big",
+                    "width": 221,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 229,
+                        "g": 29,
+                        "b": 38,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 177,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8274:18722",
+            "name": "State=Loading, Size=Medium",
+            "props": {
+                "State": "Loading",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Loading, Size=Medium",
+                    "width": 205,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 169,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9155:37024",
+            "name": "State=Loading, Size=Big",
+            "props": {
+                "State": "Loading",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Loading, Size=Big",
+                    "width": 221,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 177,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8274:18734",
+            "name": "State=Focused, Size=Medium",
+            "props": {
+                "State": "Focused",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Focused, Size=Medium",
+                    "width": 205,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 169,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9155:37049",
+            "name": "State=Focused, Size=Big",
+            "props": {
+                "State": "Focused",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Focused, Size=Big",
+                    "width": 221,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 177,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8274:18746",
+            "name": "State=Pressed, Size=Medium",
+            "props": {
+                "State": "Pressed",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Pressed, Size=Medium",
+                    "width": 205,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 193,
+                        "g": 20,
+                        "b": 28,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 169,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9155:37069",
+            "name": "State=Pressed, Size=Big",
+            "props": {
+                "State": "Pressed",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Pressed, Size=Big",
+                    "width": 221,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 193,
+                        "g": 20,
+                        "b": 28,
+                        "a": 1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 177,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "8274:18758",
+            "name": "State=Disabled, Size=Medium",
+            "props": {
+                "State": "Disabled",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Size=Medium",
+                    "width": 205,
+                    "height": 48,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 0.6
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 42,
+                            "y": 12,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 16,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 169,
+                            "y": 14,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9155:37089",
+            "name": "State=Disabled, Size=Big",
+            "props": {
+                "State": "Disabled",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Size=Big",
+                    "width": 221,
+                    "height": 56,
+                    "radius": [
+                        8,
+                        8,
+                        8,
+                        8
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 0.6
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 50,
+                            "y": 16,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Destructive Button Left Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 24,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    },
+                    {
+                        "name": "Destructive Button Right Icon",
+                        "component": "StarFour",
+                        "box": {
+                            "x": 177,
+                            "y": 18,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

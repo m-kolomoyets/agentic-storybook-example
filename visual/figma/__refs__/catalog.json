@@ -1,0 +1,552 @@
+{
+    "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+    "syncedAt": "2026-11-20T10:47:30.454Z",
+    "sets": [
+        {
+            "nodeId": "10826:215582",
+            "name": "Status Icon",
+            "page": "Alerts & Toasts",
+            "frame": "Toast Message"
+        },
+        {
+            "nodeId": "9312:64474",
+            "name": "Status Icon",
+            "page": "Alerts & Toasts",
+            "frame": "Toast Message"
+        },
+        {
+            "nodeId": "10237:174118",
+            "name": "Avatar",
+            "page": "Avatar",
+            "frame": "Avatar"
+        },
+        {
+            "nodeId": "10477:196027",
+            "name": "Photo",
+            "page": "Avatar",
+            "frame": "Avatar"
+        },
+        {
+            "nodeId": "8670:12382",
+            "name": "Backlight",
+            "page": "Backgrounds",
+            "frame": "Backgrounds"
+        },
+        {
+            "nodeId": "8228:8849",
+            "name": "Modal Overlay",
+            "page": "Backgrounds",
+            "frame": "Backgrounds"
+        },
+        {
+            "nodeId": "8673:4388",
+            "name": "Badge",
+            "page": "Badges",
+            "frame": "Badges"
+        },
+        {
+            "nodeId": "9482:98984",
+            "name": "Note",
+            "page": "Banners",
+            "frame": "Banners"
+        },
+        {
+            "nodeId": "11040:277410",
+            "name": "Note",
+            "page": "Banners",
+            "frame": "Banners"
+        },
+        {
+            "nodeId": "11755:42893",
+            "name": "Note",
+            "page": "Banners",
+            "frame": "Banners"
+        },
+        {
+            "nodeId": "11922:41685",
+            "name": "Bottom Sheet",
+            "page": "Bottom Sheet",
+            "frame": "Bottom Sheet"
+        },
+        {
+            "nodeId": "8274:18709",
+            "name": "Destructive Button",
+            "page": "Buttons",
+            "frame": "Buttons"
+        },
+        {
+            "nodeId": "8016:314",
+            "name": "Icon Button/Secondary",
+            "page": "Buttons",
+            "frame": "Buttons"
+        },
+        {
+            "nodeId": "8886:18371",
+            "name": "Icon Button/Tertiary",
+            "page": "Buttons",
+            "frame": "Buttons"
+        },
+        {
+            "nodeId": "8696:12170",
+            "name": "Primary Button",
+            "page": "Buttons",
+            "frame": "Buttons"
+        },
+        {
+            "nodeId": "9642:177476",
+            "name": "Primary On Surface",
+            "page": "Buttons",
+            "frame": "Buttons"
+        },
+        {
+            "nodeId": "9263:22344",
+            "name": "Remote Button",
+            "page": "Buttons",
+            "frame": "Buttons"
+        },
+        {
+            "nodeId": "8038:2005",
+            "name": "Secondary Button",
+            "page": "Buttons",
+            "frame": "Buttons"
+        },
+        {
+            "nodeId": "12963:8280",
+            "name": "Secondary Button",
+            "page": "Buttons",
+            "frame": "Buttons"
+        },
+        {
+            "nodeId": "8254:13360",
+            "name": "Day Cell",
+            "page": "Calendar",
+            "frame": "Calendar"
+        },
+        {
+            "nodeId": "11004:247943",
+            "name": "Analyzer Location Card",
+            "page": "Cards",
+            "frame": "Metric Cards"
+        },
+        {
+            "nodeId": "12879:7697",
+            "name": "Event Log",
+            "page": "Cards",
+            "frame": "Metric Cards"
+        },
+        {
+            "nodeId": "10567:254992",
+            "name": "Note Card",
+            "page": "Cards",
+            "frame": "Metric Cards"
+        },
+        {
+            "nodeId": "11767:259474",
+            "name": "Robin Chat Icon",
+            "page": "Chat (Robin Intelligence)",
+            "frame": "Chat"
+        },
+        {
+            "nodeId": "9183:5528",
+            "name": "Check box outline blank",
+            "page": "Checkbox & Radiobutton",
+            "frame": "Checkbox & Radiobutton"
+        },
+        {
+            "nodeId": "9181:5758",
+            "name": "Radio button",
+            "page": "Checkbox & Radiobutton",
+            "frame": "Checkbox & Radiobutton"
+        },
+        {
+            "nodeId": "9506:75537",
+            "name": "Toggle",
+            "page": "Checkbox & Radiobutton",
+            "frame": "Checkbox & Radiobutton"
+        },
+        {
+            "nodeId": "11679:8292",
+            "name": "Inputs with Legend",
+            "page": "Composable Modules",
+            "frame": "Composable Modules"
+        },
+        {
+            "nodeId": "12119:12252",
+            "name": "Simulation Setup",
+            "page": "Composable Modules",
+            "frame": "Composable Modules"
+        },
+        {
+            "nodeId": "11679:9069",
+            "name": "Small Fan Illu + Modes",
+            "page": "Composable Modules",
+            "frame": "Composable Modules"
+        },
+        {
+            "nodeId": "9130:47536",
+            "name": "Bin Tile",
+            "page": "Controls",
+            "frame": "Controls"
+        },
+        {
+            "nodeId": "8841:28736",
+            "name": "List Item",
+            "page": "Controls",
+            "frame": "Controls"
+        },
+        {
+            "nodeId": "9422:73275",
+            "name": "Micro-Display",
+            "page": "Controls",
+            "frame": "Controls"
+        },
+        {
+            "nodeId": "9262:41931",
+            "name": "Mode",
+            "page": "Controls",
+            "frame": "Controls"
+        },
+        {
+            "nodeId": "8762:14869",
+            "name": "Segmented Control",
+            "page": "Controls",
+            "frame": "Controls"
+        },
+        {
+            "nodeId": "8950:20794",
+            "name": "Singleselect",
+            "page": "Controls",
+            "frame": "Controls"
+        },
+        {
+            "nodeId": "9850:118472",
+            "name": "Stepped slider",
+            "page": "Controls",
+            "frame": "Controls"
+        },
+        {
+            "nodeId": "9501:66656",
+            "name": "Time Range Pill",
+            "page": "Controls",
+            "frame": "Controls"
+        },
+        {
+            "nodeId": "11387:8742",
+            "name": "Aeration Recommendations/Desktop",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "13085:18868",
+            "name": "Airpspace",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "8720:13541",
+            "name": "Airspace/Visualization",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "8850:26675",
+            "name": "Bin Simulation",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "11093:12629",
+            "name": "Chart Overlay",
+            "page": "Data Visualization",
+            "frame": "Datavis"
+        },
+        {
+            "nodeId": "8691:11976",
+            "name": "Chart Overlay",
+            "page": "Data Visualization",
+            "frame": "Datavis"
+        },
+        {
+            "nodeId": "9897:159989",
+            "name": "Eave Height",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "9408:63581",
+            "name": "Fan Control Illustration",
+            "page": "Data Visualization",
+            "frame": "Old Illustrations"
+        },
+        {
+            "nodeId": "11440:9451",
+            "name": "Fan Control Illustration",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "9913:115947",
+            "name": "Illustration/Sensor Settings",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "8720:14030",
+            "name": "Inventory/Visualization",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "8867:43348",
+            "name": "Legend",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "9256:44095",
+            "name": "Micro-Display Container",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "11876:7319",
+            "name": "Risk Level Indicator",
+            "page": "Data Visualization",
+            "frame": "Datavis"
+        },
+        {
+            "nodeId": "9690:200090",
+            "name": "Scanner Illustration",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "8696:12333",
+            "name": "Weather Forecast/Visualization",
+            "page": "Data Visualization",
+            "frame": "Data Visualization"
+        },
+        {
+            "nodeId": "11657:164898",
+            "name": "Dialog",
+            "page": "Dialog",
+            "frame": "Dialog"
+        },
+        {
+            "nodeId": "12967:8401",
+            "name": "Favicon",
+            "page": "Favicon",
+            "frame": "Favicon"
+        },
+        {
+            "nodeId": "12030:20372",
+            "name": "Header Container",
+            "page": "Header",
+            "frame": "Header"
+        },
+        {
+            "nodeId": "12030:23543",
+            "name": "Bin Name+Grain Coding",
+            "page": "Headings",
+            "frame": "Headings"
+        },
+        {
+            "nodeId": "12847:71290",
+            "name": "Grain Bin Image",
+            "page": "Icons",
+            "frame": "Icons"
+        },
+        {
+            "nodeId": "11960:12883",
+            "name": "Old/Grain Bin Image",
+            "page": "Icons",
+            "frame": "Headings"
+        },
+        {
+            "nodeId": "11751:13939",
+            "name": "Robin Logo",
+            "page": "Icons",
+            "frame": "Icons"
+        },
+        {
+            "nodeId": "10079:148447",
+            "name": "Day Range",
+            "page": "Input & Dropdown",
+            "frame": "Time Picker"
+        },
+        {
+            "nodeId": "10497:199701",
+            "name": "Digit Code Input",
+            "page": "Input & Dropdown",
+            "frame": "Inputs"
+        },
+        {
+            "nodeId": "10495:199848",
+            "name": "Digit-code input",
+            "page": "Input & Dropdown",
+            "frame": "Inputs"
+        },
+        {
+            "nodeId": "8915:27038",
+            "name": "Dropdown",
+            "page": "Input & Dropdown",
+            "frame": "Dropdown"
+        },
+        {
+            "nodeId": "8750:15978",
+            "name": "Dropdown",
+            "page": "Input & Dropdown",
+            "frame": "Dropdown"
+        },
+        {
+            "nodeId": "8750:15830",
+            "name": "Dropdown Option",
+            "page": "Input & Dropdown",
+            "frame": "Dropdown"
+        },
+        {
+            "nodeId": "8067:6633",
+            "name": "Input",
+            "page": "Input & Dropdown",
+            "frame": "Inputs"
+        },
+        {
+            "nodeId": "8915:27415",
+            "name": "Input/Dropdown",
+            "page": "Input & Dropdown",
+            "frame": "Dropdown"
+        },
+        {
+            "nodeId": "10550:246987",
+            "name": "Notes Input",
+            "page": "Input & Dropdown",
+            "frame": "Inputs"
+        },
+        {
+            "nodeId": "9076:27281",
+            "name": "Overlay",
+            "page": "Input & Dropdown",
+            "frame": "Dropdown"
+        },
+        {
+            "nodeId": "10417:262835",
+            "name": "Phone Number Input",
+            "page": "Input & Dropdown",
+            "frame": "Inputs"
+        },
+        {
+            "nodeId": "8915:26251",
+            "name": "Search",
+            "page": "Input & Dropdown",
+            "frame": "Inputs"
+        },
+        {
+            "nodeId": "9888:113656",
+            "name": "Stepper",
+            "page": "Input & Dropdown",
+            "frame": "Time Picker"
+        },
+        {
+            "nodeId": "12446:6418",
+            "name": "Workspace Switcher",
+            "page": "Input & Dropdown",
+            "frame": "Dropdown"
+        },
+        {
+            "nodeId": "12969:8461",
+            "name": "Loader",
+            "page": "Loader",
+            "frame": "Loader"
+        },
+        {
+            "nodeId": "8885:20213",
+            "name": "Loader Primary Button",
+            "page": "Loader",
+            "frame": "Loader"
+        },
+        {
+            "nodeId": "8192:4620",
+            "name": "Loader Secondary Button",
+            "page": "Loader",
+            "frame": "Loader"
+        },
+        {
+            "nodeId": "11864:248733",
+            "name": "❖ Context Menu Item",
+            "page": "Menu",
+            "frame": "Menu"
+        },
+        {
+            "nodeId": "13199:20696",
+            "name": "❖ Side Menu Bin Item ",
+            "page": "Menu",
+            "frame": "Menu"
+        },
+        {
+            "nodeId": "12439:12100",
+            "name": "❖ Side Menu Bottom Item",
+            "page": "Menu",
+            "frame": "Sidebar"
+        },
+        {
+            "nodeId": "10000:147683",
+            "name": "❖ Side Menu Item",
+            "page": "Menu",
+            "frame": "Menu"
+        },
+        {
+            "nodeId": "12439:91461",
+            "name": "Side Menu",
+            "page": "Menu",
+            "frame": "Sidebar"
+        },
+        {
+            "nodeId": "12439:8563",
+            "name": "Side Menu/Fan Icon",
+            "page": "Menu",
+            "frame": "Sidebar"
+        },
+        {
+            "nodeId": "8999:22747",
+            "name": "Placeholder",
+            "page": "Placeholder",
+            "frame": "Placeholder"
+        },
+        {
+            "nodeId": "9602:167320",
+            "name": "Progress Element",
+            "page": "Step Indicator",
+            "frame": "Step Indicator"
+        },
+        {
+            "nodeId": "8690:12007",
+            "name": "Recommendation",
+            "page": "Step Indicator",
+            "frame": "Step Indicator"
+        },
+        {
+            "nodeId": "13072:44325",
+            "name": "Recommendation",
+            "page": "Step Indicator",
+            "frame": "Step Indicator"
+        },
+        {
+            "nodeId": "8389:9873",
+            "name": "Step",
+            "page": "Stepper",
+            "frame": "Stepper"
+        },
+        {
+            "nodeId": "8390:9889",
+            "name": "Stepper",
+            "page": "Stepper",
+            "frame": "Stepper"
+        },
+        {
+            "nodeId": "13233:333875",
+            "name": "Scrollbar",
+            "page": "System Elements",
+            "frame": "System Elements (iOS)"
+        }
+    ]
+}

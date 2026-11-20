@@ -1,0 +1,903 @@
+{
+    "source": {
+        "url": "https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=9181-5758",
+        "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+        "nodeId": "9181:5758",
+        "name": "Radio button",
+        "version": "2423344990798825378",
+        "lastModified": "2026-11-18T22:40:41Z"
+    },
+    "axes": [
+        {
+            "name": "State",
+            "options": [
+                "Default",
+                "Hover",
+                "Active",
+                "Disabled"
+            ]
+        },
+        {
+            "name": "Status",
+            "options": [
+                "Unselected",
+                "Selected"
+            ]
+        },
+        {
+            "name": "Size",
+            "options": [
+                "Big",
+                "Medium",
+                "Small"
+            ]
+        }
+    ],
+    "booleans": [],
+    "variants": [
+        {
+            "id": "9181:5757",
+            "name": "State=Default, Status=Unselected, Size=Big",
+            "props": {
+                "State": "Default",
+                "Status": "Unselected",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Unselected, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected big",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9181:5759",
+            "name": "State=Hover, Status=Unselected, Size=Big",
+            "props": {
+                "State": "Hover",
+                "Status": "Unselected",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Unselected, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected big",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:4401",
+            "name": "State=Active, Status=Unselected, Size=Big",
+            "props": {
+                "State": "Active",
+                "Status": "Unselected",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Unselected, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected big",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:4405",
+            "name": "State=Disabled, Status=Unselected, Size=Big",
+            "props": {
+                "State": "Disabled",
+                "Status": "Unselected",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Unselected, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected big",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5430",
+            "name": "State=Default, Status=Selected, Size=Big",
+            "props": {
+                "State": "Default",
+                "Status": "Selected",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Selected, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected big",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5439",
+            "name": "State=Hover, Status=Selected, Size=Big",
+            "props": {
+                "State": "Hover",
+                "Status": "Selected",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Selected, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected big",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5442",
+            "name": "State=Active, Status=Selected, Size=Big",
+            "props": {
+                "State": "Active",
+                "Status": "Selected",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Selected, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected big",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5445",
+            "name": "State=Disabled, Status=Selected, Size=Big",
+            "props": {
+                "State": "Disabled",
+                "Status": "Selected",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Selected, Size=Big",
+                    "width": 20,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected big",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5470",
+            "name": "State=Default, Status=Unselected, Size=Medium",
+            "props": {
+                "State": "Default",
+                "Status": "Unselected",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Unselected, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected medium",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "10588:226951",
+            "name": "State=Default, Status=Unselected, Size=Small",
+            "props": {
+                "State": "Default",
+                "Status": "Unselected",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Unselected, Size=Small",
+                    "width": 12,
+                    "height": 12,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected small",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "10588:226964",
+            "name": "State=Hover, Status=Unselected, Size=Small",
+            "props": {
+                "State": "Hover",
+                "Status": "Unselected",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Unselected, Size=Small",
+                    "width": 12,
+                    "height": 12,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected small",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "10588:226969",
+            "name": "State=Active, Status=Unselected, Size=Small",
+            "props": {
+                "State": "Active",
+                "Status": "Unselected",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Unselected, Size=Small",
+                    "width": 12,
+                    "height": 12,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected small",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "10588:226974",
+            "name": "State=Disabled, Status=Unselected, Size=Small",
+            "props": {
+                "State": "Disabled",
+                "Status": "Unselected",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Unselected, Size=Small",
+                    "width": 12,
+                    "height": 12,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected small",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5473",
+            "name": "State=Default, Status=Selected, Size=Medium",
+            "props": {
+                "State": "Default",
+                "Status": "Selected",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Selected, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected medium",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "10588:226979",
+            "name": "State=Default, Status=Selected, Size=Small",
+            "props": {
+                "State": "Default",
+                "Status": "Selected",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Status=Selected, Size=Small",
+                    "width": 12,
+                    "height": 12,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected small",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5475",
+            "name": "State=Hover, Status=Unselected, Size=Medium",
+            "props": {
+                "State": "Hover",
+                "Status": "Unselected",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Unselected, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected medium",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5478",
+            "name": "State=Hover, Status=Selected, Size=Medium",
+            "props": {
+                "State": "Hover",
+                "Status": "Selected",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Selected, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected medium",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "10588:226982",
+            "name": "State=Hover, Status=Selected, Size=Small",
+            "props": {
+                "State": "Hover",
+                "Status": "Selected",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Status=Selected, Size=Small",
+                    "width": 12,
+                    "height": 12,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected small",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5480",
+            "name": "State=Active, Status=Unselected, Size=Medium",
+            "props": {
+                "State": "Active",
+                "Status": "Unselected",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Unselected, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected medium",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5483",
+            "name": "State=Active, Status=Selected, Size=Medium",
+            "props": {
+                "State": "Active",
+                "Status": "Selected",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Selected, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected medium",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "10588:226988",
+            "name": "State=Active, Status=Selected, Size=Small",
+            "props": {
+                "State": "Active",
+                "Status": "Selected",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Active, Status=Selected, Size=Small",
+                    "width": 12,
+                    "height": 12,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected small",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5485",
+            "name": "State=Disabled, Status=Unselected, Size=Medium",
+            "props": {
+                "State": "Disabled",
+                "Status": "Unselected",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Unselected, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button unselected medium",
+                        "component": "Radio button unchecked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9183:5488",
+            "name": "State=Disabled, Status=Selected, Size=Medium",
+            "props": {
+                "State": "Disabled",
+                "Status": "Selected",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Selected, Size=Medium",
+                    "width": 16,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected medium",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "10588:226996",
+            "name": "State=Disabled, Status=Selected, Size=Small",
+            "props": {
+                "State": "Disabled",
+                "Status": "Selected",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Status=Selected, Size=Small",
+                    "width": 12,
+                    "height": 12,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [],
+                "icons": [
+                    {
+                        "name": "Radio button selected small",
+                        "component": "Radio button checked",
+                        "box": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
