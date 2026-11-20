@@ -309,9 +309,12 @@ export const MissingTitle: Story = {
     play: async (context) => {
         const dialog = await openSheet(context);
         await expect(dialog).toBeInTheDocument();
-        await waitFor(() => {
-            return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('BottomSheet.Popup'));
-        });
+        // Guard is dev-only: a production build (Chromatic) strips it.
+        if (import.meta.env.DEV) {
+            await waitFor(() => {
+                return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('BottomSheet.Popup'));
+            });
+        }
         await context.userEvent.keyboard('{Escape}');
         await expectClosed(context);
     },

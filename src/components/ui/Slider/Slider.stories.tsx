@@ -220,9 +220,12 @@ export const Controlled: Story = {
         );
     },
     play: async ({ canvas, args, userEvent }) => {
+        // Wait for mount: in a production build `tab()` can run before the input exists.
+        const slider = await canvas.findByRole('slider', { name: 'Aeration priority' });
         await userEvent.tab();
+        await expect(slider).toHaveFocus();
         await userEvent.keyboard('{ArrowRight}');
-        await expect(canvas.getByText('value: 2')).toBeVisible();
+        await expect(await canvas.findByText('value: 2')).toBeVisible();
         await expect(args.onValueChange).toHaveBeenCalledWith(2, expect.anything());
     },
 };

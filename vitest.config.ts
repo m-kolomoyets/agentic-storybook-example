@@ -65,36 +65,44 @@ export default defineConfig((env) => {
                         },
                     },
                 },
-                vrtProject('vrt-diy', [], {
-                    setupFiles: ['./visual/diy/setup.ts'],
-                    attachmentsDir: 'visual/.results/diy',
-                    // Storybook's plugin blocks API file writes unless opted in; toMatchScreenshot needs them to
-                    // save baselines and diffs. The API server stays on localhost.
-                    api: { allowWrite: true },
-                    browser: {
-                        expect: {
-                            toMatchScreenshot: {
-                                comparatorName: 'pixelmatch',
-                                comparatorOptions: { threshold: 0.1, allowedMismatchedPixelRatio: 0 },
-                                resolveScreenshotPath: vrtPath('visual/diy/__baselines__'),
-                                resolveDiffPath: vrtPath('visual/.results/diy'),
-                            },
-                        },
-                    },
-                }),
-                // Captures locally, uploads to Argos (ARGOS_TOKEN); baselines and review live in Argos.
-                vrtProject(
-                    'vrt-argos',
-                    [
-                        argosVitestPlugin({
-                            uploadToArgos: Boolean(process.env.ARGOS_TOKEN),
-                            root: 'visual/.results/argos',
-                            buildName: 'storybook-vrt',
-                        }),
-                    ],
-                    {}
-                ),
+                // Storybook's runner (UI / MCP test-run) sets VITEST_STORYBOOK and storybookTest() then renames every
+                // project to `storybook:<configDir>` — VRT projects share configDir, so names collide. VRT is CLI-only.
+                ...(process.env.VITEST_STORYBOOK === 'true' ? [] : vrtProjects()),
             ],
         },
     });
 });
+
+function vrtProjects(): TestProjectInlineConfiguration[] {
+    return [
+        vrtProject('vrt-diy', [], {
+            setupFiles: ['./visual/diy/setup.ts'],
+            attachmentsDir: 'visual/.results/diy',
+            // Storybook's plugin blocks API file writes unless opted in; toMatchScreenshot needs them to
+            // save baselines and diffs. The API server stays on localhost.
+            api: { allowWrite: true },
+            browser: {
+                expect: {
+                    toMatchScreenshot: {
+                        comparatorName: 'pixelmatch',
+                        comparatorOptions: { threshold: 0.1, allowedMismatchedPixelRatio: 0 },
+                        resolveScreenshotPath: vrtPath('visual/diy/__baselines__'),
+                        resolveDiffPath: vrtPath('visual/.results/diy'),
+                    },
+                },
+            },
+        }),
+        // Captures locally, uploads to Argos (ARGOS_TOKEN); baselines and review live in Argos.
+        vrtProject(
+            'vrt-argos',
+            [
+                argosVitestPlugin({
+                    uploadToArgos: Boolean(process.env.ARGOS_TOKEN),
+                    root: 'visual/.results/argos',
+                    buildName: 'storybook-vrt',
+                }),
+            ],
+            {}
+        ),
+    ];
+}

@@ -223,9 +223,12 @@ export const MissingTitle: Story = {
     play: async (context) => {
         const dialog = await openPanel(context);
         await expect(dialog).toBeInTheDocument();
-        await waitFor(() => {
-            return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('<SidePanel.Title>'));
-        });
+        // Guard is dev-only: a production build (Chromatic) strips it.
+        if (import.meta.env.DEV) {
+            await waitFor(() => {
+                return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('<SidePanel.Title>'));
+            });
+        }
         await context.userEvent.keyboard('{Escape}');
         await expectClosed(context);
     },

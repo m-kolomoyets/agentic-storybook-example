@@ -238,9 +238,12 @@ export const MissingTitle: Story = {
     parameters: { a11y: { config: { rules: [{ id: 'aria-dialog-name', enabled: false }] } } },
     play: async (context) => {
         await expect(await openDialog(context)).toBeInTheDocument();
-        await waitFor(() => {
-            return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('<Dialog.Title>'));
-        });
+        // Guard is dev-only: a production build (Chromatic) strips it.
+        if (import.meta.env.DEV) {
+            await waitFor(() => {
+                return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('<Dialog.Title>'));
+            });
+        }
         await context.userEvent.keyboard('{Escape}');
         await expectClosed(context);
     },
@@ -251,9 +254,12 @@ export const MissingDescriptor: Story = {
     args: { descriptor: undefined },
     play: async (context) => {
         await expect(await openDialog(context)).toBeInTheDocument();
-        await waitFor(() => {
-            return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('<Dialog.Descriptor>'));
-        });
+        // Guard is dev-only: a production build (Chromatic) strips it.
+        if (import.meta.env.DEV) {
+            await waitFor(() => {
+                return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('<Dialog.Descriptor>'));
+            });
+        }
         await expect(consoleError).not.toHaveBeenCalledWith(expect.stringContaining('<Dialog.Title>'));
         await context.userEvent.keyboard('{Escape}');
         await expectClosed(context);

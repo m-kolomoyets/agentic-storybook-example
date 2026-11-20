@@ -269,6 +269,10 @@ export const DevGuards: Story = {
     // button-name off: the unnamed icon-only trigger is the deliberate mistake under test.
     parameters: { a11y: { config: { rules: [{ id: 'button-name', enabled: false }] } } },
     play: async () => {
+        // Guards are dev-only: a production build (Chromatic) strips them.
+        if (!import.meta.env.DEV) {
+            return;
+        }
         await waitFor(() => {
             return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('cannot take focus'));
         });
