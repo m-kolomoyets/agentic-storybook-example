@@ -60,9 +60,44 @@ Each run appends a record to `visual/runs.jsonl` (committed). That log is the in
 - Each tool keeps its own default stabilisation. DIY imitates it with `STABILIZE_CSS` in `visual/diy/setup.ts`.
 - Make baselines on the default branch first (`--update` for DIY; the first upload for Argos and Chromatic), then make a change and run all three.
 
+## Figma reference (`pnpm vrt figma`)
+
+Chromatic, Argos and DIY above are **code-vs-code**: they catch regressions against an earlier render, never drift from the design. None of them can use Figma as the baseline (Chromatic's Figma plugin shows a story next to a frame, without a diff). The `vrt-figma` Vitest project does that, DIY-style.
+
+A story opts in with the `figma` tag and `parameters.figmaRef` pointing at **one variant node**, not the component set, and reproduces that cell's content (label, icons, state):
+
+```tsx
+export const FigmaMdDefault = meta.story({
+    tags: ['figma', '!autodocs'],
+    args: { size: 'md', children: 'Generate Automations', startIcon: <StarFourIcon />, endIcon: <StarFourIcon /> },
+    parameters: { figmaRef: { url: `${FIGMA}8728-14523` } },
+});
+```
+
+Keep it free of `.test()` children: the check runs after every test of the story, and a test's args change the render.
+
+After the play function, two checks run (both reported; either fails the test):
+
+1. **Spec, exact within 1px**: root size, corner radii and background, each text run (matched by its characters) for x, width, vertical centre, font family, size, weight, line height, letter spacing, colour and whether the font actually loaded, and each icon box (left-to-right order). Spec mismatches are real deviations. Approved ones (ADR 0002) go in `figmaRef.ignore` with the reason beside them.
+2. **Image**: pixelmatch against Figma's 2x PNG (page at DPR 2, transparent canvas), allowing `figmaRef.maxDiffRatio` (default 5 %). Diff and actual go to `visual/.results/figma`.
+
+Pixel-perfect isn't a usable gate. Figma's text renderer is not Chromium's, so glyph edges differ even when the layout matches exactly: the Button pilot matched the spec but still differed on 2.9 % of pixels, all on text edges and corner anti-aliasing. A zero-tolerance gate always fails, and a loose one hides small layout bugs. So the spec check is the gate, the image diff is for review, and once a story matches Figma the regression tools keep it there.
+
+References are cached in `visual/figma/__refs__` (PNG plus the spec as JSON, with the Figma file `version`) and committed, so runs work offline and a design change shows up as a git diff. `FIGMA_TOKEN` (`.env.local`; a personal access token with file read scope) is only needed to fetch, and is read on the Node side only.
+
+```bash
+pnpm vrt figma             # compare (fetches refs that are not cached yet)
+pnpm vrt figma --refresh   # refetch every ref from Figma, then compare
+```
+
+`--update` is refused for `figma`: it would replace Figma's PNG with a screenshot. `pnpm vrt all` runs only the three regression tools.
+
 ## Gotchas found during setup
 
 - `@storybook/addon-vitest` turns off Vitest API file writes. The DIY project opts back in with `api: { allowWrite: true }`. The API server stays on localhost.
 - `expect(page).toMatchScreenshot()` never stabilised: it timed out after 5 s. Screenshotting `document.body` works and still includes portalled overlays.
 - The Storybook vitest plugin sets the viewport to 1200×900. Vitest's own `browser.viewport` setting doesn't apply.
+- Figma: Vitest sanitises screenshot names (`--` → `-`); ref names use single dashes.
+- Figma: the kit's `color-scheme: dark` paints the canvas #121212 even with `omitBackground`, so the 95 %-alpha button fill came out 241 instead of 254. The Figma setup forces `color-scheme: light` on the root (no native controls in the compared nodes).
+- Figma: portable stories render into an anonymous `<body>` div, then the `withKitText` decorator div. The default root selector depends on that; use `figmaRef.selector` for anything else.
 - Chromatic's CLI uploads the whole Storybook; `--only-story-names` limits which stories get snapshots, which is what you're billed for.

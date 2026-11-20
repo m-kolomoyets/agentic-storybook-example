@@ -1,0 +1,69 @@
+{
+    "source": {
+        "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+        "nodeId": "8728:14523",
+        "version": "2423344990798825378",
+        "lastModified": "2026-11-18T22:40:41Z"
+    },
+    "spec": {
+        "root": {
+            "name": "Size=Medium, State=Default",
+            "width": 247,
+            "height": 48,
+            "radius": [
+                8,
+                8,
+                8,
+                8
+            ],
+            "fill": {
+                "r": 254,
+                "g": 254,
+                "b": 254,
+                "a": 0.95
+            }
+        },
+        "texts": [
+            {
+                "characters": "Generate Automations",
+                "box": {
+                    "x": 42,
+                    "y": 12,
+                    "width": 163,
+                    "height": 24
+                },
+                "fontFamily": "Urbanist",
+                "fontSize": 16,
+                "fontWeight": 600,
+                "lineHeightPx": 24,
+                "letterSpacing": 0,
+                "color": {
+                    "r": 20,
+                    "g": 21,
+                    "b": 24,
+                    "a": 1
+                }
+            }
+        ],
+        "icons": [
+            {
+                "name": "Icon",
+                "box": {
+                    "x": 16,
+                    "y": 14,
+                    "width": 20,
+                    "height": 20
+                }
+            },
+            {
+                "name": "Icon",
+                "box": {
+                    "x": 211,
+                    "y": 14,
+                    "width": 20,
+                    "height": 20
+                }
+            }
+        ]
+    }
+}
