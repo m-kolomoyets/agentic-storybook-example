@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { StoryContext } from '@storybook/react-vite';
 import type { MockInstance } from 'storybook/test';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn, spyOn, waitFor, within } from 'storybook/test';
 import { Button } from '@/components/ui/Button';
 import { Toggle } from '@/components/ui/Toggle';
@@ -100,7 +101,7 @@ function Demo({ title, descriptor, rows, footer, onOpenChange, onDone }: StoryAr
     );
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/SidePanel',
     component: Demo,
     args: {
@@ -116,13 +117,9 @@ const meta = {
     beforeEach: spyOnConsoleError,
     // Desktop surface (callers switch to `BottomSheet` below `md:`); vitest's default viewport is 1200×900.
     parameters: { layout: 'fullscreen', design: { type: 'figma', url: `${FIGMA_LAYOUTS}11555-412884` } },
-} satisfies Meta<StoryArgs>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-type PlayContext = Parameters<NonNullable<Story['play']>>[0];
+type PlayContext = Pick<StoryContext, 'canvas' | 'canvasElement' | 'userEvent'>;
 
 async function openPanel({ canvas, canvasElement, userEvent }: PlayContext) {
     await userEvent.click(canvas.getByRole('button', { name: TRIGGER }));
@@ -145,61 +142,56 @@ function isScrollLocked(document: Document) {
 
 /**
  * Drawn frame. Named by `Title`; the ✕ is unconditional (the footer has no Cancel). Modal: focus trap,
- * inert page, scroll lock. `Done` is the caller's close.
+ * inert page, scroll lock. `Done` is the caller's close. Rows, footer and descriptor are Controls.
  */
-export const Default: Story = {
-    play: async (context) => {
-        const { canvasElement, userEvent, args } = context;
-        const body = within(canvasElement.ownerDocument.body);
-        const dialog = await openPanel(context);
+export const Default = meta.story();
 
-        await expect(dialog).toHaveAccessibleName(TITLE);
-        await expect(dialog).toHaveAttribute('aria-labelledby', body.getByRole('heading', { name: TITLE }).id);
-        await expect(dialog).toContainElement(body.getByRole('button', { name: 'Close panel' }));
-        await waitFor(() => {
-            return expect(dialog.contains(canvasElement.ownerDocument.activeElement)).toBe(true);
-        });
-        await expect(body.queryByRole('button', { name: TRIGGER })).toBeNull();
-        await expect(isScrollLocked(canvasElement.ownerDocument)).toBe(true);
-        await expect(consoleError).not.toHaveBeenCalled();
-        await expect(args.onOpenChange).toHaveBeenLastCalledWith(true);
+Default.test('named, modal; Done closes', async (context) => {
+    const { canvasElement, userEvent, args } = context;
+    const body = within(canvasElement.ownerDocument.body);
+    const dialog = await openPanel(context);
 
-        await userEvent.click(within(dialog).getByRole('button', { name: 'Done' }));
-        await expect(args.onDone).toHaveBeenCalledOnce();
-        await expectClosed(context);
-    },
-};
+    await expect(dialog).toHaveAccessibleName(TITLE);
+    await expect(dialog).toHaveAttribute('aria-labelledby', body.getByRole('heading', { name: TITLE }).id);
+    await expect(dialog).toContainElement(body.getByRole('button', { name: 'Close panel' }));
+    await waitFor(() => {
+        return expect(dialog.contains(canvasElement.ownerDocument.activeElement)).toBe(true);
+    });
+    await expect(body.queryByRole('button', { name: TRIGGER })).toBeNull();
+    await expect(isScrollLocked(canvasElement.ownerDocument)).toBe(true);
+    await expect(consoleError).not.toHaveBeenCalled();
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(true);
+
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Done' }));
+    await expect(args.onDone).toHaveBeenCalledOnce();
+    await expectClosed(context);
+});
 
 /** Not drawn on desktop (the mobile sheet of the same feature has one). Optional, so not guarded. */
-export const WithDescriptor: Story = {
-    args: { descriptor: DESCRIPTOR },
-    play: async (context) => {
-        const dialog = await openPanel(context);
-        await expect(dialog).toHaveAccessibleDescription(DESCRIPTOR);
-        await context.userEvent.keyboard('{Escape}');
-        await expectClosed(context);
-    },
-};
+Default.test('an optional Descriptor describes it', { args: { descriptor: DESCRIPTOR } }, async (context) => {
+    const dialog = await openPanel(context);
+    await expect(dialog).toHaveAccessibleDescription(DESCRIPTOR);
+    await context.userEvent.keyboard('{Escape}');
+    await expectClosed(context);
+});
 
 /** Invented: only the list scrolls; title and footer stay put. */
-export const Scrolling: Story = {
-    args: { rows: 24 },
-    play: async (context) => {
-        const dialog = await openPanel(context);
-        const done = within(dialog).getByRole('button', { name: 'Done' });
+Default.test('only the list scrolls; the footer stays inside', { args: { rows: 24 } }, async (context) => {
+    const dialog = await openPanel(context);
+    const done = within(dialog).getByRole('button', { name: 'Done' });
 
-        // The footer stays inside the panel: the list absorbs the overflow.
-        await waitFor(() => {
-            return expect(done).toBeVisible();
-        });
-        await expect(done.getBoundingClientRect().bottom).toBeLessThanOrEqual(dialog.getBoundingClientRect().bottom);
-    },
-};
+    // The footer stays inside the panel: the list absorbs the overflow.
+    await waitFor(() => {
+        return expect(done).toBeVisible();
+    });
+    await expect(done.getBoundingClientRect().bottom).toBeLessThanOrEqual(dialog.getBoundingClientRect().bottom);
+});
 
 /** Escape, an outside press and the ✕ each close it; none can be disabled. */
-export const Dismissal: Story = {
-    args: { footer: false, rows: 1, title: 'No way out but the three' },
-    play: async (context) => {
+Default.test(
+    'Escape and the ✕ close it',
+    { args: { footer: false, rows: 1, title: 'No way out but the three' } },
+    async (context) => {
         const { canvasElement, userEvent, args } = context;
         const body = within(canvasElement.ownerDocument.body);
 
@@ -212,15 +204,18 @@ export const Dismissal: Story = {
         await expectClosed(context);
 
         await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
-    },
-};
+    }
+);
 
 /** Dev-only guard: no `Title` → `console.error`, and the panel still renders. */
-export const MissingTitle: Story = {
-    args: { title: undefined },
-    // aria-dialog-name off: the unnamed dialog is the point of this story.
-    parameters: { a11y: { config: { rules: [{ id: 'aria-dialog-name', enabled: false }] } } },
-    play: async (context) => {
+Default.test(
+    'missing Title logs a dev error and still renders',
+    {
+        args: { title: undefined },
+        // aria-dialog-name off: the unnamed dialog is the point of this test.
+        parameters: { a11y: { config: { rules: [{ id: 'aria-dialog-name', enabled: false }] } } },
+    },
+    async (context) => {
         const dialog = await openPanel(context);
         await expect(dialog).toBeInTheDocument();
         // Guard is dev-only: a production build (Chromatic) strips it.
@@ -231,5 +226,5 @@ export const MissingTitle: Story = {
         }
         await context.userEvent.keyboard('{Escape}');
         await expectClosed(context);
-    },
-};
+    }
+);

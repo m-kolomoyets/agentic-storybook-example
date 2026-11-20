@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ReactNode } from 'react';
 import type { ToastLayout, ToastStatus } from './types';
 import HistoryIcon from '@/assets/icons/history.svg?react';
-import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+import preview from '#.storybook/preview';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { Button } from '@/components/ui/Button';
 import { resetToasts, toast } from '.';
 
@@ -24,7 +24,7 @@ type PlaygroundArgs = {
  * `Toast.Provider` + `Toast.Viewport` are mounted once in `.storybook/preview.tsx`. The manager is
  * module state, so every story starts and ends with an empty queue.
  */
-const meta = {
+const meta = preview.meta({
     title: 'UI/Toast',
     args: {
         status: 'positive',
@@ -40,12 +40,28 @@ const meta = {
         duration: { control: 'number' },
         actionLabel: { control: 'text' },
     },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10768-10277` } },
+    parameters: {
+        design: [
+            { name: 'Toast', type: 'figma', url: `${FIGMA}10768-10277` },
+            { name: 'Inline action', type: 'figma', url: `${FIGMA}8781-18872` },
+            { name: 'Stacked action', type: 'figma', url: `${FIGMA}9420-63609` },
+            { name: 'Desktop', type: 'figma', url: `${FIGMA}11256-5911` },
+        ],
+    },
     beforeEach: () => {
         resetToasts();
         return resetToasts;
     },
-    render: function Playground({ status, title, descriptor, layout, duration, actionLabel, onAction, onClose }) {
+    render: function Playground({
+        status,
+        title,
+        descriptor,
+        layout,
+        duration,
+        actionLabel,
+        onAction,
+        onClose,
+    }: PlaygroundArgs) {
         function handleFire() {
             toast[status]({
                 title,
@@ -58,11 +74,7 @@ const meta = {
         }
         return <Fire onClick={handleFire}>Raise toast</Fire>;
     },
-} satisfies Meta<PlaygroundArgs>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+});
 
 function Fire({ children, onClick }: { children: ReactNode; onClick: () => void }) {
     return (
@@ -111,13 +123,107 @@ function idrefText(card: HTMLElement, attribute: 'aria-labelledby' | 'aria-descr
  * Base UI keeps a `high` priority (negative) card `aria-hidden` while its hidden `role="alert"` mirror
  * announces, yet the card stays `tabindex="0"` → axe `aria-hidden-focus`. Upstream behaviour, not ours.
  */
-const NEGATIVE_A11Y = { a11y: { config: { rules: [{ id: 'aria-hidden-focus', enabled: false }] } } } as const;
+const NEGATIVE_A11Y = { a11y: { config: { rules: [{ id: 'aria-hidden-focus', enabled: false }] } } };
 
 const HISTORY_GLYPH = <HistoryIcon />;
 
-/** Args-driven. Leaves after 5s; the viewport is a polite live region; the ✕ closes and reports `onClose`. */
-export const Default: Story = {
-    play: async ({ canvas, canvasElement, args }) => {
+/**
+ * Base UI keeps every toast queued and flags overflow `data-limited`; the viewport hides those.
+ * Hidden timers still run, so the first three are sticky to make promotion visible.
+ */
+function Limit() {
+    return (
+        <Fire
+            onClick={() => {
+                for (let index = 1; index <= 3; index += 1) {
+                    toast.default({ title: `Container ${index} synced`, duration: 0 });
+                }
+                for (let index = 4; index <= 6; index += 1) {
+                    toast.default({ title: `Container ${index} synced` });
+                }
+            }}
+        >
+            Fire six
+        </Fire>
+    );
+}
+
+function CustomIcon() {
+    return (
+        <Fire
+            onClick={() => {
+                toast.negative({ title: 'Retry failed', icon: HISTORY_GLYPH });
+            }}
+        >
+            negative with an override
+        </Fire>
+    );
+}
+
+function LongContent() {
+    return (
+        <Stack>
+            <Fire
+                onClick={() => {
+                    toast.warning({
+                        title: 'Fan 2 in bin 14 is drawing more current than its commissioning baseline',
+                        descriptor:
+                            'Measured at 7.4A against a 6.0A baseline over the last three hours. The schedule has not been changed; check the impeller for obstruction before the next window opens.',
+                    });
+                    toast.default({ title: 'Reconditioning-window-scheduling-diagnostics-report-2026-08-18' });
+                }}
+            >
+                Fire long content
+            </Fire>
+        </Stack>
+    );
+}
+
+function StackedAction() {
+    return (
+        <Fire
+            onClick={() => {
+                toast.warning({
+                    title: 'Bin 14 is running warm',
+                    descriptor: 'Grain temperature has been above target for 40 minutes.',
+                    layout: 'stacked',
+                    action: {
+                        label: 'Run Diagnostics',
+                        onClick: () => {},
+                        variant: 'primary',
+                        startIcon: HISTORY_GLYPH,
+                    },
+                });
+            }}
+        >
+            Fire stacked
+        </Fire>
+    );
+}
+
+function Desktop() {
+    return (
+        <Fire
+            onClick={() => {
+                toast.negative({
+                    title: 'Fan 3 Offline',
+                    descriptor: 'Bin 14',
+                    action: { label: 'Run Diagnostics', onClick: () => {}, variant: 'primary' },
+                });
+            }}
+        >
+            Fan 3 goes offline
+        </Fire>
+    );
+}
+
+/** Playground — args-driven: pick status/layout/action in Controls, then raise it. */
+export const Default = meta.story();
+
+/** Leaves after 5s; the viewport is a polite live region; the ✕ closes and reports `onClose`. */
+Default.test(
+    'viewport is a polite live region; the ✕ closes and reports onClose',
+    async ({ canvas, canvasElement, args, userEvent }) => {
         await userEvent.click(canvas.getByRole('button', { name: 'Raise toast' }));
         const region = bodyOf(canvasElement).getByRole('region', { name: 'Notifications' });
         await expect(region).toHaveAttribute('aria-live', 'polite');
@@ -140,11 +246,119 @@ export const Default: Story = {
         await waitFor(() => {
             return expect(cardsOf(canvasElement, 'dialog')).toHaveLength(0);
         });
-    },
-};
+    }
+);
+
+/** Figma draws no lifetime: these are the kit's. Hovering the viewport pauses every timer (WCAG 2.2.1). */
+Default.test(
+    'hovering pauses the lifetime; leaving resumes it',
+    { args: { status: 'positive', duration: 600, descriptor: undefined } },
+    async ({ canvas, canvasElement, args, userEvent }) => {
+        await userEvent.click(canvas.getByRole('button', { name: 'Raise toast' }));
+        // The viewport is `pointer-events-none`; hovering a card bubbles `mouseenter` up to it.
+        const [card] = cardsOf(canvasElement, 'dialog');
+
+        await userEvent.hover(card);
+        await new Promise((resolve) => {
+            setTimeout(resolve, 900);
+        });
+        await expect(viewportOf(canvasElement).getByText('Schedule window saved')).toBeInTheDocument();
+
+        await userEvent.unhover(card);
+        await waitFor(
+            () => {
+                return expect(viewportOf(canvasElement).queryByText('Schedule window saved')).toBeNull();
+            },
+            { timeout: 3000 }
+        );
+        await expect(args.onClose).toHaveBeenCalledOnce();
+    }
+);
+
+/** Figma 8781:18872. An action closes its toast by default (`closeOnClick`), after running `onClick`. */
+Default.test(
+    'inline action runs onClick, then closes',
+    { args: { status: 'default', title: 'Schedule window deleted', actionLabel: 'Undo' } },
+    async ({ canvas, canvasElement, args, userEvent }) => {
+        await userEvent.click(canvas.getByRole('button', { name: 'Raise toast' }));
+        await userEvent.hover(cardsOf(canvasElement, 'dialog')[0]);
+        await userEvent.click(viewportOf(canvasElement).getByRole('button', { name: 'Undo' }));
+        await expect(args.onAction).toHaveBeenCalledOnce();
+        await waitFor(() => {
+            return expect(args.onClose).toHaveBeenCalledOnce();
+        });
+    }
+);
+
+Default.test(
+    'only three cards show; overflow is data-limited',
+    { render: Limit },
+    async ({ canvas, canvasElement, userEvent }) => {
+        await userEvent.click(canvas.getByRole('button', { name: 'Fire six' }));
+        const cards = cardsOf(canvasElement, 'dialog');
+        const visible = cards.filter((card) => {
+            return !card.hasAttribute('data-limited');
+        });
+        await expect(cards).toHaveLength(6);
+        await expect(visible).toHaveLength(3);
+        await expect(visible[0]).toHaveTextContent('Container 6 synced');
+    }
+);
+
+/** Only the 20px glyph changes; chip fill and tint stay bound to status. Still `aria-hidden`. */
+Default.test(
+    'a custom icon stays aria-hidden',
+    { render: CustomIcon, parameters: NEGATIVE_A11Y },
+    async ({ canvas, canvasElement, userEvent }) => {
+        await userEvent.click(canvas.getByRole('button', { name: 'negative with an override' }));
+        const [card] = cardsOf(canvasElement, 'alertdialog');
+        await expect(card.querySelector('svg')?.closest('div')).toHaveAttribute('aria-hidden', 'true');
+    }
+);
+
+/** Width caps rather than grows; an unbroken string keeps the ✕ on the card. */
+Default.test(
+    'long content keeps the ✕ on the card',
+    { render: LongContent },
+    async ({ canvas, canvasElement, userEvent }) => {
+        await userEvent.click(canvas.getByRole('button', { name: 'Fire long content' }));
+        const close = bodyOf(canvasElement).getAllByLabelText('Dismiss notification', { selector: 'button' });
+        for (const button of close) {
+            const card = button.closest('[role="dialog"]');
+            const cardBox = card?.getBoundingClientRect();
+            await expect(button.getBoundingClientRect().right).toBeLessThanOrEqual(cardBox?.right ?? 0);
+        }
+    }
+);
+
+/**
+ * Figma 9420:63609. Action below the descriptor, indented to the text; ✕ stays on the first row
+ * but follows the action in DOM (WCAG 1.3.2).
+ */
+Default.test(
+    'stacked action precedes the ✕ in DOM',
+    { render: StackedAction },
+    async ({ canvas, canvasElement, userEvent }) => {
+        await userEvent.click(canvas.getByRole('button', { name: 'Fire stacked' }));
+        const [card] = cardsOf(canvasElement, 'dialog');
+        const buttons = within(card).getAllByRole('button', { hidden: true });
+        await expect(buttons[0]).toHaveTextContent('Run Diagnostics');
+        await expect(buttons.at(-1)).toHaveAttribute('aria-label', 'Dismiss notification');
+    }
+);
+
+/** Figma 11256:5911. The `md:` breakpoint changes only width cap, padding and edge. */
+Default.test(
+    'desktop negative with action is an alertdialog',
+    { render: Desktop, parameters: NEGATIVE_A11Y },
+    async ({ canvas, canvasElement, userEvent }) => {
+        await userEvent.click(canvas.getByRole('button', { name: 'Fan 3 goes offline' }));
+        await expect(cardsOf(canvasElement, 'alertdialog')).toHaveLength(1);
+    }
+);
 
 /** `negative` interrupts: `role="alertdialog"` plus a hidden `role="alert"` mirror. Others are `dialog`. */
-export const Statuses: Story = {
+export const Statuses = meta.story({
     parameters: NEGATIVE_A11Y,
     render: function Statuses() {
         return (
@@ -171,205 +385,24 @@ export const Statuses: Story = {
             </Stack>
         );
     },
-    play: async ({ canvas, canvasElement }) => {
+});
+
+Statuses.test(
+    'negative is an alertdialog with an alert mirror; others are dialogs',
+    async ({ canvas, canvasElement, userEvent }) => {
         await userEvent.click(canvas.getByRole('button', { name: 'Fire three' }));
         await expect(cardsOf(canvasElement, 'alertdialog')).toHaveLength(1);
         await expect(cardsOf(canvasElement, 'alertdialog')[0]).toHaveTextContent('Could not reach the hub');
         await expect(cardsOf(canvasElement, 'dialog')).toHaveLength(2);
         await expect(bodyOf(canvasElement).getByRole('alert')).toHaveTextContent('Could not reach the hub');
-    },
-};
-
-/** Figma draws no lifetime: these are the kit's. Hovering the viewport pauses every timer (WCAG 2.2.1). */
-export const LifetimeAndHoverPause: Story = {
-    args: { status: 'positive', duration: 600, descriptor: undefined },
-    play: async ({ canvas, canvasElement, args }) => {
-        await userEvent.click(canvas.getByRole('button', { name: 'Raise toast' }));
-        // The viewport is `pointer-events-none`; hovering a card bubbles `mouseenter` up to it.
-        const [card] = cardsOf(canvasElement, 'dialog');
-
-        await userEvent.hover(card);
-        await new Promise((resolve) => {
-            setTimeout(resolve, 900);
-        });
-        await expect(viewportOf(canvasElement).getByText('Schedule window saved')).toBeInTheDocument();
-
-        await userEvent.unhover(card);
-        await waitFor(
-            () => {
-                return expect(viewportOf(canvasElement).queryByText('Schedule window saved')).toBeNull();
-            },
-            { timeout: 3000 }
-        );
-        await expect(args.onClose).toHaveBeenCalledOnce();
-    },
-};
-
-/**
- * Base UI keeps every toast queued and flags overflow `data-limited`; the viewport hides those.
- * Hidden timers still run, so the first three are sticky to make promotion visible.
- */
-export const Limit: Story = {
-    render: function Limit() {
-        return (
-            <Fire
-                onClick={() => {
-                    for (let index = 1; index <= 3; index += 1) {
-                        toast.default({ title: `Container ${index} synced`, duration: 0 });
-                    }
-                    for (let index = 4; index <= 6; index += 1) {
-                        toast.default({ title: `Container ${index} synced` });
-                    }
-                }}
-            >
-                Fire six
-            </Fire>
-        );
-    },
-    play: async ({ canvas, canvasElement }) => {
-        await userEvent.click(canvas.getByRole('button', { name: 'Fire six' }));
-        const cards = cardsOf(canvasElement, 'dialog');
-        const visible = cards.filter((card) => {
-            return !card.hasAttribute('data-limited');
-        });
-        await expect(cards).toHaveLength(6);
-        await expect(visible).toHaveLength(3);
-        await expect(visible[0]).toHaveTextContent('Container 6 synced');
-    },
-};
-
-/** Only the 20px glyph changes; chip fill and tint stay bound to status. Still `aria-hidden`. */
-export const CustomIcon: Story = {
-    parameters: NEGATIVE_A11Y,
-    render: function CustomIcon() {
-        return (
-            <Fire
-                onClick={() => {
-                    toast.negative({ title: 'Retry failed', icon: HISTORY_GLYPH });
-                }}
-            >
-                negative with an override
-            </Fire>
-        );
-    },
-    play: async ({ canvas, canvasElement }) => {
-        await userEvent.click(canvas.getByRole('button', { name: 'negative with an override' }));
-        const [card] = cardsOf(canvasElement, 'alertdialog');
-        await expect(card.querySelector('svg')?.closest('div')).toHaveAttribute('aria-hidden', 'true');
-    },
-};
-
-/** Width caps rather than grows; an unbroken string keeps the ✕ on the card. */
-export const LongContent: Story = {
-    render: function LongContent() {
-        return (
-            <Stack>
-                <Fire
-                    onClick={() => {
-                        toast.warning({
-                            title: 'Fan 2 in bin 14 is drawing more current than its commissioning baseline',
-                            descriptor:
-                                'Measured at 7.4A against a 6.0A baseline over the last three hours. The schedule has not been changed; check the impeller for obstruction before the next window opens.',
-                        });
-                        toast.default({ title: 'Reconditioning-window-scheduling-diagnostics-report-2026-08-18' });
-                    }}
-                >
-                    Fire long content
-                </Fire>
-            </Stack>
-        );
-    },
-    play: async ({ canvas, canvasElement }) => {
-        await userEvent.click(canvas.getByRole('button', { name: 'Fire long content' }));
-        const close = bodyOf(canvasElement).getAllByLabelText('Dismiss notification', { selector: 'button' });
-        for (const button of close) {
-            const card = button.closest('[role="dialog"]');
-            const cardBox = card?.getBoundingClientRect();
-            await expect(button.getBoundingClientRect().right).toBeLessThanOrEqual(cardBox?.right ?? 0);
-        }
-    },
-};
-
-/** Figma 8781:18872. An action closes its toast by default (`closeOnClick`), after running `onClick`. */
-export const InlineAction: Story = {
-    args: { status: 'default', title: 'Schedule window deleted', actionLabel: 'Undo' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8781-18872` } },
-    play: async ({ canvas, canvasElement, args }) => {
-        await userEvent.click(canvas.getByRole('button', { name: 'Raise toast' }));
-        await userEvent.hover(cardsOf(canvasElement, 'dialog')[0]);
-        await userEvent.click(viewportOf(canvasElement).getByRole('button', { name: 'Undo' }));
-        await expect(args.onAction).toHaveBeenCalledOnce();
-        await waitFor(() => {
-            return expect(args.onClose).toHaveBeenCalledOnce();
-        });
-    },
-};
-
-/**
- * Figma 9420:63609. Action below the descriptor, indented to the text; ✕ stays on the first row
- * but follows the action in DOM (WCAG 1.3.2).
- */
-export const StackedAction: Story = {
-    render: function StackedAction() {
-        return (
-            <Fire
-                onClick={() => {
-                    toast.warning({
-                        title: 'Bin 14 is running warm',
-                        descriptor: 'Grain temperature has been above target for 40 minutes.',
-                        layout: 'stacked',
-                        action: {
-                            label: 'Run Diagnostics',
-                            onClick: () => {},
-                            variant: 'primary',
-                            startIcon: HISTORY_GLYPH,
-                        },
-                    });
-                }}
-            >
-                Fire stacked
-            </Fire>
-        );
-    },
-    parameters: { design: { type: 'figma', url: `${FIGMA}9420-63609` } },
-    play: async ({ canvas, canvasElement }) => {
-        await userEvent.click(canvas.getByRole('button', { name: 'Fire stacked' }));
-        const [card] = cardsOf(canvasElement, 'dialog');
-        const buttons = within(card).getAllByRole('button', { hidden: true });
-        await expect(buttons[0]).toHaveTextContent('Run Diagnostics');
-        await expect(buttons.at(-1)).toHaveAttribute('aria-label', 'Dismiss notification');
-    },
-};
-
-/** Figma 11256:5911. The `md:` breakpoint changes only width cap, padding and edge. */
-export const Desktop: Story = {
-    render: function Desktop() {
-        return (
-            <Fire
-                onClick={() => {
-                    toast.negative({
-                        title: 'Fan 3 Offline',
-                        descriptor: 'Bin 14',
-                        action: { label: 'Run Diagnostics', onClick: () => {}, variant: 'primary' },
-                    });
-                }}
-            >
-                Fan 3 goes offline
-            </Fire>
-        );
-    },
-    parameters: { ...NEGATIVE_A11Y, design: { type: 'figma', url: `${FIGMA}11256-5911` } },
-    play: async ({ canvas, canvasElement }) => {
-        await userEvent.click(canvas.getByRole('button', { name: 'Fan 3 goes offline' }));
-        await expect(cardsOf(canvasElement, 'alertdialog')).toHaveLength(1);
-    },
-};
+    }
+);
 
 /**
  * `closeOnClick: false` keeps the card through its own action; `toast.update` patches it in place.
  * Raising with an id already on screen updates instead of stacking — the only dedup.
  */
-export const RetryAndDedup: Story = {
+export const RetryAndDedup = meta.story({
     parameters: NEGATIVE_A11Y,
     render: function Retry() {
         function start() {
@@ -396,7 +429,11 @@ export const RetryAndDedup: Story = {
             </Stack>
         );
     },
-    play: async ({ canvas, canvasElement }) => {
+});
+
+RetryAndDedup.test(
+    'update patches in place; a repeated id does not stack',
+    async ({ canvas, canvasElement, userEvent }) => {
         await userEvent.click(canvas.getByRole('button', { name: 'Retry a failing request' }));
         const [card] = cardsOf(canvasElement, 'dialog');
         await expect(idrefText(card, 'aria-labelledby')).toBe('Retrying…');
@@ -409,5 +446,5 @@ export const RetryAndDedup: Story = {
         await userEvent.click(dedup);
         await userEvent.click(dedup);
         await expect(cardsOf(canvasElement, 'alertdialog')).toHaveLength(1);
-    },
-};
+    }
+);

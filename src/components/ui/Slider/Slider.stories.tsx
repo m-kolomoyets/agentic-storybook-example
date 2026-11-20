@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { SliderProps } from './types';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Field } from '@/components/ui/Field';
 import { Slider } from '.';
@@ -28,7 +28,7 @@ function Labelled({ label, ...props }: SliderProps & { label: string }) {
     );
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Slider',
     component: Slider,
     args: {
@@ -55,17 +55,16 @@ const meta = {
     render: function Render(args) {
         return <Labelled {...args} label="Aeration priority" />;
     },
-} satisfies Meta<typeof Slider>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — a labelled slider; switch range/labels/origin in Controls. Every drawn cell lives in `Matrix`. */
+export const Default = meta.story();
 
 /** Range reaches the input; arrows move by `step`, clamp at the ends; focus sits on the input, not the thumb. */
-export const Default: Story = {
-    args: { max: 6, step: 2, defaultValue: 2, labels: undefined },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8217-8122` } },
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
+Default.test(
+    'range reaches the input; arrows step and clamp; focus on the input',
+    { args: { max: 6, step: 2, defaultValue: 2, labels: undefined } },
+    async ({ canvas, canvasElement, args, userEvent }) => {
         const input = inputOf(canvasElement);
         await expect(input).toHaveAttribute('min', '0');
         await expect(input).toHaveAttribute('max', '6');
@@ -89,14 +88,14 @@ export const Default: Story = {
         await expect(args.onValueChange).toHaveBeenCalledTimes(3);
         await userEvent.keyboard('{Home}');
         await expect(args.onValueChange).toHaveBeenLastCalledWith(0, expect.anything());
-    },
-};
+    }
+);
 
 /** Scale row is a plain `<div>` (not `<output>`/live region), labels are bare spans; string label → valuetext. */
-export const ThreePosition: Story = {
-    args: { value: 2, defaultValue: undefined },
-    parameters: { design: { type: 'figma', url: `${FIGMA}9850-118483` } },
-    play: async ({ canvas, canvasElement }) => {
+Default.test(
+    'three positions: string label is the valuetext; scale is plain spans',
+    { args: { value: 2, defaultValue: undefined } },
+    async ({ canvas, canvasElement }) => {
         const input = inputOf(canvasElement);
         await expect(input).toHaveAttribute('aria-valuetext', 'High');
         const scale = canvas.getByText('High').parentElement!;
@@ -107,74 +106,105 @@ export const ThreePosition: Story = {
         for (const label of Array.from(scale.children)) {
             await expect(label.tagName).toBe('SPAN');
         }
-    },
-};
+    }
+);
 
 /** Seven positions; `Continious` announced, not `7`. */
-export const SevenPosition: Story = {
-    args: { max: 6, value: 6, defaultValue: undefined, labels: AUTO_UPDATE },
-    parameters: { design: { type: 'figma', url: `${FIGMA}9850-118493` } },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'seven positions announce the label, not the number',
+    { args: { max: 6, value: 6, defaultValue: undefined, labels: AUTO_UPDATE } },
+    async ({ canvasElement }) => {
         await expect(inputOf(canvasElement)).toHaveAttribute('aria-valuetext', 'Continious');
-    },
-};
+    }
+);
 
 /** Exact match only: between positions nothing is highlighted and no valuetext is set. */
-export const Highlighted: Story = {
-    args: { step: 0.5, value: 1.5, defaultValue: undefined, highlightActiveLabel: true },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'between positions there is no valuetext',
+    { args: { step: 0.5, value: 1.5, defaultValue: undefined, highlightActiveLabel: true } },
+    async ({ canvasElement }) => {
         const input = inputOf(canvasElement);
         await expect(input).not.toHaveAttribute('aria-valuetext');
         await expect(input).toHaveAttribute('aria-valuenow', '1.5');
-    },
-};
+    }
+);
 
 /** `ReactNode` labels have no text to announce. */
-export const ReactNodeLabels: Story = {
-    args: {
-        max: 1,
-        value: 0,
-        defaultValue: undefined,
-        highlightActiveLabel: true,
-        labels: [<span key="less">&darr; less</span>, 'Speed'],
+Default.test(
+    'ReactNode labels set no valuetext',
+    {
+        args: {
+            max: 1,
+            value: 0,
+            defaultValue: undefined,
+            highlightActiveLabel: true,
+            labels: [<span key="less">&darr; less</span>, 'Speed'],
+        },
     },
-    play: async ({ canvasElement }) => {
+    async ({ canvasElement }) => {
         await expect(inputOf(canvasElement)).not.toHaveAttribute('aria-valuetext');
-    },
-};
+    }
+);
 
 /** Preference axis (11239:5902): no fill. */
-export const WithoutIndicator: Story = {
-    args: {
-        max: 1,
-        step: 0.01,
-        value: 0.65,
-        defaultValue: undefined,
-        labels: ['Accuracy', 'Speed'],
-        showIndicator: false,
+Default.test(
+    'without indicator keeps a fractional value',
+    {
+        args: {
+            max: 1,
+            step: 0.01,
+            value: 0.65,
+            defaultValue: undefined,
+            labels: ['Accuracy', 'Speed'],
+            showIndicator: false,
+        },
     },
-    parameters: { design: { type: 'figma', url: `${FIGMA}11239-5902` } },
-    play: async ({ canvasElement }) => {
+    async ({ canvasElement }) => {
         await expect(inputOf(canvasElement)).toHaveAttribute('aria-valuenow', '0.65');
-    },
-};
+    }
+);
 
 /** Invented (no Figma cell): `opacity-50` over the whole control; the keyboard is refused. */
-export const Disabled: Story = {
-    args: { disabled: true },
-    // color-contrast off: dimmed scale labels; WCAG 1.4.3 exempts inactive UI, which axe can't infer here.
-    parameters: { a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } } },
-    play: async ({ canvasElement, args, userEvent }) => {
+Default.test(
+    'disabled refuses the keyboard',
+    {
+        args: { disabled: true },
+        // color-contrast off: dimmed scale labels; WCAG 1.4.3 exempts inactive UI, which axe can't infer here.
+        parameters: { a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } } },
+    },
+    async ({ canvasElement, args, userEvent }) => {
         const input = inputOf(canvasElement);
         await expect(input).toBeDisabled();
         await userEvent.tab();
         await userEvent.keyboard('{ArrowRight}');
         await expect(args.onValueChange).not.toHaveBeenCalled();
+    }
+);
+
+/** `origin="center"` + `ticks`: 2px track, 11 dots, a 2×8 midpoint bar; the fill grows from the middle. */
+Default.test(
+    'center origin with ticks draws 11 hidden dots',
+    {
+        args: {
+            max: 10,
+            value: 8,
+            defaultValue: undefined,
+            origin: 'center',
+            ticks: true,
+            labels: SENSITIVITY,
+            highlightActiveLabel: true,
+        },
     },
-};
+    async ({ canvasElement }) => {
+        const ticks = canvasElement.querySelector('[data-slider-ticks]')!;
+        await expect(ticks).toHaveAttribute('aria-hidden', 'true');
+        await expect(ticks).toHaveTextContent('');
+        await expect(ticks.children).toHaveLength(11);
+    }
+);
 
 /** `Field` composition: label names it, description describes it, `disabled` is inherited. */
-export const InField: Story = {
+export const InField = meta.story({
     render: function InField(args) {
         return (
             <div className="flex w-[327px] flex-col gap-xl">
@@ -191,15 +221,16 @@ export const InField: Story = {
             </div>
         );
     },
-    play: async ({ canvas }) => {
-        const slider = await canvas.findByRole('slider', { name: 'Aeration priority' });
-        await expect(slider).toHaveAccessibleDescription('Low, Medium or High.');
-        await expect(await canvas.findByRole('slider', { name: 'Disabled priority' })).toBeDisabled();
-    },
-};
+});
+
+InField.test('label names it, description describes it, disabled is inherited', async ({ canvas }) => {
+    const slider = await canvas.findByRole('slider', { name: 'Aeration priority' });
+    await expect(slider).toHaveAccessibleDescription('Low, Medium or High.');
+    await expect(await canvas.findByRole('slider', { name: 'Disabled priority' })).toBeDisabled();
+});
 
 /** Plain `useState`. */
-export const Controlled: Story = {
+export const Controlled = meta.story({
     render: function Controlled(args) {
         const [value, setValue] = useState(1);
 
@@ -219,39 +250,29 @@ export const Controlled: Story = {
             </div>
         );
     },
-    play: async ({ canvas, args, userEvent }) => {
-        // Wait for mount: in a production build `tab()` can run before the input exists.
-        const slider = await canvas.findByRole('slider', { name: 'Aeration priority' });
-        await userEvent.tab();
-        await expect(slider).toHaveFocus();
-        await userEvent.keyboard('{ArrowRight}');
-        await expect(await canvas.findByText('value: 2')).toBeVisible();
-        await expect(args.onValueChange).toHaveBeenCalledWith(2, expect.anything());
-    },
-};
+});
 
-/** `origin="center"` + `ticks`: 2px track, 11 dots, a 2×8 midpoint bar; the fill grows from the middle. */
-export const CenterOrigin: Story = {
-    args: {
-        max: 10,
-        value: 8,
-        defaultValue: undefined,
-        origin: 'center',
-        ticks: true,
-        labels: SENSITIVITY,
-        highlightActiveLabel: true,
-    },
-    parameters: { design: { type: 'figma', url: `${FIGMA}11870-6064` } },
-    play: async ({ canvasElement }) => {
-        const ticks = canvasElement.querySelector('[data-slider-ticks]')!;
-        await expect(ticks).toHaveAttribute('aria-hidden', 'true');
-        await expect(ticks).toHaveTextContent('');
-        await expect(ticks.children).toHaveLength(11);
-    },
-};
+Controlled.test('arrow updates the caller state', async ({ canvas, args, userEvent }) => {
+    // Wait for mount: in a production build `tab()` can run before the input exists.
+    const slider = await canvas.findByRole('slider', { name: 'Aeration priority' });
+    await userEvent.tab();
+    await expect(slider).toHaveFocus();
+    await userEvent.keyboard('{ArrowRight}');
+    await expect(await canvas.findByText('value: 2')).toBeVisible();
+    await expect(args.onValueChange).toHaveBeenCalledWith(2, expect.anything());
+});
 
 /** Every drawn instance plus the invented cells, for side-by-side review against Figma. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            { name: 'Priority', type: 'figma', url: `${FIGMA}8217-8122` },
+            { name: 'Three position', type: 'figma', url: `${FIGMA}9850-118483` },
+            { name: 'Seven position', type: 'figma', url: `${FIGMA}9850-118493` },
+            { name: 'Preference axis', type: 'figma', url: `${FIGMA}11239-5902` },
+            { name: 'Center origin', type: 'figma', url: `${FIGMA}11870-6064` },
+        ],
+    },
     render: function Matrix() {
         const cells: (SliderProps & { label: string })[] = [
             { label: 'Priority min — 8217:8122', min: 0, max: 2, value: 0, labels: PRIORITY },
@@ -308,4 +329,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

@@ -1,10 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { StoryContext } from '@storybook/react-vite';
 import type { ContextMenuAlign, ContextMenuItem, ContextMenuSide } from './types';
 import ArchiveIcon from '@/assets/icons/archive.svg?react';
 import DotsIcon from '@/assets/icons/dots-three-outline-vertical.svg?react';
 import MoveIcon from '@/assets/icons/drive-file-move-outline.svg?react';
 import GroupIcon from '@/assets/icons/group.svg?react';
 import ModeEditIcon from '@/assets/icons/mode-edit.svg?react';
+import preview from '#.storybook/preview';
 import { expect, fn, waitFor, within } from 'storybook/test';
 import { IconButton } from '@/components/ui/IconButton';
 import { ContextMenu } from '.';
@@ -46,7 +47,7 @@ function buildItems({ withIcons, disableCreate, onEdit, onMove, onCreate, onArch
           });
 }
 
-const meta = {
+const meta = preview.type<{ args: StoryArgs }>().meta({
     title: 'UI/ContextMenu',
     args: {
         side: 'bottom',
@@ -89,13 +90,9 @@ const meta = {
     ],
     // Desktop panel by default (vitest's 1200×900); `*OnMobile` stories pin a phone viewport for the sheet.
     parameters: { design: { type: 'figma', url: `${FIGMA}11309-7784` } },
-} satisfies Meta<StoryArgs>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-type PlayContext = Parameters<NonNullable<Story['play']>>[0];
+type PlayContext = StoryContext<StoryArgs>;
 
 function bodyOf({ canvasElement }: PlayContext) {
     return within(canvasElement.ownerDocument.body);
@@ -118,61 +115,62 @@ async function expectMenuClosed(context: PlayContext) {
  * One `menuitem` per item, in order. Escape closes and returns focus to the trigger (WCAG 2.1.2). Selecting a
  * row closes the menu and calls its `onSelect`.
  */
-export const Default: Story = {
-    play: async (context) => {
-        const { canvas, userEvent, args } = context;
-        const menu = within(await openMenu(context));
+export const Default = meta.story();
 
-        await expect(
-            menu.getAllByRole('menuitem').map((row) => {
-                return row.textContent;
-            })
-        ).toEqual(LABELS);
-        await expect(args.onOpenChange).toHaveBeenLastCalledWith(true, expect.anything());
+Default.test('one menuitem per item; Escape returns focus; a pick closes and calls onSelect', async (context) => {
+    const { canvas, userEvent, args } = context;
+    const menu = within(await openMenu(context));
 
-        await userEvent.keyboard('{Escape}');
-        await expectMenuClosed(context);
-        await expect(canvas.getByRole('button', { name: TRIGGER })).toHaveFocus();
+    await expect(
+        menu.getAllByRole('menuitem').map((row) => {
+            return row.textContent;
+        })
+    ).toEqual(LABELS);
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(true, expect.anything());
 
-        await userEvent.click(within(await openMenu(context)).getByRole('menuitem', { name: 'Edit Bin Details' }));
-        await expect(args.onEdit).toHaveBeenCalledOnce();
-        await expectMenuClosed(context);
-    },
-};
+    await userEvent.keyboard('{Escape}');
+    await expectMenuClosed(context);
+    await expect(canvas.getByRole('button', { name: TRIGGER })).toHaveFocus();
+
+    await userEvent.click(within(await openMenu(context)).getByRole('menuitem', { name: 'Edit Bin Details' }));
+    await expect(args.onEdit).toHaveBeenCalledOnce();
+    await expectMenuClosed(context);
+});
 
 /** Roving focus with the arrow keys, typeahead by label, Enter selects — the reason this wraps Base UI `menu`. */
-export const Keyboard: Story = {
-    play: async (context) => {
-        const { userEvent, args } = context;
-        const menu = within(await openMenu(context));
+Default.test('arrow keys rove, typeahead by label, Enter selects', async (context) => {
+    const { userEvent, args } = context;
+    const menu = within(await openMenu(context));
 
-        await userEvent.keyboard('{ArrowDown}');
-        await waitFor(() => {
-            return expect(menu.getByRole('menuitem', { name: 'Edit Bin Details' })).toHaveFocus();
-        });
-        await userEvent.keyboard('{ArrowDown}');
-        await waitFor(() => {
-            return expect(menu.getByRole('menuitem', { name: 'Move to Group' })).toHaveFocus();
-        });
-        await userEvent.keyboard('{Enter}');
-        await expect(args.onMove).toHaveBeenCalledOnce();
-        await expectMenuClosed(context);
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => {
+        return expect(menu.getByRole('menuitem', { name: 'Edit Bin Details' })).toHaveFocus();
+    });
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => {
+        return expect(menu.getByRole('menuitem', { name: 'Move to Group' })).toHaveFocus();
+    });
+    await userEvent.keyboard('{Enter}');
+    await expect(args.onMove).toHaveBeenCalledOnce();
+    await expectMenuClosed(context);
 
-        const reopened = within(await openMenu(context));
-        await userEvent.keyboard('arch');
-        await waitFor(() => {
-            return expect(reopened.getByRole('menuitem', { name: 'Archive Bin' })).toHaveFocus();
-        });
-        await userEvent.keyboard('{Enter}');
-        await expect(args.onArchive).toHaveBeenCalledOnce();
-        await expectMenuClosed(context);
-    },
-};
+    const reopened = within(await openMenu(context));
+    await userEvent.keyboard('arch');
+    await waitFor(() => {
+        return expect(reopened.getByRole('menuitem', { name: 'Archive Bin' })).toHaveFocus();
+    });
+    await userEvent.keyboard('{Enter}');
+    await expect(args.onArchive).toHaveBeenCalledOnce();
+    await expectMenuClosed(context);
+});
 
 /** A disabled row stays arrow-reachable (so its unavailability is discoverable), takes no fill, does nothing. */
-export const DisabledRow: Story = {
-    args: { disableCreate: true },
-    play: async (context) => {
+Default.test(
+    'a disabled row stays arrow-reachable and does nothing',
+    {
+        args: { disableCreate: true },
+    },
+    async (context) => {
         const { userEvent, args } = context;
         const menu = within(await openMenu(context));
         const create = menu.getByRole('menuitem', { name: 'Create New Group' });
@@ -186,116 +184,133 @@ export const DisabledRow: Story = {
         await expect(args.onCreate).not.toHaveBeenCalled();
         await userEvent.keyboard('{Escape}');
         await expectMenuClosed(context);
-    },
-};
+    }
+);
 
 /** `disabled` on `Root` stops it opening without disabling the trigger element. */
-export const DisabledMenu: Story = {
-    args: { disabled: true },
-    play: async (context) => {
+Default.test(
+    'disabled Root does not open but the trigger stays enabled',
+    {
+        args: { disabled: true },
+    },
+    async (context) => {
         await context.userEvent.click(context.canvas.getByRole('button', { name: TRIGGER }));
         await expect(bodyOf(context).queryByRole('menu')).toBeNull();
         await expect(context.args.onOpenChange).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
 /** The icon is optional; labels still align because the slot is absent, not empty. */
-export const WithoutIcons: Story = {
-    args: { withIcons: false },
-    play: async (context) => {
+Default.test(
+    'without icons the slot is absent, not empty',
+    {
+        args: { withIcons: false },
+    },
+    async (context) => {
         const menu = await openMenu(context);
         await expect(menu.querySelector('svg')).toBeNull();
-    },
-};
+    }
+);
 
 /** Every state at once for review against Figma: hover fill, disabled, destructive. */
-export const States: Story = {
+export const States = meta.story({
     args: { disableCreate: true },
+    // Setup, not a test: opens the panel and parks the pointer so the review state is visible.
     play: async (context) => {
         const menu = within(await openMenu(context));
         await context.userEvent.hover(menu.getByRole('menuitem', { name: 'Move to Group' }));
     },
-};
+});
 
 /** Base UI flips a placement that would collide with the viewport. */
-export const Placements: Story = {
-    render: function Placements(args) {
-        return (
-            <div className="flex flex-wrap items-center justify-center gap-4xl">
-                {(['top', 'right', 'bottom', 'left'] as const).map((side) => {
-                    return (
-                        <ContextMenu.Root key={side}>
-                            <ContextMenu.Trigger
-                                render={<IconButton size="md" aria-label={`${side} actions`} icon={<DotsIcon />} />}
-                            />
-                            <ContextMenu.Content items={buildItems(args).slice(0, 2)} side={side} align="center" />
-                        </ContextMenu.Root>
-                    );
-                })}
-            </div>
-        );
+Default.test(
+    'a colliding placement flips',
+    {
+        render: function Placements(args) {
+            return (
+                <div className="flex flex-wrap items-center justify-center gap-4xl">
+                    {(['top', 'right', 'bottom', 'left'] as const).map((side) => {
+                        return (
+                            <ContextMenu.Root key={side}>
+                                <ContextMenu.Trigger
+                                    render={<IconButton size="md" aria-label={`${side} actions`} icon={<DotsIcon />} />}
+                                />
+                                <ContextMenu.Content items={buildItems(args).slice(0, 2)} side={side} align="center" />
+                            </ContextMenu.Root>
+                        );
+                    })}
+                </div>
+            );
+        },
     },
-    play: async (context) => {
+    async (context) => {
         await context.userEvent.click(context.canvas.getByRole('button', { name: 'top actions' }));
         await waitFor(() => {
             return expect(bodyOf(context).getByRole('menu').closest('[data-side]')).toHaveAttribute('data-side', 'top');
         });
-    },
-};
+    }
+);
 
 /** The panel is portalled, so a trigger inside an `overflow: hidden` card is not clipped with it. */
-export const InsideAClippingAncestor: Story = {
-    decorators: [
-        function ClippingCard(Story) {
-            return (
-                <div className="flex w-[24rem] items-center justify-between overflow-hidden rounded-m border border-border-primary bg-surface-card p-l">
-                    <span className="text-body-s-medium">Gulf Bin 4</span>
-                    <Story />
-                </div>
-            );
-        },
-    ],
-    play: async (context) => {
+Default.test(
+    'the portalled panel is not clipped by an overflow-hidden ancestor',
+    {
+        decorators: [
+            function ClippingCard(Story) {
+                return (
+                    <div className="flex w-[24rem] items-center justify-between overflow-hidden rounded-m border border-border-primary bg-surface-card p-l">
+                        <span className="text-body-s-medium">Gulf Bin 4</span>
+                        <Story />
+                    </div>
+                );
+            },
+        ],
+    },
+    async (context) => {
         const menu = await openMenu(context);
         await expect(context.canvasElement.contains(menu)).toBe(false);
-    },
-};
+    }
+);
 
 /**
  * Below `md:` the same `Root` renders the drawn `Actions` bottom sheet (Figma 10600:285692): a named dialog of
  * plain buttons. A row closes the sheet, then fires `onSelect`.
  */
-export const DefaultOnMobile: Story = {
+export const DefaultOnMobile = meta.story({
     globals: MOBILE,
     args: { disableCreate: true },
     parameters: { design: { type: 'figma', url: `${FIGMA}10600-285692` } },
-    play: async (context) => {
-        const { canvas, userEvent, args } = context;
-        const body = bodyOf(context);
-        const trigger = canvas.getByRole('button', { name: TRIGGER });
+});
 
-        await expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
-        await expect(trigger).toHaveAttribute('aria-expanded', 'false');
-        await userEvent.click(trigger);
+DefaultOnMobile.test('renders a named sheet of buttons; a row closes it, then fires onSelect', async (context) => {
+    const { canvas, userEvent, args } = context;
+    const body = bodyOf(context);
+    const trigger = canvas.getByRole('button', { name: TRIGGER });
 
-        const sheet = within(await body.findByRole('dialog', { name: 'Actions' }));
-        await expect(args.onOpenChange).toHaveBeenLastCalledWith(true, expect.anything());
-        await expect(sheet.getByRole('button', { name: 'Create New Group' })).toBeDisabled();
+    await expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(trigger);
 
-        await userEvent.click(sheet.getByRole('button', { name: 'Archive Bin' }));
-        await expect(args.onArchive).toHaveBeenCalledOnce();
-        await waitFor(() => {
-            return expect(body.queryByRole('dialog')).not.toBeInTheDocument();
-        });
-        await expect(args.onOpenChange).toHaveBeenLastCalledWith(false, expect.anything());
-    },
-};
+    const sheet = within(await body.findByRole('dialog', { name: 'Actions' }));
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(true, expect.anything());
+    await expect(sheet.getByRole('button', { name: 'Create New Group' })).toBeDisabled();
+
+    await userEvent.click(sheet.getByRole('button', { name: 'Archive Bin' }));
+    await expect(args.onArchive).toHaveBeenCalledOnce();
+    await waitFor(() => {
+        return expect(body.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(false, expect.anything());
+});
 
 /** The sheet is named whatever the caller titles it; its ✕ follows. */
-export const CustomSheetTitleOnMobile: Story = {
-    globals: MOBILE,
-    args: { sheetTitle: 'Bin actions menu' },
-    play: async (context) => {
+DefaultOnMobile.test(
+    'the sheet and its close button follow sheetTitle',
+    {
+        // `disableCreate` back to the meta default; the parent story greys it.
+        args: { sheetTitle: 'Bin actions menu', disableCreate: false },
+    },
+    async (context) => {
         const body = bodyOf(context);
         await context.userEvent.click(context.canvas.getByRole('button', { name: TRIGGER }));
         await body.findByRole('dialog', { name: 'Bin actions menu' });
@@ -303,5 +318,5 @@ export const CustomSheetTitleOnMobile: Story = {
         await waitFor(() => {
             return expect(body.queryByRole('dialog')).not.toBeInTheDocument();
         });
-    },
-};
+    }
+);

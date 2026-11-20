@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import { lazy, useEffect, useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn, waitFor } from 'storybook/test';
 import { DeferredOverlay } from '.';
 
@@ -37,19 +37,15 @@ function createLazyPanel() {
     });
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/DeferredOverlay',
     component: DeferredOverlay,
     args: { open: false, children: null },
     argTypes: { children: { control: false } },
-} satisfies Meta<typeof DeferredOverlay>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-/** Nothing (and no chunk) before the first open; mounted on open; still mounted after close. */
-export const LazyOnFirstOpen: Story = {
+/** A lazy panel behind a trigger: nothing renders (and no chunk loads) until the first open. */
+export const Default = meta.story({
     beforeEach: () => {
         loadPanel.mockClear();
         onLoad.mockClear();
@@ -81,18 +77,20 @@ export const LazyOnFirstOpen: Story = {
             </div>
         );
     },
-    play: async ({ canvas, canvasElement, userEvent }) => {
-        await expect(canvasElement.querySelector('section')).toBeNull();
-        await expect(onLoad).not.toHaveBeenCalled();
-        await expect(loadPanel).not.toHaveBeenCalled();
-        await userEvent.click(canvas.getByRole('button', { name: 'Open the lazy panel' }));
-        const panel = await canvas.findByRole('region', { name: 'Lazy panel' });
-        await expect(onLoad).toHaveBeenCalledOnce();
-        await expect(loadPanel).toHaveBeenCalledOnce();
-        await userEvent.click(canvas.getByRole('button', { name: 'Close' }));
-        await waitFor(async () => {
-            await expect(panel).not.toBeVisible();
-        });
-        await expect(canvasElement.querySelector('section')).toBe(panel);
-    },
-};
+});
+
+/** Nothing (and no chunk) before the first open; mounted on open; still mounted after close. */
+Default.test('loads on first open and stays mounted after close', async ({ canvas, canvasElement, userEvent }) => {
+    await expect(canvasElement.querySelector('section')).toBeNull();
+    await expect(onLoad).not.toHaveBeenCalled();
+    await expect(loadPanel).not.toHaveBeenCalled();
+    await userEvent.click(canvas.getByRole('button', { name: 'Open the lazy panel' }));
+    const panel = await canvas.findByRole('region', { name: 'Lazy panel' });
+    await expect(onLoad).toHaveBeenCalledOnce();
+    await expect(loadPanel).toHaveBeenCalledOnce();
+    await userEvent.click(canvas.getByRole('button', { name: 'Close' }));
+    await waitFor(async () => {
+        await expect(panel).not.toBeVisible();
+    });
+    await expect(canvasElement.querySelector('section')).toBe(panel);
+});

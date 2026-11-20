@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { OptionListHandle, OptionListProps, SelectOption } from './types';
 import { useRef } from 'react';
 import GrainIcon from '@/assets/icons/grains.svg?react';
 import { Combobox } from '@base-ui/react/combobox';
+import preview from '#.storybook/preview';
 import { expect, fn, waitFor } from 'storybook/test';
 import { Field } from '@/components/ui/Field';
 import { OptionList } from '.';
@@ -41,7 +41,7 @@ type StoryArgs = OptionListProps & {
  * `inline open` is required: highlight is driven by the floating context, so a closed `Root` renders
  * inert rows. `itemToStringLabel`: `SelectOption` is an object.
  */
-const meta = {
+const meta = preview.type<{ args: StoryArgs }>().meta({
     title: 'UI/OptionList',
     component: OptionList,
     args: { items: oneLine(12), 'aria-label': 'Grains' },
@@ -74,18 +74,23 @@ const meta = {
         },
     ],
     parameters: {
-        design: { type: 'figma', url: `${FIGMA}8915-27188` },
+        // No `Matrix`: the per-cell Figma links live here, as tabs in the Design panel.
+        design: [
+            { name: 'List', type: 'figma', url: `${FIGMA}8915-27188` },
+            { name: 'Big (two-line)', type: 'figma', url: `${FIGMA}8750-15849` },
+            { name: 'Radio (mobile sheet)', type: 'figma', url: `${FIGMA}11165-148548` },
+        ],
     },
-} satisfies Meta<StoryArgs>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+});
 
 /** 12 one-line options: five rows visible, the rest scroll. Rows live in the `listbox`; clicking selects. */
-export const Default: Story = {
+export const Default = meta.story({
     args: { onValueChange: fn() },
-    play: async ({ canvas, canvasElement, userEvent, args }) => {
+});
+
+Default.test(
+    'five rows visible, the rest scroll; clicking selects',
+    async ({ canvas, canvasElement, userEvent, args }) => {
         const listbox = canvas.getByRole('listbox', { name: 'Grains' });
         await expect(rowsOf(canvasElement)[0]?.parentElement).toBe(listbox);
         const viewport = canvasElement.querySelector<HTMLElement>('[data-scroll-viewport]');
@@ -99,73 +104,87 @@ export const Default: Story = {
             expect.anything()
         );
         await expect(row).toHaveAttribute('data-selected');
-    },
-};
+    }
+);
 
 /** Max-height, not height: three options hug. */
-export const Short: Story = {
-    args: { items: oneLine(3) },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'max-height, not height: three options hug',
+    {
+        args: { items: oneLine(3) },
+    },
+    async ({ canvasElement }) => {
         const viewport = canvasElement.querySelector<HTMLElement>('[data-scroll-viewport]');
         await waitFor(() => {
             return expect(viewport!.clientHeight).toBe(3 * 50);
         });
-    },
-};
+    }
+);
 
 /** ~400 options: only a window is in the DOM, but each row announces its position in the whole list. */
-export const Large: Story = {
-    args: { items: oneLine(400) },
-    play: async ({ canvasElement }) => {
+Default.test(
+    '~400 options are windowed but announce their position in the whole list',
+    {
+        args: { items: oneLine(400) },
+    },
+    async ({ canvasElement }) => {
         const rows = rowsOf(canvasElement);
         await expect(rows.length).toBeLessThan(20);
         rows.forEach((row, offset) => {
             void expect(row).toHaveAttribute('aria-setsize', '400');
             void expect(row).toHaveAttribute('aria-posinset', String(offset + 1));
         });
-    },
-};
+    }
+);
 
 /** Big list: any `subtitle` switches the whole list to two-line rows, six visible. */
-export const TwoLine: Story = {
-    args: { items: twoLine(12) },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8750-15849` } },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'any subtitle switches the whole list to two-line rows, six visible',
+    {
+        args: { items: twoLine(12) },
+    },
+    async ({ canvasElement }) => {
         const viewport = canvasElement.querySelector<HTMLElement>('[data-scroll-viewport]');
         await waitFor(() => {
             return expect(viewport!.clientHeight).toBe(6 * 50 + 5 * 2);
         });
-    },
-};
+    }
+);
 
 /** `renderItem` fills row text only; the row is still `Option`, so its checkmark slot survives. */
-export const WithRenderItem: Story = {
-    args: {
-        renderItem: function RowText(item, index) {
-            return (
-                <span className="flex min-w-px items-center gap-s">
-                    <span className="shrink-0 text-caption-m text-text-general-medium">{index + 1}</span>
-                    <GrainIcon aria-hidden className="size-2xl shrink-0" />
-                    <span className="truncate">{item.label}</span>
-                </span>
-            );
+Default.test(
+    'renderItem fills row text only; the checkmark slot survives',
+    {
+        args: {
+            renderItem: function RowText(item, index) {
+                return (
+                    <span className="flex min-w-px items-center gap-s">
+                        <span className="shrink-0 text-caption-m text-text-general-medium">{index + 1}</span>
+                        <GrainIcon aria-hidden className="size-2xl shrink-0" />
+                        <span className="truncate">{item.label}</span>
+                    </span>
+                );
+            },
         },
     },
-    play: async ({ canvas }) => {
+    async ({ canvas }) => {
         const row = canvas.getByRole('option', { name: /Corn 1/ });
         await expect(row.querySelector('[data-slot="check"]')).toBeInTheDocument();
         await expect(row.querySelector('svg:not([data-slot])')).toBeInTheDocument();
-    },
-};
+    }
+);
 
 /** Disabled rows get `aria-disabled` (not native `disabled`) so arrow keys still reach them; hover still highlights. */
-export const Disabled: Story = {
-    args: {
-        items: oneLine(12).map((item, index) => {
-            return { ...item, disabled: [1, 2, 6].includes(index) };
-        }),
+Default.test(
+    'disabled rows use aria-disabled so arrow keys still reach them',
+    {
+        args: {
+            items: oneLine(12).map((item, index) => {
+                return { ...item, disabled: [1, 2, 6].includes(index) };
+            }),
+        },
     },
-    play: async ({ canvas, userEvent }) => {
+    async ({ canvas, userEvent }) => {
         const row = canvas.getByRole('option', { name: 'Soybeans 2' });
         await expect(row).toHaveAttribute('aria-disabled', 'true');
         await expect(row).not.toHaveAttribute('disabled');
@@ -174,21 +193,24 @@ export const Disabled: Story = {
         await waitFor(() => {
             return expect(row).toHaveAttribute('data-highlighted');
         });
-    },
-};
+    }
+);
 
 /** `group` inserts a `presentation` header whenever it changes; the same value may repeat across groups. */
-export const Grouped: Story = {
-    args: {
-        items: [
-            { value: 'America/Chicago', label: 'Chicago', group: 'Recommended' },
-            { value: 'America/Chicago', label: 'Chicago', group: 'America' },
-            { value: 'America/Denver', label: 'Denver', group: 'America' },
-            { value: 'Europe/Berlin', label: 'Berlin', group: 'Europe' },
-            { value: 'Europe/Paris', label: 'Paris', group: 'Europe' },
-        ],
+Default.test(
+    'group inserts a presentation header whenever it changes',
+    {
+        args: {
+            items: [
+                { value: 'America/Chicago', label: 'Chicago', group: 'Recommended' },
+                { value: 'America/Chicago', label: 'Chicago', group: 'America' },
+                { value: 'America/Denver', label: 'Denver', group: 'America' },
+                { value: 'Europe/Berlin', label: 'Berlin', group: 'Europe' },
+                { value: 'Europe/Paris', label: 'Paris', group: 'Europe' },
+            ],
+        },
     },
-    play: async ({ canvas, canvasElement }) => {
+    async ({ canvas, canvasElement }) => {
         const headers = canvasElement.querySelectorAll('[role=listbox] > [role=presentation]');
         await expect(
             Array.from(headers, (header) => {
@@ -198,24 +220,25 @@ export const Grouped: Story = {
         await expect(headers[0]).toHaveClass('pt-none');
         await expect(canvas.getAllByRole('option', { name: 'Chicago' })).toHaveLength(2);
         await expect(rowsOf(canvasElement).at(-1)).toHaveAttribute('aria-setsize', '5');
-    },
-};
+    }
+);
 
 /** Mobile-sheet rows: radio ring, 36px rows inset 12px. */
-export const Radio: Story = {
-    args: { indicator: 'radio' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}11165-148548` } },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'radio indicator: ring, 36px rows inset 12px',
+    {
+        args: { indicator: 'radio' },
+    },
+    async ({ canvasElement }) => {
         const [first] = rowsOf(canvasElement);
         await expect(first?.querySelector('[data-slot="radio"]')).toBeInTheDocument();
         await expect(first?.getBoundingClientRect().height).toBe(36);
-    },
-};
+    }
+);
 
 /** `ref.scrollToIndex` brings a filtered index into view (what `Select` calls on keyboard highlight). */
-export const ScrollToIndex: Story = {
+export const ScrollToIndex = meta.story({
     args: { items: oneLine(100) },
-    // Dynamic source serialisation reads `element.ref`, which React 19 removed — show the static source instead.
     parameters: { docs: { source: { type: 'code' } } },
     render: function ScrollToIndex({ items, ...props }) {
         const listRef = useRef<OptionListHandle>(null);
@@ -236,15 +259,16 @@ export const ScrollToIndex: Story = {
             </>
         );
     },
-    play: async ({ canvas, userEvent }) => {
-        await expect(canvas.queryByRole('option', { name: 'Soybeans 80' })).toBeNull();
-        await userEvent.click(canvas.getByRole('button', { name: 'Jump to 80' }));
-        await expect(await canvas.findByRole('option', { name: 'Soybeans 80' })).toBeVisible();
-    },
-};
+});
+
+ScrollToIndex.test('ref.scrollToIndex brings a filtered index into view', async ({ canvas, userEvent }) => {
+    await expect(canvas.queryByRole('option', { name: 'Soybeans 80' })).toBeNull();
+    await userEvent.click(canvas.getByRole('button', { name: 'Jump to 80' }));
+    await expect(await canvas.findByRole('option', { name: 'Soybeans 80' })).toBeVisible();
+});
 
 /** Inside a `Field`, the `Field.Label` names the listbox (`aria-labelledby` beats the `aria-label` fallback). */
-export const InField: Story = {
+export const InField = meta.story({
     render: function InField({ items, ...props }) {
         return (
             <Field.Root>
@@ -255,7 +279,8 @@ export const InField: Story = {
             </Field.Root>
         );
     },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('listbox', { name: 'Grain' })).toHaveAttribute('aria-labelledby');
-    },
-};
+});
+
+InField.test('Field.Label names the listbox', async ({ canvas }) => {
+    await expect(canvas.getByRole('listbox', { name: 'Grain' })).toHaveAttribute('aria-labelledby');
+});

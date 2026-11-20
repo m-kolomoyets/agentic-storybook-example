@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ReactNode } from 'react';
 import type { CheckboxSize } from './types';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Checkbox } from '.';
 
@@ -20,7 +20,7 @@ function CheckboxLabel({ children, srOnly = false }: { children: ReactNode; srOn
     );
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Checkbox',
     component: Checkbox,
     args: { size: 'md', disabled: false, onCheckedChange: fn() },
@@ -38,72 +38,63 @@ const meta = {
             </CheckboxLabel>
         );
     },
-} satisfies Meta<typeof Checkbox>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — switch size/disabled/indeterminate in Controls. Every visual cell lives in `Matrix`. */
+export const Default = meta.story({
+    parameters: { design: { type: 'figma', url: `${FIGMA}9185-4488` } },
+});
 
 /** `md`, unchecked, at rest. Click toggles and reports the next state. */
-export const Default: Story = {
-    parameters: { design: { type: 'figma', url: `${FIGMA}9185-4488` } },
-    play: async ({ canvas, args, userEvent }) => {
-        const box = canvas.getByRole('checkbox', { name: 'Dry the bin' });
-        await expect(box).not.toBeChecked();
-        await userEvent.click(box);
-        await expect(box).toBeChecked();
-        await expect(args.onCheckedChange).toHaveBeenCalledWith(true, expect.anything());
-        await userEvent.keyboard(' ');
-        await expect(box).not.toBeChecked();
-    },
-};
+Default.test('click and Space toggle and report the next state', async ({ canvas, args, userEvent }) => {
+    const box = canvas.getByRole('checkbox', { name: 'Dry the bin' });
+    await expect(box).not.toBeChecked();
+    await userEvent.click(box);
+    await expect(box).toBeChecked();
+    await expect(args.onCheckedChange).toHaveBeenCalledWith(true, expect.anything());
+    await userEvent.keyboard(' ');
+    await expect(box).not.toBeChecked();
+});
 
 /** The tick is a transparent hole knocked out of a solid square, not a layered glyph. */
-export const Checked: Story = {
-    args: { defaultChecked: true, size: 'lg' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}9183-5526` } },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('checkbox')).toBeChecked();
-    },
-};
+Default.test('defaultChecked starts checked', { args: { defaultChecked: true, size: 'lg' } }, async ({ canvas }) => {
+    await expect(canvas.getByRole('checkbox')).toBeChecked();
+});
 
 /** Base UI re-asserts `indeterminate` after every click — the caller clears it (see `Controlled`). */
-export const Indeterminate: Story = {
-    args: { indeterminate: true },
-    parameters: { design: { type: 'figma', url: `${FIGMA}9185-4452` } },
-    play: async ({ canvas, userEvent }) => {
+Default.test(
+    'indeterminate stays mixed after a click',
+    { args: { indeterminate: true } },
+    async ({ canvas, userEvent }) => {
         const box = canvas.getByRole('checkbox');
         await expect(box).toHaveAttribute('aria-checked', 'mixed');
         await userEvent.click(box);
         await expect(box).toHaveAttribute('aria-checked', 'mixed');
-    },
-};
+    }
+);
 
 /** 6% glyph; clicks are ignored. */
-export const Disabled: Story = {
-    args: { disabled: true },
-    parameters: { design: { type: 'figma', url: `${FIGMA}9183-5535` } },
-    play: async ({ canvas, args, userEvent }) => {
-        const box = canvas.getByRole('checkbox');
-        await expect(box).toHaveAttribute('aria-disabled', 'true');
-        await userEvent.click(box);
-        await expect(box).not.toBeChecked();
-        await expect(args.onCheckedChange).not.toHaveBeenCalled();
-    },
-};
+Default.test('disabled ignores clicks', { args: { disabled: true } }, async ({ canvas, args, userEvent }) => {
+    const box = canvas.getByRole('checkbox');
+    await expect(box).toHaveAttribute('aria-disabled', 'true');
+    await userEvent.click(box);
+    await expect(box).not.toBeChecked();
+    await expect(args.onCheckedChange).not.toHaveBeenCalled();
+});
 
 /** No `label` prop: a caller's bare `<label>` supplies the name. Clicking the text toggles exactly once. */
-export const WithLabel: Story = {
-    args: { name: 'dry' },
-    play: async ({ canvas, userEvent }) => {
+Default.test(
+    'clicking the label text toggles exactly once',
+    { args: { name: 'dry' } },
+    async ({ canvas, userEvent }) => {
         const box = canvas.getByRole('checkbox', { name: 'Dry the bin' });
         await userEvent.click(canvas.getByText('Dry the bin'));
         await expect(box).toBeChecked();
-    },
-};
+    }
+);
 
 /** Plain `useState`: starts mixed, the caller clears `indeterminate` on the first change. */
-export const Controlled: Story = {
+export const Controlled = meta.story({
     render: function Controlled(args) {
         const [checked, setChecked] = useState(false);
         const [indeterminate, setIndeterminate] = useState(true);
@@ -128,15 +119,16 @@ export const Controlled: Story = {
             </div>
         );
     },
-    play: async ({ canvas, args, userEvent }) => {
-        const box = canvas.getByRole('checkbox');
-        await expect(box).toHaveAttribute('aria-checked', 'mixed');
-        await userEvent.click(box);
-        await expect(box).toBeChecked();
-        await expect(args.onCheckedChange).toHaveBeenCalledWith(true, expect.anything());
-        await expect(canvas.getByText('checked: true · indeterminate: false')).toBeVisible();
-    },
-};
+});
+
+Controlled.test('caller clears indeterminate on the first change', async ({ canvas, args, userEvent }) => {
+    const box = canvas.getByRole('checkbox');
+    await expect(box).toHaveAttribute('aria-checked', 'mixed');
+    await userEvent.click(box);
+    await expect(box).toBeChecked();
+    await expect(args.onCheckedChange).toHaveBeenCalledWith(true, expect.anything());
+    await expect(canvas.getByText('checked: true · indeterminate: false')).toBeVisible();
+});
 
 const STATES = ['default', 'hover', 'pressed', 'focused', 'disabled'] as const;
 const STATUSES = ['unchecked', 'checked', 'indeterminate'] as const;
@@ -157,7 +149,17 @@ const FORCED: Record<(typeof STATES)[number], string> = {
  * Every size × status × state. Rest column ≈1.4:1 over the ground (WCAG 1.4.11 wants 3:1) — token defect,
  * shipped as drawn.
  */
-export const Matrix: Story = {
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            { name: 'Unchecked', type: 'figma', url: `${FIGMA}9185-4488` },
+            { name: 'Checked', type: 'figma', url: `${FIGMA}9183-5526` },
+            { name: 'Indeterminate', type: 'figma', url: `${FIGMA}9185-4452` },
+            { name: 'Disabled', type: 'figma', url: `${FIGMA}9183-5535` },
+        ],
+        // The one billed Chromatic snapshot for Checkbox (preview disables the rest).
+        chromatic: { disableSnapshot: false },
+    },
     render: function Matrix() {
         return (
             <div className="flex flex-col gap-xl">
@@ -199,4 +201,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

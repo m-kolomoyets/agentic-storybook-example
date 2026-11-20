@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { SegmentedControlItem } from './types';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { SegmentedControl } from '.';
 
@@ -11,7 +11,7 @@ const ITEMS: SegmentedControlItem[] = [
 ];
 
 /* No Figma node is referenced by the amber source. */
-const meta = {
+const meta = preview.meta({
     title: 'UI/SegmentedControl',
     component: SegmentedControl,
     args: {
@@ -46,54 +46,46 @@ const meta = {
             />
         );
     },
-} satisfies Meta<typeof SegmentedControl>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — switch value/disabled in Controls; the meta render keeps the selection live. */
+export const Default = meta.story();
 
 /** A named group of `aria-pressed` buttons; pressing one selects it, pressing it again keeps it. */
-export const Default: Story = {
-    play: async ({ canvas, userEvent, args }) => {
-        await expect(canvas.getByRole('group', { name: 'Notification channel' })).toBeInTheDocument();
-        await expect(canvas.getAllByRole('button')).toHaveLength(3);
-        await expect(canvas.getByRole('button', { name: 'Push & Text' })).toHaveAttribute('aria-pressed', 'true');
+Default.test('pressing selects; pressing again keeps it', async ({ canvas, userEvent, args }) => {
+    await expect(canvas.getByRole('group', { name: 'Notification channel' })).toBeInTheDocument();
+    await expect(canvas.getAllByRole('button')).toHaveLength(3);
+    await expect(canvas.getByRole('button', { name: 'Push & Text' })).toHaveAttribute('aria-pressed', 'true');
 
-        await userEvent.click(canvas.getByRole('button', { name: 'Push Only' }));
-        await expect(args.onValueChange).toHaveBeenCalledWith('PUSH_ONLY');
-        await expect(canvas.getByRole('button', { name: 'Push Only' })).toHaveAttribute('aria-pressed', 'true');
-        await expect(canvas.getByRole('button', { name: 'Push & Text' })).toHaveAttribute('aria-pressed', 'false');
+    await userEvent.click(canvas.getByRole('button', { name: 'Push Only' }));
+    await expect(args.onValueChange).toHaveBeenCalledWith('PUSH_ONLY');
+    await expect(canvas.getByRole('button', { name: 'Push Only' })).toHaveAttribute('aria-pressed', 'true');
+    await expect(canvas.getByRole('button', { name: 'Push & Text' })).toHaveAttribute('aria-pressed', 'false');
 
-        await userEvent.click(canvas.getByRole('button', { name: 'Push Only' }));
-        await expect(args.onValueChange).toHaveBeenCalledOnce();
-        await expect(canvas.getByRole('button', { name: 'Push Only' })).toHaveAttribute('aria-pressed', 'true');
-    },
-};
+    await userEvent.click(canvas.getByRole('button', { name: 'Push Only' }));
+    await expect(args.onValueChange).toHaveBeenCalledOnce();
+    await expect(canvas.getByRole('button', { name: 'Push Only' })).toHaveAttribute('aria-pressed', 'true');
+});
 
 /** `value={null}`: nothing pressed. */
-export const NoSelection: Story = {
-    args: { value: null },
-    play: async ({ canvas }) => {
-        for (const button of canvas.getAllByRole('button')) {
-            await expect(button).toHaveAttribute('aria-pressed', 'false');
-        }
-    },
-};
+Default.test('value null presses nothing', { args: { value: null } }, async ({ canvas }) => {
+    for (const button of canvas.getAllByRole('button')) {
+        await expect(button).toHaveAttribute('aria-pressed', 'false');
+    }
+});
 
 /** Whole group disabled: no press reaches `onValueChange`. */
-export const Disabled: Story = {
-    args: { disabled: true },
-    play: async ({ canvas, userEvent, args }) => {
-        await userEvent.click(canvas.getByRole('button', { name: 'Push Only' }));
-        await expect(args.onValueChange).not.toHaveBeenCalled();
-    },
-};
+Default.test('disabled group never emits', { args: { disabled: true } }, async ({ canvas, userEvent, args }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Push Only' }));
+    await expect(args.onValueChange).not.toHaveBeenCalled();
+});
 
 /** One item disabled. */
-export const ItemDisabled: Story = {
-    args: { items: [ITEMS[0]!, { ...ITEMS[1]!, disabled: true }, ITEMS[2]!] },
-    play: async ({ canvas }) => {
+Default.test(
+    'a disabled item disables one button only',
+    { args: { items: [ITEMS[0]!, { ...ITEMS[1]!, disabled: true }, ITEMS[2]!] } },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('button', { name: 'Text Messages' })).toBeDisabled();
         await expect(canvas.getByRole('button', { name: 'Push Only' })).toBeEnabled();
-    },
-};
+    }
+);

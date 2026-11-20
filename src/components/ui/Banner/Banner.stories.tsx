@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, userEvent, waitFor } from 'storybook/test';
+import preview from '#.storybook/preview';
+import { expect, fn, waitFor } from 'storybook/test';
 import { Banner } from '.';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
@@ -23,7 +23,7 @@ function fanItems(onClick: () => void) {
     });
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Banner',
     component: Banner,
     args: {
@@ -49,57 +49,56 @@ const meta = {
         },
     ],
     parameters: { design: { type: 'figma', url: `${FIGMA}8357-8017` } },
-} satisfies Meta<typeof Banner>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — switch status/orientation/role in Controls. Every visual cell lives in `Matrix`. */
+export const Default = meta.story();
 
 /** Standing advisory: no role by default, so it does not interrupt on load. Gradient edge on `default` only. */
-export const Default: Story = {
-    play: async ({ canvas, canvasElement }) => {
-        await expect(canvas.queryByRole('status')).toBeNull();
-        await expect(canvas.queryByRole('alert')).toBeNull();
-        await expect(canvasElement.querySelector('[role]')).toBeNull();
-        // `default` says nothing extra before the label.
-        await expect(canvas.getByText(LABEL).textContent).toBe(LABEL);
-    },
-};
+Default.test('has no role by default and says nothing before the label', async ({ canvas, canvasElement }) => {
+    await expect(canvas.queryByRole('status')).toBeNull();
+    await expect(canvas.queryByRole('alert')).toBeNull();
+    await expect(canvasElement.querySelector('[role]')).toBeNull();
+    // `default` says nothing extra before the label.
+    await expect(canvas.getByText(LABEL).textContent).toBe(LABEL);
+});
 
 /** Severity is said in words (sr-only "Error: "), not only by the fill (WCAG 1.4.1). `role` is forwarded verbatim. */
-export const NegativeAlert: Story = {
-    args: { status: 'negative', role: 'alert' },
-    play: async ({ canvas }) => {
+Default.test(
+    'negative alert says "Error:" in sr-only text',
+    { args: { status: 'negative', role: 'alert' } },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('alert')).toHaveTextContent(`Error: ${LABEL}`);
         await expect(canvas.getByText('Error:')).toHaveClass('sr-only');
-    },
-};
+    }
+);
 
-export const WarningStatus: Story = {
-    args: { status: 'warning', role: 'status' },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('status')).toHaveTextContent(`Warning: ${LABEL}`);
-    },
-};
+Default.test('warning status says "Warning:"', { args: { status: 'warning', role: 'status' } }, async ({ canvas }) => {
+    await expect(canvas.getByRole('status')).toHaveTextContent(`Warning: ${LABEL}`);
+});
 
 /** `neutral`: the grey `Updating` card, a command in flight. A plain advisory like `default`. */
-export const Neutral: Story = {
-    args: { status: 'neutral', role: 'status', label: 'Updating fan schedule…', descriptor: undefined },
-    play: async ({ canvas }) => {
+Default.test(
+    'neutral adds no severity prefix',
+    { args: { status: 'neutral', role: 'status', label: 'Updating fan schedule…', descriptor: undefined } },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('status').textContent?.startsWith('Updating')).toBe(true);
-    },
-};
+    }
+);
 
 /**
  * Horizontal: `sm` buttons in the header, primary first. Clicks stop propagating — a banner is dropped
  * into pages it knows nothing about.
  */
-export const HorizontalActions: Story = {
-    args: {
-        primaryAction: { label: 'Clear and Restart', onClick: fn() },
-        secondaryAction: { label: 'Run Diagnostics', onClick: fn() },
+Default.test(
+    'horizontal actions: primary first, clicks do not reach the page',
+    {
+        args: {
+            primaryAction: { label: 'Clear and Restart', onClick: fn() },
+            secondaryAction: { label: 'Run Diagnostics', onClick: fn() },
+        },
     },
-    play: async ({ canvas, canvasElement, args }) => {
+    async ({ canvas, canvasElement, args, userEvent }) => {
         // A page-level click listener: actions must not reach it.
         const onHostClick = fn();
         const host = canvasElement.ownerDocument.body;
@@ -113,47 +112,55 @@ export const HorizontalActions: Story = {
         await expect(args.secondaryAction?.onClick).toHaveBeenCalledOnce();
         host.removeEventListener('click', onHostClick);
         await expect(onHostClick).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
 /** Vertical: full-width `md` pair below the text, different inline padding (as drawn). */
-export const VerticalActions: Story = {
-    args: {
-        orientation: 'vertical',
-        status: 'negative',
-        primaryAction: { label: 'Clear and Restart', onClick: fn() },
-        secondaryAction: { label: 'Run Diagnostics', onClick: fn(), loading: true },
+Default.test(
+    'vertical actions: a loading action refuses activation',
+    {
+        args: {
+            orientation: 'vertical',
+            status: 'negative',
+            primaryAction: { label: 'Clear and Restart', onClick: fn() },
+            secondaryAction: { label: 'Run Diagnostics', onClick: fn(), loading: true },
+        },
     },
-    play: async ({ canvas, args }) => {
+    async ({ canvas, args, userEvent }) => {
         const busy = canvas.getByRole('button', { name: 'Run Diagnostics' });
         await expect(busy).toHaveAttribute('aria-busy', 'true');
         await userEvent.click(busy);
         await expect(args.secondaryAction?.onClick).not.toHaveBeenCalled();
         await userEvent.click(canvas.getByRole('button', { name: 'Clear and Restart' }));
         await expect(args.primaryAction?.onClick).toHaveBeenCalledOnce();
-    },
-};
+    }
+);
 
 /** A disabled action stays so the card still names the fix, but is inert. */
-export const DisabledAction: Story = {
-    args: { primaryAction: { label: 'Clear and Restart', onClick: fn(), disabled: true } },
-    play: async ({ canvas, args }) => {
+Default.test(
+    'a disabled action stays but is inert',
+    { args: { primaryAction: { label: 'Clear and Restart', onClick: fn(), disabled: true } } },
+    async ({ canvas, args }) => {
         const button = canvas.getByRole('button', { name: 'Clear and Restart' });
         await expect(button).toBeDisabled();
         await expect(args.primaryAction?.onClick).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
 /** Leading glyph (Figma `showAiIcon`) in its own column; decorative. */
-export const WithIcon: Story = {
-    args: { icon: <span aria-hidden="true">✦</span> },
-};
+Default.test(
+    'leading icon renders decoratively',
+    { args: { icon: <span aria-hidden="true">✦</span> } },
+    async ({ canvas }) => {
+        await expect(canvas.getByText('✦')).toHaveAttribute('aria-hidden', 'true');
+    }
+);
 
 /**
  * `Banner.Item` children make the header a disclosure trigger (Figma 11046:248194). The chevron is
  * decoration; Base UI puts the state on the trigger. Top-level actions stay while open (WCAG 3.2.2).
  */
-export const Collapsible: Story = {
+export const Collapsible = meta.story({
     args: {
         orientation: 'vertical',
         status: 'negative',
@@ -166,7 +173,11 @@ export const Collapsible: Story = {
         return <Banner {...args}>{fanItems(args.primaryAction?.onClick ?? (() => {}))}</Banner>;
     },
     parameters: { design: { type: 'figma', url: `${FIGMA}11046-248194` } },
-    play: async ({ canvas, canvasElement, args }) => {
+});
+
+Collapsible.test(
+    'header toggles the items; actions stay while open',
+    async ({ canvas, canvasElement, args, userEvent }) => {
         const trigger = canvas.getByRole('button', { name: `Error: ${OFFLINE_LABEL} ${OFFLINE_DESCRIPTOR}` });
         await expect(trigger).toHaveAttribute('aria-expanded', 'false');
         await expect(canvasElement.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
@@ -183,30 +194,28 @@ export const Collapsible: Story = {
         await userEvent.click(canvas.getByRole('button', { name: 'Run Diagnostics on Fan 2' }));
         await expect(args.primaryAction?.onClick).toHaveBeenCalledOnce();
         await expect(trigger).toHaveAttribute('aria-expanded', 'true');
-    },
-};
+    }
+);
 
 /** `defaultOpen` — the drawn open cell. */
-export const CollapsibleOpen: Story = {
-    args: {
-        orientation: 'vertical',
-        status: 'warning',
-        label: OFFLINE_LABEL,
-        defaultOpen: true,
-        descriptor: undefined,
+Collapsible.test(
+    'defaultOpen starts expanded',
+    {
+        args: {
+            status: 'warning',
+            defaultOpen: true,
+            descriptor: undefined,
+            primaryAction: undefined,
+        },
     },
-    render: function CollapsibleOpen(args) {
-        return <Banner {...args}>{fanItems(() => {})}</Banner>;
-    },
-    parameters: { design: { type: 'figma', url: `${FIGMA}11046-248194` } },
-    play: async ({ canvas }) => {
+    async ({ canvas }) => {
         await expect(canvas.getByRole('button', { expanded: true })).toBeInTheDocument();
         await expect(canvas.getByText('Fan 3 is offline')).toBeVisible();
-    },
-};
+    }
+);
 
 /** Every status × orientation, for review against Figma. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
     render: function Matrix() {
         return (
             <div className="flex flex-col gap-l">
@@ -230,4 +239,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

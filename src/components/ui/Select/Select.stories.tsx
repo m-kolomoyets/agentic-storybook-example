@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ReactNode } from 'react';
 import type { SelectOption } from '@/components/ui/OptionList/types';
 import type { SelectProps } from './types';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn, waitFor, within } from 'storybook/test';
 import { Field } from '@/components/ui/Field';
 import { Select } from '.';
@@ -55,7 +55,7 @@ function rowsOf(canvasElement: HTMLElement) {
     });
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Select',
     component: Select,
     args: {
@@ -86,15 +86,14 @@ const meta = {
         // Desktop by default (vitest's 1200×900); `*OnMobile` stories pin a phone viewport for the sheet branch.
         design: { type: 'figma', url: `${FIGMA}8915-27414` },
     },
-} satisfies Meta<typeof Select>;
+});
 
-export default meta;
+/** Playground — a labelled trigger; behaviour is covered by the tests below. Every visual cell lives in `Matrix`. */
+export const Default = meta.story();
 
-type Story = StoryObj<typeof meta>;
-
-/** Closed, nothing selected. Opening shows the labelled listbox; a pick reports the value and fills the trigger. */
-export const Default: Story = {
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
+Default.test(
+    'opens a labelled listbox; a pick reports the value and fills the trigger',
+    async ({ canvas, canvasElement, args, userEvent }) => {
         const trigger = canvas.getByRole('combobox', { name: LABEL });
         await expect(trigger).toHaveTextContent('Select a grain');
         await expect(trigger).toHaveAttribute('aria-expanded', 'false');
@@ -113,25 +112,24 @@ export const Default: Story = {
         });
         await expect(trigger).toHaveTextContent('Wheat 3');
         await expect(args.onSearchChange).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
-/** A selection only swaps the placeholder for the label; border unchanged. Popup marks the row selected. */
-export const Filled: Story = {
-    args: { defaultValue: 'option-2' },
-    play: async ({ canvas, canvasElement, userEvent }) => {
+Default.test(
+    'selection swaps the placeholder and marks the row selected',
+    { args: { defaultValue: 'option-2' } },
+    async ({ canvas, canvasElement, userEvent }) => {
         const trigger = canvas.getByRole('combobox', { name: LABEL });
         await expect(trigger).toHaveTextContent('Wheat 3');
         await userEvent.click(trigger);
         const selected = await bodyOf(canvasElement).findByRole('option', { name: 'Wheat 3' });
         await expect(selected).toHaveAttribute('aria-selected', 'true');
-    },
-};
+    }
+);
 
-/** Trigger + 4px + popup with search on top, five rows visible. Figma popup: 8915:27188. */
-export const Open: Story = {
-    parameters: { design: { type: 'figma', url: `${FIGMA}8915-27188` } },
-    play: async ({ canvas, canvasElement, userEvent }) => {
+Default.test(
+    'popup opens below the trigger with search on top, five rows visible',
+    async ({ canvas, canvasElement, userEvent }) => {
         const trigger = canvas.getByRole('combobox', { name: LABEL });
         await userEvent.click(trigger);
         const body = bodyOf(canvasElement);
@@ -143,29 +141,26 @@ export const Open: Story = {
         await waitFor(() => {
             return expect(rowsOf(canvasElement).length).toBeGreaterThan(0);
         });
-    },
-};
+    }
+);
 
-/** Debounced search: the list and `onSearchChange` settle once typing pauses (250ms), not per keystroke. */
-export const Search: Story = {
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
-        await userEvent.click(canvas.getByRole('combobox', { name: LABEL }));
-        const search = await bodyOf(canvasElement).findByPlaceholderText('Search');
-        await userEvent.type(search, 'Corn');
-        await waitFor(() => {
-            return expect(args.onSearchChange).toHaveBeenCalledWith('Corn');
-        });
-        await expect(args.onSearchChange).toHaveBeenCalledTimes(1);
-        await waitFor(() => {
-            return expect(rowsOf(canvasElement)).toEqual(['Corn 1', 'Corn 7']);
-        });
-    },
-};
+Default.test('search is debounced (250ms), not per keystroke', async ({ canvas, canvasElement, args, userEvent }) => {
+    await userEvent.click(canvas.getByRole('combobox', { name: LABEL }));
+    const search = await bodyOf(canvasElement).findByPlaceholderText('Search');
+    await userEvent.type(search, 'Corn');
+    await waitFor(() => {
+        return expect(args.onSearchChange).toHaveBeenCalledWith('Corn');
+    });
+    await expect(args.onSearchChange).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+        return expect(rowsOf(canvasElement)).toEqual(['Corn 1', 'Corn 7']);
+    });
+});
 
-/** `searchDebounce={0}`: every keystroke filters and reports synchronously. */
-export const SearchUndebounced: Story = {
-    args: { searchDebounce: 0 },
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
+Default.test(
+    'searchDebounce={0} filters every keystroke',
+    { args: { searchDebounce: 0 } },
+    async ({ canvas, canvasElement, args, userEvent }) => {
         await userEvent.click(canvas.getByRole('combobox', { name: LABEL }));
         await userEvent.type(await bodyOf(canvasElement).findByPlaceholderText('Search'), 'Oa');
         await expect(args.onSearchChange).toHaveBeenNthCalledWith(1, 'O');
@@ -173,28 +168,25 @@ export const SearchUndebounced: Story = {
         await waitFor(() => {
             return expect(rowsOf(canvasElement)).toEqual(['Oats 5', 'Oats 11']);
         });
-    },
-};
+    }
+);
 
-/** Filter matches nothing: `emptyMessage` is announced through the mounted live region. */
-export const NoResults: Story = {
-    args: { emptyMessage: 'No grains match', searchDebounce: 0 },
-    play: async ({ canvas, canvasElement, userEvent }) => {
+Default.test(
+    'no match announces emptyMessage',
+    { args: { emptyMessage: 'No grains match', searchDebounce: 0 } },
+    async ({ canvas, canvasElement, userEvent }) => {
         await userEvent.click(canvas.getByRole('combobox', { name: LABEL }));
         const body = bodyOf(canvasElement);
         await userEvent.type(await body.findByPlaceholderText('Search'), 'Rye');
         await expect(await body.findByText('No grains match')).toBeVisible();
         await expect(rowsOf(canvasElement)).toEqual([]);
-    },
-};
+    }
+);
 
-/**
- * No search field and no typeahead (ADR-0003). Short lists only. The listbox takes focus on open, so arrow
- * keys move the highlight and Enter picks.
- */
-export const NotSearchable: Story = {
-    args: { items: oneLine(5), searchable: false },
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
+Default.test(
+    'not searchable: no search field, listbox takes focus (ADR-0003)',
+    { args: { items: oneLine(5), searchable: false } },
+    async ({ canvas, canvasElement, args, userEvent }) => {
         const trigger = canvas.getByRole('combobox', { name: LABEL });
         await userEvent.click(trigger);
         const body = bodyOf(canvasElement);
@@ -205,13 +197,13 @@ export const NotSearchable: Story = {
         });
         await userEvent.click(await body.findByRole('option', { name: 'Soybeans 2' }));
         await expect(args.onValueChange).toHaveBeenCalledWith('option-1');
-    },
-};
+    }
+);
 
-/** Keyboard only, no search field: open from the trigger, arrow to a row, Enter picks it. */
-export const NotSearchableKeyboard: Story = {
-    args: { items: oneLine(5), searchable: false },
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
+Default.test(
+    'not searchable: keyboard open, arrow, Enter picks',
+    { args: { items: oneLine(5), searchable: false } },
+    async ({ canvas, canvasElement, args, userEvent }) => {
         const trigger = canvas.getByRole('combobox', { name: LABEL });
         trigger.focus();
         await userEvent.keyboard('{ArrowDown}');
@@ -230,29 +222,30 @@ export const NotSearchableKeyboard: Story = {
         await waitFor(() => {
             return expect(trigger).toHaveTextContent('Soybeans 2');
         });
-    },
-};
+    }
+);
 
-/** Two-line rows; items with subtitles drive it (no `size` prop). Figma Big: 8750:15815. */
-export const TwoLine: Story = {
-    args: {
-        items: TWO_LINE_OPTIONS,
-        defaultValue: 'option-0',
-        placeholder: 'Select a bin',
-        searchPlaceholder: 'Search bins',
+Default.test(
+    'subtitles drive two-line rows',
+    {
+        args: {
+            items: TWO_LINE_OPTIONS,
+            defaultValue: 'option-0',
+            placeholder: 'Select a bin',
+            searchPlaceholder: 'Search bins',
+        },
     },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8750-15815` } },
-    play: async ({ canvas }) => {
+    async ({ canvas }) => {
         const trigger = canvas.getByRole('combobox', { name: LABEL });
         await expect(trigger).toHaveTextContent('Corn 1');
         await expect(trigger).toHaveTextContent('Bin 1 · 1200 BU');
-    },
-};
+    }
+);
 
-/** ~400 options (`SelectTimezone`'s size): virtualized, so only a window of rows mounts. */
-export const Large: Story = {
-    args: { items: oneLine(400) },
-    play: async ({ canvas, canvasElement, userEvent }) => {
+Default.test(
+    '~400 options are virtualized',
+    { args: { items: oneLine(400) } },
+    async ({ canvas, canvasElement, userEvent }) => {
         await userEvent.click(canvas.getByRole('combobox', { name: LABEL }));
         await bodyOf(canvasElement).findByRole('listbox');
         await waitFor(() => {
@@ -261,29 +254,43 @@ export const Large: Story = {
         await expect(rowsOf(canvasElement).length).toBeLessThan(40);
         const first = canvasElement.ownerDocument.querySelector('[role=option]');
         await expect(first).toHaveAttribute('aria-setsize', '400');
-    },
-};
+    }
+);
 
-/** Standalone error: red border only; messages live in `Field`. */
-export const Error: Story = {
-    args: { error: true },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('combobox', { name: LABEL })).toHaveAttribute('data-invalid');
-    },
-};
+Default.test('standalone error marks the trigger', { args: { error: true } }, async ({ canvas }) => {
+    await expect(canvas.getByRole('combobox', { name: LABEL })).toHaveAttribute('data-invalid');
+});
 
-/** `Border/control-disabled` and `text-text-disabled`; the trigger does not open. */
-export const Disabled: Story = {
-    args: { disabled: true, defaultValue: 'option-2' },
-    play: async ({ canvas }) => {
+Default.test(
+    'disabled trigger does not open',
+    { args: { disabled: true, defaultValue: 'option-2' } },
+    async ({ canvas }) => {
         const trigger = canvas.getByRole('combobox', { name: LABEL });
         await expect(trigger).toHaveAttribute('data-disabled');
         await expect(trigger).toHaveTextContent('Wheat 3');
-    },
-};
+    }
+);
+
+Default.test(
+    'loading swallows list keys but Escape closes (WCAG 2.1.2)',
+    { args: { loading: true } },
+    async ({ canvas, canvasElement, args, userEvent }) => {
+        await userEvent.click(canvas.getByRole('combobox', { name: LABEL }));
+        const body = bodyOf(canvasElement);
+        const search = await body.findByPlaceholderText('Search');
+        await expect(body.getByText('Loading results')).toBeInTheDocument();
+        search.focus();
+        await userEvent.keyboard('{ArrowDown}{Enter}');
+        await expect(args.onValueChange).not.toHaveBeenCalled();
+        await userEvent.keyboard('{Escape}');
+        await waitFor(() => {
+            return expect(body.queryByRole('listbox')).toBeNull();
+        });
+    }
+);
 
 /** `Field.Root invalid` reaches the trigger via context; `Field` owns the message. */
-export const InvalidField: Story = {
+export const InvalidField = meta.story({
     render: function Render(args) {
         return (
             <div className={COLUMN}>
@@ -297,32 +304,21 @@ export const InvalidField: Story = {
             </div>
         );
     },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('combobox', { name: LABEL })).toHaveAttribute('data-invalid');
-        await expect(canvas.getByText('Pick a grain')).toBeVisible();
-    },
-};
+});
 
-/** While `loading`, list keys are swallowed (no pick) but `Escape` still closes (WCAG 2.1.2). */
-export const Loading: Story = {
-    args: { loading: true },
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
-        await userEvent.click(canvas.getByRole('combobox', { name: LABEL }));
-        const body = bodyOf(canvasElement);
-        const search = await body.findByPlaceholderText('Search');
-        await expect(body.getByText('Loading results')).toBeInTheDocument();
-        search.focus();
-        await userEvent.keyboard('{ArrowDown}{Enter}');
-        await expect(args.onValueChange).not.toHaveBeenCalled();
-        await userEvent.keyboard('{Escape}');
-        await waitFor(() => {
-            return expect(body.queryByRole('listbox')).toBeNull();
-        });
-    },
-};
+InvalidField.test('trigger reads Field invalid and the message shows', async ({ canvas }) => {
+    await expect(canvas.getByRole('combobox', { name: LABEL })).toHaveAttribute('data-invalid');
+    await expect(canvas.getByText('Pick a grain')).toBeVisible();
+});
+
+InvalidField.test('mobile trigger reads Field invalid', { globals: MOBILE }, async ({ canvas }) => {
+    const trigger = canvas.getByRole('button', { name: /Select a grain/ });
+    await expect(trigger).toHaveAttribute('data-invalid');
+    await expect(trigger).toHaveAttribute('aria-invalid', 'true');
+});
 
 /** Async: the caller owns the rows (`filteredItems`) and `loading`; the "server" is a 300ms timer. */
-export const AsyncSearch: Story = {
+export const AsyncSearch = meta.story({
     render: function Render(args) {
         const [results, setResults] = useState<SelectOption[]>(OPTIONS);
         const [loading, setLoading] = useState(false);
@@ -354,15 +350,19 @@ export const AsyncSearch: Story = {
             </div>
         );
     },
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
+});
+
+AsyncSearch.test(
+    'caller-filtered rows replace the list after loading',
+    async ({ canvas, canvasElement, args, userEvent }) => {
         await userEvent.click(canvas.getByRole('combobox', { name: LABEL }));
         await userEvent.type(await bodyOf(canvasElement).findByPlaceholderText('Search'), 'barley');
         await expect(args.onSearchChange).toHaveBeenLastCalledWith('barley');
         await waitFor(() => {
             return expect(rowsOf(canvasElement)).toEqual(['Barley 4', 'Barley 10']);
         });
-    },
-};
+    }
+);
 
 function FocusAfterSelectHarness(args: SelectProps<string | number>) {
     function getNext() {
@@ -379,33 +379,29 @@ function FocusAfterSelectHarness(args: SelectProps<string | number>) {
 }
 
 /** `focusAfterSelect`: a pick moves focus to the next field instead of back to the trigger. */
-export const FocusAfterSelect: Story = {
+export const FocusAfterSelect = meta.story({
     args: { items: oneLine(3) },
     render: FocusAfterSelectHarness,
-    play: async ({ canvas, canvasElement, userEvent }) => {
-        await userEvent.click(canvas.getByRole('combobox', { name: LABEL }));
-        (await bodyOf(canvasElement).findByPlaceholderText('Search')).focus();
-        await userEvent.keyboard('{ArrowDown}{Enter}');
-        await waitFor(() => {
-            return expect(canvas.getByRole('textbox', { name: 'Next' })).toHaveFocus();
-        });
-    },
-};
+});
 
-/** …but `Escape` still returns focus to the trigger. */
-export const FocusAfterSelectEscape: Story = {
-    args: { items: oneLine(3) },
-    render: FocusAfterSelectHarness,
-    play: async ({ canvas, canvasElement, userEvent }) => {
-        const trigger = canvas.getByRole('combobox', { name: LABEL });
-        await userEvent.click(trigger);
-        (await bodyOf(canvasElement).findByPlaceholderText('Search')).focus();
-        await userEvent.keyboard('{Escape}');
-        await waitFor(() => {
-            return expect(trigger).toHaveFocus();
-        });
-    },
-};
+FocusAfterSelect.test('a pick moves focus to the next field', async ({ canvas, canvasElement, userEvent }) => {
+    await userEvent.click(canvas.getByRole('combobox', { name: LABEL }));
+    (await bodyOf(canvasElement).findByPlaceholderText('Search')).focus();
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+    await waitFor(() => {
+        return expect(canvas.getByRole('textbox', { name: 'Next' })).toHaveFocus();
+    });
+});
+
+FocusAfterSelect.test('Escape still returns focus to the trigger', async ({ canvas, canvasElement, userEvent }) => {
+    const trigger = canvas.getByRole('combobox', { name: LABEL });
+    await userEvent.click(trigger);
+    (await bodyOf(canvasElement).findByPlaceholderText('Search')).focus();
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+        return expect(trigger).toHaveFocus();
+    });
+});
 
 type StateName = 'default' | 'hover' | 'focused' | 'open' | 'error' | 'disabled';
 
@@ -422,7 +418,16 @@ const FORCED: Record<StateName, string> = {
 };
 
 /** Every trigger cell, both layouts. `hover`/`focused`/`open` borders are pinned via `className`. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
+    // The one billed Chromatic snapshot for Select (preview disables the rest).
+    parameters: {
+        design: [
+            { name: 'Trigger', type: 'figma', url: `${FIGMA}8915-27414` },
+            { name: 'Popup', type: 'figma', url: `${FIGMA}8915-27188` },
+            { name: 'Two-line', type: 'figma', url: `${FIGMA}8750-15815` },
+        ],
+        chromatic: { disableSnapshot: false },
+    },
     render: function Render() {
         return (
             <div className="flex flex-col gap-xl">
@@ -453,59 +458,47 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});
 
 /** Below `md` the trigger is a plain button opening a titled `SelectSheet`; a pick closes it. */
-export const DefaultOnMobile: Story = {
+export const DefaultOnMobile = meta.story({
     globals: MOBILE,
     parameters: { design: { type: 'figma', url: `${FIGMA}11165-148548` } },
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
-        const trigger = canvas.getByRole('button', { name: /Select a grain/ });
-        await expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
-        await userEvent.click(trigger);
-        const body = bodyOf(canvasElement);
-        const sheet = await body.findByRole('dialog', { name: 'Select a grain' });
-        await expect(trigger).toHaveAttribute('aria-expanded', 'true');
-        await userEvent.click(await within(sheet).findByRole('option', { name: 'Barley 4' }));
-        await expect(args.onValueChange).toHaveBeenCalledWith('option-3');
-        await waitFor(() => {
-            return expect(body.queryByRole('dialog')).toBeNull();
-        });
-        await expect(trigger).toHaveTextContent('Barley 4');
-    },
-};
+});
 
-/** `sheetTitle` / `sheetDescription` override the placeholder-derived heading. */
-export const SheetTitleOnMobile: Story = {
-    globals: MOBILE,
-    args: { sheetTitle: 'Choose grain', sheetDescription: 'Used for the bin forecast' },
-    play: async ({ canvas, canvasElement, userEvent }) => {
+DefaultOnMobile.test('opens a titled sheet; a pick closes it', async ({ canvas, canvasElement, args, userEvent }) => {
+    const trigger = canvas.getByRole('button', { name: /Select a grain/ });
+    await expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
+    await userEvent.click(trigger);
+    const body = bodyOf(canvasElement);
+    const sheet = await body.findByRole('dialog', { name: 'Select a grain' });
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    await userEvent.click(await within(sheet).findByRole('option', { name: 'Barley 4' }));
+    await expect(args.onValueChange).toHaveBeenCalledWith('option-3');
+    await waitFor(() => {
+        return expect(body.queryByRole('dialog')).toBeNull();
+    });
+    await expect(trigger).toHaveTextContent('Barley 4');
+});
+
+DefaultOnMobile.test(
+    'sheetTitle / sheetDescription override the heading',
+    { args: { sheetTitle: 'Choose grain', sheetDescription: 'Used for the bin forecast' } },
+    async ({ canvas, canvasElement, userEvent }) => {
         await userEvent.click(canvas.getByRole('button', { name: /Select a grain/ }));
         const sheet = await bodyOf(canvasElement).findByRole('dialog', { name: 'Choose grain' });
         await expect(within(sheet).getByText('Used for the bin forecast')).toBeVisible();
         await expect(within(sheet).getByRole('button', { name: 'Close choose grain' })).toBeVisible();
-    },
-};
+    }
+);
 
-/** The mobile trigger reads the kit `Field`'s `invalid` (Base UI never marks a plain button). */
-export const InvalidFieldOnMobile: Story = {
-    ...InvalidField,
-    globals: MOBILE,
-    play: async ({ canvas }) => {
-        const trigger = canvas.getByRole('button', { name: /Select a grain/ });
-        await expect(trigger).toHaveAttribute('data-invalid');
-        await expect(trigger).toHaveAttribute('aria-invalid', 'true');
-    },
-};
-
-/** The mobile trigger carries `data-disabled` itself, so the disabled styling applies on phones too. */
-export const DisabledOnMobile: Story = {
-    ...Disabled,
-    globals: MOBILE,
-    play: async ({ canvas }) => {
+DefaultOnMobile.test(
+    'mobile trigger carries data-disabled',
+    { args: { disabled: true, defaultValue: 'option-2' } },
+    async ({ canvas }) => {
         const trigger = canvas.getByRole('button', { name: /Wheat 3/ });
         await expect(trigger).toBeDisabled();
         await expect(trigger).toHaveAttribute('data-disabled');
         await expect(trigger).toHaveClass('data-disabled:border-border-control-disabled');
-    },
-};
+    }
+);

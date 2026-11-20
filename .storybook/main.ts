@@ -18,6 +18,8 @@ const config: StorybookConfig = {
     features: {
         // Required by addon-mcp docs toolset (docs-list / docs-show / docs-show-story).
         componentsManifest: true,
+        // CSF Next `story.test()`: behaviour tests nest under their story instead of being stories themselves.
+        experimentalTestSyntax: true,
     },
     viteFinal(viteConfig) {
         viteConfig.plugins = viteConfig.plugins?.flat().filter((plugin) => {

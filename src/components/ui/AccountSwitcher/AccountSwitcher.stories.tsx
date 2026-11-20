@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { SelectOption } from '@/components/ui/OptionList/types';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn, waitFor, within } from 'storybook/test';
 import { AccountSwitcher } from '.';
 
@@ -87,7 +87,7 @@ function triggerOf(canvasElement: HTMLElement) {
     return trigger;
 }
 
-const meta = {
+const meta = preview.type<{ args: StoryArgs }>().meta({
     title: 'UI/AccountSwitcher',
     args: {
         caption: CAPTION,
@@ -115,50 +115,50 @@ const meta = {
         // Desktop by default (vitest's 1200×900); `*OnMobile` stories pin a phone viewport for the sheet branch.
         design: { type: 'figma', url: `${FIGMA}12446-6418` },
     },
-} satisfies Meta<StoryArgs>;
+});
 
-export default meta;
+/** Playground — multi-account: the card is a trigger with the unfold chevron; current row is checked. */
+export const Default = meta.story();
 
-type Story = StoryObj<typeof meta>;
-
-/** Multi-account: card is a trigger with the unfold chevron. Opens a searchable list; current row is checked. */
-export const Default: Story = {
-    play: async ({ canvasElement, userEvent }) => {
-        const trigger = triggerOf(canvasElement);
-        await expect(trigger).toHaveTextContent('Amber Prod Test');
-        await expect(trigger).toHaveTextContent(CAPTION);
-        await userEvent.click(trigger);
-        const body = bodyOf(canvasElement);
-        await body.findByRole('listbox');
-        await expect(await body.findByRole('option', { name: 'Amber Prod Test' })).toHaveAttribute(
-            'aria-selected',
-            'true'
-        );
-    },
-};
+Default.test('opens a searchable list with the current row checked', async ({ canvasElement, userEvent }) => {
+    const trigger = triggerOf(canvasElement);
+    await expect(trigger).toHaveTextContent('Amber Prod Test');
+    await expect(trigger).toHaveTextContent(CAPTION);
+    await userEvent.click(trigger);
+    const body = bodyOf(canvasElement);
+    await body.findByRole('listbox');
+    await expect(await body.findByRole('option', { name: 'Amber Prod Test' })).toHaveAttribute('aria-selected', 'true');
+});
 
 /** Drawn `Single` cell: static card, no chevron, nothing to press. */
-export const Single: Story = {
-    args: { single: true },
-    play: async ({ canvas }) => {
+Default.test(
+    'single is a static card with nothing to press',
+    {
+        args: { single: true },
+    },
+    async ({ canvas }) => {
         await expect(canvas.getByText('Amber Prod Test')).toBeVisible();
         await expect(canvas.queryByRole('button')).toBeNull();
         await expect(canvas.queryByRole('combobox')).toBeNull();
-    },
-};
+    }
+);
 
 /** Long names truncate to one line. */
-export const LongName: Story = {
-    args: { initialValue: 'green-acres' },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'long names truncate to one line',
+    {
+        args: { initialValue: 'green-acres' },
+    },
+    async ({ canvasElement }) => {
         const name = within(triggerOf(canvasElement)).getByText(/Green Acres/);
         await expect(name.scrollWidth).toBeGreaterThan(name.clientWidth);
-    },
-};
+    }
+);
 
 /** Keyboard: Enter opens, typing filters (caller-side), arrows + Enter pick. */
-export const KeyboardPick: Story = {
-    play: async ({ canvasElement, args, userEvent }) => {
+Default.test(
+    'keyboard: Enter opens, typing filters, arrows + Enter pick',
+    async ({ canvasElement, args, userEvent }) => {
         triggerOf(canvasElement).focus();
         await userEvent.keyboard('{Enter}');
         const body = bodyOf(canvasElement);
@@ -173,47 +173,49 @@ export const KeyboardPick: Story = {
         await waitFor(() => {
             return expect(triggerOf(canvasElement)).toHaveTextContent('Decent Ag Co');
         });
-    },
-};
+    }
+);
 
 /** Re-picking the current account is not reported. */
-export const RepickCurrent: Story = {
-    play: async ({ canvasElement, args, userEvent }) => {
-        await userEvent.click(triggerOf(canvasElement));
-        await userEvent.click(await bodyOf(canvasElement).findByRole('option', { name: 'Amber Prod Test' }));
-        await expect(args.onValueChange).not.toHaveBeenCalled();
-    },
-};
+Default.test('re-picking the current account is not reported', async ({ canvasElement, args, userEvent }) => {
+    await userEvent.click(triggerOf(canvasElement));
+    const body = bodyOf(canvasElement);
+    await userEvent.click(await body.findByRole('option', { name: 'Amber Prod Test' }));
+    await expect(args.onValueChange).not.toHaveBeenCalled();
+    // Let the popup finish closing so axe doesn't catch its focus guards mid-exit.
+    await waitFor(() => {
+        return expect(body.queryByRole('listbox')).toBeNull();
+    });
+});
 
 /** Escape closes and clears the query it leaves behind. */
-export const EscapeClearsSearch: Story = {
-    play: async ({ canvasElement, args, userEvent }) => {
-        await userEvent.click(triggerOf(canvasElement));
-        const body = bodyOf(canvasElement);
-        await userEvent.type(await body.findByPlaceholderText('Search'), 'Co');
-        await userEvent.keyboard('{Escape}');
-        await waitFor(() => {
-            return expect(body.queryByRole('listbox')).toBeNull();
-        });
-        await expect(args.onSearchChange).toHaveBeenLastCalledWith('');
-    },
-};
+Default.test('Escape closes and clears the query it leaves behind', async ({ canvasElement, args, userEvent }) => {
+    await userEvent.click(triggerOf(canvasElement));
+    const body = bodyOf(canvasElement);
+    await userEvent.type(await body.findByPlaceholderText('Search'), 'Co');
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+        return expect(body.queryByRole('listbox')).toBeNull();
+    });
+    await expect(args.onSearchChange).toHaveBeenLastCalledWith('');
+});
 
 /** Drawn `No results for "…"` empty state. */
-export const NoResults: Story = {
-    play: async ({ canvasElement, userEvent }) => {
-        await userEvent.click(triggerOf(canvasElement));
-        const body = bodyOf(canvasElement);
-        await userEvent.type(await body.findByPlaceholderText('Search'), 'Beans Farm');
-        await expect(await body.findByText('No results for "Beans Farm"')).toBeVisible();
-        await expect(body.getByText('Try another search')).toBeVisible();
-    },
-};
+Default.test('no match shows the drawn empty state', async ({ canvasElement, userEvent }) => {
+    await userEvent.click(triggerOf(canvasElement));
+    const body = bodyOf(canvasElement);
+    await userEvent.type(await body.findByPlaceholderText('Search'), 'Beans Farm');
+    await expect(await body.findByText('No results for "Beans Farm"')).toBeVisible();
+    await expect(body.getByText('Try another search')).toBeVisible();
+});
 
 /** Spinner over the list while the caller's search is in flight. */
-export const Loading: Story = {
-    args: { loading: true },
-    play: async ({ canvasElement, userEvent }) => {
+Default.test(
+    'loading shows a spinner and keeps focus in search',
+    {
+        args: { loading: true },
+    },
+    async ({ canvasElement, userEvent }) => {
         await userEvent.click(triggerOf(canvasElement));
         const body = bodyOf(canvasElement);
         await expect(await body.findByText('Loading results')).toBeInTheDocument();
@@ -221,16 +223,19 @@ export const Loading: Story = {
         await waitFor(() => {
             return expect(search).toHaveFocus();
         });
-    },
-};
+    }
+);
 
 /** Disabled: greyed text, does not open. */
-export const Disabled: Story = {
-    args: { disabled: true },
-    play: async ({ canvasElement }) => {
-        await expect(triggerOf(canvasElement)).toHaveAttribute('data-disabled');
+Default.test(
+    'disabled trigger carries data-disabled',
+    {
+        args: { disabled: true },
     },
-};
+    async ({ canvasElement }) => {
+        await expect(triggerOf(canvasElement)).toHaveAttribute('data-disabled');
+    }
+);
 
 /* `:hover` / `:focus-visible` can't be reached statically; pinned with the ramp's own tokens. */
 const STATES = [
@@ -242,7 +247,7 @@ const STATES = [
 ];
 
 /** Closed column of the Figma set: Single, default, hover, focused, disabled. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
     render: function Render() {
         return (
             <div className="flex w-[296px] flex-col gap-l">
@@ -257,13 +262,17 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});
 
 /** Below `md` the card opens the `Switch Organization` sheet; a tap switches and closes. Figma: 13942:423473. */
-export const DefaultOnMobile: Story = {
+export const DefaultOnMobile = meta.story({
     globals: MOBILE,
     parameters: { design: { type: 'figma', url: `${FIGMA}13942-423473` } },
-    play: async ({ canvasElement, args, userEvent }) => {
+});
+
+DefaultOnMobile.test(
+    'opens the Switch Organization sheet; a tap switches and closes',
+    async ({ canvasElement, args, userEvent }) => {
         const trigger = triggerOf(canvasElement);
         await expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
         await userEvent.click(trigger);
@@ -276,17 +285,18 @@ export const DefaultOnMobile: Story = {
             return expect(body.queryByRole('dialog')).toBeNull();
         });
         await expect(trigger).toHaveTextContent('Elite Corn');
-    },
-};
+    }
+);
 
 /** Typing filters per keystroke; no match shows the sheet's empty state. */
-export const NoResultsOnMobile: Story = {
-    globals: MOBILE,
-    play: async ({ canvasElement, args, userEvent }) => {
+DefaultOnMobile.test(
+    "typing filters per keystroke; no match shows the sheet's empty state",
+    {},
+    async ({ canvasElement, args, userEvent }) => {
         await userEvent.click(triggerOf(canvasElement));
         const sheet = await bodyOf(canvasElement).findByRole('dialog');
         await userEvent.type(within(sheet).getByLabelText('Search organizations'), 'zzz');
         await expect(args.onSearchChange).toHaveBeenLastCalledWith('zzz');
         await expect(await within(sheet).findByRole('status')).toHaveTextContent('No organizations found');
-    },
-};
+    }
+);

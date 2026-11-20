@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { ReactNode } from 'react';
 import type { ButtonProps, ButtonVariant } from './types';
 import AddIcon from '@/assets/icons/add.svg?react';
 import ChevronDownIcon from '@/assets/icons/chevron-down.svg?react';
-import ModeEditIcon from '@/assets/icons/mode-edit.svg?react';
 import PlayIcon from '@/assets/icons/play.svg?react';
+import StarFourIcon from '@/assets/icons/star-four.svg?react';
+import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Button } from '.';
 
@@ -22,15 +21,20 @@ const VARIANTS: ButtonVariant[] = [
     'link-tertiary',
 ];
 
-function OnLightSurface(Story: () => ReactNode) {
-    return (
-        <div className="rounded-s bg-surface-tertiary p-l">
-            <Story />
-        </div>
-    );
-}
+/** Figma cell per variant — shown as tabs in the Design panel of `Matrix`. */
+const VARIANT_NODES: Record<ButtonVariant, string> = {
+    primary: '8696-12170',
+    'primary-on-surface': '9642-177476',
+    secondary: '8038-2005',
+    'secondary-elevated': '12963-8280',
+    destructive: '8274-18709',
+    remote: '9263-22344',
+    'link-primary': '8887-16205',
+    'link-secondary': '9275-43776',
+    'link-tertiary': '9315-49693',
+};
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Button',
     component: Button,
     args: { children: 'Save', variant: 'primary', onClick: fn() },
@@ -45,90 +49,22 @@ const meta = {
         render: { control: false },
     },
     parameters: { design: { type: 'figma', url: `${FIGMA}8696-12170` } },
-} satisfies Meta<typeof Button>;
+});
 
-export default meta;
+/** Playground — switch variant/size/state in Controls. Every visual cell lives in `Matrix`. */
+export const Default = meta.story();
 
-type Story = StoryObj<typeof meta>;
+Default.test('is a type=button that calls onClick', async ({ canvas, args, userEvent }) => {
+    const button = canvas.getByRole('button', { name: 'Save' });
+    await expect(button).toHaveAttribute('type', 'button');
+    await userEvent.click(button);
+    await expect(args.onClick).toHaveBeenCalledOnce();
+});
 
-export const Primary: Story = {
-    // Visual-regression smoke target (visual/README.md); swap for the real components/flows under comparison.
-    tags: ['vrt'],
-    play: async ({ canvas, args, userEvent }) => {
-        const button = canvas.getByRole('button', { name: 'Save' });
-        await expect(button).toHaveAttribute('type', 'button');
-        await userEvent.click(button);
-        await expect(args.onClick).toHaveBeenCalledOnce();
-    },
-};
-
-/** Figma `9642:177476`, on a light surface. Focus ring and loading spinner added over Figma (WCAG 2.4.7). */
-export const PrimaryOnSurface: Story = {
-    args: { variant: 'primary-on-surface', startIcon: <AddIcon /> },
-    decorators: [OnLightSurface],
-    parameters: { design: { type: 'figma', url: `${FIGMA}9642-177476` } },
-};
-
-export const Secondary: Story = {
-    args: { variant: 'secondary', startIcon: <PlayIcon /> },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8038-2005` } },
-};
-
-/** Figma `12963:8280` — size-locked 40px, drawn over imagery. */
-export const SecondaryElevated: Story = {
-    args: { variant: 'secondary-elevated', startIcon: <AddIcon />, children: 'Add Automator' },
-    decorators: [
-        function OverImage(Story) {
-            return (
-                <div className="rounded-s bg-linear-to-r from-surface-tertiary to-surface-card p-l">
-                    <Story />
-                </div>
-            );
-        },
-    ],
-    parameters: { design: { type: 'figma', url: `${FIGMA}12963-8280` } },
-};
-
-export const Destructive: Story = {
-    args: { variant: 'destructive', children: 'Delete' },
-    // color-contrast off: Figma-drawn white on `button-destructive-default` is 3.65:1 — design decision, tracked.
-    parameters: {
-        design: { type: 'figma', url: `${FIGMA}8274-18709` },
-        a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } },
-    },
-};
-
-/** Figma `9263:22344` — size-locked to 48px, both icon slots. */
-export const Remote: Story = {
-    args: { variant: 'remote', startIcon: <PlayIcon />, endIcon: <ChevronDownIcon />, children: '15 min' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}9263-22344` } },
-    play: async ({ canvas }) => {
-        const button = canvas.getByRole('button', { name: '15 min' });
-        await expect(button).toHaveClass('h-6xl');
-    },
-};
-
-export const LinkPrimary: Story = {
-    args: { variant: 'link-primary', children: 'View all' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8887-16205` } },
-};
-
-/** The on-light link — the toast's inline action. */
-export const LinkSecondary: Story = {
-    args: { variant: 'link-secondary', size: 'sm', children: 'Undo' },
-    decorators: [OnLightSurface],
-    parameters: { design: { type: 'figma', url: `${FIGMA}9275-43776` } },
-};
-
-export const LinkTertiary: Story = {
-    args: { variant: 'link-tertiary', children: 'Skip' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}9315-49693` } },
-};
-
-/** Busy, not disabled: stays focusable, keeps its name, refuses activation, one spinner per slot. */
-export const Loading: Story = {
-    args: { loading: true, startIcon: <PlayIcon />, endIcon: <ChevronDownIcon /> },
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
+Default.test(
+    'loading stays focusable, keeps its name, refuses activation, one spinner per slot',
+    { args: { loading: true, startIcon: <PlayIcon />, endIcon: <ChevronDownIcon /> } },
+    async ({ canvas, canvasElement, args, userEvent }) => {
         const button = canvas.getByRole('button', { name: 'Save' });
         await expect(button).not.toBeDisabled();
         await expect(button).toHaveAttribute('aria-busy', 'true');
@@ -138,76 +74,50 @@ export const Loading: Story = {
         await expect(button).toHaveFocus();
         await userEvent.click(button);
         await expect(args.onClick).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
-/** Without an icon slot, loading still shows one spinner in the leading slot. */
-export const LoadingWithoutIcon: Story = {
-    args: { loading: true },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'loading without icons shows one leading spinner',
+    { args: { loading: true } },
+    async ({ canvasElement }) => {
         await expect(canvasElement.querySelectorAll('.animate-spin')).toHaveLength(1);
-    },
-};
+    }
+);
 
-/** The one state that leaves the tab order. */
-export const Disabled: Story = {
-    args: { disabled: true, startIcon: <PlayIcon /> },
-    play: async ({ canvas }) => {
-        const button = canvas.getByRole('button', { name: 'Save' });
-        await expect(button).toBeDisabled();
-        await expect(button).toHaveAttribute('aria-disabled', 'true');
-    },
-};
+Default.test('disabled leaves the tab order', { args: { disabled: true } }, async ({ canvas }) => {
+    const button = canvas.getByRole('button', { name: 'Save' });
+    await expect(button).toBeDisabled();
+    await expect(button).toHaveAttribute('aria-disabled', 'true');
+});
 
-export const WithIcons: Story = {
-    render: function WithIcons(args) {
-        return (
-            <div className="flex items-center gap-l">
-                <Button {...args} variant="secondary" startIcon={<AddIcon />}>
-                    Start only
-                </Button>
-                <Button {...args} variant="secondary" endIcon={<ChevronDownIcon />}>
-                    End only
-                </Button>
-                <Button {...args} variant="secondary" startIcon={<PlayIcon />} endIcon={<ChevronDownIcon />}>
-                    Both
-                </Button>
-            </div>
-        );
-    },
-};
+Default.test('caller-set aria-busy survives when not loading', { args: { 'aria-busy': true } }, async ({ canvas }) => {
+    await expect(canvas.getByRole('button', { name: 'Save' })).toHaveAttribute('aria-busy', 'true');
+});
 
-/** Stretches with content centred. */
-export const FullWidth: Story = {
-    args: { variant: 'remote', fullWidth: true, startIcon: <ModeEditIcon />, children: 'Edit' },
-    parameters: { layout: 'padded' },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('button', { name: 'Edit' })).toHaveClass('w-full');
-    },
-};
+Default.test('remote is size-locked to 48px', { args: { variant: 'remote' } }, async ({ canvas }) => {
+    await expect(canvas.getByRole('button', { name: 'Save' })).toHaveClass('h-6xl');
+});
+
+Default.test('fullWidth stretches', { args: { fullWidth: true } }, async ({ canvas }) => {
+    await expect(canvas.getByRole('button', { name: 'Save' })).toHaveClass('w-full');
+});
 
 /** `render` swaps the element; `type`/`disabled` are held back and `aria-disabled` carries the state. */
-export const AsLink: Story = {
+export const AsLink = meta.story({
     // Content is supplied by Button through `useRender`.
     // eslint-disable-next-line jsx-a11y-x/anchor-has-content
     args: { render: <a href="#settings" />, variant: 'secondary', disabled: true, children: 'Settings' },
-    play: async ({ canvas, args, userEvent }) => {
-        const link = canvas.getByRole('link', { name: 'Settings' });
-        await expect(link).not.toHaveAttribute('disabled');
-        await expect(link).not.toHaveAttribute('type');
-        await expect(link).toHaveAttribute('aria-disabled', 'true');
-        await userEvent.click(link);
-        await expect(args.onClick).not.toHaveBeenCalled();
-    },
-};
+});
 
-/** A caller-set `aria-busy` survives when not loading. */
-export const CallerBusy: Story = {
-    args: { 'aria-busy': true },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('button', { name: 'Save' })).toHaveAttribute('aria-busy', 'true');
-    },
-};
+AsLink.test('disabled link keeps no button attrs and refuses activation', async ({ canvas, args, userEvent }) => {
+    const link = canvas.getByRole('link', { name: 'Settings' });
+    await expect(link).not.toHaveAttribute('disabled');
+    await expect(link).not.toHaveAttribute('type');
+    await expect(link).toHaveAttribute('aria-disabled', 'true');
+    await userEvent.click(link);
+    await expect(args.onClick).not.toHaveBeenCalled();
+});
 
 type StateName = 'default' | 'hover' | 'focused' | 'pressed' | 'loading' | 'disabled';
 
@@ -289,9 +199,19 @@ function StateRow({ label, onLight = false, ...props }: RowProps) {
 const GRID = 'grid grid-cols-7 items-center gap-l';
 
 /** Every legal variant × size × state cell, for review against Figma. Illegal cells don't typecheck. */
-export const Matrix: Story = {
-    // color-contrast off: the destructive cells are 3.65:1 (Figma colour) — see `Destructive`. Other rules still run.
-    parameters: { layout: 'padded', a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } } },
+export const Matrix = meta.story({
+    // Visual-regression target (visual/README.md). On a test-free story: `story.test()` children inherit tags.
+    tags: ['vrt'],
+    parameters: {
+        layout: 'padded',
+        design: VARIANTS.map((variant) => {
+            return { name: variant, type: 'figma', url: `${FIGMA}${VARIANT_NODES[variant]}` };
+        }),
+        // The one billed Chromatic snapshot for Button (preview disables the rest).
+        chromatic: { disableSnapshot: false },
+        // color-contrast off: Figma-drawn white on `button-destructive-default` is 3.65:1 — design decision, tracked.
+        a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } },
+    },
     render: function Matrix() {
         return (
             <div className="flex flex-col gap-xl">
@@ -308,7 +228,7 @@ export const Matrix: Story = {
                             );
                         });
                     })}
-                    <StateRow label="remote" variant="remote" startIcon={<PlayIcon />} />
+                    <StateRow label="remote" variant="remote" startIcon={<PlayIcon />} endIcon={<ChevronDownIcon />} />
                     <StateRow label="secondary-elevated" variant="secondary-elevated" startIcon={<AddIcon />} />
                     {(['link-primary', 'link-tertiary'] as const).map((variant) => {
                         return (['md', 'sm'] as const).map((size) => {
@@ -341,4 +261,14 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});
+
+/** Held to Figma `Size=Medium, State=Default` (8728:14523) by `pnpm vrt figma` — content mirrors the Figma cell. */
+export const FigmaMdDefault = meta.story({
+    tags: ['figma', '!autodocs'],
+    args: { size: 'md', children: 'Generate Automations', startIcon: <StarFourIcon />, endIcon: <StarFourIcon /> },
+    parameters: {
+        design: { type: 'figma', url: `${FIGMA}8728-14523` },
+        figmaRef: { url: `${FIGMA}8728-14523` },
+    },
+});

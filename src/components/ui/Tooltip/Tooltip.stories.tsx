@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { MockInstance } from 'storybook/test';
 import type { TooltipContentProps } from './types';
+import preview from '#.storybook/preview';
 import { userEvent as baseUserEvent, expect, fn, spyOn, waitFor, within } from 'storybook/test';
 import { Tooltip } from '.';
 
@@ -27,7 +27,7 @@ function spyOnConsoleError() {
 
 type StoryArgs = TooltipContentProps & { onOpenChange?: (open: boolean) => void; disabled?: boolean };
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Tooltip',
     component: Tooltip.Content,
     args: { side: 'top', align: 'center', children: null },
@@ -37,7 +37,7 @@ const meta = {
         children: { control: false },
     },
     beforeEach: spyOnConsoleError,
-    render: function Default({ onOpenChange, disabled, ...content }) {
+    render: function Default({ onOpenChange, disabled, ...content }: StoryArgs) {
         return (
             <Tooltip.Root onOpenChange={onOpenChange} disabled={disabled}>
                 <Tooltip.Trigger
@@ -63,16 +63,70 @@ const meta = {
         },
     ],
     parameters: { design: { type: 'figma', url: `${FIGMA}11246-6661` } },
-} satisfies Meta<StoryArgs>;
+});
 
-export default meta;
+/** Controlled `open`, as a coach mark would drive it. */
+function Open({ onOpenChange: _onOpenChange, disabled: _disabled, ...content }: StoryArgs) {
+    return (
+        <Tooltip.Root open>
+            <Tooltip.Trigger className={TRIGGER_CLASSES}>Cooling potential</Tooltip.Trigger>
+            <Tooltip.Content {...content}>
+                <Tooltip.Title>{TITLE}</Tooltip.Title>
+                <Tooltip.Descriptor>{DESCRIPTOR}</Tooltip.Descriptor>
+            </Tooltip.Content>
+        </Tooltip.Root>
+    );
+}
 
-type Story = StoryObj<typeof meta>;
+/** Any element via `render`; a link takes focus and opens the card. */
+function LinkTrigger() {
+    return (
+        <Tooltip.Root>
+            <Tooltip.Trigger render={<a href="#cooling" className="underline" aria-label="Cooling" />}>
+                Cooling
+            </Tooltip.Trigger>
+            <Tooltip.Content>
+                <Tooltip.Title>{TITLE}</Tooltip.Title>
+            </Tooltip.Content>
+        </Tooltip.Root>
+    );
+}
+
+/** Dev guards: a `<span>` trigger cannot take focus; an icon-only trigger has no name; an empty card. */
+function DevGuards() {
+    return (
+        <div className="flex gap-xl">
+            <Tooltip.Root>
+                <Tooltip.Trigger render={<span />}>A span</Tooltip.Trigger>
+                <Tooltip.Content>
+                    <Tooltip.Title>{TITLE}</Tooltip.Title>
+                </Tooltip.Content>
+            </Tooltip.Root>
+            <Tooltip.Root>
+                <Tooltip.Trigger className={TRIGGER_CLASSES}>
+                    <svg aria-hidden className="size-l" />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                    <Tooltip.Title>{TITLE}</Tooltip.Title>
+                </Tooltip.Content>
+            </Tooltip.Root>
+            <Tooltip.Root open>
+                <Tooltip.Trigger className={TRIGGER_CLASSES}>Empty card</Tooltip.Trigger>
+                <Tooltip.Content>{null}</Tooltip.Content>
+            </Tooltip.Root>
+        </div>
+    );
+}
+
+/** Playground — focus or hover the trigger; switch side/align in Controls. */
+export const Default = meta.story({
+    args: { onOpenChange: fn() },
+});
 
 /** Keyboard focus opens instantly; Escape closes (WCAG 1.4.13). The card is not wired to the trigger. */
-export const Default: Story = {
-    args: { onOpenChange: fn() },
-    play: async ({ canvas, canvasElement, userEvent, args }) => {
+Default.test(
+    'focus opens instantly; Escape closes; trigger is not described by the card',
+    async ({ canvas, canvasElement, userEvent, args }) => {
         const body = within(canvasElement.ownerDocument.body);
         await userEvent.tab();
         await waitFor(() => {
@@ -93,12 +147,13 @@ export const Default: Story = {
         });
         await expect(args.onOpenChange).toHaveBeenLastCalledWith(false, expect.anything());
         await expect(consoleError).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
 /** Hover opens after Base UI's 600ms delay, and the pointer can travel into the card without closing it. */
-export const Hover: Story = {
-    play: async ({ canvas, canvasElement, userEvent }) => {
+Default.test(
+    'hover opens after a delay; the pointer can enter the card',
+    async ({ canvas, canvasElement, userEvent }) => {
         const body = within(canvasElement.ownerDocument.body);
         await userEvent.hover(canvas.getByRole('button'));
         await waitFor(
@@ -113,45 +168,63 @@ export const Hover: Story = {
             setTimeout(resolve, 300);
         });
         await expect(body.getByText(TITLE)).toBeVisible();
-    },
-};
+    }
+);
 
 /** `disabled` stops it opening without disabling the trigger. */
-export const Disabled: Story = {
-    args: { disabled: true },
-    play: async ({ canvas, canvasElement, userEvent }) => {
+Default.test(
+    'disabled never opens but the trigger stays focusable',
+    { args: { disabled: true } },
+    async ({ canvas, canvasElement, userEvent }) => {
         await userEvent.tab();
         await expect(canvas.getByRole('button')).toHaveFocus();
         await new Promise((resolve) => {
             setTimeout(resolve, 200);
         });
         await expect(within(canvasElement.ownerDocument.body).queryByText(TITLE)).toBeNull();
-    },
-};
+    }
+);
 
-/** Controlled `open`, as a coach mark would drive it. */
-export const Open: Story = {
-    render: function Open(content) {
-        return (
-            <Tooltip.Root open>
-                <Tooltip.Trigger className={TRIGGER_CLASSES}>Cooling potential</Tooltip.Trigger>
-                <Tooltip.Content {...content}>
-                    <Tooltip.Title>{TITLE}</Tooltip.Title>
-                    <Tooltip.Descriptor>{DESCRIPTOR}</Tooltip.Descriptor>
-                </Tooltip.Content>
-            </Tooltip.Root>
-        );
+Default.test('controlled open card: 8px radius, 280px cap', { render: Open }, async ({ canvasElement }) => {
+    const title = await within(canvasElement.ownerDocument.body).findByText(TITLE);
+    const card = title.parentElement!;
+    await expect(getComputedStyle(card).borderRadius).toBe('8px');
+    await expect(card.getBoundingClientRect().width).toBeLessThanOrEqual(280);
+});
+
+Default.test(
+    'a link trigger takes focus and opens the card',
+    { render: LinkTrigger },
+    async ({ canvas, canvasElement, userEvent }) => {
+        const link = canvas.getByRole('link', { name: 'Cooling' });
+        await userEvent.tab();
+        await expect(await within(canvasElement.ownerDocument.body).findByText(TITLE)).toBeInTheDocument();
+        await expect(link).toHaveFocus();
+    }
+);
+
+Default.test(
+    'dev guards warn on an unfocusable, unnamed or empty tooltip',
+    {
+        render: DevGuards,
+        // button-name off: the unnamed icon-only trigger is the deliberate mistake under test.
+        parameters: { a11y: { config: { rules: [{ id: 'button-name', enabled: false }] } } },
     },
-    play: async ({ canvasElement }) => {
-        const title = await within(canvasElement.ownerDocument.body).findByText(TITLE);
-        const card = title.parentElement!;
-        await expect(getComputedStyle(card).borderRadius).toBe('8px');
-        await expect(card.getBoundingClientRect().width).toBeLessThanOrEqual(280);
-    },
-};
+    async () => {
+        // Guards are dev-only: a production build (Chromatic) strips them.
+        if (!import.meta.env.DEV) {
+            return;
+        }
+        await waitFor(() => {
+            return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('cannot take focus'));
+        });
+        await expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('no accessible name'));
+        await expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('neither <Tooltip.Title>'));
+    }
+);
 
 /** No placement is drawn; Base UI flips on collision. */
-export const Placements: Story = {
+export const Placements = meta.story({
     render: function Placements() {
         return (
             <div className="flex flex-wrap items-center justify-center gap-xl">
@@ -177,10 +250,10 @@ export const Placements: Story = {
             );
         },
     ],
-};
+});
 
 /** 280px is a cap: a title-only card hugs; long copy wraps; rich `ReactNode` content is fine. */
-export const Content: Story = {
+export const Content = meta.story({
     render: function Content() {
         return (
             <div className="flex items-start gap-8xl pt-8xl">
@@ -210,73 +283,11 @@ export const Content: Story = {
             </div>
         );
     },
-    play: async ({ canvasElement }) => {
-        const body = within(canvasElement.ownerDocument.body);
-        const short = (await body.findByText('Fan on')).parentElement!;
-        await expect(short.getBoundingClientRect().width).toBeLessThan(200);
-        await expect(consoleError).not.toHaveBeenCalled();
-    },
-};
+});
 
-/** Any element via `render`; a link takes focus and opens the card. */
-export const LinkTrigger: Story = {
-    render: function LinkTrigger() {
-        return (
-            <Tooltip.Root>
-                <Tooltip.Trigger render={<a href="#cooling" className="underline" aria-label="Cooling" />}>
-                    Cooling
-                </Tooltip.Trigger>
-                <Tooltip.Content>
-                    <Tooltip.Title>{TITLE}</Tooltip.Title>
-                </Tooltip.Content>
-            </Tooltip.Root>
-        );
-    },
-    play: async ({ canvas, canvasElement, userEvent }) => {
-        const link = canvas.getByRole('link', { name: 'Cooling' });
-        await userEvent.tab();
-        await expect(await within(canvasElement.ownerDocument.body).findByText(TITLE)).toBeInTheDocument();
-        await expect(link).toHaveFocus();
-    },
-};
-
-/** Dev guards: a `<span>` trigger cannot take focus; an icon-only trigger has no name; an empty card. */
-export const DevGuards: Story = {
-    render: function DevGuards() {
-        return (
-            <div className="flex gap-xl">
-                <Tooltip.Root>
-                    <Tooltip.Trigger render={<span />}>A span</Tooltip.Trigger>
-                    <Tooltip.Content>
-                        <Tooltip.Title>{TITLE}</Tooltip.Title>
-                    </Tooltip.Content>
-                </Tooltip.Root>
-                <Tooltip.Root>
-                    <Tooltip.Trigger className={TRIGGER_CLASSES}>
-                        <svg aria-hidden className="size-l" />
-                    </Tooltip.Trigger>
-                    <Tooltip.Content>
-                        <Tooltip.Title>{TITLE}</Tooltip.Title>
-                    </Tooltip.Content>
-                </Tooltip.Root>
-                <Tooltip.Root open>
-                    <Tooltip.Trigger className={TRIGGER_CLASSES}>Empty card</Tooltip.Trigger>
-                    <Tooltip.Content>{null}</Tooltip.Content>
-                </Tooltip.Root>
-            </div>
-        );
-    },
-    // button-name off: the unnamed icon-only trigger is the deliberate mistake under test.
-    parameters: { a11y: { config: { rules: [{ id: 'button-name', enabled: false }] } } },
-    play: async () => {
-        // Guards are dev-only: a production build (Chromatic) strips them.
-        if (!import.meta.env.DEV) {
-            return;
-        }
-        await waitFor(() => {
-            return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('cannot take focus'));
-        });
-        await expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('no accessible name'));
-        await expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('neither <Tooltip.Title>'));
-    },
-};
+Content.test('a title-only card hugs its content', async ({ canvasElement }) => {
+    const body = within(canvasElement.ownerDocument.body);
+    const short = (await body.findByText('Fan on')).parentElement!;
+    await expect(short.getBoundingClientRect().width).toBeLessThan(200);
+    await expect(consoleError).not.toHaveBeenCalled();
+});

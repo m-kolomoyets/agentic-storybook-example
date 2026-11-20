@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Radio } from '@/components/ui/Radio';
 import { RadioGroup } from '.';
@@ -29,7 +29,7 @@ function FanOptions() {
 }
 
 /** Figma draws no group; the link is the radio set the children come from. */
-const meta = {
+const meta = preview.meta({
     title: 'UI/RadioGroup',
     component: RadioGroup,
     args: {
@@ -53,49 +53,57 @@ const meta = {
             </div>
         );
     },
-} satisfies Meta<typeof RadioGroup>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — toggle disabled in Controls; behaviour is covered by the tests below. */
+export const Default = meta.story();
 
 /** `role="radiogroup"`, one tab stop for the whole group. */
-export const Default: Story = {
-    play: async ({ canvas, userEvent }) => {
-        await expect(canvas.getByRole('radiogroup')).toBeInTheDocument();
-        await userEvent.tab();
-        await expect(canvas.getByRole('radio', { name: 'Automatic' })).toHaveFocus();
-        await userEvent.tab();
-        await expect(canvas.getByRole('button', { name: 'After' })).toHaveFocus();
-    },
-};
+Default.test('is a radiogroup with one tab stop', async ({ canvas, userEvent }) => {
+    await expect(canvas.getByRole('radiogroup')).toBeInTheDocument();
+    await userEvent.tab();
+    await expect(canvas.getByRole('radio', { name: 'Automatic' })).toHaveFocus();
+    await userEvent.tab();
+    await expect(canvas.getByRole('button', { name: 'After' })).toHaveFocus();
+});
 
 /** Arrows move focus **and** select (ARIA radiogroup), in both orientations, with wrap; `Home`/`End` inert. */
-export const KeyboardNav: Story = {
-    play: async ({ canvas, args, userEvent }) => {
-        await userEvent.tab();
-        await userEvent.keyboard('{ArrowDown}');
-        const manual = canvas.getByRole('radio', { name: 'Manual' });
-        await expect(manual).toHaveFocus();
-        await expect(manual).toBeChecked();
-        await expect(args.onValueChange).toHaveBeenCalledTimes(1);
-        await expect(args.onValueChange).toHaveBeenCalledWith('manual', expect.anything());
+Default.test('arrows move focus and select, with wrap; Home/End inert', async ({ canvas, args, userEvent }) => {
+    await userEvent.tab();
+    await userEvent.keyboard('{ArrowDown}');
+    const manual = canvas.getByRole('radio', { name: 'Manual' });
+    await expect(manual).toHaveFocus();
+    await expect(manual).toBeChecked();
+    await expect(args.onValueChange).toHaveBeenCalledTimes(1);
+    await expect(args.onValueChange).toHaveBeenCalledWith('manual', expect.anything());
 
-        await userEvent.keyboard('{End}');
-        await expect(manual).toHaveFocus();
-        await expect(canvas.getByRole('radio', { name: 'Off' })).not.toBeChecked();
+    await userEvent.keyboard('{End}');
+    await expect(manual).toHaveFocus();
+    await expect(canvas.getByRole('radio', { name: 'Off' })).not.toBeChecked();
 
-        await userEvent.keyboard('{ArrowUp}{ArrowUp}');
-        const off = canvas.getByRole('radio', { name: 'Off' });
-        await expect(off).toHaveFocus();
-        await expect(off).toBeChecked();
-        await userEvent.keyboard('{ArrowRight}');
-        await expect(canvas.getByRole('radio', { name: 'Automatic' })).toHaveFocus();
-    },
-};
+    await userEvent.keyboard('{ArrowUp}{ArrowUp}');
+    const off = canvas.getByRole('radio', { name: 'Off' });
+    await expect(off).toHaveFocus();
+    await expect(off).toBeChecked();
+    await userEvent.keyboard('{ArrowRight}');
+    await expect(canvas.getByRole('radio', { name: 'Automatic' })).toHaveFocus();
+});
+
+/** Group-level `disabled` reaches every radio. */
+Default.test(
+    'group-level disabled reaches every radio',
+    { args: { disabled: true } },
+    async ({ canvas, args, userEvent }) => {
+        for (const radio of canvas.getAllByRole('radio')) {
+            await expect(radio).toHaveAttribute('aria-disabled', 'true');
+        }
+        await userEvent.click(canvas.getByRole('radio', { name: 'Off' }));
+        await expect(args.onValueChange).not.toHaveBeenCalled();
+    }
+);
 
 /** Plain `useState`. */
-export const Controlled: Story = {
+export const Controlled = meta.story({
     render: function Controlled(args) {
         const [value, setValue] = useState<unknown>('manual');
 
@@ -115,21 +123,10 @@ export const Controlled: Story = {
             </div>
         );
     },
-    play: async ({ canvas, args, userEvent }) => {
-        await userEvent.click(canvas.getByRole('radio', { name: 'Off' }));
-        await expect(canvas.getByText('value: off')).toBeVisible();
-        await expect(args.onValueChange).toHaveBeenCalledWith('off', expect.anything());
-    },
-};
+});
 
-/** Group-level `disabled` reaches every radio. */
-export const Disabled: Story = {
-    args: { disabled: true },
-    play: async ({ canvas, args, userEvent }) => {
-        for (const radio of canvas.getAllByRole('radio')) {
-            await expect(radio).toHaveAttribute('aria-disabled', 'true');
-        }
-        await userEvent.click(canvas.getByRole('radio', { name: 'Off' }));
-        await expect(args.onValueChange).not.toHaveBeenCalled();
-    },
-};
+Controlled.test('a pick updates caller state and reports the value', async ({ canvas, args, userEvent }) => {
+    await userEvent.click(canvas.getByRole('radio', { name: 'Off' }));
+    await expect(canvas.getByText('value: off')).toBeVisible();
+    await expect(args.onValueChange).toHaveBeenCalledWith('off', expect.anything());
+});

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import preview from '#.storybook/preview';
 import { expect, waitFor } from 'storybook/test';
 import { Avatar } from '.';
 
@@ -23,61 +23,60 @@ const SIZES = [
     { label: '80', className: 'size-avatar-lg text-heading-s' },
 ];
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Avatar',
     component: Avatar,
     args: { children: 'J' },
     parameters: { design: { type: 'figma', url: `${FIGMA}10237-174118` } },
-} satisfies Meta<typeof Avatar>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — initials fallback; set `src`/`alt` in Controls. */
+export const Default = meta.story();
 
 /** Decorative by default: fallback `aria-hidden`, no `img` role, root carries no role. */
-export const Fallback: Story = {
-    args: { children: 'JS' },
-    play: async ({ canvasElement, canvas }) => {
+Default.test(
+    'fallback is decorative by default; root has no role',
+    { args: { children: 'JS' } },
+    async ({ canvasElement, canvas }) => {
         const root = canvasElement.querySelector('span');
         await expect(root).not.toHaveAttribute('role');
         await expect(root!.querySelector('span')).toHaveAttribute('aria-hidden', 'true');
         await expect(canvas.queryByRole('img')).toBeNull();
-    },
-};
+    }
+);
 
 /** `alt` names the fallback (`role="img"`); the root still has no role. */
-export const Labelled: Story = {
-    args: { children: 'JS', alt: 'Jane Smith' },
-    play: async ({ canvasElement, canvas }) => {
+Default.test(
+    'alt names the fallback as an image',
+    { args: { children: 'JS', alt: 'Jane Smith' } },
+    async ({ canvasElement, canvas }) => {
         await expect(canvas.getByRole('img', { name: 'Jane Smith' })).toBeInTheDocument();
         await expect(canvasElement.querySelector('span')).not.toHaveAttribute('role');
-    },
-};
+    }
+);
 
 /** Photo loads; its `alt` defaults to `''`. */
-export const Photo: Story = {
-    args: { src: PHOTO },
-    play: async ({ canvasElement }) => {
-        await waitFor(async () => {
-            await expect(canvasElement.querySelector('img')).toBeInTheDocument();
-        });
-        await expect(canvasElement.querySelector('img')).toHaveAttribute('alt', '');
-    },
-};
+Default.test('photo loads with an empty alt', { args: { src: PHOTO } }, async ({ canvasElement }) => {
+    await waitFor(async () => {
+        await expect(canvasElement.querySelector('img')).toBeInTheDocument();
+    });
+    await expect(canvasElement.querySelector('img')).toHaveAttribute('alt', '');
+});
 
 /** A failing `src` falls back to the initials. */
-export const BrokenPhoto: Story = {
-    args: { src: BROKEN_PHOTO },
-    play: async ({ canvasElement, canvas }) => {
+Default.test(
+    'a failing src falls back to the initials',
+    { args: { src: BROKEN_PHOTO } },
+    async ({ canvasElement, canvas }) => {
         await waitFor(async () => {
             await expect(canvas.getByText('J')).toBeInTheDocument();
         });
         await expect(canvasElement.querySelector('img')).toBeNull();
-    },
-};
+    }
+);
 
 /** 44 / 48 / 80, fallback and photo. The 80px size needs `text-heading-s` alongside it. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
     render: function Matrix() {
         return (
             <div className="grid grid-cols-[8rem_auto_auto] items-center gap-l">
@@ -97,4 +96,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import ErrorIcon from '@/assets/icons/error.svg?react';
 import { Input as BaseInput } from '@base-ui/react/input';
+import preview from '#.storybook/preview';
 import { expect } from 'storybook/test';
 import { cn } from '@/lib/cn';
 import { Field } from '.';
@@ -14,7 +14,7 @@ const CONTROL = `
     disabled:border-border-control-disabled disabled:text-text-disabled
 `;
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Field',
     component: Field.Root,
     args: { name: 'moisture', invalid: false, disabled: false },
@@ -42,61 +42,54 @@ const meta = {
             </Field.Root>
         );
     },
-} satisfies Meta<typeof Field.Root>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-/** Label, control, helper, 6px gaps. Description is wired into `aria-describedby`. */
-export const Default: Story = {
+/** Playground — toggle invalid/disabled in Controls. Label, control, helper, 6px gaps. */
+export const Default = meta.story({
     parameters: { design: { type: 'figma', url: `${FIGMA}8067-6605` } },
-    play: async ({ canvas }) => {
-        const control = canvas.getByLabelText('Moisture target');
-        const description = canvas.getByText('Percent, wet basis.');
-        await expect(control).toHaveAttribute('aria-describedby', expect.stringContaining(description.id));
-        await expect(canvas.queryByText('Must be between 8 and 25.')).toBeNull();
-    },
-};
+});
+
+/** Description is wired into `aria-describedby`. */
+Default.test('description is wired into aria-describedby; error hidden while valid', async ({ canvas }) => {
+    const control = canvas.getByLabelText('Moisture target');
+    const description = canvas.getByText('Percent, wet basis.');
+    await expect(control).toHaveAttribute('aria-describedby', expect.stringContaining(description.id));
+    await expect(canvas.queryByText('Must be between 8 and 25.')).toBeNull();
+});
 
 /** `Error` takes `Description`'s slot (same `Caption/Medium`); label stays full-strength. */
-export const Invalid: Story = {
-    args: { invalid: true },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8070-1208` } },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByText('Must be between 8 and 25.')).toBeVisible();
-        await expect(canvas.queryByText('Percent, wet basis.')).toBeNull();
-        await expect(canvas.getByLabelText('Moisture target')).toHaveAttribute('data-invalid');
-    },
-};
+Default.test('invalid swaps the description for the error', { args: { invalid: true } }, async ({ canvas }) => {
+    await expect(canvas.getByText('Must be between 8 and 25.')).toBeVisible();
+    await expect(canvas.queryByText('Percent, wet basis.')).toBeNull();
+    await expect(canvas.getByLabelText('Moisture target')).toHaveAttribute('data-invalid');
+});
 
 /** Label/helper stay `Text/primary` as drawn; only the body greys. */
-export const Disabled: Story = {
-    args: { disabled: true },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8070-1229` } },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByLabelText('Moisture target')).toBeDisabled();
-        await expect(canvas.getByText('Percent, wet basis.')).toBeVisible();
-    },
-};
+Default.test('disabled greys the control, helper stays visible', { args: { disabled: true } }, async ({ canvas }) => {
+    await expect(canvas.getByLabelText('Moisture target')).toBeDisabled();
+    await expect(canvas.getByText('Percent, wet basis.')).toBeVisible();
+});
 
 /** `showLabel=false`: the caller owes the control an `aria-label`. */
-export const WithoutLabel: Story = {
-    render: function Render(args) {
-        return (
-            <Field.Root {...args}>
-                <BaseInput aria-label="Moisture target" className={CONTROL} placeholder="Input Text" />
-                <Field.Description>Percent, wet basis.</Field.Description>
-            </Field.Root>
-        );
+Default.test(
+    'without a label the control is named by aria-label',
+    {
+        render: function Render(args) {
+            return (
+                <Field.Root {...args}>
+                    <BaseInput aria-label="Moisture target" className={CONTROL} placeholder="Input Text" />
+                    <Field.Description>Percent, wet basis.</Field.Description>
+                </Field.Root>
+            );
+        },
     },
-    play: async ({ canvas }) => {
+    async ({ canvas }) => {
         await expect(canvas.getByRole('textbox', { name: 'Moisture target' })).toBeInTheDocument();
-    },
-};
+    }
+);
 
 /** 16px glyph after the label, 4px gap. Meaning undefined in Figma, so no `icon` prop — pass a second child. */
-export const LabelIcon: Story = {
+export const LabelIcon = meta.story({
     parameters: { design: { type: 'figma', url: `${FIGMA}9675-189801` } },
     render: function Render(args) {
         return (
@@ -110,16 +103,23 @@ export const LabelIcon: Story = {
             </Field.Root>
         );
     },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('textbox', { name: 'Moisture target' })).toBeInTheDocument();
-    },
-};
+});
+
+LabelIcon.test('the glyph leaves the accessible name intact', async ({ canvas }) => {
+    await expect(canvas.getByRole('textbox', { name: 'Moisture target' })).toBeInTheDocument();
+});
 
 /**
  * valid / invalid / disabled × with / without helper.
  * Shipped as drawn: resting border ≈1.44:1 (WCAG 1.4.11 wants 3:1) — the fix belongs to the token.
  */
-export const Matrix: Story = {
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            { name: 'Invalid', type: 'figma', url: `${FIGMA}8070-1208` },
+            { name: 'Disabled', type: 'figma', url: `${FIGMA}8070-1229` },
+        ],
+    },
     decorators: [
         function Wide(Story) {
             return (
@@ -157,4 +157,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

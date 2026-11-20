@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import EyeIcon from '@/assets/icons/remove-red-eye.svg?react';
 import EyeOffIcon from '@/assets/icons/visibility-off.svg?react';
+import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Field } from '@/components/ui/Field';
 import { Input, InputAddonButton } from '.';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Input',
     component: Input,
     args: {
@@ -22,6 +22,8 @@ const meta = {
         type: { control: 'select', options: ['text', 'password', 'email', 'number', 'tel', 'url'] },
         error: { control: 'boolean' },
         disabled: { control: 'boolean' },
+        startAddon: { control: false },
+        endAddon: { control: false },
     },
     parameters: { design: { type: 'figma', url: `${FIGMA}8067-6633` } },
     decorators: [
@@ -33,49 +35,86 @@ const meta = {
             );
         },
     ],
-} satisfies Meta<typeof Input>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-/** Bare `Input` has no accessible name, hence `aria-label`. Clicking the body padding focuses the control. */
-export const Default: Story = {
+/**
+ * Playground — switch error/disabled/type in Controls. Every visual cell lives in `Matrix`.
+ * Bare `Input` has no accessible name, hence `aria-label`.
+ */
+export const Default = meta.story({
     parameters: { design: { type: 'figma', url: `${FIGMA}8067-6605` } },
-    play: async ({ canvas, args, userEvent }) => {
-        const control = canvas.getByRole('textbox', { name: 'Moisture target' });
-        await userEvent.click(control.parentElement!);
-        await expect(control).toHaveFocus();
-        await userEvent.keyboard('14');
-        await expect(control).toHaveValue('14');
-        await expect(args.onValueChange).toHaveBeenLastCalledWith('14', expect.anything());
-    },
-};
+});
+
+/** Clicking the body padding focuses the control. */
+Default.test('body click focuses the control; typing reports the value', async ({ canvas, args, userEvent }) => {
+    const control = canvas.getByRole('textbox', { name: 'Moisture target' });
+    await userEvent.click(control.parentElement!);
+    await expect(control).toHaveFocus();
+    await userEvent.keyboard('14');
+    await expect(control).toHaveValue('14');
+    await expect(args.onValueChange).toHaveBeenLastCalledWith('14', expect.anything());
+});
 
 /** Non-interactive addons focus the control when clicked — also inside a focusable ancestor (dialog popup). */
-export const WithAddons: Story = {
-    args: {
-        startAddon: <EyeIcon aria-hidden />,
-        endAddon: <span data-testid="unit">%</span>,
-    },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8067-6621` } },
-    decorators: [
-        function FocusableAncestor(Story) {
-            return (
-                <div role="dialog" aria-label="Edit bin" tabIndex={-1}>
-                    <Story />
-                </div>
-            );
+Default.test(
+    'addon click focuses the control inside a focusable ancestor',
+    {
+        args: {
+            startAddon: <EyeIcon aria-hidden />,
+            endAddon: <span data-testid="unit">%</span>,
         },
-    ],
-    play: async ({ canvas, userEvent }) => {
+        decorators: [
+            function FocusableAncestor(Story) {
+                return (
+                    <div role="dialog" aria-label="Edit bin" tabIndex={-1}>
+                        <Story />
+                    </div>
+                );
+            },
+        ],
+    },
+    async ({ canvas, userEvent }) => {
         await userEvent.click(canvas.getByTestId('unit'));
         await expect(canvas.getByRole('textbox', { name: 'Moisture target' })).toHaveFocus();
+    }
+);
+
+/** Value vs placeholder colour is free from `<input>`; `Filled` is not a state. */
+Default.test('defaultValue fills the control', { args: { defaultValue: 'Input Text' } }, async ({ canvas }) => {
+    await expect(canvas.getByRole('textbox')).toHaveValue('Input Text');
+});
+
+/** Standalone: red border, no message — the message needs a `Field` (see `InField`). */
+Default.test(
+    'standalone error marks the control',
+    { args: { error: true, defaultValue: 'Input Text' } },
+    async ({ canvas }) => {
+        await expect(canvas.getByRole('textbox')).toHaveAttribute('data-invalid');
+    }
+);
+
+/** Body click does not focus a disabled control; the trailing button can't be clicked (`pointer-events-none`). */
+Default.test(
+    'disabled ignores body clicks and blocks the trailing button',
+    {
+        args: {
+            disabled: true,
+            startAddon: <EyeIcon aria-hidden />,
+            endAddon: <InputAddonButton icon={<EyeIcon className="size-full" />} aria-label="Show password" />,
+        },
     },
-};
+    async ({ canvas, userEvent }) => {
+        const control = canvas.getByRole('textbox');
+        await userEvent.click(control.parentElement!);
+        await expect(control).not.toHaveFocus();
+        await expect(control).toBeDisabled();
+        const slot = canvas.getByRole('button', { name: 'Show password' }).parentElement!;
+        await expect(getComputedStyle(slot).pointerEvents).toBe('none');
+    }
+);
 
 /** Why slots are nodes, not icons: the designed trailing addon is a button. */
-export const PasswordToggle: Story = {
+export const PasswordToggle = meta.story({
     args: { 'aria-label': 'Password', placeholder: undefined },
     parameters: { design: { type: 'figma', url: `${FIGMA}8067-6628` } },
     render: function PasswordToggle(args) {
@@ -99,7 +138,11 @@ export const PasswordToggle: Story = {
             />
         );
     },
-    play: async ({ canvas, canvasElement, userEvent }) => {
+});
+
+PasswordToggle.test(
+    'toggle reveals the value and keeps focus on itself',
+    async ({ canvas, canvasElement, userEvent }) => {
         const control = canvasElement.querySelector('input')!;
         await expect(control).toHaveAttribute('type', 'password');
         const reveal = canvas.getByRole('button', { name: 'Show password' });
@@ -108,47 +151,11 @@ export const PasswordToggle: Story = {
         await expect(control).toHaveAttribute('type', 'text');
         // The addon keeps its own click: focus stays on the button, not the control.
         await expect(canvas.getByRole('button', { name: 'Hide password' })).toHaveFocus();
-    },
-};
-
-/** Value vs placeholder colour is free from `<input>`; `Filled` is not a state. */
-export const Filled: Story = {
-    args: { defaultValue: 'Input Text' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8070-1199` } },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('textbox')).toHaveValue('Input Text');
-    },
-};
-
-/** Standalone: red border, no message — the message needs a `Field` (see `InField`). */
-export const Error: Story = {
-    args: { error: true, defaultValue: 'Input Text' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8070-1208` } },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('textbox')).toHaveAttribute('data-invalid');
-    },
-};
-
-/** Body click does not focus a disabled control; the trailing button can't be clicked (`pointer-events-none`). */
-export const Disabled: Story = {
-    args: {
-        disabled: true,
-        startAddon: <EyeIcon aria-hidden />,
-        endAddon: <InputAddonButton icon={<EyeIcon className="size-full" />} aria-label="Show password" />,
-    },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8070-1229` } },
-    play: async ({ canvas, userEvent }) => {
-        const control = canvas.getByRole('textbox');
-        await userEvent.click(control.parentElement!);
-        await expect(control).not.toHaveFocus();
-        await expect(control).toBeDisabled();
-        const slot = canvas.getByRole('button', { name: 'Show password' }).parentElement!;
-        await expect(getComputedStyle(slot).pointerEvents).toBe('none');
-    },
-};
+    }
+);
 
 /** `Field.Root invalid` with no `error` still reddens: Base UI writes `data-invalid` via context. */
-export const InField: Story = {
+export const InField = meta.story({
     args: { 'aria-label': undefined },
     render: function InField(args) {
         return (
@@ -167,15 +174,16 @@ export const InField: Story = {
             </div>
         );
     },
-    play: async ({ canvas }) => {
-        const valid = canvas.getByRole('textbox', { name: 'Moisture target' });
-        await expect(valid).not.toHaveAttribute('data-invalid');
-        await expect(valid).toHaveAccessibleDescription('Percent, wet basis.');
-        const invalid = canvas.getByRole('textbox', { name: 'Moisture invalid' });
-        await expect(invalid).toHaveAttribute('data-invalid');
-        await expect(invalid).toHaveAccessibleDescription('Must be between 8 and 25.');
-    },
-};
+});
+
+InField.test('Field wires name, description and invalid state', async ({ canvas }) => {
+    const valid = canvas.getByRole('textbox', { name: 'Moisture target' });
+    await expect(valid).not.toHaveAttribute('data-invalid');
+    await expect(valid).toHaveAccessibleDescription('Percent, wet basis.');
+    const invalid = canvas.getByRole('textbox', { name: 'Moisture invalid' });
+    await expect(invalid).toHaveAttribute('data-invalid');
+    await expect(invalid).toHaveAccessibleDescription('Must be between 8 and 25.');
+});
 
 const STATES = ['default', 'hover', 'focused', 'error', 'disabled'] as const;
 
@@ -192,7 +200,18 @@ const FORCED: Record<(typeof STATES)[number], string> = {
  * Every state × with/without addons. Shipped as drawn: resting border ≈1.44:1, hover ≈2.70:1 (WCAG 1.4.11
  * wants 3:1) — the fix belongs to `--color-border-primary`.
  */
-export const Matrix: Story = {
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            { name: 'Default', type: 'figma', url: `${FIGMA}8067-6605` },
+            { name: 'With addons', type: 'figma', url: `${FIGMA}8067-6621` },
+            { name: 'Filled', type: 'figma', url: `${FIGMA}8070-1199` },
+            { name: 'Error', type: 'figma', url: `${FIGMA}8070-1208` },
+            { name: 'Disabled', type: 'figma', url: `${FIGMA}8070-1229` },
+        ],
+        // The one billed Chromatic snapshot for Input (preview disables the rest).
+        chromatic: { disableSnapshot: false },
+    },
     decorators: [
         function Wide(Story) {
             return (
@@ -237,4 +256,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

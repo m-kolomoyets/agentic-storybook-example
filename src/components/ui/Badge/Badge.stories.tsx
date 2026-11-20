@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { BadgeSize, BadgeVariant } from './types';
 import { useState } from 'react';
 import GrainIcon from '@/assets/icons/grains.svg?react';
+import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Badge } from '.';
 
@@ -21,7 +21,7 @@ const VARIANTS: { variant: BadgeVariant; content: string; node: string }[] = [
 
 const SIZES: BadgeSize[] = ['sm', 'md', 'lg'];
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Badge',
     component: Badge,
     args: { children: 'White corn', variant: 'neutral', size: 'md' },
@@ -35,114 +35,97 @@ const meta = {
         size: { control: 'inline-radio', options: SIZES },
     },
     parameters: { design: { type: 'figma', url: `${FIGMA}8673-4388` } },
-} satisfies Meta<typeof Badge>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — switch variant/size in Controls. Every visual cell lives in `Matrix`. */
+export const Default = meta.story({
+    parameters: { design: { type: 'figma', url: `${FIGMA}8673-4507` } },
+});
 
 /** Decorative label: a bare `<span>` — no role, no tabindex, no `aria-*`. Natural-case text, kit draws caps. */
-export const Default: Story = {
-    parameters: { design: { type: 'figma', url: `${FIGMA}8673-4507` } },
-    play: async ({ canvasElement, canvas }) => {
-        const badge = canvasElement.querySelector('span');
-        await expect(badge).not.toBeNull();
-        await expect(badge).toHaveTextContent('White corn');
-        await expect(badge).not.toHaveAttribute('role');
-        await expect(badge).not.toHaveAttribute('tabindex');
-        await expect(
-            badge!.getAttributeNames().filter((n) => {
-                return n.startsWith('aria-');
-            })
-        ).toEqual([]);
-        await expect(canvas.queryByRole('button')).toBeNull();
-    },
-};
+Default.test('is a bare span with no role, tabindex or aria-*', async ({ canvasElement, canvas }) => {
+    const badge = canvasElement.querySelector('span');
+    await expect(badge).not.toBeNull();
+    await expect(badge).toHaveTextContent('White corn');
+    await expect(badge).not.toHaveAttribute('role');
+    await expect(badge).not.toHaveAttribute('tabindex');
+    await expect(
+        badge!.getAttributeNames().filter((n) => {
+            return n.startsWith('aria-');
+        })
+    ).toEqual([]);
+    await expect(canvas.queryByRole('button')).toBeNull();
+});
 
 /** Aeration variants draw a decorative gradient dot before the label. */
-export const Mode: Story = {
-    args: { variant: 'cool', children: 'Cool' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}11640-163194` } },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'aeration variants draw a decorative dot',
+    { args: { variant: 'cool', children: 'Cool' } },
+    async ({ canvasElement }) => {
         const dot = canvasElement.querySelector('span > span[aria-hidden="true"]');
         await expect(dot).toBeInTheDocument();
-    },
-};
-
-/** Leading SVG icon is sized by the root (14px) and inherits the ink. */
-export const WithIcon: Story = {
-    args: {
-        children: (
-            <>
-                <GrainIcon />
-                White corn
-            </>
-        ),
-    },
-};
+    }
+);
 
 /** Chip: `selected` defined → `<button type="button">` with `aria-pressed`; Enter and Space activate it. */
-export const Chip: Story = {
+export const Chip = meta.story({
     args: { selected: false, onClick: fn(), size: 'lg' },
     parameters: { design: { type: 'figma', url: `${FIGMA}10330-187048` } },
-    play: async ({ args, canvas, userEvent }) => {
-        const chip = canvas.getByRole('button', { name: 'White corn' });
-        await expect(chip).toHaveAttribute('type', 'button');
-        await expect(chip).toHaveAttribute('aria-pressed', 'false');
-        await expect(chip).toHaveAttribute('data-selected', 'false');
-        await userEvent.tab();
-        await expect(chip).toHaveFocus();
-        await userEvent.keyboard('{Enter}');
-        await expect(args.onClick).toHaveBeenCalledTimes(1);
-        await userEvent.keyboard(' ');
-        await expect(args.onClick).toHaveBeenCalledTimes(2);
-    },
-};
+});
 
-export const ChipSelected: Story = {
-    args: { selected: true, onClick: fn(), size: 'lg' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10330-198995` } },
-    play: async ({ args, canvas, userEvent }) => {
+Chip.test('is a type=button toggle; Enter and Space activate it', async ({ args, canvas, userEvent }) => {
+    const chip = canvas.getByRole('button', { name: 'White corn' });
+    await expect(chip).toHaveAttribute('type', 'button');
+    await expect(chip).toHaveAttribute('aria-pressed', 'false');
+    await expect(chip).toHaveAttribute('data-selected', 'false');
+    await userEvent.tab();
+    await expect(chip).toHaveFocus();
+    await userEvent.keyboard('{Enter}');
+    await expect(args.onClick).toHaveBeenCalledTimes(1);
+    await userEvent.keyboard(' ');
+    await expect(args.onClick).toHaveBeenCalledTimes(2);
+});
+
+Chip.test(
+    'selected chip is pressed and still clickable',
+    { args: { selected: true } },
+    async ({ args, canvas, userEvent }) => {
         const chip = canvas.getByRole('button', { name: 'White corn' });
         await expect(chip).toHaveAttribute('aria-pressed', 'true');
         await expect(chip).toHaveAttribute('data-selected', 'true');
         await userEvent.click(chip);
         await expect(args.onClick).toHaveBeenCalledOnce();
-    },
-};
+    }
+);
 
 /** Figma-drawn disabled ink (`text-on-surface-disabled`) is below 4.5:1; WCAG exempts disabled controls. */
-export const ChipDisabled: Story = {
-    args: { selected: false, disabled: true, onClick: fn(), size: 'lg' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10330-198999` } },
-    play: async ({ args, canvas, userEvent }) => {
-        const chip = canvas.getByRole('button', { name: 'White corn' });
-        await expect(chip).toBeDisabled();
-        await expect(chip).toHaveAttribute('aria-disabled', 'true');
-        await userEvent.click(chip);
-        await expect(args.onClick).not.toHaveBeenCalled();
-    },
-};
+Chip.test('disabled chip refuses activation', { args: { disabled: true } }, async ({ args, canvas, userEvent }) => {
+    const chip = canvas.getByRole('button', { name: 'White corn' });
+    await expect(chip).toBeDisabled();
+    await expect(chip).toHaveAttribute('aria-disabled', 'true');
+    await userEvent.click(chip);
+    await expect(args.onClick).not.toHaveBeenCalled();
+});
 
 /**
  * `render` to an anchor: no `aria-pressed` (button-only); disablement travels as `aria-disabled` (no
  * `disabled` attribute). The anchor stays focusable and named, so the click handler guard is what blocks activation.
  */
-export const AsLinkDisabled: Story = {
-    args: {
-        selected: false,
-        disabled: true,
-        onClick: fn(),
-        size: 'lg',
-        render: function CropsLink(props) {
-            return (
-                <a href="#crops" {...props}>
-                    {props.children}
-                </a>
-            );
+Chip.test(
+    'disabled anchor chip carries aria-disabled, no aria-pressed, refuses activation',
+    {
+        args: {
+            disabled: true,
+            render: function CropsLink(props) {
+                return (
+                    <a href="#crops" {...props}>
+                        {props.children}
+                    </a>
+                );
+            },
         },
     },
-    play: async ({ args, canvas, userEvent }) => {
+    async ({ args, canvas, userEvent }) => {
         const link = canvas.getByRole('link', { name: 'White corn' });
         await expect(link).not.toHaveAttribute('disabled');
         await expect(link).toHaveAttribute('aria-disabled', 'true');
@@ -155,41 +138,53 @@ export const AsLinkDisabled: Story = {
         await userEvent.click(link);
         await userEvent.keyboard('{Enter}');
         await expect(args.onClick).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
 /** Live toggle: `aria-pressed` follows the value. */
-export const ChipToggle: Story = {
-    args: { selected: false, onClick: fn(), size: 'lg' },
-    render: function ChipToggle(args) {
-        const [picked, setPicked] = useState(false);
-        return (
-            <Badge
-                size="lg"
-                selected={picked}
-                onClick={(event) => {
-                    setPicked((value) => {
-                        return !value;
-                    });
-                    args.onClick?.(event);
-                }}
-            >
-                White corn
-            </Badge>
-        );
+Chip.test(
+    'live toggle: aria-pressed follows the value',
+    {
+        render: function ChipToggle(args) {
+            const [picked, setPicked] = useState(false);
+            return (
+                <Badge
+                    size="lg"
+                    selected={picked}
+                    onClick={(event) => {
+                        setPicked((value) => {
+                            return !value;
+                        });
+                        args.onClick?.(event);
+                    }}
+                >
+                    White corn
+                </Badge>
+            );
+        },
     },
-    play: async ({ args, canvas, userEvent }) => {
+    async ({ args, canvas, userEvent }) => {
         const chip = canvas.getByRole('button', { name: 'White corn' });
         await userEvent.click(chip);
         await expect(chip).toHaveAttribute('aria-pressed', 'true');
         await userEvent.click(chip);
         await expect(chip).toHaveAttribute('aria-pressed', 'false');
         await expect(args.onClick).toHaveBeenCalledTimes(2);
-    },
-};
+    }
+);
 
-/** Every variant × size (every cell legal; Figma draws `md` plus neutral at `sm`/`lg`), plus chip states. */
-export const Matrix: Story = {
+/** Every variant × size (every cell legal; Figma draws `md` plus neutral at `sm`/`lg`), plus icon and chip states. */
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            ...VARIANTS.map((spec) => {
+                return { name: spec.variant, type: 'figma' as const, url: `${FIGMA}${spec.node}` };
+            }),
+            { name: 'chip', type: 'figma', url: `${FIGMA}10330-187048` },
+            { name: 'chip selected', type: 'figma', url: `${FIGMA}10330-198995` },
+            { name: 'chip disabled', type: 'figma', url: `${FIGMA}10330-198999` },
+        ],
+    },
     render: function Matrix() {
         return (
             <div className="flex flex-col gap-xl">
@@ -213,6 +208,11 @@ export const Matrix: Story = {
                     <Badge variant="positive">+22,3%</Badge>
                     <Badge variant="negative">+22,3%</Badge>
                     <Badge variant="neutral">0%</Badge>
+                    {/* Leading SVG icon is sized by the root (14px) and inherits the ink. */}
+                    <Badge variant="neutral">
+                        <GrainIcon />
+                        White corn
+                    </Badge>
                 </div>
                 <div className="flex flex-wrap items-center gap-l">
                     <Badge size="lg" selected={false} onClick={fn()}>
@@ -231,4 +231,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

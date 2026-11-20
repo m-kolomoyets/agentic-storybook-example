@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Field } from '@/components/ui/Field';
 import { SearchInput } from '.';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/SearchInput',
     component: SearchInput,
     args: {
@@ -30,26 +30,24 @@ const meta = {
             );
         },
     ],
-} satisfies Meta<typeof SearchInput>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — toggle error/disabled in Controls. Every visual cell lives in `Matrix`. */
+export const Default = meta.story();
 
 /** Empty: leading glyph, no clear button. Typing reveals it. */
-export const Default: Story = {
-    play: async ({ canvas, args, userEvent }) => {
-        await expect(canvas.queryByRole('button', { name: 'Clear search' })).toBeNull();
-        await userEvent.type(canvas.getByRole('textbox', { name: 'Search containers' }), 'n');
-        await expect(args.onValueChange).toHaveBeenLastCalledWith('n');
-        await expect(canvas.getByRole('button', { name: 'Clear search' })).toBeVisible();
-    },
-};
+Default.test('typing reveals the clear button', async ({ canvas, args, userEvent }) => {
+    await expect(canvas.queryByRole('button', { name: 'Clear search' })).toBeNull();
+    await userEvent.type(canvas.getByRole('textbox', { name: 'Search containers' }), 'n');
+    await expect(args.onValueChange).toHaveBeenLastCalledWith('n');
+    await expect(canvas.getByRole('button', { name: 'Clear search' })).toBeVisible();
+});
 
 /** Clearing empties the value and refocuses the control (the button unmounts, focus would drop to `<body>`). */
-export const Filled: Story = {
-    args: { defaultValue: 'north bin' },
-    play: async ({ canvas, args, userEvent }) => {
+Default.test(
+    'clear empties the value and refocuses the control',
+    { args: { defaultValue: 'north bin' } },
+    async ({ canvas, args, userEvent }) => {
         const clear = canvas.getByRole('button', { name: 'Clear search' });
         await expect(clear).toHaveAttribute('type', 'button');
         await userEvent.click(clear);
@@ -58,11 +56,21 @@ export const Filled: Story = {
         await expect(control).toHaveFocus();
         await expect(args.onValueChange).toHaveBeenCalledWith('');
         await expect(canvas.queryByRole('button', { name: 'Clear search' })).toBeNull();
-    },
-};
+    }
+);
+
+/** No clear button when disabled: the value cannot change. */
+Default.test(
+    'disabled hides the clear button',
+    { args: { disabled: true, defaultValue: 'north bin' } },
+    async ({ canvas }) => {
+        await expect(canvas.getByRole('textbox')).toBeDisabled();
+        await expect(canvas.queryByRole('button', { name: 'Clear search' })).toBeNull();
+    }
+);
 
 /** Plain `useState`; `clearLabel` names the button. */
-export const Controlled: Story = {
+export const Controlled = meta.story({
     args: { clearLabel: 'Clear container search' },
     render: function Controlled(args) {
         const [query, setQuery] = useState('north bin');
@@ -83,43 +91,16 @@ export const Controlled: Story = {
             </div>
         );
     },
-    play: async ({ canvas, args, userEvent }) => {
-        await userEvent.click(canvas.getByRole('button', { name: 'Clear container search' }));
-        await expect(canvas.getByText('value: (empty)')).toBeVisible();
-        await expect(args.onValueChange).toHaveBeenCalledWith('');
-    },
-};
+});
 
-/** Error keeps the clear button (Figma's error cell omits it). The error line needs a `Field`. */
-export const Error: Story = {
-    args: { defaultValue: '???' },
-    render: function Error(args) {
-        return (
-            <Field.Root name="search" invalid>
-                <SearchInput {...args} />
-                <Field.Error>No containers match that name.</Field.Error>
-            </Field.Root>
-        );
-    },
-    play: async ({ canvas }) => {
-        const control = canvas.getByRole('textbox', { name: 'Search containers' });
-        await expect(control).toHaveAttribute('data-invalid');
-        await expect(control).toHaveAccessibleDescription('No containers match that name.');
-        await expect(canvas.getByRole('button', { name: 'Clear search' })).toBeVisible();
-    },
-};
-
-/** No clear button when disabled: the value cannot change. */
-export const Disabled: Story = {
-    args: { disabled: true, defaultValue: 'north bin' },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('textbox')).toBeDisabled();
-        await expect(canvas.queryByRole('button', { name: 'Clear search' })).toBeNull();
-    },
-};
+Controlled.test('clearLabel names the button; clearing empties the state', async ({ canvas, args, userEvent }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Clear container search' }));
+    await expect(canvas.getByText('value: (empty)')).toBeVisible();
+    await expect(args.onValueChange).toHaveBeenCalledWith('');
+});
 
 /** Composes into `Field.Root` like `Input`; the label supplies the accessible name. */
-export const InField: Story = {
+export const InField = meta.story({
     args: { 'aria-label': undefined },
     render: function InField(args) {
         return (
@@ -130,15 +111,38 @@ export const InField: Story = {
             </Field.Root>
         );
     },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('textbox', { name: 'Search containers' })).toHaveAccessibleDescription(
-            'Matches on name and location.'
-        );
+});
+
+InField.test('the label names the control and the description describes it', async ({ canvas }) => {
+    await expect(canvas.getByRole('textbox', { name: 'Search containers' })).toHaveAccessibleDescription(
+        'Matches on name and location.'
+    );
+});
+
+/** Error keeps the clear button (Figma's error cell omits it). The error line needs a `Field`. */
+InField.test(
+    'Field invalid keeps the clear button and describes the error',
+    {
+        args: { 'aria-label': 'Search containers', defaultValue: '???' },
+        render: function Error(args) {
+            return (
+                <Field.Root name="search" invalid>
+                    <SearchInput {...args} />
+                    <Field.Error>No containers match that name.</Field.Error>
+                </Field.Root>
+            );
+        },
     },
-};
+    async ({ canvas }) => {
+        const control = canvas.getByRole('textbox', { name: 'Search containers' });
+        await expect(control).toHaveAttribute('data-invalid');
+        await expect(control).toHaveAccessibleDescription('No containers match that name.');
+        await expect(canvas.getByRole('button', { name: 'Clear search' })).toBeVisible();
+    }
+);
 
 /** Empty / filled × default / error / disabled. Hover/focus belong to `Input`. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
     decorators: [
         function Wide(Story) {
             return (
@@ -183,4 +187,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

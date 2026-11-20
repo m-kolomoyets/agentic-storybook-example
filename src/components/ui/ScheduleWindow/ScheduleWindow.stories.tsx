@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ReactNode } from 'react';
 import type { ScheduleWindowProps } from './types';
 import { useState } from 'react';
-import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+import preview from '#.storybook/preview';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { ScheduleWindow } from '.';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
@@ -56,7 +56,7 @@ function part(root: HTMLElement, name: string) {
     return root.querySelector(`[data-part="${name}"]`);
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/ScheduleWindow',
     component: ScheduleWindow,
     args: { ...BASE, status: 'scheduled', mode: 'cooling' },
@@ -81,24 +81,26 @@ const meta = {
         },
     ],
     parameters: { design: { type: 'figma', url: `${FIGMA}9298-49202` } },
-} satisfies Meta<typeof ScheduleWindow>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — status/mode/readOnly/disabled/message in Controls. Every visual cell lives in `Matrix`. */
+export const Default = meta.story();
 
 /** `11329:7509` — desktop, editable, deletable, with chart: the reference cell. */
-export const Default: Story = {
-    args: {
-        runtime: '8h 0m',
-        end: { day: '2026-01-01', time: '21:00' },
-        chart: <ChartStub />,
-        onDelete: fn(),
-        onStartChange: fn(),
-        onEndChange: fn(),
+Default.test(
+    'reference cell: four named selects, readings, chart, trash calls onDelete only',
+    {
+        args: {
+            runtime: '8h 0m',
+            end: { day: '2026-01-01', time: '21:00' },
+            chart: <ChartStub />,
+            onDelete: fn(),
+            onStartChange: fn(),
+            onEndChange: fn(),
+        },
+        parameters: { rowWidth: DESKTOP_WIDTH },
     },
-    parameters: { rowWidth: DESKTOP_WIDTH, design: { type: 'figma', url: `${FIGMA}11329-7509` } },
-    play: async ({ canvas, canvasElement, args }) => {
+    async ({ canvas, canvasElement, args, userEvent }) => {
         for (const name of ['Start day', 'Start time', 'End day', 'End time']) {
             await expect(canvas.getByRole('combobox', { name })).toBeInTheDocument();
         }
@@ -111,75 +113,157 @@ export const Default: Story = {
         await expect(args.onDelete).toHaveBeenCalledOnce();
         await expect(args.onStartChange).not.toHaveBeenCalled();
         await expect(args.onEndChange).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
 /** The rail repeats what the two lines say in words, so it is hidden from assistive tech. */
-export const Rail: Story = {
-    parameters: { design: { type: 'figma', url: `${FIGMA}9298-49201` } },
-    play: async ({ canvasElement }) => {
-        const root = canvasElement.querySelector('[data-status]');
-        await expect(root).toHaveAttribute('data-status', 'scheduled');
-        await expect(root).toHaveAttribute('data-mode', 'cooling');
-        const rail = part(canvasElement, 'rail') as HTMLElement;
-        await expect(rail).toHaveAttribute('aria-hidden', 'true');
-        await expect(part(rail, 'rail-start')).not.toBeNull();
-        await expect(part(rail, 'rail-end')).not.toBeNull();
-        await expect(part(rail, 'rail-line')).not.toBeNull();
-        await expect(part(canvasElement, 'running-stroke')).toBeNull();
-        // No trash without `onDelete`: absent, not disabled.
-        await expect(canvasElement.querySelector('button[aria-label="Delete run window"]')).toBeNull();
-    },
-};
+Default.test('rail is aria-hidden; no trash without onDelete', async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-status]');
+    await expect(root).toHaveAttribute('data-status', 'scheduled');
+    await expect(root).toHaveAttribute('data-mode', 'cooling');
+    const rail = part(canvasElement, 'rail') as HTMLElement;
+    await expect(rail).toHaveAttribute('aria-hidden', 'true');
+    await expect(part(rail, 'rail-start')).not.toBeNull();
+    await expect(part(rail, 'rail-end')).not.toBeNull();
+    await expect(part(rail, 'rail-line')).not.toBeNull();
+    await expect(part(canvasElement, 'running-stroke')).toBeNull();
+    // No trash without `onDelete`: absent, not disabled.
+    await expect(canvasElement.querySelector('button[aria-label="Delete run window"]')).toBeNull();
+});
 
 /** `10071:204475` — only `running` strokes the box; the rail drops its connector under the stroke. */
-export const Running: Story = {
-    args: { status: 'running' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10071-204475` } },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'running strokes the box and drops the rail line',
+    { args: { status: 'running' } },
+    async ({ canvasElement }) => {
         await expect(part(canvasElement, 'running-stroke')).toHaveAttribute('aria-hidden', 'true');
         await expect(part(canvasElement, 'rail-line')).toBeNull();
-    },
-};
+    }
+);
 
 /** `10173:170496` — `stopped` draws exactly as `scheduled` (the difference lives on `ScheduleCard`'s bar). */
-export const Stopped: Story = {
-    args: { status: 'stopped' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10173-170496` } },
-    play: async ({ canvasElement }) => {
-        await expect(canvasElement.querySelector('[data-status]')).toHaveAttribute('data-status', 'stopped');
-        await expect(part(canvasElement, 'running-stroke')).toBeNull();
-        await expect(part(canvasElement, 'rail-line')).not.toBeNull();
-    },
-};
+Default.test('stopped draws as scheduled', { args: { status: 'stopped' } }, async ({ canvasElement }) => {
+    await expect(canvasElement.querySelector('[data-status]')).toHaveAttribute('data-status', 'stopped');
+    await expect(part(canvasElement, 'running-stroke')).toBeNull();
+    await expect(part(canvasElement, 'rail-line')).not.toBeNull();
+});
 
 /** `11331:43271` — values as text, nothing in the tab order. */
-export const ReadOnly: Story = {
-    args: { readOnly: true, onDayPress: fn() },
-    parameters: { design: { type: 'figma', url: `${FIGMA}11331-43271` } },
-    play: async ({ canvas, canvasElement, args }) => {
+Default.test(
+    'read-only shows values as text, nothing focusable',
+    { args: { readOnly: true, onDayPress: fn() } },
+    async ({ canvas, canvasElement, args }) => {
         await expect(canvas.queryAllByRole('combobox')).toHaveLength(0);
         await expect(canvasElement.querySelector('button')).toBeNull();
         await expect(canvas.getAllByText('Today')).toHaveLength(2);
         await expect(canvas.getByText('1:00 PM')).toBeInTheDocument();
         // `readOnly` outranks `onDayPress`.
         await expect(args.onDayPress).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
 /** A read-only `Forever` with no clock time: the time cell is not drawn and the day cell spans both. */
-export const ReadOnlyForever: Story = {
-    args: { readOnly: true, end: { day: 'forever', time: '' }, runtime: '∞' },
-    play: async ({ canvas, canvasElement }) => {
+Default.test(
+    'read-only forever without a time spans the day cell',
+    { args: { readOnly: true, end: { day: 'forever', time: '' }, runtime: '∞' } },
+    async ({ canvas, canvasElement }) => {
         await expect(canvas.getByText('Forever')).toBeInTheDocument();
         await expect(part(canvasElement, 'end-time')).toBeNull();
         await expect(part(canvasElement, 'start-time')).not.toBeNull();
         await expect(part(canvasElement, 'end-day')?.className).toContain('calc(');
+    }
+);
+
+/** `11089:140347` — day cells as chevron-less buttons that open the caller's own picker; empty cells prompt. */
+Default.test(
+    'pressable empty day cells prompt and report which end',
+    {
+        args: {
+            start: { day: '', time: '' },
+            end: { day: '', time: '' },
+            runtime: '0h 0m',
+            avgWeather: '- °F · - RH',
+            dayPlaceholder: 'Today',
+            timePlaceholder: 'Time',
+            onDayPress: fn(),
+            onStartChange: fn(),
+        },
+        parameters: {
+            // label-content-name-mismatch: an empty cell draws the prompt word (`Today`) but is named for the
+            // control (`Start day`) — amber's choice, so the prompt is not announced as a held value.
+            a11y: { config: { rules: [{ id: 'label-content-name-mismatch', enabled: false }] } },
+        },
     },
-};
+    async ({ canvas, args, userEvent }) => {
+        // Named for the control, not the prompt word drawn in it.
+        const startDay = canvas.getByRole('button', { name: 'Start day' });
+        await expect(startDay).toHaveTextContent('Today');
+        await expect(startDay.className).toContain('text-text-general-medium');
+        await userEvent.click(startDay);
+        await expect(args.onDayPress).toHaveBeenCalledWith('start');
+        await userEvent.click(canvas.getByRole('button', { name: 'End day' }));
+        await expect(args.onDayPress).toHaveBeenLastCalledWith('end');
+        // Time cells stay selects.
+        await expect(canvas.getByRole('combobox', { name: 'Start time' })).toBeInTheDocument();
+        await expect(args.onStartChange).not.toHaveBeenCalled();
+    }
+);
+
+/** A held day: the button names its value, in the ordinary ink. */
+Default.test(
+    'pressable held day names its value',
+    { args: { dayPlaceholder: 'Today', onDayPress: fn() } },
+    async ({ canvas, args, userEvent }) => {
+        const startDay = canvas.getByRole('button', { name: 'Start day: Today' });
+        await expect(startDay.className).not.toContain('text-text-general-medium');
+        await userEvent.click(startDay);
+        await expect(args.onDayPress).toHaveBeenCalledWith('start');
+    }
+);
+
+/** The row and every control in it go disabled. */
+Default.test(
+    'disabled disables the row and every control',
+    {
+        args: { disabled: true, onDelete: fn(), onDayPress: fn() },
+        // color-contrast off: Figma draws the disabled row at 50% opacity;
+        // its secondary ink drops under 4.5:1 by design.
+        parameters: { a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } } },
+    },
+    async ({ canvas, args }) => {
+        await expect(canvas.getByRole('button', { name: 'Delete run window' })).toBeDisabled();
+        await expect(canvas.getByRole('button', { name: 'Start day: Today' })).toBeDisabled();
+        await expect(canvas.getByRole('combobox', { name: 'Start time' })).toBeDisabled();
+        await expect(args.onDelete).not.toHaveBeenCalled();
+        await expect(args.onDayPress).not.toHaveBeenCalled();
+    }
+);
+
+/** Message inside the box, under the two lines. */
+Default.test(
+    'message sits inside the box',
+    { args: { message: 'Automation Period Expired: Maintaining last scheduled run' } },
+    async ({ canvasElement }) => {
+        const message = part(canvasElement, 'message');
+        await expect(message?.closest('[data-part="box"]')).not.toBeNull();
+    }
+);
+
+/** A missing reading draws a dash, not an empty labelled slot. */
+Default.test('a missing reading draws a dash', { args: { avgWeather: undefined } }, async ({ canvas }) => {
+    await expect(canvas.getByText('Avg Weather').nextElementSibling).toHaveTextContent('—');
+});
+
+/** `entranceIndex` set: each cell flips in from an empty face (skipped under reduced motion). */
+Default.test('entranceIndex staggers the flip faces', { args: { entranceIndex: 0 } }, async ({ canvasElement }) => {
+    const faces = canvasElement.querySelectorAll('[data-part="flip-front"]');
+    await expect(faces).toHaveLength(4);
+    // End day is slot 2: two staggers after the row's start.
+    await expect((faces[2] as HTMLElement).style.animationDelay).toBe('300ms');
+});
 
 /** Controlled: picking a time reports the whole `{ day, time }`, never a partial. */
-export const Controlled: Story = {
+export const Controlled = meta.story({
     args: { onStartChange: fn(), onEndChange: fn() },
     render: function Controlled(args: ScheduleWindowProps) {
         const [start, setStart] = useState(args.start);
@@ -200,124 +284,26 @@ export const Controlled: Story = {
             />
         );
     },
-    play: async ({ canvas, canvasElement, args }) => {
-        const body = within(canvasElement.ownerDocument.body);
+});
 
-        await userEvent.click(canvas.getByRole('combobox', { name: 'Start time' }));
-        await userEvent.click(await body.findByRole('option', { name: '9:00 AM' }));
-        await expect(args.onStartChange).toHaveBeenCalledWith({ day: '2026-01-01', time: '9:00' });
-        await waitFor(() => {
-            return expect(canvas.getByRole('combobox', { name: 'Start time' })).toHaveTextContent('9:00 AM');
-        });
+Controlled.test('a pick reports the whole { day, time }', async ({ canvas, canvasElement, args, userEvent }) => {
+    const body = within(canvasElement.ownerDocument.body);
 
-        await userEvent.click(canvas.getByRole('combobox', { name: 'End day' }));
-        await userEvent.click(await body.findByRole('option', { name: 'Forever' }));
-        await expect(args.onEndChange).toHaveBeenCalledWith({ day: 'forever', time: '19:00' });
-    },
-};
+    await userEvent.click(canvas.getByRole('combobox', { name: 'Start time' }));
+    await userEvent.click(await body.findByRole('option', { name: '9:00 AM' }));
+    await expect(args.onStartChange).toHaveBeenCalledWith({ day: '2026-01-01', time: '9:00' });
+    await waitFor(() => {
+        return expect(canvas.getByRole('combobox', { name: 'Start time' })).toHaveTextContent('9:00 AM');
+    });
+    // Let the first popup finish closing so the next click opens the end-day list, not dismisses the old one.
+    await waitFor(() => {
+        return expect(body.queryByRole('listbox')).toBeNull();
+    });
 
-/** `11089:140347` — day cells as chevron-less buttons that open the caller's own picker; empty cells prompt. */
-export const PressableDays: Story = {
-    args: {
-        start: { day: '', time: '' },
-        end: { day: '', time: '' },
-        runtime: '0h 0m',
-        avgWeather: '- °F · - RH',
-        dayPlaceholder: 'Today',
-        timePlaceholder: 'Time',
-        onDayPress: fn(),
-        onStartChange: fn(),
-    },
-    parameters: {
-        design: { type: 'figma', url: `${FIGMA}11089-140347` },
-        // label-content-name-mismatch: an empty cell draws the prompt word (`Today`) but is named for the
-        // control (`Start day`) — amber's choice, so the prompt is not announced as a held value.
-        a11y: { config: { rules: [{ id: 'label-content-name-mismatch', enabled: false }] } },
-    },
-    play: async ({ canvas, args }) => {
-        // Named for the control, not the prompt word drawn in it.
-        const startDay = canvas.getByRole('button', { name: 'Start day' });
-        await expect(startDay).toHaveTextContent('Today');
-        await expect(startDay.className).toContain('text-text-general-medium');
-        await userEvent.click(startDay);
-        await expect(args.onDayPress).toHaveBeenCalledWith('start');
-        await userEvent.click(canvas.getByRole('button', { name: 'End day' }));
-        await expect(args.onDayPress).toHaveBeenLastCalledWith('end');
-        // Time cells stay selects.
-        await expect(canvas.getByRole('combobox', { name: 'Start time' })).toBeInTheDocument();
-        await expect(args.onStartChange).not.toHaveBeenCalled();
-    },
-};
-
-/** A held day: the button names its value, in the ordinary ink. */
-export const PressableDaysAnswered: Story = {
-    args: { dayPlaceholder: 'Today', onDayPress: fn() },
-    play: async ({ canvas, args }) => {
-        const startDay = canvas.getByRole('button', { name: 'Start day: Today' });
-        await expect(startDay.className).not.toContain('text-text-general-medium');
-        await userEvent.click(startDay);
-        await expect(args.onDayPress).toHaveBeenCalledWith('start');
-    },
-};
-
-/** The row and every control in it go disabled. */
-export const Disabled: Story = {
-    // color-contrast off: Figma draws the disabled row at 50% opacity; its secondary ink drops under 4.5:1 by design.
-    parameters: { a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } } },
-    args: { disabled: true, onDelete: fn(), onDayPress: fn() },
-    play: async ({ canvas, args }) => {
-        await expect(canvas.getByRole('button', { name: 'Delete run window' })).toBeDisabled();
-        await expect(canvas.getByRole('button', { name: 'Start day: Today' })).toBeDisabled();
-        await expect(canvas.getByRole('combobox', { name: 'Start time' })).toBeDisabled();
-        await expect(args.onDelete).not.toHaveBeenCalled();
-        await expect(args.onDayPress).not.toHaveBeenCalled();
-    },
-};
-
-/** Message inside the box, under the two lines. */
-export const WithMessage: Story = {
-    args: { message: 'Automation Period Expired: Maintaining last scheduled run' },
-    play: async ({ canvasElement }) => {
-        const message = part(canvasElement, 'message');
-        await expect(message?.closest('[data-part="box"]')).not.toBeNull();
-    },
-};
-
-/** A missing reading draws a dash, not an empty labelled slot. */
-export const NoReading: Story = {
-    args: { avgWeather: undefined },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByText('Avg Weather').nextElementSibling).toHaveTextContent('—');
-    },
-};
-
-/** `entranceIndex` set: each cell flips in from an empty face (skipped under reduced motion). */
-export const Entrance: Story = {
-    args: { entranceIndex: 0 },
-    play: async ({ canvasElement }) => {
-        const faces = canvasElement.querySelectorAll('[data-part="flip-front"]');
-        await expect(faces).toHaveLength(4);
-        // End day is slot 2: two staggers after the row's start.
-        await expect((faces[2] as HTMLElement).style.animationDelay).toBe('300ms');
-    },
-};
-
-/** Running stroke and rail per schedule mode. */
-export const Modes: Story = {
-    render: function Modes(args: ScheduleWindowProps) {
-        return (
-            <div className="flex flex-col gap-xl">
-                {(['cooling', 'drying', 'reconditioning', 'custom', 'manual'] as const).flatMap((mode) => {
-                    return [
-                        <ScheduleWindow key={`${mode}-run`} {...args} mode={mode} status="running" />,
-                        <ScheduleWindow key={`${mode}-sched`} {...args} mode={mode} />,
-                    ];
-                })}
-            </div>
-        );
-    },
-};
-
+    await userEvent.click(canvas.getByRole('combobox', { name: 'End day' }));
+    await userEvent.click(await body.findByRole('option', { name: 'Forever' }));
+    await expect(args.onEndChange).toHaveBeenCalledWith({ day: 'forever', time: '19:00' });
+});
 function Cell({ name, width, ...props }: ScheduleWindowProps & { name: string; width: string }) {
     return (
         <div className="flex shrink-0 flex-col gap-s">
@@ -372,17 +358,49 @@ function Cells({ width }: { width: string }) {
     );
 }
 
-/** Every cell at 331 / 432 / 620, for review against the Figma frame. */
-export const Matrix: Story = {
-    // color-contrast off: holds the disabled cells (50% opacity, design contrast). Other rules still run.
-    parameters: { rowWidth: 'w-auto', a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } } },
+/** Running stroke and rail per schedule mode, then every cell at 331 / 432 / 620, for review against Figma. */
+export const Matrix = meta.story({
+    parameters: {
+        rowWidth: 'w-auto',
+        design: [
+            { name: 'Desktop with chart', type: 'figma', url: `${FIGMA}11329-7509` },
+            { name: 'Scheduled', type: 'figma', url: `${FIGMA}9298-49201` },
+            { name: 'Running', type: 'figma', url: `${FIGMA}10071-204475` },
+            { name: 'Stopped', type: 'figma', url: `${FIGMA}10173-170496` },
+            { name: 'Read-only', type: 'figma', url: `${FIGMA}11331-43271` },
+            { name: 'Pressable days', type: 'figma', url: `${FIGMA}11089-140347` },
+        ],
+        // color-contrast off: holds the disabled cells (50% opacity, design contrast). Other rules still run.
+        a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } },
+    },
     render: function Matrix() {
         return (
             <div className="flex flex-col gap-4xl">
+                <Group title="Modes">
+                    {(['cooling', 'drying', 'reconditioning', 'custom', 'manual'] as const).flatMap((mode) => {
+                        return [
+                            <Cell
+                                key={`${mode}-run`}
+                                name={`${mode} running`}
+                                width={MOBILE_WIDTH}
+                                {...BASE}
+                                mode={mode}
+                                status="running"
+                            />,
+                            <Cell
+                                key={`${mode}-sched`}
+                                name={`${mode} scheduled`}
+                                width={MOBILE_WIDTH}
+                                {...BASE}
+                                mode={mode}
+                            />,
+                        ];
+                    })}
+                </Group>
                 <Cells width={MOBILE_WIDTH} />
                 <Cells width={DESKTOP_WIDTH} />
                 <Cells width={WIDE_WIDTH} />
             </div>
         );
     },
-};
+});

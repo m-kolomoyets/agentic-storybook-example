@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import preview from '#.storybook/preview';
 import { expect } from 'storybook/test';
 import { Progress } from '.';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Progress',
     component: Progress,
     args: { value: 68, label: 'Grain unloaded' },
@@ -21,47 +21,46 @@ const meta = {
             );
         },
     ],
-} satisfies Meta<typeof Progress>;
+});
 
-export default meta;
+/** Playground — the drawn bar at the drawn value; named by `label`, announced against 0…100. */
+export const Default = meta.story();
 
-type Story = StoryObj<typeof meta>;
-
-/** The drawn bar at the drawn value; named by `label`, announced against 0…100. */
-export const Default: Story = {
-    play: async ({ canvas }) => {
-        const bar = canvas.getByRole('progressbar', { name: 'Grain unloaded' });
-        await expect(bar).toHaveAttribute('aria-valuenow', '68');
-        await expect(bar).toHaveAttribute('aria-valuemin', '0');
-        await expect(bar).toHaveAttribute('aria-valuemax', '100');
-        await expect(getComputedStyle(bar).borderTopLeftRadius).toBe('12px');
-    },
-};
+Default.test('named by label, announced against 0…100', async ({ canvas }) => {
+    const bar = canvas.getByRole('progressbar', { name: 'Grain unloaded' });
+    await expect(bar).toHaveAttribute('aria-valuenow', '68');
+    await expect(bar).toHaveAttribute('aria-valuemin', '0');
+    await expect(bar).toHaveAttribute('aria-valuemax', '100');
+    await expect(getComputedStyle(bar).borderTopLeftRadius).toBe('12px');
+});
 
 /** `max` for counts: 3 of 7 is announced as a percentage (~43%). */
-export const CustomMax: Story = {
-    args: { value: 3, max: 7, label: 'Files uploaded' },
-    play: async ({ canvas }) => {
+Default.test(
+    'custom max is announced as a percentage',
+    { args: { value: 3, max: 7, label: 'Files uploaded' } },
+    async ({ canvas }) => {
         const bar = canvas.getByRole('progressbar', { name: 'Files uploaded' });
         await expect(bar).toHaveAttribute('aria-valuemax', '7');
         await expect(bar).toHaveAttribute('aria-valuenow', '3');
         await expect(bar.getAttribute('aria-valuetext')).toContain('43');
-    },
-};
+    }
+);
 
 /** One colour swap; still announced, never `aria-disabled`. Drawn fill is near the track colour (design issue). */
-export const Disabled: Story = {
-    args: { disabled: true },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10173-170543` } },
-    play: async ({ canvas }) => {
-        const bar = canvas.getByRole('progressbar', { name: 'Grain unloaded' });
-        await expect(bar).toHaveAttribute('data-disabled');
-        await expect(bar).not.toHaveAttribute('aria-disabled');
-    },
-};
+Default.test('disabled is a colour swap, never aria-disabled', { args: { disabled: true } }, async ({ canvas }) => {
+    const bar = canvas.getByRole('progressbar', { name: 'Grain unloaded' });
+    await expect(bar).toHaveAttribute('data-disabled');
+    await expect(bar).not.toHaveAttribute('aria-disabled');
+});
 
 /** 0 / 1 (no floor) / 50 / 68 / 100, enabled and disabled; ramp sized to the fill at two widths. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            { name: 'Enabled', type: 'figma', url: `${FIGMA}9273-43259` },
+            { name: 'Disabled', type: 'figma', url: `${FIGMA}10173-170543` },
+        ],
+    },
     decorators: [
         function Wide(Story) {
             return (
@@ -89,4 +88,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

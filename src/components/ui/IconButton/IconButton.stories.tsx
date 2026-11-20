@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { IconButtonSize } from './types';
 import AddIcon from '@/assets/icons/add.svg?react';
 import CloseIcon from '@/assets/icons/close.svg?react';
 import ModeEditIcon from '@/assets/icons/mode-edit.svg?react';
 import MyLocationIcon from '@/assets/icons/my-location.svg?react';
 import ZoomOutMapIcon from '@/assets/icons/zoom-out-map.svg?react';
+import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { IconButton } from '.';
 
@@ -12,7 +12,7 @@ const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?
 
 const SIZES: IconButtonSize[] = ['md', 'sm', 'xs'];
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/IconButton',
     component: IconButton,
     args: { 'aria-label': 'Add item', icon: <AddIcon />, variant: 'secondary', size: 'md', onClick: fn() },
@@ -25,48 +25,46 @@ const meta = {
         render: { control: false },
     },
     parameters: { design: { type: 'figma', url: `${FIGMA}8016-314` } },
-} satisfies Meta<typeof IconButton>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/**
+ * Playground — switch variant/size/state in Controls. `xs` binds the primary ramp, as Figma draws it (20px — under
+ * WCAG 2.5.8's 24px target); ghost is a transparent ground. Every visual cell lives in `Matrix`.
+ */
+export const Default = meta.story();
 
 /** `aria-label` is the name; the glyph is hidden from the a11y tree. */
-export const Default: Story = {
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
+Default.test(
+    'is named by aria-label; glyph hidden; calls onClick',
+    async ({ canvas, canvasElement, args, userEvent }) => {
         const button = canvas.getByRole('button', { name: 'Add item' });
         await expect(button).toHaveAttribute('aria-label', 'Add item');
         await expect(canvasElement.querySelector('svg')?.parentElement).toHaveAttribute('aria-hidden', 'true');
         await userEvent.click(button);
         await expect(args.onClick).toHaveBeenCalledOnce();
-    },
-};
-
-export const Small: Story = { args: { size: 'sm' } };
-
-/** `xs` binds the primary ramp, as Figma draws it. 20px — under WCAG 2.5.8's 24px target. */
-export const ExtraSmall: Story = { args: { size: 'xs', icon: <CloseIcon />, 'aria-label': 'Close' } };
-
-/** Transparent ground; the glyph fills the 20px `xs` box. */
-export const Ghost: Story = {
-    args: { variant: 'ghost', size: 'xs', icon: <ModeEditIcon />, 'aria-label': 'Edit' },
-};
+    }
+);
 
 /** Map overlay chip (`15399:457956`): 32px, 16px glyph, size-locked. */
-export const Elevated: Story = {
-    args: { variant: 'elevated', size: undefined, icon: <MyLocationIcon />, 'aria-label': 'Move to my location' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}15399-457956` } },
-    play: async ({ canvas }) => {
+Default.test(
+    'elevated is size-locked to 32px',
+    {
+        render: function Elevated() {
+            return <IconButton variant="elevated" icon={<MyLocationIcon />} aria-label="Move to my location" />;
+        },
+    },
+    async ({ canvas }) => {
         const button = canvas.getByRole('button', { name: 'Move to my location' });
         await expect(button).toHaveClass('size-4xl');
         await expect(button).not.toHaveClass('p-l');
-    },
-};
+    }
+);
 
 /** Busy, not disabled: focusable, named, activation refused. */
-export const Loading: Story = {
-    args: { loading: true, 'aria-label': 'Saving' },
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
+Default.test(
+    'loading stays focusable and named, refuses activation',
+    { args: { loading: true, 'aria-label': 'Saving' } },
+    async ({ canvas, canvasElement, args, userEvent }) => {
         const button = canvas.getByRole('button', { name: 'Saving' });
         await expect(button).not.toBeDisabled();
         await expect(button).toHaveAttribute('aria-busy', 'true');
@@ -75,31 +73,33 @@ export const Loading: Story = {
         await expect(button).toHaveFocus();
         await userEvent.click(button);
         await expect(args.onClick).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
-export const Disabled: Story = {
-    args: { disabled: true, icon: <CloseIcon />, 'aria-label': 'Close' },
-    play: async ({ canvas }) => {
+Default.test(
+    'disabled is disabled and aria-disabled',
+    { args: { disabled: true, icon: <CloseIcon />, 'aria-label': 'Close' } },
+    async ({ canvas }) => {
         const button = canvas.getByRole('button', { name: 'Close' });
         await expect(button).toBeDisabled();
         await expect(button).toHaveAttribute('aria-disabled', 'true');
-    },
-};
+    }
+);
 
 /** `render` → `<a>`: `disabled` is held back, `aria-disabled` announces it; activation refused. */
-export const AsLink: Story = {
+export const AsLink = meta.story({
     // Content is supplied by IconButton through `useRender`.
     // eslint-disable-next-line jsx-a11y-x/anchor-has-content
     args: { render: <a href="#settings" />, disabled: true, 'aria-label': 'Settings', icon: <ZoomOutMapIcon /> },
-    play: async ({ canvas, args, userEvent }) => {
-        const link = canvas.getByRole('link', { name: 'Settings' });
-        await expect(link).not.toHaveAttribute('disabled');
-        await expect(link).toHaveAttribute('aria-disabled', 'true');
-        await userEvent.click(link);
-        await expect(args.onClick).not.toHaveBeenCalled();
-    },
-};
+});
+
+AsLink.test('disabled link holds back disabled and refuses activation', async ({ canvas, args, userEvent }) => {
+    const link = canvas.getByRole('link', { name: 'Settings' });
+    await expect(link).not.toHaveAttribute('disabled');
+    await expect(link).toHaveAttribute('aria-disabled', 'true');
+    await userEvent.click(link);
+    await expect(args.onClick).not.toHaveBeenCalled();
+});
 
 type StateName = 'default' | 'hover' | 'focused' | 'pressed' | 'loading' | 'disabled';
 
@@ -118,7 +118,13 @@ const PRIMARY_FORCED: Partial<Record<StateName, string>> = {
 };
 
 /** Every size × state cell, plus ghost and elevated, for review against Figma. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            { name: 'Default', type: 'figma', url: `${FIGMA}8016-314` },
+            { name: 'Elevated', type: 'figma', url: `${FIGMA}15399-457956` },
+        ],
+    },
     render: function Matrix() {
         return (
             <div className="grid grid-cols-7 items-center gap-l">
@@ -174,4 +180,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});
