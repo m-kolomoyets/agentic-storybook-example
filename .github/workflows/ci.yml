@@ -15,3 +15,28 @@ jobs:
     ci:
         # Pipeline lives in phenomenon-configs; fixes on the same major arrive automatically.
         uses: Phenomenon-Studio/phenomenon-configs/.github/workflows/node-ci.yml@v1
+
+    # Story tests (play functions + axe a11y) in Vitest browser mode. Separate job: the shared pipeline
+    # doesn't install Playwright browsers.
+    storybook:
+        name: storybook tests
+        runs-on: ubuntu-latest
+        timeout-minutes: 20
+        permissions:
+            contents: read
+        steps:
+            - uses: actions/checkout@v7
+
+            - uses: pnpm/action-setup@v6
+
+            - uses: actions/setup-node@v7
+              with:
+                  node-version-file: .nvmrc
+                  cache: pnpm
+
+            - run: pnpm install --frozen-lockfile
+
+            # ignoreScripts (pnpm-workspace.yaml) skips Playwright's postinstall; fetch Chromium explicitly.
+            - run: pnpm exec playwright install --with-deps chromium
+
+            - run: pnpm test:storybook

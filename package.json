@@ -31,7 +31,8 @@
         "lint:fmt": "prettier --check \"**/*.{js,ts,tsx,json,html,css,cjs,mjs}\"",
         "lint": "pnpm run \"/^lint:.*/\"",
         "fix:fmt": "prettier --write \"**/*.{js,ts,tsx,json,html,css,cjs,mjs}\"",
-        "prepare": "husky"
+        "prepare": "husky",
+        "chromatic": "chromatic"
     },
     "msw": {
         "workerDirectory": [
