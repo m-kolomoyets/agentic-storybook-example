@@ -35,6 +35,7 @@
         "eslint.config.js",
         "prettier.config.js",
         "stylelint.config.js",
-        "commitlint.config.js"
+        "commitlint.config.js",
+        "visual/run.ts"
     ]
 }

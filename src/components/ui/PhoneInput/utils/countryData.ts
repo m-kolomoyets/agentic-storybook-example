@@ -79,11 +79,6 @@ function matchFolded(entry: CountryEntry, folded: string): boolean {
     return /^\d+$/.test(digits) && entry.callingCode.startsWith(digits);
 }
 
-/** Localised name, English name, ISO-2, or calling code (with or without `+`). Blank matches all. */
-export function matchCountry(entry: CountryEntry, query: string): boolean {
-    return matchFolded(entry, fold(query.trim()));
-}
-
 /** `entries` narrowed to `query`, source order kept. */
 export function filterCountries(entries: CountryEntry[], query: string): CountryEntry[] {
     const folded = fold(query.trim());

@@ -28,9 +28,9 @@ export const queryClient = new QueryClient({
             if (hasQueryData && isHTTPError(error) && error.data !== undefined) {
                 // TODO: The API error messages should be aligned with BE engineers
                 const message = typeof error.data === 'string' ? error.data : error.data.message;
-                toast.add({ type: 'error', title: message || error.message });
+                toast.negative({ title: message || error.message });
             } else if (hasQueryData && error instanceof Error) {
-                toast.add({ type: 'error', title: error?.message || COMMON_ERROR_MESSAGE });
+                toast.negative({ title: error?.message || COMMON_ERROR_MESSAGE });
             }
         },
     }),

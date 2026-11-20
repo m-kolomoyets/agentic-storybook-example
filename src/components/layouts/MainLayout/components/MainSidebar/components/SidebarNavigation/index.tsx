@@ -24,7 +24,7 @@ function SidebarNavigation() {
                             }}
                         >
                             <SidebarNavigationLink tooltipText={item.label} {...item.linkProps}>
-                                <item.Icon className="size-4" />
+                                <item.Icon aria-hidden />
                                 {item.label}
                             </SidebarNavigationLink>
                         </SidebarMenuItem>

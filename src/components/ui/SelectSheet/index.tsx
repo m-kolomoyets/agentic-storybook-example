@@ -89,6 +89,7 @@ function SelectSheet<TValue extends string | number = string>({
                         loadingLabel={loadingLabel}
                         renderItem={renderItem}
                         listRef={listRef}
+                        listLabel={sheetTitle}
                     />
                 </BottomSheet.Popup>
             </BottomSheet.Root>

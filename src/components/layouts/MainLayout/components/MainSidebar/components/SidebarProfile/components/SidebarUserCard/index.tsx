@@ -1,6 +1,6 @@
 import type { SidebarUserCardProps } from './types';
 import { getRouteApi } from '@tanstack/react-router';
-import { cn } from 'cn';
+import { cn } from '@/lib/cn';
 import { SidebarAvatar } from './components/SidebarAvatar';
 
 const routeApi = getRouteApi('/_authenticated');
@@ -14,11 +14,11 @@ function SidebarUserCard({ className }: SidebarUserCardProps) {
     const fullName = `${me.firstName} ${me.lastName}`;
 
     return (
-        <div className={cn`flex items-center gap-2 py-1.5 text-left text-sm ${className}`}>
+        <div className={cn`flex min-w-px items-center gap-m py-s text-left ${className}`}>
             <SidebarAvatar name={`${fullName} (${me.username})`} avatarUrl={me.image} />
-            <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{fullName}</span>
-                <span className="mb-1 truncate text-xs">{me.email}</span>
+            <div className="grid flex-1 text-left">
+                <span className="truncate text-body-s-semibold">{fullName}</span>
+                <span className="truncate text-caption-m text-text-general-medium">{me.email}</span>
             </div>
         </div>
     );

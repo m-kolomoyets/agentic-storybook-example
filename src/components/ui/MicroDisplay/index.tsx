@@ -65,3 +65,5 @@ function MicroDisplay({
 }
 
 export { MicroDisplay };
+// Shared with fan-card composites that draw the same status dot.
+export { MICRO_DISPLAY_DOT_CLASSES, MICRO_DISPLAY_DOT_PAINT } from './constants';

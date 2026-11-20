@@ -62,7 +62,7 @@ function Root({ items, query = '', children }: { items: SelectOption[]; query?: 
 const meta = {
     title: 'UI/DropdownContent',
     component: DropdownContent,
-    args: { items: oneLine(12), searchPlaceholder: 'Search' },
+    args: { items: oneLine(12), searchPlaceholder: 'Search', listLabel: 'Grains' },
     argTypes: {
         indicator: { control: 'inline-radio', options: ['check', 'radio'] },
         items: { control: false },
@@ -81,8 +81,6 @@ const meta = {
     },
     parameters: {
         design: { type: 'figma', url: `${FIGMA}8915-27188` },
-        // The listbox's name comes from the host `Select`'s trigger/label; bare here (amber API has no label prop).
-        a11y: { test: 'todo' },
     },
 } satisfies Meta<StoryArgs>;
 
@@ -93,7 +91,7 @@ type Story = StoryObj<typeof meta>;
 /** Search, five rows visible, twelve in the list. Empty live region stays mounted while rows exist. */
 export const Default: Story = {
     play: async ({ canvas, canvasElement }) => {
-        await expect(canvasElement.querySelector('[role=listbox]')).not.toBeNull();
+        await expect(canvas.getByRole('listbox', { name: 'Grains' })).toBeInTheDocument();
         await waitFor(() => {
             return expect(rowsOf(canvasElement).length).toBeGreaterThan(0);
         });
@@ -201,7 +199,11 @@ export const Matrix: Story = {
                         <div key={column.label} className="flex w-[343px] flex-col gap-xs">
                             <span className="text-caption-m text-text-general-medium">{column.label}</span>
                             <Root items={column.items}>
-                                <DropdownContent searchPlaceholder="Search" {...column.props} />
+                                <DropdownContent
+                                    searchPlaceholder="Search"
+                                    listLabel={column.label}
+                                    {...column.props}
+                                />
                             </Root>
                         </div>
                     );

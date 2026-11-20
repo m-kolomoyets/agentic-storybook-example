@@ -137,9 +137,8 @@ export default defineConfig([
             'jsx-a11y-x/label-has-associated-control': [
                 2,
                 {
-                    labelComponents: ['Label', 'FieldLabel'],
                     labelAttributes: ['label'],
-                    controlComponents: ['Input', 'PasswordInput'],
+                    controlComponents: ['Input', 'SearchInput', 'PhoneInput', 'TimeInput'],
                     depth: 3,
                 },
             ],

@@ -185,16 +185,13 @@ export const WithDescription: Story = {
     },
 };
 
-/** `searchable={false}`: no search field at all. */
+/** `searchable={false}`: no search field at all; the listbox is still named by the sheet title. */
 export const NotSearchable: Story = {
     args: { searchable: false, items: SHORT },
-    parameters: {
-        // Listbox has no name without the search combobox that owns it; `OptionList` takes no label (amber API).
-        a11y: { test: 'todo' },
-    },
     play: async ({ canvasElement }) => {
         const sheet = await bodyOf(canvasElement).findByRole('dialog');
         await expect(within(sheet).queryByPlaceholderText('Search')).toBeNull();
+        await expect(within(sheet).getByRole('listbox', { name: 'Select a grain' })).toBeInTheDocument();
         await waitFor(() => {
             return expect(rowsOf(sheet)).toHaveLength(4);
         });

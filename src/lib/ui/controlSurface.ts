@@ -21,13 +21,6 @@ export const CONTROL_SURFACE_FILL = 'bg-surface-input';
 /** 48px — the standard control height. */
 export const CONTROL_SURFACE_HEIGHT = 'h-6xl';
 
-export const CONTROL_SURFACE_BASE = [
-    CONTROL_SURFACE_LAYOUT,
-    CONTROL_SURFACE_MIN_WIDTH,
-    CONTROL_SURFACE_FRAME,
-    CONTROL_SURFACE_FILL,
-] as const;
-
 /** Border colour per state. Consumers spell out the variant prefix (`hover:${...}` compiles to nothing). */
 export const CONTROL_BORDER = {
     default: 'border-border-primary',

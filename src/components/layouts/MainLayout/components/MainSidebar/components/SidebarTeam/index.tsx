@@ -9,11 +9,11 @@ function SidebarTeam() {
                     size="lg"
                     render={
                         <Link to="/dashboard">
-                            <span className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar text-sidebar-primary-foreground">
-                                <img src="/icon.svg" className="size-8" alt="" aria-hidden={true} />
+                            <span className="flex aspect-square size-4xl shrink-0 items-center justify-center rounded-s">
+                                <img src="/icon.svg" className="size-4xl" alt="" aria-hidden={true} />
                             </span>
-                            <span className="grid flex-1 text-left text-sm leading-tight">
-                                <span className="truncate font-semibold">Phenomenon admin panel</span>
+                            <span className="grid flex-1 text-left">
+                                <span className="truncate text-body-s-semibold">Phenomenon admin panel</span>
                             </span>
                         </Link>
                     }

@@ -21,11 +21,9 @@ const DAY_DIGITS = 4;
 const DATE_DIGITS = 8;
 
 /** Floor: Unix epoch, local — the bottom of every timestamp the app can hold. */
-export const EPOCH_START = DateTime.local(1970, 1, 1);
+const EPOCH_START = DateTime.local(1970, 1, 1);
 
 /** Ceiling for a box that takes future dates (the last day a 4-digit year can write). The default is today. */
-export const DATE_INPUT_LAST_DAY = DateTime.local(9999, 12, 31);
-
 /** Written down, not inherited: a bound quoted in an error must read in the mask's order. */
 const LOCALE = 'en-US';
 
@@ -40,7 +38,7 @@ function formatBound(date: DateTime): string {
 export const DATE_INPUT_INCOMPLETE_ERROR = `Enter the full date as ${DATE_INPUT_PLACEHOLDER}`;
 
 /** The one segment rule the mask cannot enforce: the day is typed before its year (`02/29`). */
-export function getDayInMonthError(month: DateTime): string {
+function getDayInMonthError(month: DateTime): string {
     return `${month.setLocale(LOCALE).toFormat('MMMM yyyy')} has ${month.daysInMonth} days`;
 }
 
@@ -53,7 +51,7 @@ function toCalendarDay(date: DateTime): number {
 }
 
 /** Below the floor. */
-export function getMinDateError(minDate: DateTime): string {
+function getMinDateError(minDate: DateTime): string {
     return `Date must be on or after ${formatBound(minDate)}`;
 }
 
@@ -63,7 +61,7 @@ export function getMaxDateError(maxDate: DateTime): string {
 }
 
 /** Fallback for text the mask never touched (`13/01/2026`). */
-export const DATE_INPUT_INVALID_ERROR = 'Enter a real date';
+const DATE_INPUT_INVALID_ERROR = 'Enter a real date';
 
 /** The two endpoints' names as the pair messages quote them — the site's labels, minus `(optional)`. */
 export type DateRangeLabels = {

@@ -52,6 +52,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
+    // Visual-regression smoke target (visual/README.md); swap for the real components/flows under comparison.
+    tags: ['vrt'],
     play: async ({ canvas, args, userEvent }) => {
         const button = canvas.getByRole('button', { name: 'Save' });
         await expect(button).toHaveAttribute('type', 'button');
@@ -89,8 +91,11 @@ export const SecondaryElevated: Story = {
 
 export const Destructive: Story = {
     args: { variant: 'destructive', children: 'Delete' },
-    // Figma-drawn white on `button-destructive-default` is 3.65:1 (< 4.5) — design decision, tracked.
-    parameters: { design: { type: 'figma', url: `${FIGMA}8274-18709` }, a11y: { test: 'todo' } },
+    // color-contrast off: Figma-drawn white on `button-destructive-default` is 3.65:1 — design decision, tracked.
+    parameters: {
+        design: { type: 'figma', url: `${FIGMA}8274-18709` },
+        a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } },
+    },
 };
 
 /** Figma `9263:22344` — size-locked to 48px, both icon slots. */
@@ -285,8 +290,8 @@ const GRID = 'grid grid-cols-7 items-center gap-l';
 
 /** Every legal variant × size × state cell, for review against Figma. Illegal cells don't typecheck. */
 export const Matrix: Story = {
-    // Includes the destructive cells (3.65:1, Figma colour) — see `Destructive`.
-    parameters: { layout: 'padded', a11y: { test: 'todo' } },
+    // color-contrast off: the destructive cells are 3.65:1 (Figma colour) — see `Destructive`. Other rules still run.
+    parameters: { layout: 'padded', a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } } },
     render: function Matrix() {
         return (
             <div className="flex flex-col gap-xl">

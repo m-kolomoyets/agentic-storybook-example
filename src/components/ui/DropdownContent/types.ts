@@ -24,6 +24,8 @@ export type DropdownContentProps<TValue extends string | number = string> = Omit
     indicator?: 'check' | 'radio';
     /** Accessible name for the search clear button. @default 'Clear search' */
     clearLabel?: string;
+    /** The listbox's fallback name (`aria-label`); a surrounding `Field.Label` takes precedence. */
+    listLabel?: string;
     /** Handed to `OptionList`'s `ref` (the host needs its `scrollToIndex`), not the panel's. */
     listRef?: Ref<OptionListHandle>;
     /**

@@ -89,8 +89,11 @@ export const Highlighted: Story = {
 /** Presentational greying; the host owns activation. */
 export const Disabled: Story = {
     args: { 'data-disabled': '' } as Story['args'],
-    // Figma-drawn disabled ink on a bare `div` (no `aria-disabled`, host-owned) trips axe colour-contrast.
-    parameters: { design: { type: 'figma', url: `${FIGMA}8915-27066` }, a11y: { test: 'todo' } },
+    // color-contrast off: Figma-drawn disabled ink on a bare `div` (no `aria-disabled`, host-owned).
+    parameters: {
+        design: { type: 'figma', url: `${FIGMA}8915-27066` },
+        a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } },
+    },
 };
 
 /** `radio` indicator (mobile sheet): leading ring replaces the checkmark; selected ring fills. */
@@ -174,8 +177,8 @@ const ROW_STATES: { name: string; attributes: Record<string, string> }[] = [
 
 /** Every drawn and derived cell: standard and Big × state × indicator. */
 export const Matrix: Story = {
-    // Includes the disabled rows (see `Disabled`).
-    parameters: { a11y: { test: 'todo' } },
+    // color-contrast off: includes the disabled rows (see `Disabled`). Other rules still run.
+    parameters: { a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } } },
     decorators: [
         function Bare(Story) {
             return <Story />;

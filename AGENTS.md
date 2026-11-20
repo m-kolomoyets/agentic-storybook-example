@@ -24,6 +24,8 @@ SPA admin template built with React (React Compiler) + TypeScript + Vite.
 - Scripts: `pnpm storybook` (dev, :6006), `pnpm build-storybook`, `pnpm test:storybook` (Vitest browser mode, Playwright Chromium; every story = test, play fn + axe a11y, `a11y.test: 'error'` globally).
 - MCP: `http://localhost:6006/mcp` (server `storybook` in `.mcp.json`; needs `pnpm storybook` running). Tools: `docs-list`, `docs-show`, `docs-show-story`, `stories-preview`, `stories-find-by-component`, `get-storybook-story-instructions`, `stories-changed`, `test-run`. Call `get-storybook-story-instructions` before writing stories.
 - Known a11y debt: mark per story with `parameters: { a11y: { test: 'todo' } }` + comment, never disable globally.
+- Story conventions (kit primitives, `src/components/ui/<Name>/<Name>.stories.tsx`): args-driven story per meaningful state + one `Matrix` story (all variants × sizes × states) for Figma review; behaviour asserted in play fns (no separate RTL tests); every `fn()` arg asserted; portals queried via `within(canvasElement.ownerDocument.body)`; mobile branch via story `globals: { viewport: { value: 'mobile2', isRotated: false } }` (stories named `*OnMobile`); dates fixed via props, never the clock.
+- Figma: kit file `GPPlxspxcbP4kc13YwNJTH` → `https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=<a-b>` on meta (component set) and per story (cell).
 
 <!-- BEGIN:storybook-skills -->
 <!-- Storybook updates this section on upgrade. Remove both markers to keep your own edits. -->

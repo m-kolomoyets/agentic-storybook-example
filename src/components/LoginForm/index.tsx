@@ -6,7 +6,6 @@ import { focusFirstError } from '@/lib/utils/focusFirstError';
 import { loginMutationOptions } from '@/services/authExample/queries';
 import { useAppForm } from '@/components/Form';
 import { Button } from '@/components/ui/Button';
-import { Field, FieldGroup, FieldSet } from '@/components/ui/Field';
 import { toast } from '@/components/ui/Toast';
 import { loginSchema } from './schemas';
 
@@ -61,7 +60,7 @@ function LoginForm() {
                                 },
                             });
                         } else {
-                            toast.add({ type: 'error', title: error.message });
+                            toast.negative({ title: error.message });
                         }
                     },
                 }
@@ -73,10 +72,10 @@ function LoginForm() {
     });
 
     return (
-        <div className="w-full max-w-md p-6 md:p-8">
-            <div className="mb-6 flex flex-col items-center text-center">
-                <h1 className="text-2xl font-bold">Welcome back</h1>
-                <p className="text-balance text-muted-foreground">Login to your account</p>
+        <div className="w-full max-w-md p-3xl md:p-4xl">
+            <div className="mb-3xl flex flex-col items-center text-center">
+                <h1 className="text-heading-m text-text-general-strong">Welcome back</h1>
+                <p className="text-body-m text-balance text-text-general-medium">Login to your account</p>
             </div>
             <form
                 id="login-form"
@@ -86,62 +85,48 @@ function LoginForm() {
                     form.handleSubmit();
                 }}
             >
-                <FieldSet>
-                    <FieldGroup>
-                        <form.AppField
-                            name="username"
-                            children={(field) => {
-                                return (
-                                    <field.FormFieldWrapper label="Username">
-                                        <field.InputField placeholder="emilys" autoComplete="username" />
-                                    </field.FormFieldWrapper>
-                                );
-                            }}
-                        />
+                <div className="flex flex-col gap-3xl">
+                    <form.AppField
+                        name="username"
+                        children={(field) => {
+                            return (
+                                <field.FormFieldWrapper label="Username">
+                                    <field.InputField placeholder="emilys" autoComplete="username" />
+                                </field.FormFieldWrapper>
+                            );
+                        }}
+                    />
+                    <div className="flex flex-col gap-s">
                         <form.AppField
                             name="password"
                             children={(field) => {
                                 return (
-                                    <field.FormFieldWrapper
-                                        labelClassName="flex items-center justify-between"
-                                        label={
-                                            <>
-                                                Password{' '}
-                                                <Link
-                                                    to="/login"
-                                                    className="ml-auto rounded-sm text-sm text-foreground underline-offset-2 outline-none hover:underline focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-                                                >
-                                                    Forgot your password?
-                                                </Link>
-                                            </>
-                                        }
-                                    >
-                                        <field.PasswordInputField placeholder="Enter password" />
+                                    <field.FormFieldWrapper label="Password">
+                                        <field.PasswordInputField
+                                            placeholder="Enter password"
+                                            autoComplete="current-password"
+                                        />
                                     </field.FormFieldWrapper>
                                 );
                             }}
                         />
-                        <Field>
-                            <form.Subscribe
-                                selector={(state) => {
-                                    return [state.canSubmit, state.isSubmitting];
-                                }}
-                                children={([canSubmit, isSubmitting]) => {
-                                    return (
-                                        <Button
-                                            type="submit"
-                                            className="w-full"
-                                            disabled={!canSubmit}
-                                            isLoading={isSubmitting}
-                                        >
-                                            Login
-                                        </Button>
-                                    );
-                                }}
-                            />
-                        </Field>
-                    </FieldGroup>
-                </FieldSet>
+                        <Button variant="link-secondary" size="sm" className="self-end" render={<Link to="/login" />}>
+                            Forgot your password?
+                        </Button>
+                    </div>
+                    <form.Subscribe
+                        selector={(state) => {
+                            return [state.canSubmit, state.isSubmitting];
+                        }}
+                        children={([canSubmit, isSubmitting]) => {
+                            return (
+                                <Button type="submit" fullWidth={true} disabled={!canSubmit} loading={isSubmitting}>
+                                    Login
+                                </Button>
+                            );
+                        }}
+                    />
+                </div>
             </form>
         </div>
     );

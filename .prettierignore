@@ -7,3 +7,6 @@ pnpm-lock.yaml
 src/routeTree.gen.ts
 src/lib/cn-tables.ts
 /public/mockServiceWorker.js
+src/styles/tokens.css
+skills-lock.json
+src/assets/icons/illustrations/icons.json

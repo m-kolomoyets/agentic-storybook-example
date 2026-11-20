@@ -26,7 +26,7 @@ const router = createRouter({
     defaultNotFoundComponent: NotFound,
     defaultErrorComponent: ErrorComponent,
     defaultPendingComponent() {
-        return <Loader className="m-auto size-16" />;
+        return <Loader variant="secondary" label="Loading" className="m-auto size-8xl" />;
     },
 });
 

@@ -1,6 +1,6 @@
-import type { Avatar } from '@/components/ui/Avatar';
+import type { AvatarProps } from '@/components/ui/Avatar/types';
 
 export type SidebarAvatarProps = {
     name: string;
     avatarUrl?: string;
-} & Pick<React.ComponentProps<typeof Avatar>, 'className'>;
+} & Pick<AvatarProps, 'className'>;

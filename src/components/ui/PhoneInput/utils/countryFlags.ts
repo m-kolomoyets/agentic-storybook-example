@@ -1,24 +1,31 @@
 /*
- * Flag artwork as SVG components. `country-flag-icons` and `libphonenumber-js` are independently
- * versioned region lists, so a missing flag is a normal outcome (callers draw a blank box).
- * Not emoji flags: Windows Chrome renders them as letters.
- * Trade-off vs amber (per-flag `<img>` asset URLs via `import.meta.glob`): the namespace import
- * bundles every flag component, because a glob into pnpm's `node_modules` is fragile.
+ * Flag artwork as asset URLs: the picker is virtualized, so only mounted rows fetch their flag; a
+ * namespace import of `country-flag-icons/react/3x2` would bundle all ~265 flag components.
+ * Not emoji flags: Windows Chrome renders them as letters. `country-flag-icons` and `libphonenumber-js`
+ * are independently versioned region lists, so a missing flag is a normal outcome (callers draw a blank box).
  */
-import type { ComponentType, ReactElement, SVGAttributes } from 'react';
 import type { CountryCode } from 'libphonenumber-js/min';
-import { createElement } from 'react';
-import * as Flags from 'country-flag-icons/react/3x2';
 
-type FlagComponent = ComponentType<SVGAttributes<SVGElement>>;
-
-const FLAGS: Partial<Record<string, FlagComponent>> = Flags;
-
-/**
- * The flag element for `code`, or `undefined` where there is no artwork. An element, not the
- * component: a component looked up during render trips `react-hooks/static-components`.
+/*
+ * Relative path: the package's `exports` map hides the `.svg` files from a bare specifier. `?no-inline`:
+ * nearly every flag is under `assetsInlineLimit`, so `?url` would inline them all as data URIs.
+ * A glob fails open (empty map → blank boxes); the `Flags` story asserts it matched.
  */
-export function renderFlag(code: CountryCode, props: SVGAttributes<SVGElement>): ReactElement | undefined {
-    const flag = FLAGS[code];
-    return flag === undefined ? undefined : createElement(flag, props);
+const FLAG_URLS_BY_PATH = import.meta.glob<string>('../../../../../node_modules/country-flag-icons/3x2/*.svg', {
+    eager: true,
+    query: '?no-inline',
+    import: 'default',
+});
+
+/* ISO-2 → URL, built once: the picker asks per row on every keystroke. */
+const URL_BY_CODE = new Map<string, string>(
+    Object.entries(FLAG_URLS_BY_PATH).map(([path, url]) => {
+        const stem = path.slice(path.lastIndexOf('/') + 1, -'.svg'.length);
+        return [stem.toUpperCase(), url];
+    })
+);
+
+/** The flag URL for `code`, or `undefined` where there is no artwork. */
+export function flagUrl(code: CountryCode): string | undefined {
+    return URL_BY_CODE.get(code);
 }

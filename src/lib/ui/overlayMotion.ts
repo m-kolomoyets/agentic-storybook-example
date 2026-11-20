@@ -10,7 +10,3 @@ export const OVERLAY_TRANSITION_TRAVEL = 'transition-[opacity,transform] duratio
 export const OVERLAY_FADE = 'data-[starting-style]:opacity-0 data-[ending-style]:opacity-0';
 
 export const OVERLAY_MOTION = `${OVERLAY_TRANSITION} ${OVERLAY_FADE}`;
-
-export const TOAST_STACK_GUTTER = 'var(--spacing-xl)';
-
-export const TOAST_STACK_GAP = 'var(--spacing-m)';

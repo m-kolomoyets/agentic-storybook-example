@@ -232,7 +232,7 @@ export const PressableDays: Story = {
         design: { type: 'figma', url: `${FIGMA}11089-140347` },
         // label-content-name-mismatch: an empty cell draws the prompt word (`Today`) but is named for the
         // control (`Start day`) — amber's choice, so the prompt is not announced as a held value.
-        a11y: { test: 'todo' },
+        a11y: { config: { rules: [{ id: 'label-content-name-mismatch', enabled: false }] } },
     },
     play: async ({ canvas, args }) => {
         // Named for the control, not the prompt word drawn in it.
@@ -262,8 +262,8 @@ export const PressableDaysAnswered: Story = {
 
 /** The row and every control in it go disabled. */
 export const Disabled: Story = {
-    // Figma draws the disabled row at 50% opacity; its secondary ink drops under 4.5:1 by design.
-    parameters: { a11y: { test: 'todo' } },
+    // color-contrast off: Figma draws the disabled row at 50% opacity; its secondary ink drops under 4.5:1 by design.
+    parameters: { a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } } },
     args: { disabled: true, onDelete: fn(), onDayPress: fn() },
     play: async ({ canvas, args }) => {
         await expect(canvas.getByRole('button', { name: 'Delete run window' })).toBeDisabled();
@@ -374,8 +374,8 @@ function Cells({ width }: { width: string }) {
 
 /** Every cell at 331 / 432 / 620, for review against the Figma frame. */
 export const Matrix: Story = {
-    // Holds the disabled cells (50% opacity, design contrast).
-    parameters: { rowWidth: 'w-auto', a11y: { test: 'todo' } },
+    // color-contrast off: holds the disabled cells (50% opacity, design contrast). Other rules still run.
+    parameters: { rowWidth: 'w-auto', a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } } },
     render: function Matrix() {
         return (
             <div className="flex flex-col gap-4xl">

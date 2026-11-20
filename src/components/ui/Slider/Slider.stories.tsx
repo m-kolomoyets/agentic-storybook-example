@@ -162,8 +162,8 @@ export const WithoutIndicator: Story = {
 /** Invented (no Figma cell): `opacity-50` over the whole control; the keyboard is refused. */
 export const Disabled: Story = {
     args: { disabled: true },
-    // Dimmed scale labels fail axe contrast; WCAG 1.4.3 exempts inactive UI, which axe can't infer here.
-    parameters: { a11y: { test: 'todo' } },
+    // color-contrast off: dimmed scale labels; WCAG 1.4.3 exempts inactive UI, which axe can't infer here.
+    parameters: { a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } } },
     play: async ({ canvasElement, args, userEvent }) => {
         const input = inputOf(canvasElement);
         await expect(input).toBeDisabled();

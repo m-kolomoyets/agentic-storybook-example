@@ -266,8 +266,8 @@ export const DevGuards: Story = {
             </div>
         );
     },
-    // The unnamed icon-only trigger is the deliberate mistake under test (axe button-name).
-    parameters: { a11y: { test: 'todo' } },
+    // button-name off: the unnamed icon-only trigger is the deliberate mistake under test.
+    parameters: { a11y: { config: { rules: [{ id: 'button-name', enabled: false }] } } },
     play: async () => {
         await waitFor(() => {
             return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('cannot take focus'));

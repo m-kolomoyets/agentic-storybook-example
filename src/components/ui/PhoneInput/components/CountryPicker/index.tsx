@@ -15,7 +15,7 @@ import {
 import { DropdownContent } from '@/components/ui/DropdownContent';
 import { Field } from '@/components/ui/Field';
 import { filterCountries, getCountryEntries } from '../../utils/countryData';
-import { renderFlag } from '../../utils/countryFlags';
+import { flagUrl } from '../../utils/countryFlags';
 
 /*
  * Fixed 68px box with its own 4px gap (not `CONTROL_SURFACE_LAYOUT`'s full-width 6px). It is a
@@ -68,13 +68,13 @@ function isSameItem(item: SelectOption, value: SelectOption) {
     return item.value === value.value;
 }
 
-/** Flag, or a blank box of the same size. Hidden: the row's name already says the country. */
+/** Flag, or a blank box of the same size. Decorative (`alt=""`): the row's name already says the country. */
 function Flag({ code }: { code: CountryCode }) {
-    return (
-        renderFlag(code, { 'aria-hidden': true, className: FLAG_CLASSES }) ?? (
-            <span aria-hidden className={FLAG_CLASSES} />
-        )
-    );
+    const url = flagUrl(code);
+    if (url === undefined) {
+        return <span aria-hidden className={FLAG_CLASSES} />;
+    }
+    return <img src={url} alt="" className={FLAG_CLASSES} />;
 }
 
 function toOption(entry: CountryEntry): SelectOption {

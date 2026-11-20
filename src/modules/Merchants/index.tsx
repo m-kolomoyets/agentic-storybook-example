@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { usersQueryOptions } from '@/services/users/queries';
 import { MainLayoutHeader } from '@/components/layouts/MainLayoutHeader';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
+import { Avatar } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
 
 function Merchants() {
@@ -10,28 +10,28 @@ function Merchants() {
     return (
         <>
             <MainLayoutHeader>
-                <h1 className="text-xl">Merchants</h1>
+                <h1 className="text-heading-s">Merchants</h1>
             </MainLayoutHeader>
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-m">
                 {data.users.map((user) => {
                     return (
-                        <li key={user.id} className="flex items-center gap-4 rounded-lg border p-3">
-                            <div className="flex items-center gap-3">
-                                <Avatar size="lg">
-                                    <AvatarImage src={user.image} alt={`${user.firstName} ${user.lastName}`} />
-                                    <AvatarFallback>
-                                        {user.firstName[0]}
-                                        {user.lastName[0]}
-                                    </AvatarFallback>
+                        <li
+                            key={user.id}
+                            className="flex items-center gap-xl rounded-m border border-border-primary p-l"
+                        >
+                            <div className="flex items-center gap-l">
+                                <Avatar src={user.image} className="size-5xl">
+                                    {user.firstName[0]}
+                                    {user.lastName[0]}
                                 </Avatar>
-                                <div className="flex flex-col gap-0.5">
-                                    <span className="text-sm font-medium">
+                                <div className="flex flex-col gap-xxs">
+                                    <span className="text-body-s-medium">
                                         {user.firstName} {user.lastName}
                                     </span>
-                                    <span className="text-xs text-muted-foreground">{user.email}</span>
+                                    <span className="text-caption-m text-text-general-medium">{user.email}</span>
                                 </div>
                             </div>
-                            <Badge className="ml-auto" variant="outline">
+                            <Badge className="ml-auto" variant="neutral">
                                 {user.role}
                             </Badge>
                         </li>

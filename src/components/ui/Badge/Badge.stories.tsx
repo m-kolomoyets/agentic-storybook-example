@@ -125,12 +125,10 @@ export const ChipDisabled: Story = {
 };
 
 /**
- * `render` to an anchor: disablement travels as `aria-disabled` (no `disabled` attribute). The anchor stays
- * focusable and named, so the click handler guard is what blocks activation.
+ * `render` to an anchor: no `aria-pressed` (button-only); disablement travels as `aria-disabled` (no
+ * `disabled` attribute). The anchor stays focusable and named, so the click handler guard is what blocks activation.
  */
 export const AsLinkDisabled: Story = {
-    // Amber behaviour kept: `aria-pressed` on an `<a>` is not an allowed attr (axe aria-allowed-attr).
-    parameters: { a11y: { test: 'todo' } },
     args: {
         selected: false,
         disabled: true,
@@ -150,6 +148,8 @@ export const AsLinkDisabled: Story = {
         await expect(link).toHaveAttribute('aria-disabled', 'true');
         await expect(link).toHaveAttribute('data-disabled', 'true');
         await expect(link).not.toHaveAttribute('type');
+        // ARIA 1.2: `aria-pressed` is not allowed on a link.
+        await expect(link).not.toHaveAttribute('aria-pressed');
         await userEvent.tab();
         await expect(link).toHaveFocus();
         await userEvent.click(link);

@@ -33,11 +33,3 @@ export const SCHEDULE_MODE_METER_FILL: Record<ScheduleMode, string> = {
     custom: '[--color-surface-meter-fill-start:var(--color-schedule-custom-progress-start)] [--color-surface-meter-fill-end:var(--color-schedule-custom-progress-end)]',
     manual: '[--color-surface-meter-fill-start:var(--color-schedule-manual-progress-start)] [--color-surface-meter-fill-end:var(--color-schedule-manual-progress-end)]',
 };
-
-export const SCHEDULE_MODE_TEXT: Record<ScheduleMode, string> = {
-    cooling: 'text-text-tag-quinary',
-    drying: 'text-text-tag-septenary',
-    reconditioning: 'text-text-tag-senary',
-    custom: 'text-text-general-strong',
-    manual: 'text-text-tag-positive',
-};

@@ -39,6 +39,10 @@ export type OptionListProps<TValue extends string | number = string> = {
     /** Forwarded to every row's `Option`. */
     indicator?: OptionIndicator;
     ref?: Ref<OptionListHandle>;
+    /** Names the `listbox`; fallback when no label is referenced. */
+    'aria-label'?: string;
+    /** Names the `listbox`. @default the surrounding `Field.Label`'s id, if any */
+    'aria-labelledby'?: string;
     /** Rows come from `Combobox.useFilteredItems()`; children would be unvirtualizable. */
     children?: never;
 };

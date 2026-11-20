@@ -1,12 +1,14 @@
 import type { LinkProps } from '@tanstack/react-router';
-import type { LucideIcon } from 'lucide-react';
+import type { ComponentType, SVGProps } from 'react';
 import type { Actions, SubjectName } from '@/lib/utils/auth/perms/types';
-import { LayoutDashboardIcon, ShoppingBagIcon, TicketsIcon } from 'lucide-react';
+import GridViewIcon from '@/assets/icons/grid-view.svg?react';
+import Inventory2Icon from '@/assets/icons/inventory-2.svg?react';
+import TicketIcon from '@/assets/icons/ticket.svg?react';
 import { PERM_ACTIONS, PERM_SUBJECTS } from '@/lib/utils/auth/perms/constants';
 
 type SidebarNavigationLinkItem = {
     label: string;
-    Icon: LucideIcon;
+    Icon: ComponentType<SVGProps<SVGSVGElement>>;
     linkProps: LinkProps;
     perm?: { action: Actions; subject: SubjectName };
 };
@@ -14,14 +16,14 @@ type SidebarNavigationLinkItem = {
 export const SIDEBAR_NAVIGATION_LINK_LIST: SidebarNavigationLinkItem[] = [
     {
         label: 'Dashboard',
-        Icon: LayoutDashboardIcon,
+        Icon: GridViewIcon,
         linkProps: {
             to: '/dashboard',
         },
     },
     {
         label: 'Merchants',
-        Icon: ShoppingBagIcon,
+        Icon: Inventory2Icon,
         linkProps: {
             to: '/merchants',
         },
@@ -29,7 +31,7 @@ export const SIDEBAR_NAVIGATION_LINK_LIST: SidebarNavigationLinkItem[] = [
     },
     {
         label: 'Vouchers',
-        Icon: TicketsIcon,
+        Icon: TicketIcon,
         linkProps: {
             to: '/vouchers',
         },

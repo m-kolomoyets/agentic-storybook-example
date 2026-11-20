@@ -183,7 +183,15 @@ export const Open: Story = {
             return expect(listbox.getBoundingClientRect().width).toBeGreaterThan(300);
         });
         // The selected row is scrolled into the virtualized window on open.
-        await expect(await within(body).findByRole('option', { name: /United States/ })).toBeVisible();
+        const row = await within(body).findByRole('option', { name: /United States/ });
+        await expect(row).toBeVisible();
+        // Flag is a lazily fetched, decorative asset `<img>` (the glob matched; it is not inlined).
+        const flag = row.querySelector('img');
+        await expect(flag).toHaveAttribute('alt', '');
+        await expect(flag?.getAttribute('src')).toMatch(/US\.svg/);
+        await waitFor(() => {
+            return expect(flag?.naturalWidth).toBeGreaterThan(0);
+        });
     },
 };
 

@@ -53,9 +53,18 @@ export const Disabled: Story = {
 
 /** The count joins the accessible name; the visual badge is hidden so it is not read twice. */
 export const WithIndicator: Story = {
-    // a11y todo: Figma badge white-on-`surface-negative` is 3.65:1; axe's label-content-name-mismatch heuristic
+    // color-contrast off: Figma badge white-on-`surface-negative` is 3.65:1. label-content-name-mismatch off: axe
     // counts the hidden badge digit as visible label text (the visible word is in the name, so WCAG 2.5.3 holds).
-    parameters: { a11y: { test: 'todo' } },
+    parameters: {
+        a11y: {
+            config: {
+                rules: [
+                    { id: 'color-contrast', enabled: false },
+                    { id: 'label-content-name-mismatch', enabled: false },
+                ],
+            },
+        },
+    },
     args: { label: 'Notifications', icon: <BellIcon />, to: '#notifications', indicator: 8 },
     play: async ({ canvas }) => {
         await expect(canvas.getByRole('link', { name: 'Notifications, 8 unread' })).toBeInTheDocument();
@@ -65,9 +74,18 @@ export const WithIndicator: Story = {
 
 /** Above 99 the badge reads `99+`; the name keeps the real count. */
 export const IndicatorCapped: Story = {
-    // a11y todo: Figma badge white-on-`surface-negative` is 3.65:1; axe's label-content-name-mismatch heuristic
+    // color-contrast off: Figma badge white-on-`surface-negative` is 3.65:1. label-content-name-mismatch off: axe
     // counts the hidden badge digit as visible label text (the visible word is in the name, so WCAG 2.5.3 holds).
-    parameters: { a11y: { test: 'todo' } },
+    parameters: {
+        a11y: {
+            config: {
+                rules: [
+                    { id: 'color-contrast', enabled: false },
+                    { id: 'label-content-name-mismatch', enabled: false },
+                ],
+            },
+        },
+    },
     args: { label: 'Notifications', icon: <BellIcon />, to: '#notifications', indicator: 120 },
     play: async ({ canvas }) => {
         await expect(canvas.getByRole('link', { name: 'Notifications, 120 unread' })).toBeInTheDocument();
@@ -97,9 +115,18 @@ export const AsRouterLink: Story = {
 
 /** Pointer/focus cells pinned with the ramp's own tokens, for review against Figma. */
 export const Matrix: Story = {
-    // a11y todo: Figma badge white-on-`surface-negative` is 3.65:1; axe's label-content-name-mismatch heuristic
+    // color-contrast off: Figma badge white-on-`surface-negative` is 3.65:1. label-content-name-mismatch off: axe
     // counts the hidden badge digit as visible label text (the visible word is in the name, so WCAG 2.5.3 holds).
-    parameters: { a11y: { test: 'todo' } },
+    parameters: {
+        a11y: {
+            config: {
+                rules: [
+                    { id: 'color-contrast', enabled: false },
+                    { id: 'label-content-name-mismatch', enabled: false },
+                ],
+            },
+        },
+    },
     render: function Matrix() {
         const rows = [
             { state: 'default', props: {} },

@@ -122,5 +122,10 @@ export default {
         'at-rule-prelude-no-invalid': [true, { ignoreAtRules: ['/^apply$/'] }],
         'import-notation': null,
         // Local overrides only.
+        // Tailwind v4 theme sub-properties use a double dash (`--text-body-m--line-height`).
+        'custom-property-pattern': [
+            '^([a-z][a-z0-9]*)(-{1,2}[a-z0-9]+)*$',
+            { message: 'Expected kebab-case custom property (Tailwind `--x--y` allowed)' },
+        ],
     },
 };

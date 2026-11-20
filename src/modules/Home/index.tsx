@@ -1,5 +1,6 @@
+import ArrowForwardIcon from '@/assets/icons/arrow-forward.svg?react';
+import GridViewIcon from '@/assets/icons/grid-view.svg?react';
 import { getRouteApi, Link } from '@tanstack/react-router';
-import { LayoutDashboardIcon, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
 const routeApi = getRouteApi('/_public/');
@@ -12,61 +13,37 @@ function Home() {
     });
 
     return (
-        <main className="min-h-screen bg-linear-to-br from-background via-background to-muted/30">
+        <main className="min-h-screen bg-linear-to-br from-surface-ground via-surface-ground to-surface-secondary">
             <section className="relative overflow-hidden">
-                <div className="bg-grid-slate-100 dark:bg-grid-slate-700/25 absolute inset-0 mask-[linear-gradient(0deg,white,rgba(255,255,255,0.6))] dark:mask-[linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" />
-                <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+                <div className="relative mx-auto max-w-7xl px-3xl py-8xl lg:px-4xl">
                     <div className="mx-auto max-w-4xl text-center">
-                        <div className="mb-12 flex justify-center">
-                            <img
-                                src="/images/logo-black.svg"
-                                alt="Phenomenon Logo"
-                                className="h-16 w-auto dark:hidden"
-                            />
-                            <img
-                                src="/images/logo-white.svg"
-                                alt="Phenomenon Logo"
-                                className="hidden h-16 w-auto dark:block"
-                            />
+                        <div className="mb-6xl flex justify-center">
+                            <img src="/images/logo-white.svg" alt="Phenomenon Logo" className="h-8xl w-auto" />
                         </div>
-                        <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-7xl lg:text-8xl">
+                        <h1 className="text-heading-l text-text-general-strong">
                             Welcome to the
-                            <span className="block bg-linear-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-                                Template Admin Panel
-                            </span>
+                            <span className="block text-text-link-primary-default">Template Admin Panel</span>
                         </h1>
-                        <div className="mx-auto mt-8 max-w-4xl">
-                            <p className="mb-8 text-xl leading-8 text-muted-foreground">
-                                Vite, React, TypeScript, Tailwind CSS, Shadcn/ui, TanStack Router, TanStack Query, Ky,
-                                TansTack Form, Zod, Lucide Icons
+                        <div className="mx-auto mt-4xl max-w-4xl">
+                            <p className="mb-4xl text-body-m text-text-general-medium">
+                                Vite, React, TypeScript, Tailwind CSS, Base UI, TanStack Router, TanStack Query, Ky,
+                                TanStack Form, Zod
                             </p>
                         </div>
-                        <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                        <div className="mt-6xl flex flex-col items-center justify-center gap-xl sm:flex-row">
                             {isAuthenticated ? (
                                 <Button
-                                    variant="outline"
+                                    variant="secondary"
                                     size="lg"
-                                    className="px-8 py-4 text-lg font-semibold"
-                                    nativeButton={false}
-                                    render={
-                                        <Link to="/dashboard">
-                                            Dashboard
-                                            <LayoutDashboardIcon className="ml-2 h-5 w-5" />
-                                        </Link>
-                                    }
-                                />
+                                    endIcon={<GridViewIcon />}
+                                    render={<Link to="/dashboard" />}
+                                >
+                                    Dashboard
+                                </Button>
                             ) : (
-                                <Button
-                                    size="lg"
-                                    className="group px-8 py-4 text-lg font-semibold"
-                                    nativeButton={false}
-                                    render={
-                                        <Link to="/login">
-                                            Login
-                                            <LogIn className="ml-2 h-5 w-5" />
-                                        </Link>
-                                    }
-                                />
+                                <Button size="lg" endIcon={<ArrowForwardIcon />} render={<Link to="/login" />}>
+                                    Login
+                                </Button>
                             )}
                         </div>
                     </div>

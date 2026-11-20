@@ -80,6 +80,7 @@ function DropdownContent<TValue extends string | number = string>({
     searchClassName,
     indicator,
     clearLabel = 'Clear search',
+    listLabel,
     ...rest
 }: DropdownContentProps<TValue>) {
     const loadingClasses = loading ? LIST_LOADING_CLASSES : '';
@@ -114,6 +115,7 @@ function DropdownContent<TValue extends string | number = string>({
                     renderItem={renderItem}
                     className={cn`${LIST_CLASSES} ${loadingClasses} ${optionListClassName}`}
                     indicator={indicator}
+                    aria-label={listLabel}
                 />
                 {loading ? (
                     <div className={OVERLAY_CLASSES}>

@@ -111,7 +111,7 @@ function idrefText(card: HTMLElement, attribute: 'aria-labelledby' | 'aria-descr
  * Base UI keeps a `high` priority (negative) card `aria-hidden` while its hidden `role="alert"` mirror
  * announces, yet the card stays `tabindex="0"` → axe `aria-hidden-focus`. Upstream behaviour, not ours.
  */
-const NEGATIVE_A11Y = { a11y: { test: 'todo' } } as const;
+const NEGATIVE_A11Y = { a11y: { config: { rules: [{ id: 'aria-hidden-focus', enabled: false }] } } } as const;
 
 const HISTORY_GLYPH = <HistoryIcon />;
 

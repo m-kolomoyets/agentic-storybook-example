@@ -39,3 +39,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Visual regression comparison (visual/README.md)
+/visual/.results
+build-storybook.log
+chromatic.log
+chromatic-diagnostics.json
+
+# Vitest browser-mode attachments
+/.vitest

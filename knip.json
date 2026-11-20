@@ -1,0 +1,5 @@
+{
+    "$schema": "https://unpkg.com/knip@6/schema.json",
+    "entry": ["src/components/ui/*/index.{ts,tsx}", "src/components/ui/*/types.ts", "src/hooks/useToastWhile.ts"],
+    "ignoreDependencies": ["@svgr/plugin-jsx", "@svgr/plugin-svgo", "country-flag-icons", "chromatic"]
+}

@@ -304,8 +304,8 @@ export const Footerless: Story = {
 /** Dev-only guard: no `Title` → `console.error`, and the sheet still renders. */
 export const MissingTitle: Story = {
     args: { title: undefined },
-    // The unnamed dialog is the point of this story.
-    parameters: { a11y: { test: 'todo' } },
+    // aria-dialog-name off: the unnamed dialog is the point of this story.
+    parameters: { a11y: { config: { rules: [{ id: 'aria-dialog-name', enabled: false }] } } },
     play: async (context) => {
         const dialog = await openSheet(context);
         await expect(dialog).toBeInTheDocument();

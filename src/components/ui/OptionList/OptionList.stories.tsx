@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import GrainIcon from '@/assets/icons/grains.svg?react';
 import { Combobox } from '@base-ui/react/combobox';
 import { expect, fn, waitFor } from 'storybook/test';
+import { Field } from '@/components/ui/Field';
 import { OptionList } from '.';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
@@ -43,7 +44,7 @@ type StoryArgs = OptionListProps & {
 const meta = {
     title: 'UI/OptionList',
     component: OptionList,
-    args: { items: oneLine(12) },
+    args: { items: oneLine(12), 'aria-label': 'Grains' },
     argTypes: {
         indicator: { control: 'inline-radio', options: ['check', 'radio'] },
         items: { control: false },
@@ -74,8 +75,6 @@ const meta = {
     ],
     parameters: {
         design: { type: 'figma', url: `${FIGMA}8915-27188` },
-        // The listbox's name comes from the host `Select`'s trigger/label; bare here (amber API has no label prop).
-        a11y: { test: 'todo' },
     },
 } satisfies Meta<StoryArgs>;
 
@@ -87,7 +86,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
     args: { onValueChange: fn() },
     play: async ({ canvas, canvasElement, userEvent, args }) => {
-        const listbox = canvas.getByRole('listbox');
+        const listbox = canvas.getByRole('listbox', { name: 'Grains' });
         await expect(rowsOf(canvasElement)[0]?.parentElement).toBe(listbox);
         const viewport = canvasElement.querySelector<HTMLElement>('[data-scroll-viewport]');
         await waitFor(() => {
@@ -241,5 +240,22 @@ export const ScrollToIndex: Story = {
         await expect(canvas.queryByRole('option', { name: 'Soybeans 80' })).toBeNull();
         await userEvent.click(canvas.getByRole('button', { name: 'Jump to 80' }));
         await expect(await canvas.findByRole('option', { name: 'Soybeans 80' })).toBeVisible();
+    },
+};
+
+/** Inside a `Field`, the `Field.Label` names the listbox (`aria-labelledby` beats the `aria-label` fallback). */
+export const InField: Story = {
+    render: function InField({ items, ...props }) {
+        return (
+            <Field.Root>
+                <Field.Label>Grain</Field.Label>
+                <Combobox.Root inline open virtualized items={items} itemToStringLabel={labelOf}>
+                    <OptionList {...props} />
+                </Combobox.Root>
+            </Field.Root>
+        );
+    },
+    play: async ({ canvas }) => {
+        await expect(canvas.getByRole('listbox', { name: 'Grain' })).toHaveAttribute('aria-labelledby');
     },
 };

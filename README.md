@@ -9,10 +9,10 @@
 - **[TanStack Query](https://tanstack.com/query/latest)** - Powerful async state management;
 - **[TanStack Form](https://tanstack.com/form/latest)** - Type-safe form state management;
 - **[TailwindCSS](https://tailwindcss.com)** - Utility-first styling;
-- **[shadcn/ui](https://ui.shadcn.com) + [Base/ui](https://base-ui.com/react/overview/quick-start)** - Accessible, customizable components;
+- **Amber design system on [Base UI](https://base-ui.com/react/overview/quick-start)** - Accessible kit primitives (`src/components/ui`), dark theme only;
 - **[Ky](https://github.com/sindresorhus/ky)** - Modern HTTP client;
 - **[Zod](https://zod.dev)** - TypeScript-first schema validation;
-- **[Lucide React](https://lucide.dev/guide/packages/lucide-react)** - Icon library;
+- **Kit SVG icons** - `@/assets/icons/*.svg?react` via SVGR;
 - **[ESLint](https://eslint.org)** - JavaScript/TypeScript linting;
 - **[Prettier](https://prettier.io)** - Code formatting;
 - **[StyleLint](https://stylelint.io)** - CSS linting;
@@ -94,14 +94,10 @@
 
 This project was generated from [phenomenon-configs](https://github.com/Phenomenon-Studio/phenomenon-configs).
 
-- ESLint, TypeScript, Prettier, Stylelint and commitlint configs are plain files in this repo, with no shared config
-  package to install. Add project-specific rules under `// Local overrides only.` so template updates merge cleanly.
+- ESLint, TypeScript, Prettier, Stylelint and commitlint configs are plain files in this repo, with no shared config package to install. Add project-specific rules under `// Local overrides only.` so template updates merge cleanly.
 - CI runs the shared `node-ci.yml@v1` workflow ([.github/workflows/ci.yml](.github/workflows/ci.yml)).
-- Config rules and template files (this README, hooks, `.gitignore`, build configs…) are updated by a weekly
-  **Template update** PR, or by hand with `pnpm dlx @phenomenon-studio/create-app update`. Keep `.copier-answers.yml`
-  committed and never edit it by hand.
-- Nothing needs a token: the template and the CLI are public. For the update PR, allow Actions to open PRs (Settings →
-  Actions → General → "Allow GitHub Actions to create and approve pull requests").
+- Config rules and template files (this README, hooks, `.gitignore`, build configs…) are updated by a weekly **Template update** PR, or by hand with `pnpm dlx @phenomenon-studio/create-app update`. Keep `.copier-answers.yml` committed and never edit it by hand.
+- Nothing needs a token: the template and the CLI are public. For the update PR, allow Actions to open PRs (Settings → Actions → General → "Allow GitHub Actions to create and approve pull requests").
 
 ## 🧶 Structure
 
@@ -212,7 +208,6 @@ This project was generated from [phenomenon-configs](https://github.com/Phenomen
 - `package.json` - project dependencies, scripts, and metadata;
 - `pnpm-lock.yaml` - exact dependency versions lock file;
 - `pnpm-workspace.yaml` - pnpm workspace and install configuration;
-- `components.json` - shadcn/ui component configuration;
 
 #### Linting and formatting configuration
 

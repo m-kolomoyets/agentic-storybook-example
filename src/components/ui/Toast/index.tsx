@@ -20,7 +20,7 @@ const VIEWPORT_CLASSES = 'pointer-events-none fixed inset-x-none bottom-none z-[
 /*
  * Figma 351px/420px as caps, not widths: a fixed 351px overflows 320px (WCAG 1.4.10).
  * `--toast-inset-bottom` (set by a pinned bar) replaces the whole offset, safe area included.
- * `--toast-offset-y`/`--toast-index` come from Base UI; only the gap is ours (`TOAST_STACK_GAP`).
+ * `--toast-offset-y`/`--toast-index` come from Base UI; only the gap is ours (`--spacing-m`).
  * Always `[transform:…]`, never `translate-*`: Tailwind v4 emits the standalone `translate`
  * property, which `transition-[opacity,transform]` does not cover. Enter/exit compose the stack
  * offset (bottom at mobile, right at `md:`); swipe exit continues the gesture.

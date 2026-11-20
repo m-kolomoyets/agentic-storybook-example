@@ -4,7 +4,7 @@ import { animate, useMotionValue } from 'motion/react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 /** 2.5s/rev, linear: the legacy dial's spin, kept so both dials turn at one pace. */
-export const SPIN_SECONDS = 2.5;
+const SPIN_SECONDS = 2.5;
 const SPIN_SPEED = 360 / SPIN_SECONDS;
 /* Quadratic ease-out starts at twice its average speed, so a coast twice as long as the distance at
    spin speed leaves at exactly the spin's speed — no lurch as the drive cuts out. */

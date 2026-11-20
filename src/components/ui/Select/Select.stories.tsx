@@ -189,8 +189,8 @@ export const NoResults: Story = {
 };
 
 /**
- * No search field and no typeahead (ADR-0003). Short lists only. Known gap (Base UI 1.9): with no
- * `Combobox.Input`, focus lands on the popup and arrow keys do not move the highlight, so this is pointer-only.
+ * No search field and no typeahead (ADR-0003). Short lists only. The listbox takes focus on open, so arrow
+ * keys move the highlight and Enter picks.
  */
 export const NotSearchable: Story = {
     args: { items: oneLine(5), searchable: false },
@@ -198,10 +198,38 @@ export const NotSearchable: Story = {
         const trigger = canvas.getByRole('combobox', { name: LABEL });
         await userEvent.click(trigger);
         const body = bodyOf(canvasElement);
-        await body.findByRole('listbox');
+        const listbox = await body.findByRole('listbox');
         await expect(body.getByRole('dialog').querySelector('input')).toBeNull();
+        await waitFor(() => {
+            return expect(listbox).toHaveFocus();
+        });
         await userEvent.click(await body.findByRole('option', { name: 'Soybeans 2' }));
         await expect(args.onValueChange).toHaveBeenCalledWith('option-1');
+    },
+};
+
+/** Keyboard only, no search field: open from the trigger, arrow to a row, Enter picks it. */
+export const NotSearchableKeyboard: Story = {
+    args: { items: oneLine(5), searchable: false },
+    play: async ({ canvas, canvasElement, args, userEvent }) => {
+        const trigger = canvas.getByRole('combobox', { name: LABEL });
+        trigger.focus();
+        await userEvent.keyboard('{ArrowDown}');
+        const listbox = await bodyOf(canvasElement).findByRole('listbox');
+        await waitFor(() => {
+            return expect(listbox).toHaveFocus();
+        });
+        await userEvent.keyboard('{ArrowDown}{ArrowDown}');
+        const soybeans = within(listbox).getByRole('option', { name: 'Soybeans 2' });
+        await waitFor(() => {
+            return expect(soybeans).toHaveAttribute('data-highlighted');
+        });
+        await expect(listbox).toHaveAttribute('aria-activedescendant', soybeans.id);
+        await userEvent.keyboard('{Enter}');
+        await expect(args.onValueChange).toHaveBeenCalledWith('option-1');
+        await waitFor(() => {
+            return expect(trigger).toHaveTextContent('Soybeans 2');
+        });
     },
 };
 
@@ -467,5 +495,17 @@ export const InvalidFieldOnMobile: Story = {
         const trigger = canvas.getByRole('button', { name: /Select a grain/ });
         await expect(trigger).toHaveAttribute('data-invalid');
         await expect(trigger).toHaveAttribute('aria-invalid', 'true');
+    },
+};
+
+/** The mobile trigger carries `data-disabled` itself, so the disabled styling applies on phones too. */
+export const DisabledOnMobile: Story = {
+    ...Disabled,
+    globals: MOBILE,
+    play: async ({ canvas }) => {
+        const trigger = canvas.getByRole('button', { name: /Wheat 3/ });
+        await expect(trigger).toBeDisabled();
+        await expect(trigger).toHaveAttribute('data-disabled');
+        await expect(trigger).toHaveClass('data-disabled:border-border-control-disabled');
     },
 };

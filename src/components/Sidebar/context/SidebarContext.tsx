@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 import { useEventListener } from '@react-hookz/web';
-import { cn } from 'cn';
+import { cn } from '@/lib/cn';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { useSafeContext } from '@/hooks/useSafeContext';
 import {
@@ -99,7 +99,7 @@ export function SidebarProvider({
                         ...style,
                     } as React.CSSProperties
                 }
-                className={cn`group/sidebar-wrapper flex h-full w-full flex-col has-data-[variant=inset]:bg-sidebar md:flex-row ${className} `}
+                className={cn`group/sidebar-wrapper flex h-full w-full flex-col md:flex-row ${className} `}
                 {...props}
             >
                 {children}

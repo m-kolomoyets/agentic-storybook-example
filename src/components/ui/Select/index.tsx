@@ -95,6 +95,7 @@ function Select<TValue extends string | number = string>({
     const lastReportedQueryRef = useRef('');
     /* Whether the popup's close came from a pick, for `focusAfterSelect`. */
     const pickedRef = useRef(false);
+    const popupRef = useRef<HTMLDivElement>(null);
 
     /* Filtering runs here, not via Base UI's `filter` prop, so it can be debounced. */
     const { contains } = Combobox.useFilter();
@@ -176,6 +177,14 @@ function Select<TValue extends string | number = string>({
         return focusAfterSelect() ?? true;
     }
 
+    /*
+     * Without a search input, Base UI's default focuses the popup, a parent of the listbox — so the list's own
+     * arrow/Enter handlers never see keys (Base UI 1.9). Focusing the listbox restores keyboard use (WCAG 2.1.1).
+     */
+    function resolveInitialFocus() {
+        return popupRef.current?.querySelector<HTMLElement>('[role="listbox"]') ?? true;
+    }
+
     function handleItemHighlighted(
         _item: SelectOption<TValue> | undefined,
         details: ComboboxTypes.Root.HighlightEventDetails
@@ -203,6 +212,7 @@ function Select<TValue extends string | number = string>({
                 {/* eslint-disable-next-line jsx-a11y-x/role-supports-aria-props */}
                 <button
                     data-invalid={mobileInvalid ? '' : undefined}
+                    data-disabled={disabled ? '' : undefined}
                     aria-invalid={mobileInvalid || undefined}
                     type="button"
                     className={triggerClassName}
@@ -289,6 +299,8 @@ function Select<TValue extends string | number = string>({
                 >
                     {/* `render`, not children: Popup merges id, data attributes and handlers onto it. */}
                     <Combobox.Popup
+                        ref={popupRef}
+                        initialFocus={searchable ? undefined : resolveInitialFocus}
                         finalFocus={resolveFinalFocus}
                         aria-labelledby={labelId}
                         render={

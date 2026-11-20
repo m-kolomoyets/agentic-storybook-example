@@ -3,3 +3,4 @@
 **/tmp
 **/coverage
 **/storybook-static
+src/styles/tokens.css

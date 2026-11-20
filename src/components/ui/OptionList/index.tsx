@@ -1,6 +1,7 @@
 import type { OptionListProps, SelectOption } from './types';
 import { useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { Combobox } from '@base-ui/react/combobox';
+import { useLabelableContext } from '@base-ui/react/internals/labelable-provider';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { cn } from '@/lib/cn';
 import { Option } from '@/components/ui/Option';
@@ -39,6 +40,8 @@ function OptionList<TValue extends string | number = string>({
     className,
     indicator,
     ref,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
 }: OptionListProps<TValue>) {
     /* `useVirtualizer` returns functions off a mutable instance the compiler cannot memoize safely. */
     'use no memo';
@@ -46,6 +49,8 @@ function OptionList<TValue extends string | number = string>({
     /* Not a prop: the only array that agrees with Base UI's highlight after filtering. */
     const items = Combobox.useFilteredItems<SelectOption<TValue>>();
     const scrollRef = useRef<HTMLDivElement>(null);
+    /* A surrounding `Field.Label` names the listbox (axe `aria-input-field-name`); Base UI names only the trigger. */
+    const { labelId } = useLabelableContext();
 
     /* Manual memoization: this component is opted out of the compiler (see above). */
     const rows = useMemo(() => {
@@ -97,7 +102,13 @@ function OptionList<TValue extends string | number = string>({
             viewportRef={scrollRef}
         >
             {/* `List` must parent the items: it is the `listbox` and owns the highlight handlers. */}
-            <Combobox.List className="relative w-full" style={{ height: virtualizer.getTotalSize() }}>
+            {/* Both set: per ARIA `aria-labelledby` wins, `aria-label` is the fallback when no label exists. */}
+            <Combobox.List
+                aria-labelledby={ariaLabelledBy ?? labelId}
+                aria-label={ariaLabel}
+                className="relative w-full"
+                style={{ height: virtualizer.getTotalSize() }}
+            >
                 {virtualizer.getVirtualItems().map((virtualItem) => {
                     const row = rows[virtualItem.index];
                     if (!row) {

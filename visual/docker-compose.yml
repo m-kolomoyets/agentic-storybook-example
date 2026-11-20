@@ -1,0 +1,13 @@
+# Pinned Linux Chromium for deterministic screenshots (DIY + Argos).
+# Vitest stays on the host and connects over WebSocket; `exposeNetwork: '<loopback>'`
+# lets the containerised browser reach the host's Vitest/Storybook servers.
+# Keep the tag in lockstep with the `playwright` devDependency.
+services:
+    playwright:
+        image: mcr.microsoft.com/playwright:v1.65.1-noble
+        command: ['npx', '-y', 'playwright@1.65.1', 'run-server', '--port', '3000', '--host', '0.0.0.0']
+        ports: ['127.0.0.1:3000:3000']
+        init: true
+        ipc: host
+        working_dir: /home/pwuser
+        user: pwuser

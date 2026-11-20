@@ -16,7 +16,9 @@ const meta = {
             options: [undefined, 'cooling', 'drying', 'reconditioning', 'custom', 'manual'],
         },
     },
-    parameters: { design: { type: 'figma', url: `${FIGMA}I9256-44159` } },
+    // `Micro-Display Container` instance inside `Micro-Display` Size=Small (9256:44165); per-story instances are
+    // nested `I…;…` ids that Figma URLs cannot address, so stories inherit this link.
+    parameters: { design: { type: 'figma', url: `${FIGMA}9256-44159` } },
     decorators: [
         function Card(Story) {
             return (
@@ -73,13 +75,11 @@ export const ClampedLow: Story = {
 /** Fan bar: gradient fill, ramped in the run's aeration mode. */
 export const ProgressVariant: Story = {
     args: { value: 83, variant: 'progress', label: 'Run window completion', caption: '% Completion', mode: 'drying' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}I11555-436602%3B9256-44159%3B11086-14544` } },
 };
 
 /** Risk bar: full-width ramp, no fill. */
 export const Score: Story = {
     args: { value: 78, variant: 'score', label: 'Grain risk', caption: 'Risk Score' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}I11555-436604%3B9256-44159%3B11086-14574` } },
     play: async ({ canvasElement }) => {
         await expect(canvasElement.querySelector('[data-part="fill"]')).toBeNull();
     },

@@ -6,11 +6,11 @@ import type { BadgeVariant } from '../types';
  */
 
 /** The four `FanRunWindowRecommendedOption` colourways that draw a dot; `MANUAL` uses `MANUAL_MODE_DOT`. */
-export const MODE_VARIANTS = ['cool', 'dry', 'recondition', 'custom'] as const;
+const MODE_VARIANTS = ['cool', 'dry', 'recondition', 'custom'] as const;
 
 export type AerationModeVariant = (typeof MODE_VARIANTS)[number];
 
-export function isAerationModeVariant(variant: string): variant is AerationModeVariant {
+function isAerationModeVariant(variant: string): variant is AerationModeVariant {
     return (MODE_VARIANTS as readonly string[]).includes(variant);
 }
 

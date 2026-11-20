@@ -13,7 +13,7 @@ function SidebarNavigationLink({ activeProps, activeOptions, tooltipText, ...pro
                         ...activeOptions,
                     }}
                     activeProps={{
-                        className: 'bg-sidebar-accent text-sidebar-accent-foreground',
+                        className: 'bg-white-alpha-10 text-body-s-medium',
                         ...activeProps,
                     }}
                     {...props}

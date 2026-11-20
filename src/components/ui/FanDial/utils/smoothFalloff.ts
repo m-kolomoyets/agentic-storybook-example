@@ -40,7 +40,7 @@ function monotoneTangents(stops: readonly FalloffStop[]): number[] {
 }
 
 /** Alpha at `x`, on the monotone cubic through `stops` (sorted by position, at least two). */
-export function sampleFalloff(stops: readonly FalloffStop[], x: number): number {
+function sampleFalloff(stops: readonly FalloffStop[], x: number): number {
     const tangents = monotoneTangents(stops);
     const last = stops.length - 1;
     if (x <= stops[0][0]) {
