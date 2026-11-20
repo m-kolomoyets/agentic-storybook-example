@@ -1,0 +1,1059 @@
+{
+    "source": {
+        "url": "https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=9315-49693",
+        "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+        "nodeId": "9315:49693",
+        "name": "Link Button Primary",
+        "version": "2423344990798825378",
+        "lastModified": "2026-11-18T22:40:41Z"
+    },
+    "axes": [
+        {
+            "name": "State",
+            "options": [
+                "Default",
+                "Hover",
+                "Pressed",
+                "Focused",
+                "Disabled",
+                "Loading"
+            ]
+        },
+        {
+            "name": "Size",
+            "options": [
+                "Big",
+                "Medium",
+                "Small"
+            ]
+        }
+    ],
+    "booleans": [
+        {
+            "name": "Show Text",
+            "default": true
+        },
+        {
+            "name": "Show Left Icon",
+            "default": true
+        },
+        {
+            "name": "Show Left Icon",
+            "default": true
+        },
+        {
+            "name": "Show Right Icon",
+            "default": false
+        }
+    ],
+    "variants": [
+        {
+            "id": "9315:49694",
+            "name": "State=Default, Size=Medium",
+            "props": {
+                "State": "Default",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Size=Medium",
+                    "width": 128,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 22,
+                            "y": 0,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.6
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12219:24822",
+            "name": "State=Default, Size=Small",
+            "props": {
+                "State": "Default",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Size=Small",
+                    "width": 105,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 14,
+                            "y": 0,
+                            "width": 91,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 600,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.6
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9315:49702",
+            "name": "State=Default, Size=Big",
+            "props": {
+                "State": "Default",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Default, Size=Big",
+                    "width": 147,
+                    "height": 24,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 26,
+                            "y": 0,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.6
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9315:49710",
+            "name": "State=Hover, Size=Medium",
+            "props": {
+                "State": "Hover",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Size=Medium",
+                    "width": 128,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 22,
+                            "y": 0,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.8
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12219:24832",
+            "name": "State=Hover, Size=Small",
+            "props": {
+                "State": "Hover",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Size=Small",
+                    "width": 105,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 14,
+                            "y": 0,
+                            "width": 91,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 600,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.8
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9315:49718",
+            "name": "State=Hover, Size=Big",
+            "props": {
+                "State": "Hover",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Hover, Size=Big",
+                    "width": 147,
+                    "height": 24,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 26,
+                            "y": 0,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.8
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9315:49726",
+            "name": "State=Pressed, Size=Medium",
+            "props": {
+                "State": "Pressed",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Pressed, Size=Medium",
+                    "width": 128,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 22,
+                            "y": 0,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12219:24855",
+            "name": "State=Pressed, Size=Small",
+            "props": {
+                "State": "Pressed",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Pressed, Size=Small",
+                    "width": 105,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 14,
+                            "y": 0,
+                            "width": 91,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 600,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9315:49734",
+            "name": "State=Pressed, Size=Big",
+            "props": {
+                "State": "Pressed",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Pressed, Size=Big",
+                    "width": 147,
+                    "height": 24,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 26,
+                            "y": 0,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9315:49742",
+            "name": "State=Focused, Size=Medium",
+            "props": {
+                "State": "Focused",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Focused, Size=Medium",
+                    "width": 128,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 22,
+                            "y": 0,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.8
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12219:24865",
+            "name": "State=Focused, Size=Small",
+            "props": {
+                "State": "Focused",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Focused, Size=Small",
+                    "width": 105,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 14,
+                            "y": 0,
+                            "width": 91,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 600,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.8
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9315:49750",
+            "name": "State=Focused, Size=Big",
+            "props": {
+                "State": "Focused",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Focused, Size=Big",
+                    "width": 147,
+                    "height": 24,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 26,
+                            "y": 0,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.8
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9315:49758",
+            "name": "State=Disabled, Size=Medium",
+            "props": {
+                "State": "Disabled",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Size=Medium",
+                    "width": 128,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 22,
+                            "y": 0,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.4
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12219:24875",
+            "name": "State=Disabled, Size=Small",
+            "props": {
+                "State": "Disabled",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Size=Small",
+                    "width": 105,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 14,
+                            "y": 0,
+                            "width": 91,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 600,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.4
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9315:49766",
+            "name": "State=Disabled, Size=Big",
+            "props": {
+                "State": "Disabled",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Disabled, Size=Big",
+                    "width": 147,
+                    "height": 24,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 26,
+                            "y": 0,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.4
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Tertiary Button Text",
+                        "component": "Plus",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9315:49774",
+            "name": "State=Loading, Size=Medium",
+            "props": {
+                "State": "Loading",
+                "Size": "Medium"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Loading, Size=Medium",
+                    "width": 128,
+                    "height": 20,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 22,
+                            "y": 0,
+                            "width": 106,
+                            "height": 20
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 14,
+                        "fontWeight": 600,
+                        "lineHeightPx": 20,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.6
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 16,
+                            "height": 16
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12219:24842",
+            "name": "State=Loading, Size=Small",
+            "props": {
+                "State": "Loading",
+                "Size": "Small"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Loading, Size=Small",
+                    "width": 105,
+                    "height": 16,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 14,
+                            "y": 0,
+                            "width": 91,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 600,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.6
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "9315:49782",
+            "name": "State=Loading, Size=Big",
+            "props": {
+                "State": "Loading",
+                "Size": "Big"
+            },
+            "spec": {
+                "root": {
+                    "name": "State=Loading, Size=Big",
+                    "width": 147,
+                    "height": 24,
+                    "radius": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "fill": null
+                },
+                "texts": [
+                    {
+                        "characters": "Stop Recondition",
+                        "box": {
+                            "x": 26,
+                            "y": 0,
+                            "width": 121,
+                            "height": 24
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 16,
+                        "fontWeight": 600,
+                        "lineHeightPx": 24,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.6
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Loader Secondary Button",
+                        "component": "Loader Secondary Button",
+                        "box": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

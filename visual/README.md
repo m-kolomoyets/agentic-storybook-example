@@ -23,7 +23,7 @@ Flows are stories with `play` functions. All three tools capture after `play` fi
 ## Setup
 
 1. Put the tokens in `.env.local` (see `.env.local.example`): `ARGOS_TOKEN` and `CHROMATIC_PROJECT_TOKEN`. Don't use the `VITE_` prefix: Vite can bundle `VITE_*` values into client code.
-2. Start Docker Desktop, then run `pnpm vrt:browser`. This starts Linux Chromium (Playwright 1.65.1) on `127.0.0.1:3000`. Vitest stays on the host and drives that browser, so screenshots don't depend on the developer's OS.
+2. Start Docker Desktop, then run `pnpm vrt:browser`. This starts Linux Chromium (Playwright 1.65.1) on `127.0.0.1:3100`. Vitest stays on the host and drives that browser, so screenshots don't depend on the developer's OS.
 
 ## Run
 
@@ -59,6 +59,15 @@ Each run appends a record to `visual/runs.jsonl` (committed). That log is the in
 - Same stories (the `vrt` tag), same Chromium build for DIY and Argos (the Docker image). Chromatic always uses its own cloud browsers; that difference is part of the comparison.
 - Each tool keeps its own default stabilisation. DIY imitates it with `STABILIZE_CSS` in `visual/diy/setup.ts`.
 - Make baselines on the default branch first (`--update` for DIY; the first upload for Argos and Chromatic), then make a change and run all three.
+
+## Figma reference (`pnpm vrt figma`)
+
+The three tools above compare code with earlier code. `pnpm vrt figma` compares code with **Figma**: every variant of a registered Figma component set, rendered by a `FigmaMatrix` story and checked per cell (spec within 1px + pixel diff). The philosophy, the architecture, and the workflow from a component's first matrix to adopting a design change are in **[FIGMA-TESTING.md](FIGMA-TESTING.md)**.
+
+```bash
+pnpm vrt figma             # sync missing Figma sets, test every `figma` story, write visual/.results/figma/index.html
+pnpm vrt figma --refresh   # re-read every set from Figma first
+```
 
 ## Gotchas found during setup
 

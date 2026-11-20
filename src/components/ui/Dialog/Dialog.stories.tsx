@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { StoryContext } from '@storybook/react-vite';
 import type { MockInstance } from 'storybook/test';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn, spyOn, waitFor, within } from 'storybook/test';
 import { Button } from '@/components/ui/Button';
 import { Dialog } from '.';
@@ -106,7 +107,7 @@ function Demo({ title, descriptor, rows, buttons, onOpenChange, onConfirm }: Sto
     );
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Dialog',
     component: Demo,
     args: {
@@ -123,14 +124,16 @@ const meta = {
     },
     beforeEach: spyOnConsoleError,
     // Desktop by default (vitest's 1200×900); `*OnMobile` stories pin a phone viewport for the sheet branch.
-    parameters: { layout: 'fullscreen', design: { type: 'figma', url: `${FIGMA_LAYOUTS}11555-437944` } },
-} satisfies Meta<StoryArgs>;
+    parameters: {
+        layout: 'fullscreen',
+        design: [
+            { name: 'Dialog', type: 'figma', url: `${FIGMA_LAYOUTS}11555-437944` },
+            { name: 'With content', type: 'figma', url: `${FIGMA_LAYOUTS}11555-437960` },
+        ],
+    },
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-type PlayContext = Parameters<NonNullable<Story['play']>>[0];
+type PlayContext = Pick<StoryContext, 'canvas' | 'canvasElement' | 'userEvent'>;
 
 async function openDialog({ canvas, canvasElement, userEvent }: PlayContext) {
     await userEvent.click(canvas.getByRole('button', { name: TRIGGER }));
@@ -151,70 +154,67 @@ function isScrollLocked(document: Document) {
     });
 }
 
+/** Title, descriptor and buttons stay pinned while the rows scroll. */
+const WITH_CONTENT = {
+    rows: 30,
+    buttons: 2,
+    title: 'Update grain level',
+    descriptor: 'Pick the bin this ticket applies to.',
+} as const;
+
+async function expectFooterPinned(context: PlayContext) {
+    const dialog = await openDialog(context);
+    const cancel = within(dialog).getByRole('button', { name: 'Cancel' });
+
+    await waitFor(() => {
+        return expect(cancel).toBeVisible();
+    });
+    await expect(cancel.getBoundingClientRect().bottom).toBeLessThanOrEqual(dialog.getBoundingClientRect().bottom);
+    await context.userEvent.click(cancel);
+    await expectClosed(context);
+}
+
 /**
  * Drawn frame: centred panel, named and described, labelled ✕ the caller never composes. Modal: focus trap,
- * inert page, scroll lock. The footer buttons are the caller's.
+ * inert page, scroll lock. The footer buttons are the caller's. Rows/buttons are Controls.
  */
-export const Default: Story = {
-    play: async (context) => {
-        const { canvasElement, userEvent, args } = context;
-        const body = within(canvasElement.ownerDocument.body);
-        const dialog = await openDialog(context);
+export const Default = meta.story();
 
-        await expect(dialog).toHaveAccessibleName(TITLE);
-        await expect(dialog).toHaveAttribute('aria-labelledby', body.getByRole('heading', { name: TITLE }).id);
-        await expect(dialog).toHaveAccessibleDescription(DESCRIPTOR);
-        await expect(dialog).toHaveAttribute('aria-describedby', body.getByText(DESCRIPTOR).id);
-        await expect(dialog).toContainElement(body.getByRole('button', { name: 'Close dialog' }));
-        // Desktop branch: no sheet chrome.
-        await expect(dialog.querySelector('[data-home-indicator]')).toBeNull();
-        await waitFor(() => {
-            return expect(dialog.contains(canvasElement.ownerDocument.activeElement)).toBe(true);
-        });
-        await expect(body.queryByRole('button', { name: TRIGGER })).toBeNull();
-        await expect(isScrollLocked(canvasElement.ownerDocument)).toBe(true);
-        await expect(consoleError).not.toHaveBeenCalled();
+Default.test('named, described, modal; Continue confirms and closes', async (context) => {
+    const { canvasElement, userEvent, args } = context;
+    const body = within(canvasElement.ownerDocument.body);
+    const dialog = await openDialog(context);
 
-        await userEvent.click(within(dialog).getByRole('button', { name: 'Continue' }));
-        await expect(args.onConfirm).toHaveBeenCalledOnce();
-        await expectClosed(context);
-        await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
-    },
-};
+    await expect(dialog).toHaveAccessibleName(TITLE);
+    await expect(dialog).toHaveAttribute('aria-labelledby', body.getByRole('heading', { name: TITLE }).id);
+    await expect(dialog).toHaveAccessibleDescription(DESCRIPTOR);
+    await expect(dialog).toHaveAttribute('aria-describedby', body.getByText(DESCRIPTOR).id);
+    await expect(dialog).toContainElement(body.getByRole('button', { name: 'Close dialog' }));
+    // Desktop branch: no sheet chrome.
+    await expect(dialog.querySelector('[data-home-indicator]')).toBeNull();
+    await waitFor(() => {
+        return expect(dialog.contains(canvasElement.ownerDocument.activeElement)).toBe(true);
+    });
+    await expect(body.queryByRole('button', { name: TRIGGER })).toBeNull();
+    await expect(isScrollLocked(canvasElement.ownerDocument)).toBe(true);
+    await expect(consoleError).not.toHaveBeenCalled();
 
-/** Title, descriptor and buttons stay pinned while the rows scroll. */
-export const WithContent: Story = {
-    args: { rows: 30, buttons: 2, title: 'Update grain level', descriptor: 'Pick the bin this ticket applies to.' },
-    parameters: { design: { type: 'figma', url: `${FIGMA_LAYOUTS}11555-437960` } },
-    play: async (context) => {
-        const dialog = await openDialog(context);
-        const cancel = within(dialog).getByRole('button', { name: 'Cancel' });
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Continue' }));
+    await expect(args.onConfirm).toHaveBeenCalledOnce();
+    await expectClosed(context);
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
+});
 
-        await waitFor(() => {
-            return expect(cancel).toBeVisible();
-        });
-        await expect(cancel.getBoundingClientRect().bottom).toBeLessThanOrEqual(dialog.getBoundingClientRect().bottom);
-        await context.userEvent.click(cancel);
-        await expectClosed(context);
-    },
-};
-
-/** No drawing confirms a one-button layout; a lone button fills the row. */
-export const SingleButton: Story = {
-    args: {
-        buttons: 1,
-        title: 'Ticket submitted',
-        descriptor: 'It will appear in the review queue within a few minutes.',
-    },
-};
+Default.test('with content the footer stays pinned while rows scroll', { args: WITH_CONTENT }, expectFooterPinned);
 
 /**
  * Escape, the backdrop and the ✕ — with no footer, these are the whole exit. `disablePointerDismissal` is not
  * exposed: a surface that refuses to close is an `alertdialog`. Focus returns to the trigger.
  */
-export const Dismissal: Story = {
-    args: { buttons: 0, title: 'Three ways out', descriptor: 'Escape, the backdrop and the close button.' },
-    play: async (context) => {
+Default.test(
+    'Escape and the ✕ close it; focus returns to the trigger',
+    { args: { buttons: 0, title: 'Three ways out', descriptor: 'Escape, the backdrop and the close button.' } },
+    async (context) => {
         const { canvas, canvasElement, userEvent } = context;
         const body = within(canvasElement.ownerDocument.body);
 
@@ -228,15 +228,18 @@ export const Dismissal: Story = {
         await openDialog(context);
         await userEvent.click(body.getByRole('button', { name: 'Close dialog' }));
         await expectClosed(context);
-    },
-};
+    }
+);
 
 /** Dev-only guard: no `Title` → `console.error`, and the dialog still renders. */
-export const MissingTitle: Story = {
-    args: { title: undefined },
-    // aria-dialog-name off: the unnamed dialog is the point of this story.
-    parameters: { a11y: { config: { rules: [{ id: 'aria-dialog-name', enabled: false }] } } },
-    play: async (context) => {
+Default.test(
+    'missing Title logs a dev error and still renders',
+    {
+        args: { title: undefined },
+        // aria-dialog-name off: the unnamed dialog is the point of this test.
+        parameters: { a11y: { config: { rules: [{ id: 'aria-dialog-name', enabled: false }] } } },
+    },
+    async (context) => {
         await expect(await openDialog(context)).toBeInTheDocument();
         // Guard is dev-only: a production build (Chromatic) strips it.
         if (import.meta.env.DEV) {
@@ -246,46 +249,41 @@ export const MissingTitle: Story = {
         }
         await context.userEvent.keyboard('{Escape}');
         await expectClosed(context);
-    },
-};
+    }
+);
 
 /** Dev-only guard: no `Descriptor` → `console.error` (every drawn dialog has one). */
-export const MissingDescriptor: Story = {
-    args: { descriptor: undefined },
-    play: async (context) => {
-        await expect(await openDialog(context)).toBeInTheDocument();
-        // Guard is dev-only: a production build (Chromatic) strips it.
-        if (import.meta.env.DEV) {
-            await waitFor(() => {
-                return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('<Dialog.Descriptor>'));
-            });
-        }
-        await expect(consoleError).not.toHaveBeenCalledWith(expect.stringContaining('<Dialog.Title>'));
-        await context.userEvent.keyboard('{Escape}');
-        await expectClosed(context);
-    },
-};
+Default.test('missing Descriptor logs a dev error', { args: { descriptor: undefined } }, async (context) => {
+    await expect(await openDialog(context)).toBeInTheDocument();
+    // Guard is dev-only: a production build (Chromatic) strips it.
+    if (import.meta.env.DEV) {
+        await waitFor(() => {
+            return expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('<Dialog.Descriptor>'));
+        });
+    }
+    await expect(consoleError).not.toHaveBeenCalledWith(expect.stringContaining('<Dialog.Title>'));
+    await context.userEvent.keyboard('{Escape}');
+    await expectClosed(context);
+});
 
 /** Below `md:` the same composition is a `BottomSheet`: same name and description, sheet chrome, ✕ kept. */
-export const DefaultOnMobile: Story = {
+export const DefaultOnMobile = meta.story({
     globals: MOBILE,
-    play: async (context) => {
-        const { canvasElement, userEvent, args } = context;
-        const dialog = await openDialog(context);
+});
 
-        await expect(dialog).toHaveAccessibleName(TITLE);
-        await expect(dialog).toHaveAccessibleDescription(DESCRIPTOR);
-        await expect(dialog.querySelector('[data-home-indicator]')).toBeInTheDocument();
-        await expect(consoleError).not.toHaveBeenCalled();
+DefaultOnMobile.test('sheet branch keeps name, description and the ✕', async (context) => {
+    const { canvasElement, userEvent, args } = context;
+    const dialog = await openDialog(context);
 
-        await userEvent.click(within(canvasElement.ownerDocument.body).getByRole('button', { name: 'Close dialog' }));
-        await expectClosed(context);
-        await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
-    },
-};
+    await expect(dialog).toHaveAccessibleName(TITLE);
+    await expect(dialog).toHaveAccessibleDescription(DESCRIPTOR);
+    await expect(dialog.querySelector('[data-home-indicator]')).toBeInTheDocument();
+    await expect(consoleError).not.toHaveBeenCalled();
+
+    await userEvent.click(within(canvasElement.ownerDocument.body).getByRole('button', { name: 'Close dialog' }));
+    await expectClosed(context);
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
+});
 
 /** Sheet branch with scrolling content: the scrolled box takes the sheet's `px-l` gutter. */
-export const WithContentOnMobile: Story = {
-    ...WithContent,
-    globals: MOBILE,
-};
+DefaultOnMobile.test('with content the footer stays pinned in the sheet', { args: WITH_CONTENT }, expectFooterPinned);

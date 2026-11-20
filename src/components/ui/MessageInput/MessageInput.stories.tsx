@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ReactNode } from 'react';
 import type { MessageAttachment, MessageInputProps } from './types';
+import preview from '#.storybook/preview';
 import { expect, fn, waitFor } from 'storybook/test';
 import { Field } from '@/components/ui/Field';
 import { MessageInput } from '.';
@@ -44,7 +44,7 @@ function Frame({ children }: { children: ReactNode }) {
     return <div className="w-[343px]">{children}</div>;
 }
 
-const meta = {
+const meta = preview.type<{ args: StoryArgs }>().meta({
     title: 'UI/MessageInput',
     args: {
         mode: 'write',
@@ -74,76 +74,71 @@ const meta = {
         },
     ],
     parameters: { design: { type: 'figma', url: `${FIGMA}10550-246987` } },
-} satisfies Meta<StoryArgs>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+});
 
 /**
  * Figma 10549:246942: empty, at rest, no send button. Typing shows it. `Enter` is a newline; `⌘Enter` and
  * `Ctrl+Enter` submit (and type nothing); `⌘Enter` with nothing to send does nothing.
  */
-export const Default: Story = {
+export const Default = meta.story({
     parameters: { design: { type: 'figma', url: `${FIGMA}10549-246942` } },
-    play: async ({ canvas, userEvent, args }) => {
-        const textarea = canvas.getByRole('textbox');
+});
 
-        await expect(canvas.queryByRole('button', { name: 'Send' })).toBeNull();
-        await userEvent.click(textarea);
-        await userEvent.keyboard('{Meta>}{Enter}{/Meta}');
-        await expect(args.onSubmit).not.toHaveBeenCalled();
-        // Unprevented, so user-event's simulated Enter may have typed a newline; start clean.
-        await userEvent.clear(textarea);
+Default.test('Enter is a newline; Cmd/Ctrl+Enter and Send submit', async ({ canvas, userEvent, args }) => {
+    const textarea = canvas.getByRole('textbox');
 
-        await userEvent.type(textarea, 'Bin up');
-        await expect(args.onValueChange).toHaveBeenLastCalledWith('Bin up');
-        await expect(canvas.getByRole('button', { name: 'Send' })).toBeVisible();
+    await expect(canvas.queryByRole('button', { name: 'Send' })).toBeNull();
+    await userEvent.click(textarea);
+    await userEvent.keyboard('{Meta>}{Enter}{/Meta}');
+    await expect(args.onSubmit).not.toHaveBeenCalled();
+    // Unprevented, so user-event's simulated Enter may have typed a newline; start clean.
+    await userEvent.clear(textarea);
 
-        await userEvent.keyboard('{Enter}');
-        await expect(textarea).toHaveValue('Bin up\n');
-        await expect(args.onSubmit).not.toHaveBeenCalled();
+    await userEvent.type(textarea, 'Bin up');
+    await expect(args.onValueChange).toHaveBeenLastCalledWith('Bin up');
+    await expect(canvas.getByRole('button', { name: 'Send' })).toBeVisible();
 
-        await userEvent.keyboard('{Meta>}{Enter}{/Meta}');
-        await expect(args.onSubmit).toHaveBeenCalledTimes(1);
-        await userEvent.keyboard('{Control>}{Enter}{/Control}');
-        await expect(args.onSubmit).toHaveBeenCalledTimes(2);
-        await expect(textarea).toHaveValue('Bin up\n');
+    await userEvent.keyboard('{Enter}');
+    await expect(textarea).toHaveValue('Bin up\n');
+    await expect(args.onSubmit).not.toHaveBeenCalled();
 
-        await userEvent.click(canvas.getByRole('button', { name: 'Send' }));
-        await expect(args.onSubmit).toHaveBeenCalledTimes(3);
-    },
-};
+    await userEvent.keyboard('{Meta>}{Enter}{/Meta}');
+    await expect(args.onSubmit).toHaveBeenCalledTimes(1);
+    await userEvent.keyboard('{Control>}{Enter}{/Control}');
+    await expect(args.onSubmit).toHaveBeenCalledTimes(2);
+    await expect(textarea).toHaveValue('Bin up\n');
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Send' }));
+    await expect(args.onSubmit).toHaveBeenCalledTimes(3);
+});
 
 /** A mousedown anywhere on the box focuses the textarea. */
-export const FocusFromBox: Story = {
-    play: async ({ canvas, userEvent }) => {
-        const textarea = canvas.getByRole('textbox');
-        const box = textarea.closest('.min-h-7xl');
+Default.test('a mousedown on the box focuses the textarea', async ({ canvas, userEvent }) => {
+    const textarea = canvas.getByRole('textbox');
+    const box = textarea.closest('.min-h-7xl');
 
-        await expect(box).not.toBeNull();
-        await userEvent.click(box as HTMLElement);
-        await expect(textarea).toHaveFocus();
-    },
-};
+    await expect(box).not.toBeNull();
+    await userEvent.click(box as HTMLElement);
+    await expect(textarea).toHaveFocus();
+});
 
 /** Figma 10551:247254: three lines, send live. The send button's name is `submitLabel`. */
-export const Filled: Story = {
-    args: { defaultValue: FILLED_TEXT, submitLabel: 'Post note' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10551-247254` } },
-    play: async ({ canvas }) => {
+Default.test(
+    'submitLabel names the send button',
+    { args: { defaultValue: FILLED_TEXT, submitLabel: 'Post note' } },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('button', { name: 'Post note' })).toBeVisible();
-    },
-};
+    }
+);
 
 /**
  * Figma 10558:204254: a photo-only note is submittable. Each × is named per card (WCAG 4.1.2), emits the
  * remaining list, and keeps focus off the textarea.
  */
-export const PhotoOnly: Story = {
-    args: { defaultAttachments: photos(1) },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10558-204254` } },
-    play: async ({ canvas, userEvent, args }) => {
+Default.test(
+    'a photo-only note is submittable; each remove is named and keeps focus off',
+    { args: { defaultAttachments: photos(1) } },
+    async ({ canvas, userEvent, args }) => {
         await expect(canvas.getByRole('button', { name: 'Send' })).toBeVisible();
         await expect(canvas.getByRole('img', { name: 'Photo 1' })).toBeInTheDocument();
 
@@ -151,27 +146,30 @@ export const PhotoOnly: Story = {
         await expect(args.onAttachmentsChange).toHaveBeenCalledWith([]);
         await expect(canvas.getByRole('textbox')).not.toHaveFocus();
         await expect(canvas.queryByRole('button', { name: 'Send' })).toBeNull();
-    },
-};
+    }
+);
 
 /** Figma 10559:204329. Photos without `alt` fall back to positional names. */
-export const FilledWithPhotos: Story = {
-    args: {
-        defaultValue: FILLED_TEXT,
-        defaultAttachments: [
-            { id: 'a1', url: PHOTO_URL },
-            { id: 'a2', url: PHOTO_URL },
-        ],
+Default.test(
+    'photos without alt fall back to positional names',
+    {
+        args: {
+            defaultValue: FILLED_TEXT,
+            defaultAttachments: [
+                { id: 'a1', url: PHOTO_URL },
+                { id: 'a2', url: PHOTO_URL },
+            ],
+        },
     },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10559-204329` } },
-    play: async ({ canvas }) => {
+    async ({ canvas }) => {
         await expect(canvas.getByRole('button', { name: 'Remove attachment 2' })).toBeInTheDocument();
-    },
-};
+    }
+);
 
 /** The paperclip emits whatever the picker returned; resolving it to a URL is the caller's job. */
-export const Attach: Story = {
-    play: async ({ canvas, canvasElement, userEvent, args }) => {
+Default.test(
+    'the paperclip emits the picked files and resets the input',
+    async ({ canvas, canvasElement, userEvent, args }) => {
         const input = canvasElement.querySelector<HTMLInputElement>('input[type="file"]');
         const file = new File(['grain'], 'auger.png', { type: 'image/png' });
 
@@ -181,26 +179,32 @@ export const Attach: Story = {
         await expect(args.onAttach).toHaveBeenCalledWith([file]);
         // Cleared so the same file can be picked again.
         await expect(input).toHaveValue('');
-    },
-};
+    }
+);
 
 /** No Figma node: at `maxAttachments` the paperclip is disabled rather than files dropped. */
-export const AtCap: Story = {
-    args: { defaultAttachments: photos(5), maxAttachments: 5 },
-    play: async ({ canvas }) => {
+Default.test(
+    'at maxAttachments the paperclip is disabled',
+    { args: { defaultAttachments: photos(5), maxAttachments: 5 } },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('button', { name: 'Attach photo' })).toBeDisabled();
-    },
-};
+    }
+);
 
 /** No Figma node: the strip scrolls sideways rather than wrapping. */
-export const ManyPhotos: Story = {
-    args: { defaultValue: 'Six angles on the same auger.', defaultAttachments: photos(6), maxAttachments: 6 },
-};
+Default.test(
+    'many photos render in one sideways strip',
+    { args: { defaultValue: 'Six angles on the same auger.', defaultAttachments: photos(6), maxAttachments: 6 } },
+    async ({ canvas }) => {
+        await expect(canvas.getAllByRole('img')).toHaveLength(6);
+    }
+);
 
 /** No Figma node: past six lines the box stops growing and scrolls. */
-export const LongText: Story = {
-    args: { defaultValue: LONG_TEXT },
-    play: async ({ canvas }) => {
+Default.test(
+    'past six lines the box stops growing and scrolls',
+    { args: { defaultValue: LONG_TEXT } },
+    async ({ canvas }) => {
         const textarea = canvas.getByRole('textbox');
         const viewport = textarea.parentElement?.closest('[data-base-ui-scroll-area-viewport], [style*="overflow"]');
         const lineHeight = Number.parseFloat(getComputedStyle(textarea).lineHeight);
@@ -210,17 +214,17 @@ export const LongText: Story = {
         });
         await expect(viewport).not.toBeNull();
         await expect((viewport as HTMLElement).clientHeight).toBeLessThanOrEqual(Math.ceil(lineHeight * 6));
-    },
-};
+    }
+);
 
 /**
  * Figma 10551:249903: Cancel / Save replace the send button. `⌘Enter` saves and never cancels; Cancel is a
  * button, never a key — `Escape` reaches the surrounding dialog un-prevented.
  */
-export const Editing: Story = {
-    args: { mode: 'edit', defaultValue: FILLED_TEXT },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10551-249903` } },
-    play: async ({ canvas, canvasElement, userEvent, args }) => {
+Default.test(
+    'edit: Cmd+Enter and Save submit, Cancel is a button, Escape passes through',
+    { args: { mode: 'edit', defaultValue: FILLED_TEXT } },
+    async ({ canvas, canvasElement, userEvent, args }) => {
         const escapes: boolean[] = [];
         function recordEscape(event: KeyboardEvent) {
             if (event.key === 'Escape') {
@@ -243,54 +247,44 @@ export const Editing: Story = {
         await expect(args.onCancel).toHaveBeenCalledOnce();
 
         canvasElement.removeEventListener('keydown', recordEscape);
-    },
-};
+    }
+);
 
 /** Figma 10560:201257: `edit` is not gated on content — an empty Save is the caller's call. */
-export const EditingEmpty: Story = {
-    args: { mode: 'edit' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10560-201257` } },
-    play: async ({ canvas, userEvent, args }) => {
-        await expect(canvas.getByRole('button', { name: 'Save' })).toBeEnabled();
-        await userEvent.click(canvas.getByRole('textbox'));
-        await userEvent.keyboard('{Meta>}{Enter}{/Meta}');
-        await expect(args.onSubmit).toHaveBeenCalledOnce();
-    },
-};
-
-/** Figma 10575:209434: 12px photo→text and text→buttons gaps. */
-export const EditingWithPhoto: Story = {
-    args: { mode: 'edit', defaultValue: FILLED_TEXT, defaultAttachments: photos(1) },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10575-209434` } },
-};
+Default.test('edit is not gated on content', { args: { mode: 'edit' } }, async ({ canvas, userEvent, args }) => {
+    await expect(canvas.getByRole('button', { name: 'Save' })).toBeEnabled();
+    await userEvent.click(canvas.getByRole('textbox'));
+    await userEvent.keyboard('{Meta>}{Enter}{/Meta}');
+    await expect(args.onSubmit).toHaveBeenCalledOnce();
+});
 
 /**
  * Figma 10551:247256: no border (the fill stays), unlike every other disabled control. While editing, Cancel
  * and Save stay visible and inert; `⌘Enter` does nothing.
  */
-export const Disabled: Story = {
-    args: { mode: 'edit', disabled: true, defaultValue: FILLED_TEXT },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10551-247256` } },
-    play: async ({ canvas, args }) => {
+Default.test(
+    'disabled editing keeps Cancel/Save visible and inert',
+    { args: { mode: 'edit', disabled: true, defaultValue: FILLED_TEXT } },
+    async ({ canvas, args }) => {
         await expect(canvas.getByRole('textbox')).toBeDisabled();
         await expect(canvas.getByRole('button', { name: 'Attach photo' })).toBeDisabled();
         await expect(canvas.getByRole('button', { name: 'Save' })).toHaveAttribute('data-disabled', 'true');
         await expect(canvas.getByRole('button', { name: 'Cancel' })).toHaveAttribute('data-disabled', 'true');
         await expect(args.onSubmit).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
 /** Standalone `error`: the bare hook, no message. Inside a `Field` use its `invalid` instead. */
-export const Error: Story = {
-    args: { error: true, defaultValue: FILLED_TEXT },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10732-7629` } },
-    play: async ({ canvas }) => {
+Default.test(
+    'standalone error marks the textarea',
+    { args: { error: true, defaultValue: FILLED_TEXT } },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('textbox')).toHaveAttribute('data-invalid');
-    },
-};
+    }
+);
 
 /** Figma 10732:7629; `Helper Text` (10732:8766) is the caller's `Field.Error`, wired by `Field`. */
-export const ErrorInField: Story = {
+export const ErrorInField = meta.story({
     args: { defaultValue: FILLED_TEXT, defaultAttachments: photos(1) },
     render: function ErrorInField(args) {
         return (
@@ -301,12 +295,13 @@ export const ErrorInField: Story = {
             </Field.Root>
         );
     },
-    play: async ({ canvas }) => {
-        const textarea = canvas.getByRole('textbox', { name: 'Note' });
-        await expect(textarea).toHaveAttribute('data-invalid');
-        await expect(textarea).toHaveAccessibleDescription('That note is longer than a note is allowed to be.');
-    },
-};
+});
+
+ErrorInField.test('Field invalid marks the textarea and describes the error', async ({ canvas }) => {
+    const textarea = canvas.getByRole('textbox', { name: 'Note' });
+    await expect(textarea).toHaveAttribute('data-invalid');
+    await expect(textarea).toHaveAccessibleDescription('That note is longer than a note is allowed to be.');
+});
 
 const MATRIX: { label: string; props: Partial<StoryArgs> }[] = [
     { label: 'default', props: {} },
@@ -328,7 +323,19 @@ const MATRIX: { label: string; props: Partial<StoryArgs> }[] = [
 ];
 
 /** Every drawn state, for side-by-side review against Figma. `focus forced` pins the border a canvas cannot. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            { name: 'Filled', type: 'figma', url: `${FIGMA}10551-247254` },
+            { name: 'Photo only', type: 'figma', url: `${FIGMA}10558-204254` },
+            { name: 'Filled with photos', type: 'figma', url: `${FIGMA}10559-204329` },
+            { name: 'Editing', type: 'figma', url: `${FIGMA}10551-249903` },
+            { name: 'Editing empty', type: 'figma', url: `${FIGMA}10560-201257` },
+            { name: 'Editing with photo', type: 'figma', url: `${FIGMA}10575-209434` },
+            { name: 'Disabled', type: 'figma', url: `${FIGMA}10551-247256` },
+            { name: 'Error', type: 'figma', url: `${FIGMA}10732-7629` },
+        ],
+    },
     decorators: [],
     render: function Matrix(args) {
         return (
@@ -344,4 +351,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import preview from '#.storybook/preview';
 import { expect } from 'storybook/test';
 import { Meter } from '.';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Meter',
     component: Meter,
     args: { value: 62, variant: 'level', label: 'Bin fullness', caption: '% Full' },
@@ -28,65 +28,53 @@ const meta = {
             );
         },
     ],
-} satisfies Meta<typeof Meter>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — switch value/variant/mode in Controls. Every visual cell lives in `Matrix`. */
+export const Default = meta.story();
 
 /** Named by `label` (never the caption), announced against 0…100; a meter, not a progressbar. */
-export const Default: Story = {
-    play: async ({ canvas }) => {
-        const meter = canvas.getByRole('meter', { name: 'Bin fullness' });
-        await expect(meter).toHaveAttribute('aria-valuenow', '62');
-        await expect(meter).toHaveAttribute('aria-valuemin', '0');
-        await expect(meter).toHaveAttribute('aria-valuemax', '100');
-        await expect(meter).toHaveAttribute('aria-valuetext', '62%');
-        await expect(canvas.queryByRole('progressbar')).toBeNull();
-        await expect(canvas.getByText('% Full')).toBeInTheDocument();
-    },
-};
+Default.test('is a meter named by label, announced against 0…100', async ({ canvas }) => {
+    const meter = canvas.getByRole('meter', { name: 'Bin fullness' });
+    await expect(meter).toHaveAttribute('aria-valuenow', '62');
+    await expect(meter).toHaveAttribute('aria-valuemin', '0');
+    await expect(meter).toHaveAttribute('aria-valuemax', '100');
+    await expect(meter).toHaveAttribute('aria-valuetext', '62%');
+    await expect(canvas.queryByRole('progressbar')).toBeNull();
+    await expect(canvas.getByText('% Full')).toBeInTheDocument();
+});
 
-export const CustomMax: Story = {
-    args: { value: 3, max: 7, caption: undefined, valueText: '3 of 7 bins' },
-    play: async ({ canvas }) => {
+Default.test(
+    'custom max and valueText are announced',
+    { args: { value: 3, max: 7, caption: undefined, valueText: '3 of 7 bins' } },
+    async ({ canvas }) => {
         const meter = canvas.getByRole('meter', { name: 'Bin fullness' });
         await expect(meter).toHaveAttribute('aria-valuenow', '3');
         await expect(meter).toHaveAttribute('aria-valuemax', '7');
         await expect(meter).toHaveAttribute('aria-valuetext', '3 of 7 bins');
-    },
-};
+    }
+);
 
 /** Out-of-range readings are clamped, so the announced value stays in range. */
-export const ClampedHigh: Story = {
-    args: { value: 140 },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('meter')).toHaveAttribute('aria-valuenow', '100');
-    },
-};
+Default.test('values above max clamp to 100', { args: { value: 140 } }, async ({ canvas }) => {
+    await expect(canvas.getByRole('meter')).toHaveAttribute('aria-valuenow', '100');
+});
 
-export const ClampedLow: Story = {
-    args: { value: -20 },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('meter')).toHaveAttribute('aria-valuenow', '0');
-    },
-};
-
-/** Fan bar: gradient fill, ramped in the run's aeration mode. */
-export const ProgressVariant: Story = {
-    args: { value: 83, variant: 'progress', label: 'Run window completion', caption: '% Completion', mode: 'drying' },
-};
+Default.test('values below min clamp to 0', { args: { value: -20 } }, async ({ canvas }) => {
+    await expect(canvas.getByRole('meter')).toHaveAttribute('aria-valuenow', '0');
+});
 
 /** Risk bar: full-width ramp, no fill. */
-export const Score: Story = {
-    args: { value: 78, variant: 'score', label: 'Grain risk', caption: 'Risk Score' },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'score variant draws no fill',
+    { args: { value: 78, variant: 'score', label: 'Grain risk', caption: 'Risk Score' } },
+    async ({ canvasElement }) => {
         await expect(canvasElement.querySelector('[data-part="fill"]')).toBeNull();
-    },
-};
+    }
+);
 
 /** Variants × values (pointer clamped on at 0/100) × modes. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
     render: function Matrix() {
         return (
             <div className="flex flex-col gap-xl">
@@ -117,4 +105,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

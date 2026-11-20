@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import preview from '#.storybook/preview';
 import { expect, waitFor } from 'storybook/test';
 import { ScrollArea } from '.';
 
@@ -13,7 +13,7 @@ function rows(count: number, label = 'Row') {
 }
 
 /* Figma draws no scrollbar, so there is no design node; the boxes are sized in px as review scaffolding. */
-const meta = {
+const meta = preview.meta({
     title: 'UI/ScrollArea',
     component: ScrollArea,
     args: {
@@ -29,85 +29,85 @@ const meta = {
         viewportRef: { control: false },
         viewportStyle: { control: false },
     },
-} satisfies Meta<typeof ScrollArea>;
+});
 
-export default meta;
+/** Playground — vertical (default). Fine pointer: the bar shows whenever the axis overflows. */
+export const Default = meta.story();
 
-type Story = StoryObj<typeof meta>;
+Default.test('vertical overflow shows only the vertical bar', async ({ canvasElement }) => {
+    const viewport = canvasElement.querySelector<HTMLElement>('[data-scroll-viewport]');
+    await expect(viewport).not.toBeNull();
+    await waitFor(() => {
+        return expect(viewport!.scrollHeight).toBeGreaterThan(viewport!.clientHeight);
+    });
+    await waitFor(() => {
+        return expect(canvasElement.querySelector('[data-orientation="vertical"]')).not.toBeNull();
+    });
+    await expect(canvasElement.querySelector('[data-orientation="horizontal"]')).toBeNull();
+});
 
-/** Vertical (default). Fine pointer: the bar shows whenever the axis overflows. */
-export const Default: Story = {
-    play: async ({ canvasElement }) => {
-        const viewport = canvasElement.querySelector<HTMLElement>('[data-scroll-viewport]');
-        await expect(viewport).not.toBeNull();
-        await waitFor(() => {
-            return expect(viewport!.scrollHeight).toBeGreaterThan(viewport!.clientHeight);
-        });
-        await waitFor(() => {
-            return expect(canvasElement.querySelector('[data-orientation="vertical"]')).not.toBeNull();
-        });
-        await expect(canvasElement.querySelector('[data-orientation="horizontal"]')).toBeNull();
+/** Sideways-only: the viewport releases the vertical axis so a wheel still scrolls the page. */
+Default.test(
+    'horizontal releases the vertical axis to the page',
+    {
+        args: {
+            orientation: 'horizontal',
+            className: 'w-[320px] rounded-s bg-surface-control text-body-m text-text-general-strong',
+            children: <div className="flex">{rows(12, 'Tab')}</div>,
+        },
     },
-};
+    async ({ canvasElement }) => {
+        const viewport = canvasElement.querySelector<HTMLElement>('[data-scroll-viewport]');
+        await expect(viewport!.style.overflowY).toBe('hidden');
+        await expect(viewport!.style.overscrollBehaviorY).toBe('auto');
+    }
+);
+
+/** Nothing to scroll: Base UI drops the overflow attribute and no bar appears. */
+Default.test('no overflow drops the overflow attribute', { args: { children: rows(3) } }, async ({ canvasElement }) => {
+    const root = canvasElement.querySelector<HTMLElement>('.group\\/scroll-area');
+    await expect(root).not.toHaveAttribute('data-has-overflow-y');
+});
+
+/** `bottomFadeClassName` fades the bottom edge while content remains below. */
+Default.test(
+    'bottomFadeClassName fades the bottom edge; outset shifts the root',
+    {
+        args: { bottomFadeClassName: 'to-surface-control', scrollbarOutset: true },
+        decorators: [
+            function Padded(Story) {
+                return (
+                    <div className="w-fit pr-xs">
+                        <Story />
+                    </div>
+                );
+            },
+        ],
+    },
+    async ({ canvasElement }) => {
+        const fade = canvasElement.querySelector('div[aria-hidden]');
+        await expect(fade).toHaveClass('to-surface-control');
+        await expect(canvasElement.querySelector('.group\\/scroll-area')).toHaveClass('-mr-xs');
+    }
+);
 
 /** `both` is the only orientation that renders the corner; both bars are live. */
-export const Both: Story = {
+export const Both = meta.story({
     args: {
         orientation: 'both',
         children: <div className="w-[720px]">{rows(24, 'A row long enough to overflow the box sideways —')}</div>,
     },
-    play: async ({ canvasElement }) => {
-        await waitFor(() => {
-            return expect(canvasElement.querySelectorAll('[data-orientation="horizontal"]').length).toBeGreaterThan(0);
-        });
-        await expect(canvasElement.querySelectorAll('[data-orientation="vertical"]').length).toBeGreaterThan(0);
-    },
-};
+});
 
-/** Sideways-only: the viewport releases the vertical axis so a wheel still scrolls the page. */
-export const Horizontal: Story = {
-    args: {
-        orientation: 'horizontal',
-        className: 'w-[320px] rounded-s bg-surface-control text-body-m text-text-general-strong',
-        children: <div className="flex">{rows(12, 'Tab')}</div>,
-    },
-    play: async ({ canvasElement }) => {
-        const viewport = canvasElement.querySelector<HTMLElement>('[data-scroll-viewport]');
-        await expect(viewport!.style.overflowY).toBe('hidden');
-        await expect(viewport!.style.overscrollBehaviorY).toBe('auto');
-    },
-};
-
-/** Nothing to scroll: Base UI drops the overflow attribute and no bar appears. */
-export const NoOverflow: Story = {
-    args: { children: rows(3) },
-    play: async ({ canvasElement }) => {
-        const root = canvasElement.querySelector<HTMLElement>('.group\\/scroll-area');
-        await expect(root).not.toHaveAttribute('data-has-overflow-y');
-    },
-};
-
-/** `bottomFadeClassName` fades the bottom edge while content remains below. */
-export const BottomFade: Story = {
-    args: { bottomFadeClassName: 'to-surface-control', scrollbarOutset: true },
-    decorators: [
-        function Padded(Story) {
-            return (
-                <div className="w-fit pr-xs">
-                    <Story />
-                </div>
-            );
-        },
-    ],
-    play: async ({ canvasElement }) => {
-        const fade = canvasElement.querySelector('div[aria-hidden]');
-        await expect(fade).toHaveClass('to-surface-control');
-        await expect(canvasElement.querySelector('.group\\/scroll-area')).toHaveClass('-mr-xs');
-    },
-};
+Both.test('both bars are live', async ({ canvasElement }) => {
+    await waitFor(() => {
+        return expect(canvasElement.querySelectorAll('[data-orientation="horizontal"]').length).toBeGreaterThan(0);
+    });
+    await expect(canvasElement.querySelectorAll('[data-orientation="vertical"]').length).toBeGreaterThan(0);
+});
 
 /** The dropdown's geometry: five 48px option rows + 2px gaps as max-height (what `OptionList` ships). */
-export const InPopupGeometry: Story = {
+export const InPopupGeometry = meta.story({
     args: {
         className: 'max-h-[calc(5*var(--size-option-row)+4*var(--spacing-xxs))] w-full',
         children: (
@@ -131,10 +131,11 @@ export const InPopupGeometry: Story = {
             );
         },
     ],
-    play: async ({ canvasElement }) => {
-        const viewport = canvasElement.querySelector<HTMLElement>('[data-scroll-viewport]');
-        await waitFor(() => {
-            return expect(viewport!.clientHeight).toBe(5 * 48 + 4 * 2);
-        });
-    },
-};
+});
+
+InPopupGeometry.test('max-height is five rows plus gaps', async ({ canvasElement }) => {
+    const viewport = canvasElement.querySelector<HTMLElement>('[data-scroll-viewport]');
+    await waitFor(() => {
+        return expect(viewport!.clientHeight).toBe(5 * 48 + 4 * 2);
+    });
+});

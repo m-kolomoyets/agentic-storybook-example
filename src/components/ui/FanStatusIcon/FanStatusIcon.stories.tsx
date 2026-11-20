@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import preview from '#.storybook/preview';
 import { expect } from 'storybook/test';
 import { FAN_STATUS_ICON_SIZES, FAN_STATUS_ICON_STATUSES } from './constants';
 import { FanStatusIcon } from '.';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/FanStatusIcon',
     component: FanStatusIcon,
     args: { status: 'running', size: 'md' },
@@ -14,37 +14,35 @@ const meta = {
         size: { control: 'inline-radio', options: FAN_STATUS_ICON_SIZES },
     },
     parameters: { design: { type: 'figma', url: `${FIGMA}13867-643998` } },
-} satisfies Meta<typeof FanStatusIcon>;
+});
 
-export default meta;
+/** Playground — decorative by default: `aria-hidden`, glyph `alt=""`. */
+export const Default = meta.story();
 
-type Story = StoryObj<typeof meta>;
-
-/** Decorative by default: `aria-hidden`, glyph `alt=""`. */
-export const Default: Story = {
-    play: async ({ canvasElement, canvas }) => {
-        const tile = canvasElement.querySelector('[data-status="running"]');
-        await expect(tile).toHaveAttribute('aria-hidden', 'true');
-        await expect(canvas.queryByRole('img')).toBeNull();
-        await expect(tile!.querySelector('img')).toHaveAttribute('alt', '');
-    },
-};
+Default.test('decorative by default: aria-hidden tile, empty glyph alt', async ({ canvasElement, canvas }) => {
+    const tile = canvasElement.querySelector('[data-status="running"]');
+    await expect(tile).toHaveAttribute('aria-hidden', 'true');
+    await expect(canvas.queryByRole('img')).toBeNull();
+    await expect(tile!.querySelector('img')).toHaveAttribute('alt', '');
+});
 
 /** `label` → announced image, for where the fan state is the only signal. */
-export const Labelled: Story = {
-    args: { status: 'error', label: 'Fan error' },
-    play: async ({ canvas }) => {
+Default.test(
+    'label makes it an announced image',
+    { args: { status: 'error', label: 'Fan error' } },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('img', { name: 'Fan error' })).toBeInTheDocument();
-    },
-};
-
-export const Small: Story = {
-    args: { size: 'sm' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}14026-847827` } },
-};
+    }
+);
 
 /** Every status × size. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            { name: 'md', type: 'figma', url: `${FIGMA}13867-643998` },
+            { name: 'sm', type: 'figma', url: `${FIGMA}14026-847827` },
+        ],
+    },
     render: function Matrix() {
         return (
             <div className="grid grid-cols-[6rem_repeat(2,auto)] items-center justify-start gap-l">
@@ -69,4 +67,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

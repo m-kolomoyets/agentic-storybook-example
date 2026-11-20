@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Field } from '@/components/ui/Field';
 import { OTP_LENGTH, OTPInput } from '.';
@@ -11,7 +11,7 @@ function cellsOf(root: HTMLElement) {
     return Array.from(root.querySelectorAll<HTMLInputElement>('input:not([aria-hidden])'));
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/OTPInput',
     component: OTPInput,
     args: {
@@ -38,16 +38,17 @@ const meta = {
             );
         },
     ],
-} satisfies Meta<typeof OTPInput>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — toggle error/disabled/autoSubmit in Controls. Every visual cell lives in `Matrix`. */
+export const Default = meta.story({
+    parameters: { design: { type: 'figma', url: `${FIGMA}10497-199678` } },
+});
 
 /** Bare use: `aria-label` names the group. Digits walk focus forward; the sixth fires `onValueComplete`. */
-export const Default: Story = {
-    parameters: { design: { type: 'figma', url: `${FIGMA}10497-199678` } },
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
+Default.test(
+    'digits walk focus forward; the sixth fires onValueComplete',
+    async ({ canvas, canvasElement, args, userEvent }) => {
         await expect(canvas.getByRole('group', { name: 'Verification code' })).toBeInTheDocument();
         const cells = cellsOf(canvasElement);
         await expect(cells).toHaveLength(OTP_LENGTH);
@@ -59,42 +60,42 @@ export const Default: Story = {
         await expect(args.onValueChange).toHaveBeenLastCalledWith('12', expect.anything());
         await userEvent.keyboard('3456');
         await expect(args.onValueComplete).toHaveBeenCalledWith('123456', expect.anything());
-    },
-};
+    }
+);
 
 /** `Filled` is not a state: value vs placeholder colour, free from `<input>`. */
-export const Filled: Story = {
-    args: { defaultValue: '222222', autoSubmit: false },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10727-7809` } },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'defaultValue fills every cell',
+    { args: { defaultValue: '222222', autoSubmit: false } },
+    async ({ canvasElement }) => {
         for (const cell of cellsOf(canvasElement)) {
             await expect(cell).toHaveValue('2');
         }
-    },
-};
+    }
+);
 
 /** Every cell reddens (group state); no message without a `Field`. */
-export const Error: Story = {
-    args: { error: true, defaultValue: '222222', autoSubmit: false },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10497-199702` } },
-    play: async ({ canvas }) => {
+Default.test(
+    'error marks the group invalid',
+    { args: { error: true, defaultValue: '222222', autoSubmit: false } },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('group')).toHaveAttribute('data-invalid');
-    },
-};
+    }
+);
 
 /** Cells are unfocusable (Base UI puts `disabled` on every slot). */
-export const Disabled: Story = {
-    args: { disabled: true, defaultValue: '222222' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}10727-7869` } },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'disabled disables every cell',
+    { args: { disabled: true, defaultValue: '222222' } },
+    async ({ canvasElement }) => {
         for (const cell of cellsOf(canvasElement)) {
             await expect(cell).toBeDisabled();
         }
-    },
-};
+    }
+);
 
 /** `Field.Root invalid` with no `error` still reddens: Base UI writes `data-invalid` via context. */
-export const InField: Story = {
+export const InField = meta.story({
     args: { 'aria-label': undefined, defaultValue: '222222', autoSubmit: false },
     render: function InField(args) {
         return (
@@ -106,14 +107,15 @@ export const InField: Story = {
             </Field.Root>
         );
     },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('group')).toHaveAttribute('data-invalid');
-        await expect(canvas.getByText('That code is not right.')).toBeVisible();
-    },
-};
+});
+
+InField.test('Field invalid reaches the group and shows the message', async ({ canvas }) => {
+    await expect(canvas.getByRole('group')).toHaveAttribute('data-invalid');
+    await expect(canvas.getByText('That code is not right.')).toBeVisible();
+});
 
 /** Controlled; pasting `123 456` filters the separator. */
-export const Controlled: Story = {
+export const Controlled = meta.story({
     render: function Controlled(args) {
         const [value, setValue] = useState('');
 
@@ -131,17 +133,25 @@ export const Controlled: Story = {
             </div>
         );
     },
-    play: async ({ canvas, canvasElement, args, userEvent }) => {
-        await userEvent.click(cellsOf(canvasElement)[0]!);
-        await userEvent.paste('123 456');
-        await expect(canvas.getByText(`6/${OTP_LENGTH}`)).toBeVisible();
-        await expect(args.onValueChange).toHaveBeenLastCalledWith('123456', expect.anything());
-        await expect(args.onValueComplete).toHaveBeenCalledWith('123456', expect.anything());
-    },
-};
+});
+
+Controlled.test('pasting with a separator fills all six cells', async ({ canvas, canvasElement, args, userEvent }) => {
+    await userEvent.click(cellsOf(canvasElement)[0]!);
+    await userEvent.paste('123 456');
+    await expect(canvas.getByText(`6/${OTP_LENGTH}`)).toBeVisible();
+    await expect(args.onValueChange).toHaveBeenLastCalledWith('123456', expect.anything());
+    await expect(args.onValueComplete).toHaveBeenCalledWith('123456', expect.anything());
+});
 
 /** default / focused (pinned on cell 1) / filled / error / disabled. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            { name: 'Filled', type: 'figma', url: `${FIGMA}10727-7809` },
+            { name: 'Error', type: 'figma', url: `${FIGMA}10497-199702` },
+            { name: 'Disabled', type: 'figma', url: `${FIGMA}10727-7869` },
+        ],
+    },
     render: function Matrix() {
         const rows = [
             { key: 'default', props: {} },
@@ -164,4 +174,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

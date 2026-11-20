@@ -1,12 +1,17 @@
 /* eslint-disable no-console -- CLI script: console is its output. */
 // Visual-regression comparison runner: same `vrt`-tagged stories through DIY, Argos and Chromatic.
-// Usage: pnpm vrt <diy|argos|chromatic|all> [--update] [--host-browser]
+// Usage: pnpm vrt <diy|argos|chromatic|figma|all> [--update] [--refresh] [--host-browser]; pnpm vrt figma --doctor
+// `figma` is not regression: it holds `figma`-tagged stories to Figma itself; `all` runs the three regression tools.
 // Each run appends one record to visual/runs.jsonl (committed) — the input for the final comparison report.
 import { spawn } from 'node:child_process';
 import { appendFile, mkdir, readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
+import { runFigmaDoctor } from './figma/doctor.ts';
+import { syncFigmaCatalog, syncFigmaSets } from './figma/figma-api.ts';
+import { writeFigmaReport } from './figma/report.ts';
 
-type Tool = 'diy' | 'argos' | 'chromatic';
+type Tool = 'diy' | 'argos' | 'chromatic' | 'figma';
+type VitestTool = Exclude<Tool, 'chromatic'>;
 
 type RunRecord = {
     tool: Tool;
@@ -29,18 +34,21 @@ type VitestJson = {
     testResults: { assertionResults: { status: string; failureMessages: string[] }[] }[];
 };
 
-const TOOLS: Tool[] = ['diy', 'argos', 'chromatic'];
+const TOOLS: Tool[] = ['diy', 'argos', 'chromatic', 'figma'];
+const REGRESSION_TOOLS: Tool[] = ['diy', 'argos', 'chromatic'];
 const VRT_TAG = 'vrt';
 const ROOT = path.resolve(import.meta.dirname, '..');
 const RESULTS = path.join(ROOT, 'visual/.results');
 const RUNS_LOG = path.join(ROOT, 'visual/runs.jsonl');
-const DOCKER_WS = 'ws://127.0.0.1:3000/';
+const DOCKER_WS = 'ws://127.0.0.1:3100/';
 
 const args = process.argv.slice(2);
 const target = args.find((arg) => {
     return !arg.startsWith('--');
 });
 const update = args.includes('--update');
+const refresh = args.includes('--refresh');
+const doctor = args.includes('--doctor');
 const hostBrowser = args.includes('--host-browser');
 
 function run(cmd: string, cmdArgs: string[], env: NodeJS.ProcessEnv = {}): Promise<number> {
@@ -65,17 +73,22 @@ async function assertDockerBrowser() {
         await fetch(DOCKER_WS.replace('ws:', 'http:'));
     } catch {
         throw new Error(
-            'Docker browser not reachable on :3000. Start it: `pnpm vrt:browser` (or pass --host-browser).'
+            'Docker browser not reachable on :3100. Start it: `pnpm vrt:browser` (or pass --host-browser).'
         );
     }
 }
 
-async function runVitest(tool: 'diy' | 'argos'): Promise<Omit<RunRecord, 'tool' | 'startedAt' | 'durationMs'>> {
+async function runVitest(tool: VitestTool): Promise<Omit<RunRecord, 'tool' | 'startedAt' | 'durationMs'>> {
     if (tool === 'argos' && !process.env.ARGOS_TOKEN) {
         throw new Error('ARGOS_TOKEN missing (.env.local).');
     }
     if (!hostBrowser) {
         await assertDockerBrowser();
+    }
+    if (tool === 'figma') {
+        // Figma sets (visual/figma/sets.ts) into the committed cache first; stories render from it.
+        console.log('[vrt:figma] sets:', await syncFigmaSets(ROOT, refresh));
+        console.log('[vrt:figma] kit catalog:', await syncFigmaCatalog(ROOT, refresh));
     }
 
     const jsonFile = path.join(RESULTS, `${tool}.vitest.json`);
@@ -91,7 +104,9 @@ async function runVitest(tool: 'diy' | 'argos'): Promise<Omit<RunRecord, 'tool' 
             `--outputFile.json=${jsonFile}`,
             ...(update && tool === 'diy' ? ['--update'] : []),
         ],
-        hostBrowser ? {} : { VRT_BROWSER_WS: DOCKER_WS }
+        {
+            ...(!hostBrowser && { VRT_BROWSER_WS: DOCKER_WS }),
+        }
     );
     const report = await readJson<VitestJson>(jsonFile);
     const failures = report?.testResults.flatMap((file) => {
@@ -99,12 +114,12 @@ async function runVitest(tool: 'diy' | 'argos'): Promise<Omit<RunRecord, 'tool' 
             return test.status === 'failed';
         });
     });
-    // DIY: a screenshot mismatch is a "change"; anything else (play fn, a11y, timeout) is a failure.
+    // DIY/Figma: a screenshot mismatch is a "change"; anything else (spec, play fn, a11y, timeout) is a failure.
     const changed =
-        tool === 'diy'
+        tool === 'diy' || tool === 'figma'
             ? (failures?.filter((test) => {
                   return test.failureMessages.some((message) => {
-                      return message.includes('toMatchScreenshot');
+                      return message.includes(tool === 'figma' ? 'Figma image' : 'toMatchScreenshot');
                   });
               }).length ?? null)
             : null;
@@ -117,8 +132,8 @@ async function runVitest(tool: 'diy' | 'argos'): Promise<Omit<RunRecord, 'tool' 
         passed: report?.numPassedTests ?? null,
         changed,
         failed: report && changed !== null ? report.numFailedTests - changed : (report?.numFailedTests ?? null),
-        // Argos prints the build URL; changes are reviewed there.
-        url: null,
+        // Argos prints the build URL; changes are reviewed there. Figma: the local report page.
+        url: tool === 'figma' ? await writeFigmaReport(ROOT) : null,
     };
 }
 
@@ -191,13 +206,21 @@ async function runTool(tool: Tool): Promise<RunRecord> {
     return record;
 }
 
-if (!target || (target !== 'all' && !TOOLS.includes(target as Tool))) {
-    console.error('Usage: pnpm vrt <diy|argos|chromatic|all> [--update] [--host-browser]');
+if (!target || (target !== 'all' && !TOOLS.includes(target as Tool)) || (update && target === 'figma')) {
+    // `--update` on figma would overwrite Figma's PNGs with screenshots; `--refresh` refetches them instead.
+    console.error(
+        'Usage: pnpm vrt <diy|argos|chromatic|figma|all> [--update (not figma)] [--refresh] [--host-browser]'
+    );
     process.exit(2);
 }
 
+if (doctor && target === 'figma') {
+    // `pnpm vrt figma --doctor`: readiness check only (visual/figma/doctor.ts); runs nothing.
+    process.exit((await runFigmaDoctor(ROOT, DOCKER_WS)) ? 0 : 1);
+}
+
 await mkdir(RESULTS, { recursive: true });
-const selected = target === 'all' ? TOOLS : [target as Tool];
+const selected = target === 'all' ? REGRESSION_TOOLS : [target as Tool];
 const records: RunRecord[] = [];
 for (const tool of selected) {
     try {

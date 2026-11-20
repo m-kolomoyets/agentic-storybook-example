@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { DateRange } from '@/components/ui/Calendar/types';
 import type { DayRangeStripProps } from './types';
+import preview from '#.storybook/preview';
 import { DateTime } from 'luxon';
 import { expect, fn, waitFor } from 'storybook/test';
 import { Field } from '@/components/ui/Field';
@@ -44,7 +44,7 @@ function emitted(spy: unknown, call = 0) {
     return (spy as ReturnType<typeof fn>).mock.calls[call]?.[0] as DateRange | null;
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/DayRangeStrip',
     component: DayRangeStrip,
     args: { start: TODAY, today: TODAY, onValueChange: fn() },
@@ -70,34 +70,33 @@ const meta = {
         },
     ],
     parameters: { design: { type: 'figma', url: `${FIGMA}9447-71484` } },
-} satisfies Meta<typeof DayRangeStrip>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — count/disabled/invalid in Controls. Every visual cell lives in `Matrix`. */
+export const Default = meta.story({
+    parameters: { design: { type: 'figma', url: `${FIGMA}10079-148633` } },
+});
 
 /** Today is `aria-current` (its only announcement besides the drawn "Today") and the single tab stop. */
-export const Default: Story = {
-    parameters: { design: { type: 'figma', url: `${FIGMA}10079-148633` } },
-    play: async ({ canvas, canvasElement, userEvent }) => {
-        const todayCell = canvas.getByRole('button', { name: nameFor(at(1)) });
-        await expect(todayCell.closest('[role="gridcell"]')).toHaveAttribute('aria-current', 'date');
-        await expect(todayCell).toHaveTextContent('Today');
-        await expect(
-            canvas.getByRole('button', { name: nameFor(at(2)) }).closest('[role="gridcell"]')
-        ).not.toHaveAttribute('aria-current');
-        await expect(canvas.getByRole('grid', { name: 'Select start and end date' })).toBeInTheDocument();
+Default.test('today is aria-current and the single tab stop', async ({ canvas, canvasElement, userEvent }) => {
+    const todayCell = canvas.getByRole('button', { name: nameFor(at(1)) });
+    await expect(todayCell.closest('[role="gridcell"]')).toHaveAttribute('aria-current', 'date');
+    await expect(todayCell).toHaveTextContent('Today');
+    await expect(canvas.getByRole('button', { name: nameFor(at(2)) }).closest('[role="gridcell"]')).not.toHaveAttribute(
+        'aria-current'
+    );
+    await expect(canvas.getByRole('grid', { name: 'Select start and end date' })).toBeInTheDocument();
 
-        await tabIntoStrip(canvasElement, userEvent);
-        await expect(activeName(canvasElement)).toBe(nameFor(at(1)));
-        await userEvent.tab();
-        await expect(activeName(canvasElement)).not.toBe(nameFor(at(2)));
-    },
-};
+    await tabIntoStrip(canvasElement, userEvent);
+    await expect(activeName(canvasElement)).toBe(nameFor(at(1)));
+    await userEvent.tab();
+    await expect(activeName(canvasElement)).not.toBe(nameFor(at(2)));
+});
 
 /** Arrows move and stop at the ends; Home/End jump; Enter and Space pick the two ends. */
-export const Keyboard: Story = {
-    play: async ({ canvasElement, userEvent, args }) => {
+Default.test(
+    'arrows move, Home/End jump, Enter and Space pick the two ends',
+    async ({ canvasElement, userEvent, args }) => {
         await tabIntoStrip(canvasElement, userEvent);
         await userEvent.keyboard('{ArrowRight}{ArrowRight}');
         await waitFor(() => {
@@ -120,35 +119,34 @@ export const Keyboard: Story = {
         const range = emitted(args.onValueChange);
         await expect(range?.start.toISODate()).toBe('2026-01-01');
         await expect(range?.end.toISODate()).toBe('2026-01-03');
-    },
-};
+    }
+);
 
 /** Click-click picks a range (backwards ordered); the whole span is `aria-selected`; a third tap restarts. */
-export const PickRange: Story = {
-    play: async ({ canvas, userEvent, args }) => {
-        function day(n: number) {
-            return canvas.getByRole('button', { name: nameFor(at(n)) });
-        }
-        await userEvent.click(day(4));
-        await expect(day(4)).toHaveAttribute('data-selected');
-        await expect(args.onValueChange).not.toHaveBeenCalled();
+Default.test('click-click picks an ordered range; a third tap restarts', async ({ canvas, userEvent, args }) => {
+    function day(n: number) {
+        return canvas.getByRole('button', { name: nameFor(at(n)) });
+    }
+    await userEvent.click(day(4));
+    await expect(day(4)).toHaveAttribute('data-selected');
+    await expect(args.onValueChange).not.toHaveBeenCalled();
 
-        await userEvent.click(day(2));
-        const range = emitted(args.onValueChange);
-        await expect([range?.start.toISODate(), range?.end.toISODate()]).toEqual(['2026-01-02', '2026-01-04']);
-        await expect(day(3).closest('[role="gridcell"]')).toHaveAttribute('aria-selected', 'true');
-        await expect(day(3)).toHaveAttribute('data-in-range');
-        await expect(day(6).closest('[role="gridcell"]')).toHaveAttribute('aria-selected', 'false');
+    await userEvent.click(day(2));
+    const range = emitted(args.onValueChange);
+    await expect([range?.start.toISODate(), range?.end.toISODate()]).toEqual(['2026-01-02', '2026-01-04']);
+    await expect(day(3).closest('[role="gridcell"]')).toHaveAttribute('aria-selected', 'true');
+    await expect(day(3)).toHaveAttribute('data-in-range');
+    await expect(day(6).closest('[role="gridcell"]')).toHaveAttribute('aria-selected', 'false');
 
-        await userEvent.click(day(6));
-        await expect(args.onValueChange).toHaveBeenLastCalledWith(null);
-        await expect(day(6)).toHaveAttribute('data-selected');
-    },
-};
+    await userEvent.click(day(6));
+    await expect(args.onValueChange).toHaveBeenLastCalledWith(null);
+    await expect(day(6)).toHaveAttribute('data-selected');
+});
 
 /** Escape abandons a half-open range; Tab returns to the day being picked. */
-export const HalfOpen: Story = {
-    play: async ({ canvas, canvasElement, userEvent }) => {
+Default.test(
+    'escape abandons a half-open range; tab returns to the day being picked',
+    async ({ canvas, canvasElement, userEvent }) => {
         const fourth = canvas.getByRole('button', { name: nameFor(at(4)) });
         await userEvent.click(fourth);
         await userEvent.tab();
@@ -157,30 +155,34 @@ export const HalfOpen: Story = {
 
         await userEvent.keyboard('{Escape}');
         await expect(fourth).not.toHaveAttribute('data-selected');
-    },
-};
+    }
+);
 
 /** Controlled value: every day of the span is selected, ends drawn selected. */
-export const Controlled: Story = {
-    args: { value: { start: at(2), end: at(4) } },
-    play: async ({ canvas }) => {
+Default.test(
+    'controlled value selects every day of the span',
+    { args: { value: { start: at(2), end: at(4) } } },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('button', { name: nameFor(at(3)) }).closest('[role="gridcell"]')).toHaveAttribute(
             'aria-selected',
             'true'
         );
         await expect(canvas.getByRole('button', { name: nameFor(at(2)) })).toHaveAttribute('data-selected');
-    },
-};
+    }
+);
 
 /** A disabled day stays focusable (keyboard users are not teleported past it) but refuses activation. */
-export const DisabledDays: Story = {
-    args: {
-        isDateDisabled: (date: DateTime) => {
-            return date.day === 3;
+Default.test(
+    'a disabled day stays focusable but refuses activation',
+    {
+        args: {
+            isDateDisabled: (date: DateTime) => {
+                return date.day === 3;
+            },
+            maxDate: at(6),
         },
-        maxDate: at(6),
     },
-    play: async ({ canvas, userEvent, args }) => {
+    async ({ canvas, userEvent, args }) => {
         const third = canvas.getByRole('button', { name: nameFor(at(3)) });
         await expect(third).toHaveAttribute('aria-disabled', 'true');
         await expect(third).not.toBeDisabled();
@@ -188,19 +190,16 @@ export const DisabledDays: Story = {
         await userEvent.click(third);
         await userEvent.click(canvas.getByRole('button', { name: nameFor(at(5)) }));
         await expect(args.onValueChange).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
 /** `invalid` strokes the unselected days and marks the grid `aria-invalid`. */
-export const Invalid: Story = {
-    args: { invalid: true },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('grid')).toHaveAttribute('aria-invalid', 'true');
-    },
-};
+Default.test('invalid marks the grid aria-invalid', { args: { invalid: true } }, async ({ canvas }) => {
+    await expect(canvas.getByRole('grid')).toHaveAttribute('aria-invalid', 'true');
+});
 
 /** `Field`'s disabled wins over the prop; invalid is suppressed while disabled. */
-export const DisabledByField: Story = {
+export const DisabledByField = meta.story({
     args: { invalid: true },
     render: function InDisabledField(args) {
         return (
@@ -209,14 +208,15 @@ export const DisabledByField: Story = {
             </Field.Root>
         );
     },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('grid')).not.toHaveAttribute('aria-invalid');
-        await expect(canvas.getByRole('button', { name: nameFor(at(2)) })).toHaveAttribute('aria-disabled', 'true');
-    },
-};
+});
+
+DisabledByField.test('field disabled wins and suppresses invalid', async ({ canvas }) => {
+    await expect(canvas.getByRole('grid')).not.toHaveAttribute('aria-invalid');
+    await expect(canvas.getByRole('button', { name: nameFor(at(2)) })).toHaveAttribute('aria-disabled', 'true');
+});
 
 /** Default, today, in-range, endpoints, disabled, invalid and disabled strip, side by side. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
     render: function Matrix() {
         const rows: { label: string; props: Partial<DayRangeStripProps> }[] = [
             { label: 'default — 10079:148633', props: {} },
@@ -247,4 +247,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

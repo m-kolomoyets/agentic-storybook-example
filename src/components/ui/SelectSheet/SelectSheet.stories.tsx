@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { SelectOption } from '@/components/ui/OptionList/types';
 import type { SelectSheetProps } from './types';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn, waitFor, within } from 'storybook/test';
 import { Button } from '@/components/ui/Button';
 import { SelectSheet } from '.';
@@ -82,7 +82,7 @@ function Demo({ items = LONG, fixedResults, onValueChange, onInputValueChange, .
     );
 }
 
-const meta = {
+const meta = preview.type<{ args: StoryArgs }>().meta({
     title: 'UI/SelectSheet',
     // `SelectSheet` is `Select`'s mobile branch; rendered directly here at phone width.
     globals: { viewport: { value: 'mobile2', isRotated: false } },
@@ -98,35 +98,34 @@ const meta = {
         return <Demo {...args} />;
     },
     parameters: { design: { type: 'figma', url: `${FIGMA}11165-148548` } },
-} satisfies Meta<StoryArgs>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+});
 
 function bodyOf(canvasElement: HTMLElement) {
     return within(canvasElement.ownerDocument.body);
 }
 
 /** Forty rows with radio indicators; a pick reports the item and closes the sheet. */
-export const LongList: Story = {
-    play: async ({ canvasElement, args, userEvent }) => {
-        const body = bodyOf(canvasElement);
-        const sheet = await body.findByRole('dialog', { name: 'Select a grain' });
-        await expect(within(sheet).getByRole('button', { name: 'Close select a grain' })).toBeVisible();
-        await userEvent.click(await within(sheet).findByRole('option', { name: 'Wheat 3' }));
-        await expect(args.onValueChange).toHaveBeenCalledWith(expect.objectContaining({ value: 'option-2' }));
-        await waitFor(() => {
-            return expect(body.queryByRole('dialog')).toBeNull();
-        });
-        await expect(body.getByRole('button', { name: 'Wheat 3' })).toBeVisible();
-    },
-};
+export const Default = meta.story();
+
+Default.test('a pick reports the item and closes the sheet', async ({ canvasElement, args, userEvent }) => {
+    const body = bodyOf(canvasElement);
+    const sheet = await body.findByRole('dialog', { name: 'Select a grain' });
+    await expect(within(sheet).getByRole('button', { name: 'Close select a grain' })).toBeVisible();
+    await userEvent.click(await within(sheet).findByRole('option', { name: 'Wheat 3' }));
+    await expect(args.onValueChange).toHaveBeenCalledWith(expect.objectContaining({ value: 'option-2' }));
+    await waitFor(() => {
+        return expect(body.queryByRole('dialog')).toBeNull();
+    });
+    await expect(body.getByRole('button', { name: 'Wheat 3' })).toBeVisible();
+});
 
 /** Four rows: shorter than the floor, so the panel is held at half the viewport. */
-export const ShortList: Story = {
-    args: { items: SHORT },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'a short list holds the panel at half the viewport',
+    {
+        args: { items: SHORT },
+    },
+    async ({ canvasElement }) => {
         const sheet = await bodyOf(canvasElement).findByRole('dialog');
         await waitFor(() => {
             return expect(rowsOf(sheet)).toHaveLength(4);
@@ -135,12 +134,13 @@ export const ShortList: Story = {
         await waitFor(() => {
             return expect(panel?.getBoundingClientRect().height).toBeGreaterThanOrEqual(window.innerHeight * 0.5 - 1);
         });
-    },
-};
+    }
+);
 
 /** Typing narrows the list; the sheet keeps the height it opened at. */
-export const Searching: Story = {
-    play: async ({ canvasElement, args, userEvent }) => {
+Default.test(
+    'typing narrows the list; the sheet keeps its opening height',
+    async ({ canvasElement, args, userEvent }) => {
         const sheet = await bodyOf(canvasElement).findByRole('dialog');
         const panel = sheet.querySelector<HTMLElement>('[data-base-ui-swipe-ignore]');
         await waitFor(() => {
@@ -153,47 +153,59 @@ export const Searching: Story = {
             return expect(rowsOf(sheet)).toEqual(['Corn 1', 'Corn 13', 'Corn 19']);
         });
         await expect(panel?.getBoundingClientRect().height).toBeGreaterThanOrEqual(openedHeight - 1);
-    },
-};
+    }
+);
 
 /** `loading` scrims the list and blocks list keys; the search field stays live. */
-export const Loading: Story = {
-    args: { loading: true },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'loading scrims the list and blocks list keys; search stays live',
+    {
+        args: { loading: true },
+    },
+    async ({ canvasElement }) => {
         const sheet = await bodyOf(canvasElement).findByRole('dialog');
         await expect(within(sheet).getByText('Loading results')).toBeInTheDocument();
         await expect(within(sheet).getByPlaceholderText('Search')).toBeEnabled();
-    },
-};
+    }
+);
 
 /** No matches: `emptyMessage` replaces the list, announced through `Combobox.Empty`. */
-export const Empty: Story = {
-    args: { fixedResults: [], emptyMessage: 'No grains match' },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'no matches: emptyMessage replaces the list',
+    {
+        args: { fixedResults: [], emptyMessage: 'No grains match' },
+    },
+    async ({ canvasElement }) => {
         const sheet = await bodyOf(canvasElement).findByRole('dialog');
         await expect(await within(sheet).findByText('No grains match')).toBeVisible();
         await expect(rowsOf(sheet)).toEqual([]);
-    },
-};
+    }
+);
 
 /** `sheetDescription` adds a subtitle under the title. */
-export const WithDescription: Story = {
-    args: { sheetTitle: 'Choose brand', sheetDescription: 'Shown on every bin card', items: SHORT },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'sheetDescription adds a subtitle under the title',
+    {
+        args: { sheetTitle: 'Choose brand', sheetDescription: 'Shown on every bin card', items: SHORT },
+    },
+    async ({ canvasElement }) => {
         const sheet = await bodyOf(canvasElement).findByRole('dialog', { name: 'Choose brand' });
         await expect(within(sheet).getByText('Shown on every bin card')).toBeVisible();
-    },
-};
+    }
+);
 
 /** `searchable={false}`: no search field at all; the listbox is still named by the sheet title. */
-export const NotSearchable: Story = {
-    args: { searchable: false, items: SHORT },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'searchable={false}: no search field; the listbox is named by the sheet title',
+    {
+        args: { searchable: false, items: SHORT },
+    },
+    async ({ canvasElement }) => {
         const sheet = await bodyOf(canvasElement).findByRole('dialog');
         await expect(within(sheet).queryByPlaceholderText('Search')).toBeNull();
         await expect(within(sheet).getByRole('listbox', { name: 'Select a grain' })).toBeInTheDocument();
         await waitFor(() => {
             return expect(rowsOf(sheet)).toHaveLength(4);
         });
-    },
-};
+    }
+);

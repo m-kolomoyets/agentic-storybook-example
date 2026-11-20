@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn } from 'storybook/test';
 import { Toggle } from '.';
 
@@ -11,7 +11,7 @@ function Row({ children }: { children: ReactNode }) {
     return <label className="inline-flex items-center gap-m text-body-m text-text-general-strong">{children}</label>;
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Toggle',
     component: Toggle,
     args: { disabled: false, onCheckedChange: fn() },
@@ -25,50 +25,44 @@ const meta = {
             </Row>
         );
     },
-} satisfies Meta<typeof Toggle>;
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+/** Playground — toggle disabled/defaultChecked in Controls. Every visual cell lives in `Matrix`. */
+export const Default = meta.story({
+    parameters: { design: { type: 'figma', url: `${FIGMA}9506-75538` } },
+});
 
 /** Role is `switch` whatever the export is called; clicking the label text toggles exactly once. */
-export const Default: Story = {
-    parameters: { design: { type: 'figma', url: `${FIGMA}9506-75538` } },
-    play: async ({ canvas, args, userEvent }) => {
-        const toggle = canvas.getByRole('switch', { name: 'Run aeration' });
-        await expect(toggle).not.toBeChecked();
-        await userEvent.click(canvas.getByText('Run aeration'));
-        await expect(args.onCheckedChange).toHaveBeenCalledTimes(1);
-        await expect(args.onCheckedChange).toHaveBeenCalledWith(true, expect.anything());
-        await expect(toggle).toBeChecked();
-        await userEvent.keyboard(' ');
-        await expect(toggle).not.toBeChecked();
-    },
-};
+Default.test('is a switch; clicking the label toggles exactly once', async ({ canvas, args, userEvent }) => {
+    const toggle = canvas.getByRole('switch', { name: 'Run aeration' });
+    await expect(toggle).not.toBeChecked();
+    await userEvent.click(canvas.getByText('Run aeration'));
+    await expect(args.onCheckedChange).toHaveBeenCalledTimes(1);
+    await expect(args.onCheckedChange).toHaveBeenCalledWith(true, expect.anything());
+    await expect(toggle).toBeChecked();
+    await userEvent.keyboard(' ');
+    await expect(toggle).not.toBeChecked();
+});
 
-export const On: Story = {
-    args: { defaultChecked: true },
-    parameters: { design: { type: 'figma', url: `${FIGMA}9506-75536` } },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('switch')).toBeChecked();
-    },
-};
+Default.test('defaultChecked starts on', { args: { defaultChecked: true } }, async ({ canvas }) => {
+    await expect(canvas.getByRole('switch')).toBeChecked();
+});
 
 /** Drawn in the on position (9572:142613); disabled + off is invented — same colours, thumb left. */
-export const Disabled: Story = {
-    args: { disabled: true, defaultChecked: true },
-    parameters: { design: { type: 'figma', url: `${FIGMA}9572-142613` } },
-    play: async ({ canvas, args, userEvent }) => {
+Default.test(
+    'disabled ignores clicks',
+    { args: { disabled: true, defaultChecked: true } },
+    async ({ canvas, args, userEvent }) => {
         const toggle = canvas.getByRole('switch');
         await expect(toggle).toHaveAttribute('aria-disabled', 'true');
         await userEvent.click(toggle);
         await expect(toggle).toBeChecked();
         await expect(args.onCheckedChange).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
 /** Plain `useState`. */
-export const Controlled: Story = {
+export const Controlled = meta.story({
     render: function Controlled(args) {
         const [checked, setChecked] = useState(false);
 
@@ -89,12 +83,13 @@ export const Controlled: Story = {
             </div>
         );
     },
-    play: async ({ canvas, args, userEvent }) => {
-        await userEvent.click(canvas.getByRole('switch'));
-        await expect(canvas.getByText('on')).toBeVisible();
-        await expect(args.onCheckedChange).toHaveBeenCalledWith(true, expect.anything());
-    },
-};
+});
+
+Controlled.test('a click updates caller state and reports it', async ({ canvas, args, userEvent }) => {
+    await userEvent.click(canvas.getByRole('switch'));
+    await expect(canvas.getByText('on')).toBeVisible();
+    await expect(args.onCheckedChange).toHaveBeenCalledWith(true, expect.anything());
+});
 
 const STATES = ['default', 'focused', 'disabled'] as const;
 
@@ -106,7 +101,14 @@ const FORCED: Record<(typeof STATES)[number], string> = {
 };
 
 /** off/on × default/focus-visible/disabled. Disabled + off is invented. */
-export const Matrix: Story = {
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            { name: 'Off', type: 'figma', url: `${FIGMA}9506-75538` },
+            { name: 'On', type: 'figma', url: `${FIGMA}9506-75536` },
+            { name: 'Disabled', type: 'figma', url: `${FIGMA}9572-142613` },
+        ],
+    },
     render: function Matrix() {
         return (
             <div className="grid grid-cols-4 items-center gap-l">
@@ -140,4 +142,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

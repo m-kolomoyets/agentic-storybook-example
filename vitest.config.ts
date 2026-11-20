@@ -5,6 +5,8 @@ import { argosVitestPlugin } from '@argos-ci/storybook/vitest-plugin';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig, mergeConfig } from 'vitest/config';
+import { figmaSaveFlatRef, figmaSaveStoryResult } from './visual/figma/commands.ts';
+import { FIGMA_FLAT_REFS_DIR, FIGMA_RESULTS_DIR, FIGMA_SCALE } from './visual/figma/types.ts';
 import viteConfig from './vite.config.ts';
 
 const configDir = path.join(import.meta.dirname, '.storybook');
@@ -13,6 +15,7 @@ const configDir = path.join(import.meta.dirname, '.storybook');
 // (`pnpm vrt`, browser from `pnpm vrt:browser`), Chromium runs in a pinned Linux container so captures
 // don't depend on the host OS; `exposeNetwork` routes the container's localhost back to this machine.
 const VRT_TAG = 'vrt';
+const FIGMA_TAG = 'figma';
 const vrtBrowserWs = process.env.VRT_BROWSER_WS;
 const vrtPlatform = vrtBrowserWs ? 'linux-docker' : process.platform;
 
@@ -22,23 +25,30 @@ function vrtPath(dir: string): NonNullable<ToMatchScreenshotOptions['resolveScre
     };
 }
 
+type VrtProjectOptions = {
+    tag?: string;
+    plugins?: NonNullable<TestProjectInlineConfiguration['plugins']>;
+    test?: NonNullable<TestProjectInlineConfiguration['test']>;
+    deviceScaleFactor?: number;
+};
+
 function vrtProject(
     name: string,
-    plugins: NonNullable<TestProjectInlineConfiguration['plugins']>,
-    test: NonNullable<TestProjectInlineConfiguration['test']>
+    { tag = VRT_TAG, plugins = [], test = {}, deviceScaleFactor }: VrtProjectOptions = {}
 ): TestProjectInlineConfiguration {
     return {
         extends: true,
-        plugins: [storybookTest({ configDir, tags: { include: [VRT_TAG] } }), ...plugins],
+        plugins: [storybookTest({ configDir, tags: { include: [tag] } }), ...plugins],
         test: {
             name,
             ...test,
             browser: {
                 enabled: true,
                 headless: true,
-                provider: playwright(
-                    vrtBrowserWs ? { connectOptions: { wsEndpoint: vrtBrowserWs, exposeNetwork: '<loopback>' } } : {}
-                ),
+                provider: playwright({
+                    ...(vrtBrowserWs && { connectOptions: { wsEndpoint: vrtBrowserWs, exposeNetwork: '<loopback>' } }),
+                    ...(deviceScaleFactor && { contextOptions: { deviceScaleFactor } }),
+                }),
                 instances: [{ browser: 'chromium' }],
                 screenshotFailures: false,
                 ...test.browser,
@@ -75,34 +85,60 @@ export default defineConfig((env) => {
 
 function vrtProjects(): TestProjectInlineConfiguration[] {
     return [
-        vrtProject('vrt-diy', [], {
-            setupFiles: ['./visual/diy/setup.ts'],
-            attachmentsDir: 'visual/.results/diy',
-            // Storybook's plugin blocks API file writes unless opted in; toMatchScreenshot needs them to
-            // save baselines and diffs. The API server stays on localhost.
-            api: { allowWrite: true },
-            browser: {
-                expect: {
-                    toMatchScreenshot: {
-                        comparatorName: 'pixelmatch',
-                        comparatorOptions: { threshold: 0.1, allowedMismatchedPixelRatio: 0 },
-                        resolveScreenshotPath: vrtPath('visual/diy/__baselines__'),
-                        resolveDiffPath: vrtPath('visual/.results/diy'),
+        vrtProject('vrt-diy', {
+            test: {
+                setupFiles: ['./visual/diy/setup.ts'],
+                attachmentsDir: 'visual/.results/diy',
+                // Storybook's plugin blocks API file writes unless opted in; toMatchScreenshot needs them to
+                // save baselines and diffs. The API server stays on localhost.
+                api: { allowWrite: true },
+                browser: {
+                    expect: {
+                        toMatchScreenshot: {
+                            comparatorName: 'pixelmatch',
+                            comparatorOptions: { threshold: 0.1, allowedMismatchedPixelRatio: 0 },
+                            resolveScreenshotPath: vrtPath('visual/diy/__baselines__'),
+                            resolveDiffPath: vrtPath('visual/.results/diy'),
+                        },
                     },
                 },
             },
         }),
         // Captures locally, uploads to Argos (ARGOS_TOKEN); baselines and review live in Argos.
-        vrtProject(
-            'vrt-argos',
-            [
+        vrtProject('vrt-argos', {
+            plugins: [
                 argosVitestPlugin({
                     uploadToArgos: Boolean(process.env.ARGOS_TOKEN),
                     root: 'visual/.results/argos',
                     buildName: 'storybook-vrt',
                 }),
             ],
-            {}
-        ),
+        }),
+        // Not regression: compares stories against Figma itself (visual/README.md → "Figma reference").
+        // Reference PNGs are Figma's 2x exports, so the page renders at DPR 2.
+        vrtProject('vrt-figma', {
+            tag: FIGMA_TAG,
+            deviceScaleFactor: FIGMA_SCALE,
+            test: {
+                setupFiles: ['./visual/figma/setup.ts'],
+                // Every cell of a matrix is captured in one afterEach (Button: ~120 cells).
+                hookTimeout: 300_000,
+                attachmentsDir: FIGMA_RESULTS_DIR,
+                api: { allowWrite: true },
+                browser: {
+                    commands: { figmaSaveFlatRef, figmaSaveStoryResult },
+                    expect: {
+                        toMatchScreenshot: {
+                            resolveScreenshotPath: ({ arg, ext, root }) => {
+                                return path.join(root, FIGMA_FLAT_REFS_DIR, `${arg}${ext}`);
+                            },
+                            resolveDiffPath: ({ arg, ext, root }) => {
+                                return path.join(root, FIGMA_RESULTS_DIR, `${arg}${ext}`);
+                            },
+                        },
+                    },
+                },
+            },
+        }),
     ];
 }

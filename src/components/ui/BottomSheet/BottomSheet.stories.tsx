@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { StoryContext } from '@storybook/react-vite';
 import type { MockInstance } from 'storybook/test';
 import type { BottomSheetActionProps } from './types';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn, spyOn, waitFor, within } from 'storybook/test';
 import { Button } from '@/components/ui/Button';
 import { BottomSheet } from '.';
@@ -112,7 +113,7 @@ function Demo({
     );
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/BottomSheet',
     component: Demo,
     args: {
@@ -133,14 +134,18 @@ const meta = {
     beforeEach: spyOnConsoleError,
     // The sheet is the phone surface: render (and test) it at phone width.
     globals: { viewport: { value: 'mobile2', isRotated: false } },
-    parameters: { layout: 'fullscreen', design: { type: 'figma', url: `${FIGMA}8370-24957` } },
-} satisfies Meta<StoryArgs>;
+    parameters: {
+        layout: 'fullscreen',
+        design: [
+            { name: 'Sheet', type: 'figma', url: `${FIGMA}8370-24957` },
+            { name: 'Closable', type: 'figma', url: `${FIGMA}8938-19290` },
+            { name: 'With content', type: 'figma', url: `${FIGMA}8938-19311` },
+            { name: 'Footerless', type: 'figma', url: `${FIGMA}11089-139884` },
+        ],
+    },
+});
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-type PlayContext = Parameters<NonNullable<Story['play']>>[0];
+type PlayContext = Pick<StoryContext, 'canvas' | 'canvasElement' | 'userEvent'>;
 
 async function openSheet({ canvas, canvasElement, userEvent }: PlayContext) {
     await userEvent.click(canvas.getByRole('button', { name: TRIGGER }));
@@ -161,64 +166,64 @@ async function expectClosed({ canvasElement }: PlayContext) {
     });
 }
 
+function canvasHeight(canvasElement: HTMLElement) {
+    return canvasElement.ownerDocument.defaultView?.innerHeight ?? 0;
+}
+
 /**
  * Frame 8370:24957. Named by `Title`, described by `Descriptor`; modal focus trap, inert page, scroll lock.
- * Escape closes. No prop disables dismissal.
+ * Escape closes. No prop disables dismissal. Footer, ✕, rows, action variant and long copy are Controls.
+ * Footerless (frame 11089:139884): dismissal is Escape, outside press or swipe. The 34px home-indicator block
+ * stays as bottom padding; its pill hides above `md:`.
  */
-export const Default: Story = {
-    play: async (context) => {
-        const { canvasElement, userEvent, args } = context;
-        const body = within(canvasElement.ownerDocument.body);
-        const dialog = await openSheet(context);
+export const Default = meta.story();
 
-        await expect(dialog).toHaveAccessibleName(TITLE);
-        await expect(dialog).toHaveAttribute('aria-labelledby', body.getByRole('heading', { name: TITLE }).id);
-        await expect(dialog).toHaveAccessibleDescription(DESCRIPTOR);
-        await expect(dialog).toHaveAttribute('aria-describedby', body.getByText(DESCRIPTOR).id);
-        await expect(dialog.querySelector('[data-home-indicator]')).toHaveAttribute('aria-hidden', 'true');
-        await waitFor(() => {
-            return expect(dialog.contains(canvasElement.ownerDocument.activeElement)).toBe(true);
-        });
-        // The page behind is hidden from assistive tech.
-        await expect(body.queryByRole('button', { name: TRIGGER })).toBeNull();
-        await expect(isScrollLocked(canvasElement.ownerDocument)).toBe(true);
-        await expect(consoleError).not.toHaveBeenCalled();
-        await expect(args.onOpenChange).toHaveBeenLastCalledWith(true);
+Default.test('named, described, modal; Escape closes', async (context) => {
+    const { canvasElement, userEvent, args } = context;
+    const body = within(canvasElement.ownerDocument.body);
+    const dialog = await openSheet(context);
 
-        await userEvent.keyboard('{Escape}');
-        await expectClosed(context);
-        await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
-    },
-};
+    await expect(dialog).toHaveAccessibleName(TITLE);
+    await expect(dialog).toHaveAttribute('aria-labelledby', body.getByRole('heading', { name: TITLE }).id);
+    await expect(dialog).toHaveAccessibleDescription(DESCRIPTOR);
+    await expect(dialog).toHaveAttribute('aria-describedby', body.getByText(DESCRIPTOR).id);
+    await expect(dialog.querySelector('[data-home-indicator]')).toHaveAttribute('aria-hidden', 'true');
+    await waitFor(() => {
+        return expect(dialog.contains(canvasElement.ownerDocument.activeElement)).toBe(true);
+    });
+    // The page behind is hidden from assistive tech.
+    await expect(body.queryByRole('button', { name: TRIGGER })).toBeNull();
+    await expect(isScrollLocked(canvasElement.ownerDocument)).toBe(true);
+    await expect(consoleError).not.toHaveBeenCalled();
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(true);
+
+    await userEvent.keyboard('{Escape}');
+    await expectClosed(context);
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
+});
 
 /** `Cancel` closes with no handler; `Action` never does — the caller closes on success. */
-export const Confirmation: Story = {
-    play: async (context) => {
-        const { userEvent, args } = context;
-        const dialog = within(await openSheet(context));
+Default.test('Cancel closes; Action does not', async (context) => {
+    const { userEvent, args } = context;
+    const dialog = within(await openSheet(context));
 
-        await userEvent.click(dialog.getByRole('button', { name: 'Stop' }));
-        await expect(args.onAction).toHaveBeenCalledOnce();
-        await expect(dialog.getByRole('heading', { name: TITLE })).toBeVisible();
+    await userEvent.click(dialog.getByRole('button', { name: 'Stop' }));
+    await expect(args.onAction).toHaveBeenCalledOnce();
+    await expect(dialog.getByRole('heading', { name: TITLE })).toBeVisible();
 
-        await userEvent.click(dialog.getByRole('button', { name: 'Cancel' }));
-        await expectClosed(context);
-        await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
-    },
-};
-
-/** Not drawn; `Action` passes `Button`'s variant through. */
-export const Destructive: Story = {
-    args: { actionVariant: 'destructive' },
-};
+    await userEvent.click(dialog.getByRole('button', { name: 'Cancel' }));
+    await expectClosed(context);
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
+});
 
 /**
  * Busy `Action` is `loading`, not `disabled`: still named and focusable, refuses activation. Nothing else
  * locks — Cancel, ✕, Escape, backdrop and swipe still close.
  */
-export const Loading: Story = {
-    args: { loading: true, withClose: true },
-    play: async (context) => {
+Default.test(
+    'loading Action stays enabled but refuses activation; Escape still closes',
+    { args: { loading: true, withClose: true } },
+    async (context) => {
         const { userEvent, args } = context;
         const dialog = within(await openSheet(context));
         const action = dialog.getByRole('button', { name: 'Stop' });
@@ -229,17 +234,17 @@ export const Loading: Story = {
 
         await userEvent.keyboard('{Escape}');
         await expectClosed(context);
-    },
-};
+    }
+);
 
 /**
  * Figma 8938:19290 is a bare 20px glyph; `IconButton size="sm"` adds a 40px target (WCAG 2.5.8) with the
  * glyph on the drawn 12px inset. Its name is the caller's.
  */
-export const Closable: Story = {
-    args: { withClose: true, rows: 3, title: 'Set the target moisture', descriptor: 'Applies to every bin.' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8938-19290` } },
-    play: async (context) => {
+Default.test(
+    'the ✕ takes the caller name and closes',
+    { args: { withClose: true, rows: 3, title: 'Set the target moisture', descriptor: 'Applies to every bin.' } },
+    async (context) => {
         const { userEvent, args } = context;
         const dialog = within(await openSheet(context));
         const close = dialog.getByRole('button', { name: 'Dismiss reconditioning dialog' });
@@ -248,25 +253,26 @@ export const Closable: Story = {
         await userEvent.click(close);
         await expectClosed(context);
         await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
-    },
-};
+    }
+);
 
 /** Frame 8938:19311. Content is full-bleed (title inset 24px, footer 12px). Gaps: 24px above, 32px below. */
-export const WithContent: Story = {
-    args: { rows: 3, title: 'Set the target moisture', descriptor: 'Applies to every bin in the current cycle.' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8938-19311` } },
-    play: async (context) => {
+Default.test(
+    'content rows render inside the sheet',
+    { args: { rows: 3, title: 'Set the target moisture', descriptor: 'Applies to every bin in the current cycle.' } },
+    async (context) => {
         const dialog = within(await openSheet(context));
         await expect(dialog.getByText('Bin 14')).toBeVisible();
         await context.userEvent.keyboard('{Escape}');
         await expectClosed(context);
-    },
-};
+    }
+);
 
 /** 40 rows past the 85dvh cap: title and footer stay pinned, only the list scrolls. */
-export const ScrollingContent: Story = {
-    args: { rows: 40, title: 'Pick a bin', descriptor: 'The title and the buttons stay put; the list scrolls.' },
-    play: async (context) => {
+Default.test(
+    'height caps at 85dvh; footer stays visible',
+    { args: { rows: 40, title: 'Pick a bin', descriptor: 'The title and the buttons stay put; the list scrolls.' } },
+    async (context) => {
         const dialog = await openSheet(context);
         const viewportHeight = canvasHeight(context.canvasElement);
 
@@ -274,39 +280,18 @@ export const ScrollingContent: Story = {
             return expect(dialog.getBoundingClientRect().height).toBeLessThanOrEqual(viewportHeight * 0.85 + 1);
         });
         await expect(within(dialog).getByRole('button', { name: 'Stop' })).toBeVisible();
-    },
-};
-
-function canvasHeight(canvasElement: HTMLElement) {
-    return canvasElement.ownerDocument.defaultView?.innerHeight ?? 0;
-}
-
-/** Long title and descriptor wrap, both centred, as drawn. */
-export const LongText: Story = {
-    args: {
-        footer: false,
-        title: 'Stop reconditioning mode on bin 14 before the cycle completes?',
-        descriptor:
-            'The fans will shut down within a minute, the current cycle will not resume, and the grain will hold ' +
-            'at its present moisture until reconditioning is started again.',
-    },
-};
-
-/**
- * Footerless (frame 11089:139884): dismissal is Escape, outside press or swipe. The 34px home-indicator block
- * stays as bottom padding; its pill hides above `md:`.
- */
-export const Footerless: Story = {
-    args: { footer: false },
-    parameters: { design: { type: 'figma', url: `${FIGMA}11089-139884` } },
-};
+    }
+);
 
 /** Dev-only guard: no `Title` → `console.error`, and the sheet still renders. */
-export const MissingTitle: Story = {
-    args: { title: undefined },
-    // aria-dialog-name off: the unnamed dialog is the point of this story.
-    parameters: { a11y: { config: { rules: [{ id: 'aria-dialog-name', enabled: false }] } } },
-    play: async (context) => {
+Default.test(
+    'missing Title logs a dev error and still renders',
+    {
+        args: { title: undefined },
+        // aria-dialog-name off: the unnamed dialog is the point of this test.
+        parameters: { a11y: { config: { rules: [{ id: 'aria-dialog-name', enabled: false }] } } },
+    },
+    async (context) => {
         const dialog = await openSheet(context);
         await expect(dialog).toBeInTheDocument();
         // Guard is dev-only: a production build (Chromatic) strips it.
@@ -317,5 +302,5 @@ export const MissingTitle: Story = {
         }
         await context.userEvent.keyboard('{Escape}');
         await expectClosed(context);
-    },
-};
+    }
+);

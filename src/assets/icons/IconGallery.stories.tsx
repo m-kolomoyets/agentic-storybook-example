@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { FunctionComponent, SVGProps } from 'react';
 import { useId, useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, userEvent } from 'storybook/test';
 
 /*
@@ -116,47 +116,44 @@ function IconGrid({ entries, sizeClass, label }: IconGridProps) {
     );
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'Foundations/Icons',
     component: IconGrid,
     args: { entries: ICONS, sizeClass: 'size-3xl', label: 'icons' },
     argTypes: { entries: { control: false } },
     parameters: { layout: 'padded' },
-} satisfies Meta<typeof IconGrid>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+});
 
 /** Every icon in `src/assets/icons`. Typing filters the grid; the status line counts matches. */
-export const AllIcons: Story = {
-    play: async ({ canvas }) => {
-        const grid = canvas.getByRole('list', { name: 'icons' });
-        const total = ICONS.length;
-        await expect(grid.querySelectorAll('li')).toHaveLength(total);
+export const AllIcons = meta.story();
 
-        await userEvent.type(canvas.getByRole('searchbox', { name: 'Filter icons' }), 'arrow back');
-        await expect(canvas.getByRole('button', { name: 'arrow-back' })).toBeInTheDocument();
-        await expect(canvas.queryByRole('button', { name: 'close' })).toBeNull();
-        const shown = grid.querySelectorAll('li').length;
-        await expect(shown).toBeGreaterThan(0);
-        await expect(shown).toBeLessThan(total);
-        await expect(canvas.getByRole('status')).toHaveTextContent(`${shown} of ${total}`);
+AllIcons.test('typing filters the grid and the status line counts matches', async ({ canvas }) => {
+    const grid = canvas.getByRole('list', { name: 'icons' });
+    const total = ICONS.length;
+    await expect(grid.querySelectorAll('li')).toHaveLength(total);
 
-        await userEvent.clear(canvas.getByRole('searchbox'));
-        await expect(grid.querySelectorAll('li')).toHaveLength(total);
-    },
-};
+    await userEvent.type(canvas.getByRole('searchbox', { name: 'Filter icons' }), 'arrow back');
+    await expect(canvas.getByRole('button', { name: 'arrow-back' })).toBeInTheDocument();
+    await expect(canvas.queryByRole('button', { name: 'close' })).toBeNull();
+    const shown = grid.querySelectorAll('li').length;
+    await expect(shown).toBeGreaterThan(0);
+    await expect(shown).toBeLessThan(total);
+    await expect(canvas.getByRole('status')).toHaveTextContent(`${shown} of ${total}`);
+
+    await userEvent.clear(canvas.getByRole('searchbox'));
+    await expect(grid.querySelectorAll('li')).toHaveLength(total);
+});
 
 /** `src/assets/icons/illustrations/*.svg` (the PNGs there are not icons). */
-export const Illustrations: Story = {
+export const Illustrations = meta.story({
     args: { entries: ILLUSTRATIONS, sizeClass: 'size-5xl', label: 'illustrations' },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('list', { name: 'illustrations' }).querySelectorAll('li')).toHaveLength(
-            ILLUSTRATIONS.length
-        );
-    },
-};
+});
+
+Illustrations.test('lists every svg illustration', async ({ canvas }) => {
+    await expect(canvas.getByRole('list', { name: 'illustrations' }).querySelectorAll('li')).toHaveLength(
+        ILLUSTRATIONS.length
+    );
+});
 
 // Monochrome icons are `fill="currentColor"`, so they take the surrounding text colour.
 const COLOR_CLASSES = [
@@ -168,7 +165,7 @@ const COLOR_CLASSES = [
 ];
 
 /** Colour comes from the parent `color`, no props. */
-export const ColorInheritance: Story = {
+export const ColorInheritance = meta.story({
     render: function ColorInheritance() {
         return (
             <div className="flex flex-col gap-l">
@@ -188,12 +185,12 @@ export const ColorInheritance: Story = {
             </div>
         );
     },
-};
+});
 
 const SIZE_CLASSES = ['size-xl', 'size-2xl', 'size-3xl', 'size-4xl', 'size-5xl'];
 
 /** `width`/`height` are stripped, so the box is whatever the spacing-scale size utility says. */
-export const Sizes: Story = {
+export const Sizes = meta.story({
     render: function Sizes() {
         return (
             <div className="flex flex-col gap-l text-text-general-strong">
@@ -210,4 +207,4 @@ export const Sizes: Story = {
             </div>
         );
     },
-};
+});

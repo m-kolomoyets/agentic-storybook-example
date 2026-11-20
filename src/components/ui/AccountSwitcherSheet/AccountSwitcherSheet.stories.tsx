@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { SelectOption } from '@/components/ui/OptionList/types';
 import type { AccountSwitcherSheetProps } from './types';
 import { useState } from 'react';
+import preview from '#.storybook/preview';
 import { expect, fn, waitFor, within } from 'storybook/test';
 import { Button } from '@/components/ui/Button';
 import { AccountSwitcherSheet } from '.';
@@ -86,7 +86,7 @@ function Demo({
     );
 }
 
-const meta = {
+const meta = preview.type<{ args: StoryArgs }>().meta({
     title: 'UI/AccountSwitcherSheet',
     // `AccountSwitcher`'s mobile branch, rendered directly at phone width.
     globals: { viewport: { value: 'mobile2', isRotated: false } },
@@ -96,11 +96,7 @@ const meta = {
         return <Demo {...args} />;
     },
     parameters: { design: { type: 'figma', url: `${FIGMA}13942-423473` } },
-} satisfies Meta<StoryArgs>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+});
 
 function sheetOf(canvasElement: HTMLElement) {
     return within(canvasElement.ownerDocument.body).findByRole('dialog', { name: 'Switch Organization' });
@@ -115,8 +111,11 @@ function rowNames(sheet: HTMLElement) {
 }
 
 /** Current account leads (filled + check), the rest alphabetical. A tap switches and closes. */
-export const Default: Story = {
-    play: async ({ canvasElement, args, userEvent }) => {
+export const Default = meta.story();
+
+Default.test(
+    'current account leads, the rest alphabetical; a tap switches and closes',
+    async ({ canvasElement, args, userEvent }) => {
         const sheet = await sheetOf(canvasElement);
         await expect(rowNames(sheet)).toEqual([
             'Amber Prod Test',
@@ -136,73 +135,81 @@ export const Default: Story = {
         await waitFor(() => {
             return expect(canvasElement.ownerDocument.querySelector('[role=dialog]')).toBeNull();
         });
-    },
-};
+    }
+);
 
 /** Tapping the current row only closes; nothing is reported. */
-export const CurrentRowCloses: Story = {
-    play: async ({ canvasElement, args, userEvent }) => {
-        const sheet = await sheetOf(canvasElement);
-        await userEvent.click(within(sheet).getByRole('button', { name: 'Amber Prod Test' }));
-        await expect(args.onValueChange).not.toHaveBeenCalled();
-        await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
-        await waitFor(() => {
-            return expect(canvasElement.ownerDocument.querySelector('[role=dialog]')).toBeNull();
-        });
-    },
-};
+Default.test('tapping the current row only closes; nothing is reported', async ({ canvasElement, args, userEvent }) => {
+    const sheet = await sheetOf(canvasElement);
+    await userEvent.click(within(sheet).getByRole('button', { name: 'Amber Prod Test' }));
+    await expect(args.onValueChange).not.toHaveBeenCalled();
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
+    await waitFor(() => {
+        return expect(canvasElement.ownerDocument.querySelector('[role=dialog]')).toBeNull();
+    });
+});
 
 /** Thirty rows: the list scrolls inside the pinned-height sheet. */
-export const LongList: Story = {
-    args: { options: MANY_ACCOUNTS },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'thirty rows scroll inside the pinned-height sheet',
+    {
+        args: { options: MANY_ACCOUNTS },
+    },
+    async ({ canvasElement }) => {
         const sheet = await sheetOf(canvasElement);
         await expect(rowNames(sheet)).toHaveLength(30);
         await expect(rowNames(sheet)[0]).toBe('Farm 02');
-    },
-};
+    }
+);
 
 /** Narrowed per keystroke; the current row stays first while it matches. */
-export const Searching: Story = {
-    args: { initialQuery: 'er' },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'the query narrows the rows; the current row stays first while it matches',
+    {
+        args: { initialQuery: 'er' },
+    },
+    async ({ canvasElement }) => {
         const sheet = await sheetOf(canvasElement);
         await expect(rowNames(sheet)).toEqual([
             'Amber Prod Test',
             'Green Acres Farm Cooperative of the Northern Plains, Eastern Valley & Lower River Region',
         ]);
-    },
-};
+    }
+);
 
 /** No match: the empty state is a live status. */
-export const NoResults: Story = {
-    args: { initialQuery: 'Beans Farm' },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'no match: the empty state is a live status',
+    {
+        args: { initialQuery: 'Beans Farm' },
+    },
+    async ({ canvasElement }) => {
         const sheet = await sheetOf(canvasElement);
         await expect(within(sheet).getByRole('status')).toHaveTextContent('No organizations found');
-    },
-};
+    }
+);
 
 /** While loading, an empty result waits silently instead of flashing "No organizations found". */
-export const Loading: Story = {
-    args: { initialQuery: 'Beans Farm', loading: true },
-    play: async ({ canvasElement }) => {
+Default.test(
+    'while loading, an empty result waits silently',
+    {
+        args: { initialQuery: 'Beans Farm', loading: true },
+    },
+    async ({ canvasElement }) => {
         const sheet = await sheetOf(canvasElement);
         await expect(within(sheet).queryByRole('status')).toBeNull();
-    },
-};
+    }
+);
 
 /** Closing over a query clears it, so the next opening starts unfiltered. */
-export const CloseClearsSearch: Story = {
-    play: async ({ canvasElement, args, userEvent }) => {
-        const sheet = await sheetOf(canvasElement);
-        await userEvent.type(within(sheet).getByLabelText('Search organizations'), 'Co');
-        await expect(args.onSearchChange).toHaveBeenLastCalledWith('Co');
-        await userEvent.click(within(sheet).getByRole('button', { name: 'Close organization switcher' }));
-        await expect(args.onSearchChange).toHaveBeenLastCalledWith('');
-        await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
-        await waitFor(() => {
-            return expect(canvasElement.ownerDocument.querySelector('[role=dialog]')).toBeNull();
-        });
-    },
-};
+Default.test('closing over a query clears it', async ({ canvasElement, args, userEvent }) => {
+    const sheet = await sheetOf(canvasElement);
+    await userEvent.type(within(sheet).getByLabelText('Search organizations'), 'Co');
+    await expect(args.onSearchChange).toHaveBeenLastCalledWith('Co');
+    await userEvent.click(within(sheet).getByRole('button', { name: 'Close organization switcher' }));
+    await expect(args.onSearchChange).toHaveBeenLastCalledWith('');
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(false);
+    await waitFor(() => {
+        return expect(canvasElement.ownerDocument.querySelector('[role=dialog]')).toBeNull();
+    });
+});

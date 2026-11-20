@@ -1,39 +1,36 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import preview from '#.storybook/preview';
 import { expect } from 'storybook/test';
 import { LoadingIndicator } from '.';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/LoadingIndicator',
     component: LoadingIndicator,
     args: { size: 'md' },
     argTypes: { size: { control: 'inline-radio', options: ['md', 'sm'] } },
     parameters: { design: { type: 'figma', url: `${FIGMA}14895-450270` } },
-} satisfies Meta<typeof LoadingIndicator>;
+});
 
-export default meta;
+/** Playground — decorative 3×3 grid: eight animated perimeter squares, a static centre. */
+export const Default = meta.story();
 
-type Story = StoryObj<typeof meta>;
+Default.test('decorative 3×3 grid animates the eight perimeter squares only', async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('span[aria-hidden="true"]');
+    await expect(root).toBeInTheDocument();
+    await expect(root!.children).toHaveLength(9);
+    await expect(root!.querySelectorAll('.animate-loading-snake')).toHaveLength(8);
+    await expect(root!.children[4]).not.toHaveClass('animate-loading-snake');
+});
 
-/** Decorative 3×3 grid: eight animated perimeter squares, a static centre. */
-export const Default: Story = {
-    play: async ({ canvasElement }) => {
-        const root = canvasElement.querySelector('span[aria-hidden="true"]');
-        await expect(root).toBeInTheDocument();
-        await expect(root!.children).toHaveLength(9);
-        await expect(root!.querySelectorAll('.animate-loading-snake')).toHaveLength(8);
-        await expect(root!.children[4]).not.toHaveClass('animate-loading-snake');
+/** Both sizes; `sm` is the chart containers' size (Figma `Airspace/Visualization`). */
+export const Matrix = meta.story({
+    parameters: {
+        design: [
+            { name: 'md', type: 'figma', url: `${FIGMA}14895-450270` },
+            { name: 'sm (chart)', type: 'figma', url: `${FIGMA}14833-287372` },
+        ],
     },
-};
-
-/** Chart containers' size. Figma: `Airspace/Visualization` 14833:287372. */
-export const Small: Story = {
-    args: { size: 'sm' },
-    parameters: { design: { type: 'figma', url: `${FIGMA}14833-287372` } },
-};
-
-export const Matrix: Story = {
     render: function Matrix() {
         return (
             <div className="flex flex-col gap-4xl">
@@ -48,4 +45,4 @@ export const Matrix: Story = {
             </div>
         );
     },
-};
+});

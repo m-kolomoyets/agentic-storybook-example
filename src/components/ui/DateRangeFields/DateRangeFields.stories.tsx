@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { CalendarActions, DateRange } from '@/components/ui/Calendar/types';
 import type { DateRangeFieldsProps, DateRangeInputField, OpenDateRange } from './types';
 import type { DateRangeLabels } from './utils/dateInput';
 import { useRef, useState } from 'react';
 import CloseIcon from '@/assets/icons/close.svg?react';
+import preview from '#.storybook/preview';
 import { DateTime } from 'luxon';
 import { expect, fn, within } from 'storybook/test';
 import { Button } from '@/components/ui/Button';
@@ -48,7 +48,7 @@ type StoryArgs = DateRangeFieldsProps & {
     onPublish?: (next: OpenDateRange | null) => void;
 };
 
-const meta = {
+const meta = preview.type<{ args: StoryArgs }>().meta({
     title: 'UI/DateRangeFields',
     component: DateRangeFields,
     args: {
@@ -77,119 +77,139 @@ const meta = {
             );
         },
     ],
-} satisfies Meta<StoryArgs>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+});
 
 /** Two labelled boxes; focus reports which; the calendar glyph is a `Show today` button when wired. */
-export const Empty: Story = {
-    play: async ({ canvas, userEvent, args }) => {
-        const from = canvas.getByRole('textbox', { name: 'From' });
-        const to = canvas.getByRole('textbox', { name: 'To' });
-        await expect(from).toHaveAttribute('placeholder', 'MM/DD/YYYY');
-        await expect(from).toHaveAttribute('inputmode', 'numeric');
-        await expect(from).toHaveAttribute('maxlength', '10');
+export const Default = meta.story();
 
-        await userEvent.click(from);
-        await expect(args.onFieldFocus).toHaveBeenLastCalledWith('from');
-        await userEvent.click(to);
-        await expect(args.onFieldFocus).toHaveBeenLastCalledWith('to');
+Default.test('labelled boxes report focus; the glyph is a show today button', async ({ canvas, userEvent, args }) => {
+    const from = canvas.getByRole('textbox', { name: 'From' });
+    const to = canvas.getByRole('textbox', { name: 'To' });
+    await expect(from).toHaveAttribute('placeholder', 'MM/DD/YYYY');
+    await expect(from).toHaveAttribute('inputmode', 'numeric');
+    await expect(from).toHaveAttribute('maxlength', '10');
 
-        const [fromToday, toToday] = canvas.getAllByRole('button', { name: 'Show today' });
-        await userEvent.click(fromToday!);
-        await expect(args.onShowToday).toHaveBeenLastCalledWith('from');
-        await userEvent.click(toToday!);
-        await expect(args.onShowToday).toHaveBeenLastCalledWith('to');
-    },
-};
+    await userEvent.click(from);
+    await expect(args.onFieldFocus).toHaveBeenLastCalledWith('from');
+    await userEvent.click(to);
+    await expect(args.onFieldFocus).toHaveBeenLastCalledWith('to');
+
+    const [fromToday, toToday] = canvas.getAllByRole('button', { name: 'Show today' });
+    await userEvent.click(fromToday!);
+    await expect(args.onShowToday).toHaveBeenLastCalledWith('from');
+    await userEvent.click(toToday!);
+    await expect(args.onShowToday).toHaveBeenLastCalledWith('to');
+});
 
 /** Without `onShowToday` the glyph is decoration, not a control. */
-export const GlyphOnly: Story = {
-    args: { onShowToday: undefined },
-    play: async ({ canvas }) => {
-        await expect(canvas.queryByRole('button', { name: 'Show today' })).toBeNull();
+Default.test(
+    'without onShowToday the glyph is decoration',
+    {
+        args: { onShowToday: undefined },
     },
-};
+    async ({ canvas }) => {
+        await expect(canvas.queryByRole('button', { name: 'Show today' })).toBeNull();
+    }
+);
 
-export const Filled: Story = {
-    args: { from: field('04/08/2026'), to: field('04/27/2026'), fromLabel: 'Start Date', toLabel: 'End Date' },
-    play: async ({ canvas }) => {
+Default.test(
+    'filled values show, nothing invalid',
+    {
+        args: { from: field('04/08/2026'), to: field('04/27/2026'), fromLabel: 'Start Date', toLabel: 'End Date' },
+    },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('textbox', { name: 'Start Date' })).toHaveValue('04/08/2026');
         await expect(canvas.getByRole('textbox', { name: 'End Date' })).toHaveValue('04/27/2026');
         await expect(canvas.getByRole('textbox', { name: 'End Date' })).not.toHaveAttribute('aria-invalid');
-    },
-};
+    }
+);
 
 /** Half-typed beside a filled neighbour. */
-export const IncompleteError: Story = {
-    args: { from: field('04/0', DATE_INPUT_INCOMPLETE_ERROR), to: field('04/27/2026') },
-    play: async ({ canvas }) => {
+Default.test(
+    'half-typed beside a filled neighbour is incomplete',
+    {
+        args: { from: field('04/0', DATE_INPUT_INCOMPLETE_ERROR), to: field('04/27/2026') },
+    },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('textbox', { name: 'From' })).toHaveAttribute('aria-invalid', 'true');
         await expect(canvas.getByText(DATE_INPUT_INCOMPLETE_ERROR)).toBeVisible();
         await expect(canvas.getByRole('textbox', { name: 'To' })).not.toHaveAttribute('aria-invalid');
-    },
-};
+    }
+);
 
 /** A whole date that is wrong on its own. */
-export const DateError: Story = {
-    args: {
-        from: field('02/29/2026', 'February 2026 has 28 days'),
-        to: field('12/31/2099', getMaxDateError(TODAY)),
+Default.test(
+    'a whole date wrong on its own shows its message',
+    {
+        args: {
+            from: field('02/29/2026', 'February 2026 has 28 days'),
+            to: field('12/31/2099', getMaxDateError(TODAY)),
+        },
     },
-    play: async ({ canvas }) => {
+    async ({ canvas }) => {
         await expect(canvas.getByText('February 2026 has 28 days')).toBeVisible();
         await expect(canvas.getByText('Date must be on or before May 15, 2026')).toBeVisible();
-    },
-};
+    }
+);
 
 /** One half alone, with the site's labels quoted. */
-export const MissingEndError: Story = {
-    args: {
-        from: field('04/08/2026'),
-        to: field('', getDateRangeMissingError(LABELS.end)),
-        fromLabel: 'Start Date',
-        toLabel: 'End Date',
+Default.test(
+    'a lone start asks for the end with site labels',
+    {
+        args: {
+            from: field('04/08/2026'),
+            to: field('', getDateRangeMissingError(LABELS.end)),
+            fromLabel: 'Start Date',
+            toLabel: 'End Date',
+        },
     },
-    play: async ({ canvas }) => {
+    async ({ canvas }) => {
         await expect(canvas.getByText('Add an End Date to complete the range')).toBeVisible();
-    },
-};
+    }
+);
 
-export const MissingStartError: Story = {
-    args: {
-        from: field('', getDateRangeMissingError(LABELS.start)),
-        to: field('04/27/2026'),
-        fromLabel: 'Start Date',
-        toLabel: 'End Date',
+Default.test(
+    'a lone end asks for the start with site labels',
+    {
+        args: {
+            from: field('', getDateRangeMissingError(LABELS.start)),
+            to: field('04/27/2026'),
+            fromLabel: 'Start Date',
+            toLabel: 'End Date',
+        },
     },
-    play: async ({ canvas }) => {
+    async ({ canvas }) => {
         await expect(canvas.getByText('Add a Start Date to complete the range')).toBeVisible();
-    },
-};
+    }
+);
 
-export const OrderError: Story = {
-    args: {
-        from: field('04/27/2026'),
-        to: field('04/08/2026', getDateRangeOrderError(LABELS)),
-        fromLabel: 'Start Date',
-        toLabel: 'End Date',
+Default.test(
+    'a reversed pair is said on the end only',
+    {
+        args: {
+            from: field('04/27/2026'),
+            to: field('04/08/2026', getDateRangeOrderError(LABELS)),
+            fromLabel: 'Start Date',
+            toLabel: 'End Date',
+        },
     },
-    play: async ({ canvas }) => {
+    async ({ canvas }) => {
         await expect(canvas.getByText('End Date must be on or after Start Date')).toBeVisible();
         await expect(canvas.getByRole('textbox', { name: 'Start Date' })).not.toHaveAttribute('aria-invalid');
-    },
-};
+    }
+);
 
 /** `invalid` marks both boxes for a message about the pair as a whole; neither gets text of its own. */
-export const InvalidPair: Story = {
-    args: { from: field('04/08/2026'), to: field('04/27/2026'), invalid: true },
-    play: async ({ canvas }) => {
+Default.test(
+    'invalid marks both boxes',
+    {
+        args: { from: field('04/08/2026'), to: field('04/27/2026'), invalid: true },
+    },
+    async ({ canvas }) => {
         await expect(canvas.getByRole('textbox', { name: 'From' })).toHaveAttribute('aria-invalid', 'true');
         await expect(canvas.getByRole('textbox', { name: 'To' })).toHaveAttribute('aria-invalid', 'true');
-    },
-};
+    }
+);
 
 type HarnessProps = {
     onPublish?: (next: OpenDateRange | null) => void;
@@ -279,11 +299,15 @@ async function typeInto(
 }
 
 /** Empty is valid; masks on the way in; publishes only a complete ordered pair; un-publishes when broken. */
-export const Typed: Story = {
-    render: function Typed(args) {
+export const WithCalendar = meta.story({
+    render: function WithCalendar(args) {
         return <HookHarness onPublish={args.onPublish} onShowToday={args.onShowToday} />;
     },
-    play: async ({ canvas, userEvent, args }) => {
+});
+
+WithCalendar.test(
+    'empty is valid; masks; publishes only a complete ordered pair',
+    async ({ canvas, userEvent, args }) => {
         const from = canvas.getByRole('textbox', { name: 'From' });
         const to = canvas.getByRole('textbox', { name: 'To' });
         await expect(from).toHaveValue('');
@@ -323,15 +347,18 @@ export const Typed: Story = {
         await userEvent.click(canvas.getAllByRole('button', { name: 'Show today' })[0]!);
         await expect(args.onShowToday).toHaveBeenCalledWith('from');
         await expect(canvas.getByText('May 2026')).toBeInTheDocument();
-    },
-};
+    }
+);
 
 /** The messages no single box can produce, plus a box's own message and the keystroke refusal. */
-export const PairRules: Story = {
-    render: function PairRules(args) {
-        return <HookHarness onPublish={args.onPublish} minDate={day(4, 1)} />;
+WithCalendar.test(
+    'pair rules, a box message and the keystroke refusal',
+    {
+        render: function PairRules(args) {
+            return <HookHarness onPublish={args.onPublish} minDate={day(4, 1)} />;
+        },
     },
-    play: async ({ canvas, canvasElement, userEvent }) => {
+    async ({ canvas, canvasElement, userEvent }) => {
         const from = canvas.getByRole('textbox', { name: 'From' });
         const to = canvas.getByRole('textbox', { name: 'To' });
         const root = within(canvasElement);
@@ -374,22 +401,25 @@ export const PairRules: Story = {
         await typeInto(to, '05162026', userEvent);
         await expect(root.getByText('Date must be on or after Apr 1, 2026')).toBeVisible();
         await expect(root.getByText('Date must be on or before May 15, 2026')).toBeVisible();
-    },
-};
+    }
+);
 
 /** The site's labels reach the pair messages, without a doubled "date". */
-export const SiteLabels: Story = {
-    render: function SiteLabels(args) {
-        return (
-            <HookHarness
-                onPublish={args.onPublish}
-                labels={LABELS}
-                fromLabel="Start Date"
-                toLabel="End Date (optional)"
-            />
-        );
+WithCalendar.test(
+    'site labels reach the pair messages',
+    {
+        render: function SiteLabels(args) {
+            return (
+                <HookHarness
+                    onPublish={args.onPublish}
+                    labels={LABELS}
+                    fromLabel="Start Date"
+                    toLabel="End Date (optional)"
+                />
+            );
+        },
     },
-    play: async ({ canvas, userEvent }) => {
+    async ({ canvas, userEvent }) => {
         const from = canvas.getByRole('textbox', { name: 'Start Date' });
         const to = canvas.getByRole('textbox', { name: 'End Date (optional)' });
 
@@ -404,15 +434,18 @@ export const SiteLabels: Story = {
         await typeInto(from, '', userEvent);
         await typeInto(to, '04272026', userEvent);
         await expect(canvas.getByText('Add a Start Date to complete the range')).toBeVisible();
-    },
-};
+    }
+);
 
 /** Seeded from a value in the masked shape; `reset` reseeds without reporting a change. */
-export const Seeded: Story = {
-    render: function Seeded(args) {
-        return <HookHarness onPublish={args.onPublish} seed={{ start: day(4, 8), end: day(4, 27) }} />;
+WithCalendar.test(
+    'seeded in the masked shape; reset reseeds silently',
+    {
+        render: function Seeded(args) {
+            return <HookHarness onPublish={args.onPublish} seed={{ start: day(4, 8), end: day(4, 27) }} />;
+        },
     },
-    play: async ({ canvas, userEvent, args }) => {
+    async ({ canvas, userEvent, args }) => {
         const from = canvas.getByRole('textbox', { name: 'From' });
         await expect(from).toHaveValue('04/08/2026');
         await expect(canvas.getByRole('textbox', { name: 'To' })).toHaveValue('04/27/2026');
@@ -422,8 +455,8 @@ export const Seeded: Story = {
         await userEvent.click(canvas.getByRole('button', { name: 'Reset' }));
         await expect(from).toHaveValue('04/08/2026');
         await expect(args.onPublish).not.toHaveBeenCalled();
-    },
-};
+    }
+);
 
 type OpenHarnessProps = { onPublish?: (next: OpenDateRange | null) => void };
 
@@ -477,11 +510,15 @@ function OpenHarness({ onPublish }: OpenHarnessProps) {
 }
 
 /** A lone start is valid and publishes `end: null`; a half-typed end is not "ongoing"; end-only still asks. */
-export const OptionalEnd: Story = {
+export const OptionalEnd = meta.story({
     render: function OptionalEnd(args) {
         return <OpenHarness onPublish={args.onPublish} />;
     },
-    play: async ({ canvas, userEvent, args }) => {
+});
+
+OptionalEnd.test(
+    'a lone start publishes end null; half-typed end is not ongoing',
+    async ({ canvas, userEvent, args }) => {
         const from = canvas.getByRole('textbox', { name: 'Start Date' });
         const to = canvas.getByRole('textbox', { name: 'End Date (optional)' });
         await expect(from).toHaveValue('04/08/2026');
@@ -511,5 +548,5 @@ export const OptionalEnd: Story = {
         await userEvent.click(canvas.getByRole('button', { name: 'April 2, 2026' }));
         await userEvent.click(canvas.getByRole('button', { name: 'April 5, 2026' }));
         await expect(to).toHaveValue('04/05/2026');
-    },
-};
+    }
+);

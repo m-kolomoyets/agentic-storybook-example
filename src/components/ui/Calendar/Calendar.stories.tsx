@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { CalendarActions, CalendarProps, DateRange } from './types';
 import { useRef, useState } from 'react';
+import preview from '#.storybook/preview';
 import { DateTime } from 'luxon';
 import { expect, fn, waitFor } from 'storybook/test';
 import { Button } from '@/components/ui/Button';
@@ -43,7 +43,7 @@ const WRAPPED: DateRange = { start: jan(8), end: jan(20) };
 const ONE_DAY: DateRange = { start: jan(14), end: jan(14) };
 const CROSS_MONTH: DateRange = { start: jan(28), end: at(2026, 2, 3) };
 
-const meta = {
+const meta = preview.meta({
     title: 'UI/Calendar',
     component: Calendar,
     args: { today: TODAY, defaultMonth: JANUARY, onValueChange: fn(), onMonthChange: fn() },
@@ -62,15 +62,14 @@ const meta = {
         actionsRef: { control: false },
     },
     parameters: { design: { type: 'figma', url: `${FIGMA}8256-13650` } },
-} satisfies Meta<typeof Calendar>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+});
 
 /** Grid semantics: blank cells hidden, full-date names, heading-labelled grid in a live region, `th abbr`. */
-export const Default: Story = {
-    play: async ({ canvas, canvasElement }) => {
+export const Default = meta.story({});
+
+Default.test(
+    'grid semantics: hidden blanks, full-date names, live heading, th abbr, today is the tab stop',
+    async ({ canvas, canvasElement }) => {
         const cells = [...canvasElement.querySelectorAll('td')];
         const blanks = cells.filter((cell) => {
             return cell.querySelector('button') === null;
@@ -99,37 +98,37 @@ export const Default: Story = {
         const todayButton = canvas.getByRole('button', { name: nameFor(TODAY) });
         await expect(todayButton).toHaveAttribute('tabindex', '0');
         await expect(todayButton.closest('td')).toHaveAttribute('aria-current', 'date');
-    },
-};
+    }
+);
 
 /** Click selects; clicking the selected day again is a no-op. Enter/Space select the focused day. */
-export const SingleSelect: Story = {
-    parameters: { design: { type: 'figma', url: `${FIGMA}8255-13381` } },
-    play: async ({ canvas, userEvent, args }) => {
-        const ninth = canvas.getByRole('button', { name: 'January 9, 2026' });
-        await userEvent.click(ninth);
-        await expect(args.onValueChange).toHaveBeenCalledTimes(1);
-        const picked = (args.onValueChange as ReturnType<typeof fn>).mock.calls[0]?.[0] as DateTime;
-        await expect(picked.toISODate()).toBe('2026-01-09');
-        await expect(ninth).toHaveAttribute('data-selected');
-        await expect(ninth.closest('td')).toHaveAttribute('aria-selected', 'true');
+Default.test('click selects once; Enter and Space select the focused day', async ({ canvas, userEvent, args }) => {
+    const ninth = canvas.getByRole('button', { name: 'January 9, 2026' });
+    await userEvent.click(ninth);
+    await expect(args.onValueChange).toHaveBeenCalledTimes(1);
+    const picked = (args.onValueChange as ReturnType<typeof fn>).mock.calls[0]?.[0] as DateTime;
+    await expect(picked.toISODate()).toBe('2026-01-09');
+    await expect(ninth).toHaveAttribute('data-selected');
+    await expect(ninth.closest('td')).toHaveAttribute('aria-selected', 'true');
 
-        await userEvent.click(ninth);
-        await expect(args.onValueChange).toHaveBeenCalledTimes(1);
+    await userEvent.click(ninth);
+    await expect(args.onValueChange).toHaveBeenCalledTimes(1);
 
-        await userEvent.keyboard('{ArrowRight}{Enter}');
-        await userEvent.keyboard('{ArrowRight} ');
-        const calls = (args.onValueChange as ReturnType<typeof fn>).mock.calls.map((call) => {
-            return (call[0] as DateTime).toISODate();
-        });
-        await expect(calls).toEqual(['2026-01-09', '2026-01-10', '2026-01-11']);
-    },
-};
+    await userEvent.keyboard('{ArrowRight}{Enter}');
+    await userEvent.keyboard('{ArrowRight} ');
+    const calls = (args.onValueChange as ReturnType<typeof fn>).mock.calls.map((call) => {
+        return (call[0] as DateTime).toISODate();
+    });
+    await expect(calls).toEqual(['2026-01-09', '2026-01-10', '2026-01-11']);
+});
 
 /** The selected day is the tab stop; with no selection or today in view, the 1st is. */
-export const TabStop: Story = {
-    args: { defaultValue: jan(9) },
-    play: async ({ canvasElement, canvas, userEvent }) => {
+Default.test(
+    'the selected day is the tab stop, else the 1st',
+    {
+        args: { defaultValue: jan(9) },
+    },
+    async ({ canvasElement, canvas, userEvent }) => {
         const tabbable = [...canvasElement.querySelectorAll('tbody button')].filter((button) => {
             return button.getAttribute('tabindex') === '0';
         });
@@ -148,32 +147,35 @@ export const TabStop: Story = {
         await userEvent.click(canvas.getByRole('button', { name: 'Next month' }));
         await expect(canvas.getByText('March 2026')).toBeInTheDocument();
         await expect(canvas.getByRole('button', { name: 'March 1, 2026' })).toHaveAttribute('tabindex', '0');
-    },
-};
+    }
+);
 
 /** Arrow/Home/End/Page keys move focus; crossing a month edge pages the grid and keeps focus. */
-export const Keyboard: Story = {
-    render: function Remountable(args) {
-        // "Reset" remounts the grid, so each key case starts from today in January.
-        const [generation, setGeneration] = useState(0);
-        return (
-            <div className="flex flex-col items-start gap-l">
-                <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => {
-                        setGeneration((previous) => {
-                            return previous + 1;
-                        });
-                    }}
-                >
-                    Reset
-                </Button>
-                <Calendar key={generation} {...(args as CalendarProps)} />
-            </div>
-        );
+Default.test(
+    'arrow, Home/End and Page keys move focus across month edges',
+    {
+        render: function Remountable(args) {
+            // "Reset" remounts the grid, so each key case starts from today in January.
+            const [generation, setGeneration] = useState(0);
+            return (
+                <div className="flex flex-col items-start gap-l">
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => {
+                            setGeneration((previous) => {
+                                return previous + 1;
+                            });
+                        }}
+                    >
+                        Reset
+                    </Button>
+                    <Calendar key={generation} {...(args as CalendarProps)} />
+                </div>
+            );
+        },
     },
-    play: async ({ canvas, canvasElement, userEvent, args }) => {
+    async ({ canvas, canvasElement, userEvent, args }) => {
         const cases: [string, string][] = [
             ['{ArrowLeft}', 'January 14, 2026'],
             ['{ArrowRight}', 'January 16, 2026'],
@@ -221,13 +223,16 @@ export const Keyboard: Story = {
         await waitFor(() => {
             return expect(activeName(canvasElement)).toBe('April 1, 2026');
         });
-    },
-};
+    }
+);
 
 /** Bounds disable days and chevrons, and clamp keyboard navigation. */
-export const Bounds: Story = {
-    args: { minDate: jan(14), maxDate: jan(16) },
-    play: async ({ canvas, canvasElement, userEvent }) => {
+Default.test(
+    'bounds disable days and chevrons and clamp navigation',
+    {
+        args: { minDate: jan(14), maxDate: jan(16) },
+    },
+    async ({ canvas, canvasElement, userEvent }) => {
         await expect(canvas.getByRole('button', { name: 'Previous month' })).toBeDisabled();
         await expect(canvas.getByRole('button', { name: 'Next month' })).toBeDisabled();
         await expect(canvas.getByRole('button', { name: 'January 13, 2026' })).toHaveAttribute('aria-disabled', 'true');
@@ -243,30 +248,37 @@ export const Bounds: Story = {
         await waitFor(() => {
             return expect(activeName(canvasElement)).toBe('January 16, 2026');
         });
-    },
-};
+    }
+);
 
 /** A bound in another zone is moved into the grid's zone: Kiritimati (UTC+14) 14th = Chicago 13th. */
-export const BoundInOtherZone: Story = {
-    args: { minDate: DateTime.fromObject({ year: 2026, month: 1, day: 14, hour: 12 }, { zone: 'Pacific/Kiritimati' }) },
-    play: async ({ canvas, userEvent }) => {
+Default.test(
+    'a bound in another zone is moved into the grid zone',
+    {
+        args: {
+            minDate: DateTime.fromObject({ year: 2026, month: 1, day: 14, hour: 12 }, { zone: 'Pacific/Kiritimati' }),
+        },
+    },
+    async ({ canvas, userEvent }) => {
         canvas.getByRole('button', { name: nameFor(TODAY) }).focus();
         await userEvent.keyboard('{PageUp}');
         await waitFor(() => {
             return expect(canvas.getByRole('button', { name: 'January 13, 2026' })).toHaveFocus();
         });
-    },
-};
+    }
+);
 
 /** `isDateDisabled` never touches the chevrons; a disabled day takes focus but refuses activation. */
-export const DisabledDays: Story = {
-    args: {
-        isDateDisabled: (date: DateTime) => {
-            return date.hasSame(JANUARY, 'month') && [7, 8, 9, 10].includes(date.day);
+Default.test(
+    'a disabled day takes focus but refuses activation; chevrons untouched',
+    {
+        args: {
+            isDateDisabled: (date: DateTime) => {
+                return date.hasSame(JANUARY, 'month') && [7, 8, 9, 10].includes(date.day);
+            },
         },
     },
-    parameters: { design: { type: 'figma', url: `${FIGMA}9554-129272` } },
-    play: async ({ canvas, userEvent, args }) => {
+    async ({ canvas, userEvent, args }) => {
         await expect(canvas.getByRole('button', { name: 'Previous month' })).toBeEnabled();
         await expect(canvas.getByRole('button', { name: 'Next month' })).toBeEnabled();
 
@@ -279,11 +291,11 @@ export const DisabledDays: Story = {
         await userEvent.click(disabledDay);
         await expect(args.onValueChange).not.toHaveBeenCalled();
         await expect(disabledDay).not.toHaveAttribute('data-selected');
-    },
-};
+    }
+);
 
 /** `Field`'s disabled wins over the local prop. */
-export const DisabledByField: Story = {
+export const DisabledByField = meta.story({
     args: { disabled: false },
     render: function InDisabledField(args) {
         return (
@@ -292,12 +304,13 @@ export const DisabledByField: Story = {
             </Field.Root>
         );
     },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByRole('button', { name: 'Previous month' })).toBeDisabled();
-        await expect(canvas.getByRole('button', { name: 'Next month' })).toBeDisabled();
-        await expect(canvas.getByRole('button', { name: 'January 5, 2026' })).toHaveAttribute('aria-disabled', 'true');
-    },
-};
+});
+
+DisabledByField.test('field disabled wins over the local prop', async ({ canvas }) => {
+    await expect(canvas.getByRole('button', { name: 'Previous month' })).toBeDisabled();
+    await expect(canvas.getByRole('button', { name: 'Next month' })).toBeDisabled();
+    await expect(canvas.getByRole('button', { name: 'January 5, 2026' })).toHaveAttribute('aria-disabled', 'true');
+});
 
 /** Story-only spy for the wrapper's keydown (cleared per run). */
 const wrapperKeyDown = fn();
@@ -306,7 +319,7 @@ const wrapperKeyDown = fn();
  * Range: open (nothing emitted) → close → the whole span is `aria-selected`. Escape cancels a half-open
  * range and stops propagation; with no half-open range it passes through.
  */
-export const Range: Story = {
+export const Range = meta.story({
     args: { mode: 'range' },
     render: function RangeWithWrapper(args) {
         return (
@@ -318,7 +331,11 @@ export const Range: Story = {
         );
     },
     parameters: { design: { type: 'figma', url: `${FIGMA}9459-85736` } },
-    play: async ({ canvas, userEvent, args }) => {
+});
+
+Range.test(
+    'range opens, closes ordered, escape cancels a half-open range only',
+    async ({ canvas, userEvent, args }) => {
         const wrapperHeard = wrapperKeyDown;
         wrapperHeard.mockClear();
         function day(n: number) {
@@ -356,13 +373,16 @@ export const Range: Story = {
         // Third click restarts: `null` is emitted first.
         await userEvent.click(day(20));
         await expect(args.onValueChange).toHaveBeenLastCalledWith(null);
-    },
-};
+    }
+);
 
 /** A controlled anchor on one end of the committed range keeps the band drawn. */
-export const ControlledAnchor: Story = {
-    args: { mode: 'range', value: SAME_ROW, rangeAnchor: SAME_ROW.end, onRangeAnchorChange: fn() },
-    play: async ({ canvas, userEvent, args }) => {
+Default.test(
+    'a controlled anchor keeps the band; escape drops it',
+    {
+        args: { mode: 'range', value: SAME_ROW, rangeAnchor: SAME_ROW.end, onRangeAnchorChange: fn() },
+    },
+    async ({ canvas, userEvent, args }) => {
         await expect(canvas.getByRole('button', { name: 'January 12, 2026' })).toHaveAttribute('data-range-start');
         await expect(canvas.getByRole('button', { name: 'January 14, 2026' })).toHaveAttribute('data-in-range');
         await expect(canvas.getByRole('button', { name: 'January 16, 2026' })).toHaveAttribute('data-range-end');
@@ -371,11 +391,11 @@ export const ControlledAnchor: Story = {
         canvas.getByRole('button', { name: 'January 16, 2026' }).focus();
         await userEvent.keyboard('{Escape}');
         await expect(args.onRangeAnchorChange).toHaveBeenCalledWith(null);
-    },
-};
+    }
+);
 
 /** `actionsRef.showToday()` pages to today's month (clamped) without selecting. */
-export const ShowToday: Story = {
+export const ShowToday = meta.story({
     args: { defaultMonth: at(2024, 6) },
     render: function WithShowToday(args) {
         const calendarActionsRef = useRef<CalendarActions>(null);
@@ -394,31 +414,18 @@ export const ShowToday: Story = {
             </div>
         );
     },
-    play: async ({ canvas, userEvent, args }) => {
-        await expect(canvas.getByText('June 2024')).toBeInTheDocument();
-        await userEvent.click(canvas.getByRole('button', { name: 'Today' }));
-        await expect(canvas.getByText('January 2026')).toBeInTheDocument();
-        await expect(args.onValueChange).not.toHaveBeenCalled();
-        await expect(args.onMonthChange).toHaveBeenCalledTimes(1);
-    },
-};
+});
 
-/** Fills the parent; cells widen, never under 48px. */
-export const FullWidth: Story = {
-    args: { fullWidth: true },
-    decorators: [
-        function Wide(Story) {
-            return (
-                <div className="w-[480px]">
-                    <Story />
-                </div>
-            );
-        },
-    ],
-};
+ShowToday.test('showToday pages to today without selecting', async ({ canvas, userEvent, args }) => {
+    await expect(canvas.getByText('June 2024')).toBeInTheDocument();
+    await userEvent.click(canvas.getByRole('button', { name: 'Today' }));
+    await expect(canvas.getByText('January 2026')).toBeInTheDocument();
+    await expect(args.onValueChange).not.toHaveBeenCalled();
+    await expect(args.onMonthChange).toHaveBeenCalledTimes(1);
+});
 
 /** Every state drawn, plus the six-row month Figma never drew. Hover/focus are pinned on Jan 14 (invented). */
-export const Matrix: Story = {
+export const Matrix = meta.story({
     render: function Matrix() {
         const specs: { label: string; props: Partial<CalendarProps>; className?: string }[] = [
             { label: 'default / today (Jan 15) — 8254:13359, 10822:5570', props: {} },
@@ -472,5 +479,14 @@ export const Matrix: Story = {
             </div>
         );
     },
-    parameters: { design: { type: 'figma', url: `${FIGMA}8254-13360` } },
-};
+    parameters: {
+        design: [
+            { name: 'Calendar', type: 'figma', url: `${FIGMA}8254-13360` },
+            { name: 'Single select', type: 'figma', url: `${FIGMA}8255-13381` },
+            { name: 'Disabled days', type: 'figma', url: `${FIGMA}9554-129272` },
+            { name: 'Range', type: 'figma', url: `${FIGMA}9459-85736` },
+        ],
+        // The one billed Chromatic snapshot for Calendar (preview disables the rest).
+        chromatic: { disableSnapshot: false },
+    },
+});

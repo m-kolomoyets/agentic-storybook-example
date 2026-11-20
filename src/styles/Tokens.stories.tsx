@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { CSSProperties, ReactNode } from 'react';
+import preview from '#.storybook/preview';
 import { expect } from 'storybook/test';
 import supplementCss from './tokens-supplement.css?raw';
 import tokensCss from './tokens.css?raw';
@@ -183,30 +183,27 @@ function TypeScale() {
     );
 }
 
-const meta = {
+const meta = preview.meta({
     title: 'Foundations/Tokens',
     parameters: { layout: 'padded' },
-} satisfies Meta;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+});
 
 /** Semantic colour tokens by family. Raw palette primitives are omitted on purpose. */
-export const Colors: Story = {
+export const Colors = meta.story({
     render: function Colors() {
         return <ColorSwatches />;
     },
-    play: async ({ canvas }) => {
-        for (const family of ['border', 'button', 'icons', 'surface', 'text', 'chart-line', 'schedule']) {
-            await expect(canvas.getByRole('region', { name: family })).toBeInTheDocument();
-        }
-        await expect(canvas.getByText('--color-border-primary')).toBeInTheDocument();
-        await expect(canvas.queryByText('--color-blue-500')).toBeNull();
-    },
-};
+});
 
-export const Spacing: Story = {
+Colors.test('lists semantic families and omits raw palette primitives', async ({ canvas }) => {
+    for (const family of ['border', 'button', 'icons', 'surface', 'text', 'chart-line', 'schedule']) {
+        await expect(canvas.getByRole('region', { name: family })).toBeInTheDocument();
+    }
+    await expect(canvas.getByText('--color-border-primary')).toBeInTheDocument();
+    await expect(canvas.queryByText('--color-blue-500')).toBeNull();
+});
+
+export const Spacing = meta.story({
     render: function Spacing() {
         return (
             <Section title="Spacing">
@@ -214,12 +211,13 @@ export const Spacing: Story = {
             </Section>
         );
     },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByText('--spacing-xl')).toBeInTheDocument();
-    },
-};
+});
 
-export const Radius: Story = {
+Spacing.test('lists the spacing scale', async ({ canvas }) => {
+    await expect(canvas.getByText('--spacing-xl')).toBeInTheDocument();
+});
+
+export const Radius = meta.story({
     render: function Radius() {
         return (
             <Section title="Radius">
@@ -227,13 +225,14 @@ export const Radius: Story = {
             </Section>
         );
     },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByText('--radius-s')).toBeInTheDocument();
-    },
-};
+});
+
+Radius.test('lists the radius scale', async ({ canvas }) => {
+    await expect(canvas.getByText('--radius-s')).toBeInTheDocument();
+});
 
 /** `--text-*` steps with their paired line height, weight and tracking. */
-export const Typography: Story = {
+export const Typography = meta.story({
     render: function Typography() {
         return (
             <Section title="Type scale">
@@ -241,14 +240,15 @@ export const Typography: Story = {
             </Section>
         );
     },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByText('--text-body-m')).toBeInTheDocument();
-        // Sub-properties belong to their step, not the list.
-        await expect(canvas.queryByText('--text-body-m--line-height')).toBeNull();
-    },
-};
+});
 
-export const Shadows: Story = {
+Typography.test('lists text steps without their paired sub-tokens', async ({ canvas }) => {
+    await expect(canvas.getByText('--text-body-m')).toBeInTheDocument();
+    // Sub-properties belong to their step, not the list.
+    await expect(canvas.queryByText('--text-body-m--line-height')).toBeNull();
+});
+
+export const Shadows = meta.story({
     render: function Shadows() {
         return (
             <Section title="Shadows">
@@ -257,7 +257,8 @@ export const Shadows: Story = {
             </Section>
         );
     },
-    play: async ({ canvas }) => {
-        await expect(canvas.getByText('--shadow-button')).toBeInTheDocument();
-    },
-};
+});
+
+Shadows.test('lists the shadow tokens', async ({ canvas }) => {
+    await expect(canvas.getByText('--shadow-button')).toBeInTheDocument();
+});

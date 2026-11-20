@@ -1,0 +1,2019 @@
+{
+    "source": {
+        "url": "https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=8673-4388",
+        "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+        "nodeId": "8673:4388",
+        "name": "Badge",
+        "version": "2423344990798825378",
+        "lastModified": "2026-11-18T22:40:41Z"
+    },
+    "axes": [
+        {
+            "name": "Size",
+            "options": [
+                "Small",
+                "Medium",
+                "Big"
+            ]
+        },
+        {
+            "name": "State",
+            "options": [
+                "Default",
+                "Selected",
+                "Disabled",
+                "Updating",
+                "Off",
+                "Running",
+                "Error",
+                "Hover",
+                "Pressed",
+                "Focus",
+                "Expanded"
+            ]
+        },
+        {
+            "name": "Tone",
+            "options": [
+                "Neutral",
+                "Positive",
+                "Negative",
+                "Info",
+                "Warning",
+                "Off"
+            ]
+        },
+        {
+            "name": "Type",
+            "options": [
+                "Label",
+                "Metric",
+                "Mode",
+                "Count"
+            ]
+        },
+        {
+            "name": "Leading",
+            "options": [
+                "Icon",
+                "None",
+                "Dot",
+                "Chevron",
+                "without Chevron"
+            ]
+        },
+        {
+            "name": "Mode",
+            "options": [
+                "None",
+                "Cool",
+                "Recondition",
+                "Dry",
+                "Custom",
+                "Manual",
+                "Time Out"
+            ]
+        }
+    ],
+    "booleans": [],
+    "variants": [
+        {
+            "id": "8017:294",
+            "name": "Size=Small, State=Default, Tone=Neutral, Type=Label, Leading=None, Mode=None",
+            "props": {
+                "Size": "Small",
+                "State": "Default",
+                "Tone": "Neutral",
+                "Type": "Label",
+                "Leading": "None",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Small, State=Default, Tone=Neutral, Type=Label, Leading=None, Mode=None",
+                    "width": 70,
+                    "height": 18,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "WHITE CORN",
+                        "box": {
+                            "x": 4,
+                            "y": 2,
+                            "width": 62,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": []
+            }
+        },
+        {
+            "id": "11763:253127",
+            "name": "Size=Small, State=Disabled, Tone=Neutral, Type=Label, Leading=None, Mode=None",
+            "props": {
+                "Size": "Small",
+                "State": "Disabled",
+                "Tone": "Neutral",
+                "Type": "Label",
+                "Leading": "None",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Small, State=Disabled, Tone=Neutral, Type=Label, Leading=None, Mode=None",
+                    "width": 70,
+                    "height": 18,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "WHITE CORN",
+                        "box": {
+                            "x": 4,
+                            "y": 2,
+                            "width": 62,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": []
+            }
+        },
+        {
+            "id": "8673:4507",
+            "name": "Size=Medium, State=Default, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Neutral",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
+                    "width": 94,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "WHITE CORN",
+                        "box": {
+                            "x": 24,
+                            "y": 4,
+                            "width": 62,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Remove red eye",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "11705:9612",
+            "name": "Size=Medium, State=Default, Tone=Neutral, Type=Label, Leading=None, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Neutral",
+                "Type": "Label",
+                "Leading": "None",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Neutral, Type=Label, Leading=None, Mode=None",
+                    "width": 78,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "WHITE CORN",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 62,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": []
+            }
+        },
+        {
+            "id": "11633:162208",
+            "name": "Size=Medium, State=Default, Tone=Info, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Info",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Info, Type=Label, Leading=Icon, Mode=None",
+                    "width": 87,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 182,
+                        "g": 187,
+                        "b": 242,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "HARDWARE",
+                        "box": {
+                            "x": 24,
+                            "y": 4,
+                            "width": 55,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 182,
+                            "g": 187,
+                            "b": 242,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Remove red eye",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "11633:162212",
+            "name": "Size=Medium, State=Default, Tone=Warning, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Warning",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Warning, Type=Label, Leading=Icon, Mode=None",
+                    "width": 75,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 255,
+                        "g": 211,
+                        "b": 79,
+                        "a": 0.06
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "PENDING",
+                        "box": {
+                            "x": 24,
+                            "y": 4,
+                            "width": 43,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 255,
+                            "g": 211,
+                            "b": 79,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Remove red eye",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12572:146114",
+            "name": "Size=Big, State=Off, Tone=Off, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Big",
+                "State": "Off",
+                "Tone": "Off",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Off, Tone=Off, Type=Label, Leading=Icon, Mode=None",
+                    "width": 65,
+                    "height": 24,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "FAN 4",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 31,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.6
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Fan",
+                        "box": {
+                            "x": 43,
+                            "y": 5,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "11643:163253",
+            "name": "Size=Medium, State=Default, Tone=Negative, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Negative",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Negative, Type=Label, Leading=Icon, Mode=None",
+                    "width": 65,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "FAILED",
+                        "box": {
+                            "x": 24,
+                            "y": 4,
+                            "width": 33,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 248,
+                            "g": 59,
+                            "b": 68,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Remove red eye",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12570:5990",
+            "name": "Size=Big, State=Error, Tone=Negative, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Big",
+                "State": "Error",
+                "Tone": "Negative",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Error, Tone=Negative, Type=Label, Leading=Icon, Mode=None",
+                    "width": 62,
+                    "height": 24,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "FAN 1",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 28,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 248,
+                            "g": 59,
+                            "b": 68,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Error",
+                        "box": {
+                            "x": 40,
+                            "y": 5,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "11643:163257",
+            "name": "Size=Medium, State=Default, Tone=Positive, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Positive",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Positive, Type=Label, Leading=Icon, Mode=None",
+                    "width": 70,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 45,
+                        "g": 204,
+                        "b": 113,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "PASSED",
+                        "box": {
+                            "x": 24,
+                            "y": 4,
+                            "width": 38,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 45,
+                            "g": 204,
+                            "b": 113,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Remove red eye",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12570:141270",
+            "name": "Size=Big, State=Running, Tone=Positive, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Big",
+                "State": "Running",
+                "Tone": "Positive",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Running, Tone=Positive, Type=Label, Leading=Icon, Mode=None",
+                    "width": 65,
+                    "height": 24,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 45,
+                        "g": 204,
+                        "b": 113,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "FAN 2",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 31,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 45,
+                            "g": 204,
+                            "b": 113,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Fan",
+                        "box": {
+                            "x": 43,
+                            "y": 5,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "11629:162131",
+            "name": "Size=Medium, State=Default, Tone=Positive, Type=Metric, Leading=None, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Positive",
+                "Type": "Metric",
+                "Leading": "None",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Positive, Type=Metric, Leading=None, Mode=None",
+                    "width": 49,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 45,
+                        "g": 204,
+                        "b": 113,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "+22,3%",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 33,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 45,
+                            "g": 204,
+                            "b": 113,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": []
+            }
+        },
+        {
+            "id": "11640:163194",
+            "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Cool",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Positive",
+                "Type": "Mode",
+                "Leading": "Dot",
+                "Mode": "Cool"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Cool",
+                    "width": 61,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 122,
+                        "g": 204,
+                        "b": 255,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "COOL",
+                        "box": {
+                            "x": 24,
+                            "y": 4,
+                            "width": 29,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 122,
+                            "g": 204,
+                            "b": 255,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Icons/Mode",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "11640:163237",
+            "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Dry",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Positive",
+                "Type": "Mode",
+                "Leading": "Dot",
+                "Mode": "Dry"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Dry",
+                    "width": 52,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 255,
+                        "g": 211,
+                        "b": 79,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "DRY",
+                        "box": {
+                            "x": 24,
+                            "y": 4,
+                            "width": 20,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 255,
+                            "g": 189,
+                            "b": 32,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Icons/Mode",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "11640:163249",
+            "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Custom",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Positive",
+                "Type": "Mode",
+                "Leading": "Dot",
+                "Mode": "Custom"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Custom",
+                    "width": 77,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 45,
+                        "g": 204,
+                        "b": 113,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "CUSTOM",
+                        "box": {
+                            "x": 24,
+                            "y": 4,
+                            "width": 45,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 45,
+                            "g": 204,
+                            "b": 113,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Icons/Mode",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12381:101111",
+            "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Manual",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Positive",
+                "Type": "Mode",
+                "Leading": "Dot",
+                "Mode": "Manual"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Manual",
+                    "width": 75,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "MANUAL",
+                        "box": {
+                            "x": 24,
+                            "y": 4,
+                            "width": 43,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Icons/Mode",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12384:101141",
+            "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Time Out",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Positive",
+                "Type": "Mode",
+                "Leading": "Dot",
+                "Mode": "Time Out"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Time Out",
+                    "width": 88,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 255,
+                        "g": 211,
+                        "b": 79,
+                        "a": 0.06
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "TIMED OUT",
+                        "box": {
+                            "x": 24,
+                            "y": 4,
+                            "width": 56,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 255,
+                            "g": 211,
+                            "b": 79,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Timer off",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "11640:163245",
+            "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Recondition",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Positive",
+                "Type": "Mode",
+                "Leading": "Dot",
+                "Mode": "Recondition"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Recondition",
+                    "width": 101,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 182,
+                        "g": 187,
+                        "b": 242,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "RECONDITION",
+                        "box": {
+                            "x": 24,
+                            "y": 4,
+                            "width": 69,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 182,
+                            "g": 187,
+                            "b": 242,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Icons/Mode",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "11629:162135",
+            "name": "Size=Medium, State=Default, Tone=Negative, Type=Metric, Leading=None, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Negative",
+                "Type": "Metric",
+                "Leading": "None",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Negative, Type=Metric, Leading=None, Mode=None",
+                    "width": 48,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 248,
+                        "g": 59,
+                        "b": 68,
+                        "a": 0.1
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "-22,3%",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 32,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 248,
+                            "g": 59,
+                            "b": 68,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": []
+            }
+        },
+        {
+            "id": "11638:162216",
+            "name": "Size=Medium, State=Default, Tone=Neutral, Type=Metric, Leading=None, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Neutral",
+                "Type": "Metric",
+                "Leading": "None",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Neutral, Type=Metric, Leading=None, Mode=None",
+                    "width": 30,
+                    "height": 22,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "0%",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 14,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": []
+            }
+        },
+        {
+            "id": "10330:187048",
+            "name": "Size=Big, State=Default, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Big",
+                "State": "Default",
+                "Tone": "Neutral",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Default, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
+                    "width": 98,
+                    "height": 30,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "WHITE CORN",
+                        "box": {
+                            "x": 26,
+                            "y": 8,
+                            "width": 62,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Remove red eye",
+                        "box": {
+                            "x": 10,
+                            "y": 8,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12570:141293",
+            "name": "Size=Big, State=Updating, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Big",
+                "State": "Updating",
+                "Tone": "Neutral",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Updating, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
+                    "width": 64,
+                    "height": 24,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 89,
+                        "g": 95,
+                        "b": 105,
+                        "a": 0.06
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "FAN 3",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 30,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 192,
+                            "g": 200,
+                            "b": 211,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Loader Primary Button",
+                        "box": {
+                            "x": 43,
+                            "y": 6,
+                            "width": 12,
+                            "height": 12
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "10330:198995",
+            "name": "Size=Big, State=Selected, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Big",
+                "State": "Selected",
+                "Tone": "Neutral",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Selected, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
+                    "width": 98,
+                    "height": 30,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.95
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "WHITE CORN",
+                        "box": {
+                            "x": 26,
+                            "y": 8,
+                            "width": 62,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Remove red eye",
+                        "box": {
+                            "x": 10,
+                            "y": 8,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "10330:198999",
+            "name": "Size=Big, State=Disabled, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
+            "props": {
+                "Size": "Big",
+                "State": "Disabled",
+                "Tone": "Neutral",
+                "Type": "Label",
+                "Leading": "Icon",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Big, State=Disabled, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
+                    "width": 98,
+                    "height": 30,
+                    "radius": [
+                        4,
+                        4,
+                        4,
+                        4
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "WHITE CORN",
+                        "box": {
+                            "x": 26,
+                            "y": 8,
+                            "width": 62,
+                            "height": 14
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 10,
+                        "fontWeight": 500,
+                        "lineHeightPx": 14,
+                        "letterSpacing": 0.4,
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Icon",
+                        "component": "Remove red eye",
+                        "box": {
+                            "x": 10,
+                            "y": 8,
+                            "width": 14,
+                            "height": 14
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12769:24583",
+            "name": "Size=Medium, State=Default, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Neutral",
+                "Type": "Count",
+                "Leading": "Chevron",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+                    "width": 39,
+                    "height": 24,
+                    "radius": [
+                        1000,
+                        1000,
+                        1000,
+                        1000
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "10",
+                        "box": {
+                            "x": 6,
+                            "y": 4,
+                            "width": 11,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Chevron Icon",
+                        "component": "Icons/Chevron Down",
+                        "box": {
+                            "x": 17,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12788:144336",
+            "name": "Size=Medium, State=Default, Tone=Neutral, Type=Count, Leading=without Chevron, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Default",
+                "Tone": "Neutral",
+                "Type": "Count",
+                "Leading": "without Chevron",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Default, Tone=Neutral, Type=Count, Leading=without Chevron, Mode=None",
+                    "width": 24,
+                    "height": 24,
+                    "radius": [
+                        1000,
+                        1000,
+                        1000,
+                        1000
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "0",
+                        "box": {
+                            "x": 8,
+                            "y": 4,
+                            "width": 8,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": []
+            }
+        },
+        {
+            "id": "12773:143000",
+            "name": "Size=Medium, State=Hover, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Hover",
+                "Tone": "Neutral",
+                "Type": "Count",
+                "Leading": "Chevron",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Hover, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+                    "width": 39,
+                    "height": 24,
+                    "radius": [
+                        1000,
+                        1000,
+                        1000,
+                        1000
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.06
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "10",
+                        "box": {
+                            "x": 6,
+                            "y": 4,
+                            "width": 11,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Chevron Icon",
+                        "component": "Icons/Chevron Down",
+                        "box": {
+                            "x": 17,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12773:143010",
+            "name": "Size=Medium, State=Pressed, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Pressed",
+                "Tone": "Neutral",
+                "Type": "Count",
+                "Leading": "Chevron",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Pressed, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+                    "width": 39,
+                    "height": 24,
+                    "radius": [
+                        1000,
+                        1000,
+                        1000,
+                        1000
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.08
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "10",
+                        "box": {
+                            "x": 6,
+                            "y": 4,
+                            "width": 11,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Chevron Icon",
+                        "component": "Icons/Chevron Down",
+                        "box": {
+                            "x": 17,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12773:143020",
+            "name": "Size=Medium, State=Focus, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Focus",
+                "Tone": "Neutral",
+                "Type": "Count",
+                "Leading": "Chevron",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Focus, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+                    "width": 39,
+                    "height": 24,
+                    "radius": [
+                        1000,
+                        1000,
+                        1000,
+                        1000
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "10",
+                        "box": {
+                            "x": 6,
+                            "y": 4,
+                            "width": 11,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Chevron Icon",
+                        "component": "Icons/Chevron Down",
+                        "box": {
+                            "x": 17,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12773:143030",
+            "name": "Size=Medium, State=Expanded, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Expanded",
+                "Tone": "Neutral",
+                "Type": "Count",
+                "Leading": "Chevron",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Expanded, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+                    "width": 39,
+                    "height": 24,
+                    "radius": [
+                        1000,
+                        1000,
+                        1000,
+                        1000
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "10",
+                        "box": {
+                            "x": 6,
+                            "y": 4,
+                            "width": 11,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Chevron Icon",
+                        "component": "Icons/Chevron Up",
+                        "box": {
+                            "x": 17,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "12773:143040",
+            "name": "Size=Medium, State=Disabled, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+            "props": {
+                "Size": "Medium",
+                "State": "Disabled",
+                "Tone": "Neutral",
+                "Type": "Count",
+                "Leading": "Chevron",
+                "Mode": "None"
+            },
+            "spec": {
+                "root": {
+                    "name": "Size=Medium, State=Disabled, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
+                    "width": 39,
+                    "height": 24,
+                    "radius": [
+                        1000,
+                        1000,
+                        1000,
+                        1000
+                    ],
+                    "fill": {
+                        "r": 254,
+                        "g": 254,
+                        "b": 254,
+                        "a": 0.04
+                    }
+                },
+                "texts": [
+                    {
+                        "characters": "10",
+                        "box": {
+                            "x": 6,
+                            "y": 4,
+                            "width": 11,
+                            "height": 16
+                        },
+                        "fontFamily": "Urbanist",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "lineHeightPx": 16,
+                        "letterSpacing": 0,
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        }
+                    }
+                ],
+                "icons": [
+                    {
+                        "name": "Chevron Icon",
+                        "component": "Icons/Chevron Down",
+                        "box": {
+                            "x": 17,
+                            "y": 2,
+                            "width": 20,
+                            "height": 20
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

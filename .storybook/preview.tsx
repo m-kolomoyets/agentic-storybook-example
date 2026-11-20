@@ -1,9 +1,15 @@
-import type { Preview } from '@storybook/react-vite';
+import addonA11y from '@storybook/addon-a11y';
+import addonDesigns from '@storybook/addon-designs';
+import addonDocs from '@storybook/addon-docs';
+import { definePreview } from '@storybook/react-vite';
 import { themes } from 'storybook/theming';
 import { Toast } from '@/components/ui/Toast';
+import { FIGMA_COMPARE_GLOBAL } from '../visual/figma/types';
 import '@/styles/index.css';
 
-const preview: Preview = {
+// CSF Next: story files build on this via `preview.meta()` → `meta.story()` → `story.test()`.
+export default definePreview({
+    addons: [addonDocs(), addonA11y(), addonDesigns()],
     parameters: {
         layout: 'centered',
         controls: {
@@ -14,12 +20,17 @@ const preview: Preview = {
             sort: 'requiredFirst',
         },
         // The kit draws a single dark mode; `html` already paints `surface-ground` (styles/index.css).
-        backgrounds: { disabled: true },
+        backgrounds: { disable: true },
         docs: { theme: themes.dark },
         // Fail Vitest runs on a11y violations.
         a11y: { test: 'error' },
+        // Chromatic snapshots are billed: only `Matrix` stories opt back in (`disableSnapshot: false`).
+        chromatic: { disableSnapshot: true },
     },
     tags: ['autodocs'],
+    // FigmaMatrix compare mode (visual/FIGMA-TESTING.md). Storybook drops undeclared globals, so the
+    // "Figma diff" panel can only set it once it's declared here.
+    initialGlobals: { [FIGMA_COMPARE_GLOBAL]: 'off' },
     decorators: [
         function withKitText(Story) {
             return (
@@ -33,6 +44,4 @@ const preview: Preview = {
             );
         },
     ],
-};
-
-export default preview;
+});

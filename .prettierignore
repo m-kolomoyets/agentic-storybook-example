@@ -10,3 +10,5 @@ src/lib/cn-tables.ts
 src/styles/tokens.css
 skills-lock.json
 src/assets/icons/illustrations/icons.json
+# Fetched from Figma by visual/figma/commands.ts
+/visual/figma/__refs__
