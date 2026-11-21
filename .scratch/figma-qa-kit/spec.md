@@ -184,7 +184,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 ### init and wizard
 - Project states: no Storybook → official `storybook init` for react-vite (latest 10; `--next` → 11 beta), then merge. SB 10.6+ / 11 → merge. SB < 10.6 → refuse, point at `storybook upgrade`. Non React + Vite → refuse naming what was found. Adds `@storybook/addon-vitest` via `storybook add` only when missing.
 - Merge: `main` addons += kit; CSF Next preview → kit addon in `definePreview({ addons })`; Vitest config += kit project. Unsafe shapes → print exact snippet, exit 2.
-- Skills: `npx skills add <installed-kit>/skills --copy -y`; on kit version / hash change init re-runs it. Fallback if local-path add fails in the spike: copy into `.agents/skills/` and symlink into `.claude/skills/`.
+- Skills: `DISABLE_TELEMETRY=1 npx -y skills@<pinned> add ./node_modules/@phenomenon-studio/storybook-figma-qa/skills --copy -y -a claude-code codex` (explicit `-a`: with no agent detected the CLI writes ~55 agent dirs); on kit version / hash change init re-runs it (re-run is a no-op when unchanged). Spike 02 confirmed local-path add; no fallback needed.
 - Rules: marked block `<!-- figma-qa:start -->…<!-- figma-qa:end -->` in `AGENTS.md`, also `CLAUDE.md` when it exists without `@AGENTS.md`; only content between markers is rewritten.
 - Every step detects before acting; re-run is a no-op; `--dry-run` prints the plan. Never touches stories, components, tokens, manager theme, other Vitest projects, git, CI files.
 - Wizard = doctor checks (ok / missing / blocked + human fix), in order: registry → Figma token → file access → Docker / image → variables-naming info.
