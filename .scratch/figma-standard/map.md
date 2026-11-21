@@ -30,6 +30,8 @@ One spec, ready for `/to-spec` → `/to-tickets`, with nothing left to decide, c
 - [Variable names without the Enterprise REST scope](issues/02-variable-names-without-rest.md): no non-Enterprise CI route for id→name; keep Plugin API (`use_figma`) for new ids only, run by agent in-session; CI reads committed `variables.json`, falls back to value match as warning. Optional: design fills `codeSyntax.WEB`.
 - [Figma REST fetch: depth, geometry, batching, caching, limits](issues/03-figma-fetch-optimization.md): `/meta` `version` = cache key; unchanged → zero Tier-1 calls (keep raw `/nodes` JSON locally so `--refresh` rebuilds offline); changed → one full `/nodes` (no depth/geometry) + per-set subtree hash → `/images` only for changed sets. Token owner needs Dev/Full seat on kit file's plan.
 - [Storybook 10 / 11-beta packaging mechanisms for the kit](issues/04-storybook-kit-packaging.md): one ESM package, peer `storybook ^10.6.0 || ^11.0.0-0`; exports `./preset` (viteFinal route), `./manager`, `./preview` (`definePreviewAddon`), `./vitest`, CLI `init` (own init — `storybook add` skips postinstall for 3rd-party), bundled `skills/`. Under `definePreview` preset previewAnnotations ignored. Risks: Node 22.12 / Vite 6.3 min, `storybook/internal/babel` gone in 11, no `setProjectAnnotations` in setup file on 11.
+- [Commit the in-progress refactor as baseline](issues/01-commit-baseline.md): baseline = `fb014c7` on `ci/storybook-tests`; tree clean. Unblocks profiling.
+- [Profile a Figma report run](issues/05-profile-report-run.md): 56.7 s warm; screenshots ≈90 % of per-cell time, Vitest startup 28 %, spec/report < 3 %. Cut: one capture per cell, collect only figma stories, cache flat refs; no block-capture/sharding yet; warm run only.
 
 ## Not yet specified
 
