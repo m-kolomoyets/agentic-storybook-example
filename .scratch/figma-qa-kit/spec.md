@@ -135,7 +135,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 
 ### Package and repo
 - New internal org monorepo (readable by all enterprise members, so any project can install the package and call the reusable workflow) `Phenomenon-Studio/storybook-figma-qa`: the published package plus `fixtures/sb10` and `fixtures/sb11` react-vite projects. The first implementation ticket creates it; the kit is seeded by copying and reshaping this repo's in-tree Figma pipeline.
-- One ESM-only package `@phenomenon-studio/storybook-figma-qa` on GitHub Packages. Peers: `storybook ^10.6.0 || ^11.0.0-0`, `vitest ^4 || ^5`, `react`. Engines: Node ≥ 22.12, Vite ≥ 6.3.
+- One ESM-only package `@phenomenon-studio/storybook-figma-qa` on GitHub Packages. Peers: `storybook ^10.6.0 || ^11.0.0-0`, `vitest ^4 || ^5`, `react`, `@storybook/addon-vitest`, `@vitest/browser-playwright`. Engines: Node ≥ 22.12, Vite ≥ 6.3.
 - Exports: `./preset` (`viteFinal` adds the results dev route and the config / icons virtual modules), `./manager` (Figma diff panel), `./preview` (`definePreviewAddon` with the compare global), `./vitest` (plugin with browser commands and the Figma project factory, composed around `storybookTest()`), bin `figma-qa`, bundled `skills/`. Heavy CLI deps lazy-loaded.
 - Under CSF Next `definePreview`, preset `previewAnnotations` are ignored: the preview side must be in `definePreview({ addons })`. Never call `setProjectAnnotations` in the setup file (throws on 11). Never use `storybook/internal/*` AST APIs (changed in 11); use magicast.
 - Versioning: semver; any `figma-qa.config.ts` or committed refs format change is a major and ships a `figma-qa migrate` step run by `init` on upgrade.
@@ -149,7 +149,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 
 ### Story → Figma mapping
 - `parameters.design` (addon-designs array of named `figma` entries) is the only place a set URL is written; one entry per component set; names = code variant names.
-- `parameters.figmaMatrix.blocks[]` reference a design entry by `name` and carry only `layout` and `approved`; a single-set story may omit the reference. Layout shape: `{ sections: string | null; columns: string }`, other axes combined as rows.
+- `parameters.figmaMatrix.blocks[]` reference a design entry by `name` and carry only `layout` and `approved` (story-wide `maxDiffRatio` and `ignore` sit beside `blocks`); a single-set story may omit the reference. Layout shape: `{ sections: string | null; columns: string }`, other axes combined as rows.
 - Discovery = `figma` tag. Tagged story without a `figma` design entry or without `figmaMatrix` → exit 2.
 - Sync is lazy: each Figma story calls browser command `figmaEnsureSets(urls)` before its checks; Node coalesces concurrent calls per file key in a short window (≈ one `/nodes` per file), then serves from cache. No generated registry, no pre-pass.
 - Offline / no token: committed cache; only a set with no cached refs fails.
