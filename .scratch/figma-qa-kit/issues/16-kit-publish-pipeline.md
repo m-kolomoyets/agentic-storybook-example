@@ -15,7 +15,7 @@ Spec: [Figma QA kit](../spec.md)
 
 ## Answer
 
-Done 2026-11-21 in `Phenomenon-Studio/storybook-figma-qa` `main` (`649531d`, `d32d5af`), not yet pushed: no CI run, no release cut. Workflows pass actionlint + shellcheck; the release-resolve script was run locally against 7 tag/version/prerelease cases; `npm pack --dry-run` holds only `dist/` + `skills/`.
+Done 2026-11-21 in `Phenomenon-Studio/storybook-figma-qa` `main` (`649531d`, `d32d5af`); CI run 44909377582 green on all 4 cells at `6bce81d` (proves `ci.yml` with `workflow_call`). No release cut yet, so `publish.yml` and `nightly.yml` are unexercised. Workflows pass actionlint + shellcheck; the release-resolve script was run locally against 7 tag/version/prerelease cases; `npm pack --dry-run` holds only `dist/` + `skills/`.
 
 - `publish.yml` on Release `published`: reruns `ci.yml` (now also `workflow_call`) on the release commit, then `npm publish` with `GITHUB_TOKEN` (`packages: write`), then force-moves `vN` (`contents: write`).
 - Tag, version and prerelease flag must agree or publish fails before anything ships: `vX.Y.Z` + Release → `latest`, `vX` moved; `vX.Y.Z-next.N` + Pre-release → `next`, `vX` untouched. Other prerelease identifiers are refused.
