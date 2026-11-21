@@ -134,7 +134,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 ## Implementation Decisions
 
 ### Package and repo
-- New private org monorepo `Phenomenon-Studio/storybook-figma-qa`: the published package plus `fixtures/sb10` and `fixtures/sb11` react-vite projects. The first implementation ticket creates it; the kit is seeded by copying and reshaping this repo's in-tree Figma pipeline.
+- New internal org monorepo (readable by all enterprise members, so any project can install the package and call the reusable workflow) `Phenomenon-Studio/storybook-figma-qa`: the published package plus `fixtures/sb10` and `fixtures/sb11` react-vite projects. The first implementation ticket creates it; the kit is seeded by copying and reshaping this repo's in-tree Figma pipeline.
 - One ESM-only package `@phenomenon-studio/storybook-figma-qa` on GitHub Packages. Peers: `storybook ^10.6.0 || ^11.0.0-0`, `vitest ^4 || ^5`, `react`. Engines: Node ≥ 22.12, Vite ≥ 6.3.
 - Exports: `./preset` (`viteFinal` adds the results dev route and the config / icons virtual modules), `./manager` (Figma diff panel), `./preview` (`definePreviewAddon` with the compare global), `./vitest` (plugin with browser commands and the Figma project factory, composed around `storybookTest()`), bin `figma-qa`, bundled `skills/`. Heavy CLI deps lazy-loaded.
 - Under CSF Next `definePreview`, preset `previewAnnotations` are ignored: the preview side must be in `definePreview({ addons })`. Never call `setProjectAnnotations` in the setup file (throws on 11). Never use `storybook/internal/*` AST APIs (changed in 11); use magicast.
