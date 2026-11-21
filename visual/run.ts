@@ -1,13 +1,20 @@
 /* eslint-disable no-console -- CLI script: console is its output. */
 // Visual-regression comparison runner: same `vrt`-tagged stories through DIY, Argos and Chromatic.
 // Usage: pnpm vrt <diy|argos|chromatic|figma|all> [--update] [--refresh] [--host-browser]; pnpm vrt figma --doctor
+// Figma variable names (visual/figma/variables.ts): pnpm vrt figma --variables-script | --variables <file> <fnv>
 // `figma` is not regression: it holds `figma`-tagged stories to Figma itself; `all` runs the three regression tools.
 // Each run appends one record to visual/runs.jsonl (committed) — the input for the final comparison report.
 import { spawn } from 'node:child_process';
 import { appendFile, mkdir, readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { runFigmaDoctor } from './figma/doctor.ts';
-import { syncFigmaCatalog, syncFigmaSets } from './figma/figma-api.ts';
+import {
+    figmaVariablesScript,
+    mergeFigmaVariables,
+    syncFigmaCatalog,
+    syncFigmaSets,
+    unnamedFigmaVariables,
+} from './figma/figma-api.ts';
 import { writeFigmaReport } from './figma/report.ts';
 
 type Tool = 'diy' | 'argos' | 'chromatic' | 'figma';
@@ -89,6 +96,12 @@ async function runVitest(tool: VitestTool): Promise<Omit<RunRecord, 'tool' | 'st
         // Figma sets (visual/figma/sets.ts) into the committed cache first; stories render from it.
         console.log('[vrt:figma] sets:', await syncFigmaSets(ROOT, refresh));
         console.log('[vrt:figma] kit catalog:', await syncFigmaCatalog(ROOT, refresh));
+        const unnamed = await unnamedFigmaVariables(ROOT);
+        if (unnamed.length) {
+            console.warn(
+                `[vrt:figma] ${unnamed.length} bound Figma variables have no name in visual/figma/__refs__/variables.json; rows show them by id. Run \`pnpm vrt figma --variables-script\` and follow .claude/skills/figma-matrix/SKILL.md → Variables.`
+            );
+        }
     }
 
     const jsonFile = path.join(RESULTS, `${tool}.vitest.json`);
@@ -212,6 +225,27 @@ if (!target || (target !== 'all' && !TOOLS.includes(target as Tool)) || (update 
         'Usage: pnpm vrt <diy|argos|chromatic|figma|all> [--update (not figma)] [--refresh] [--host-browser]'
     );
     process.exit(2);
+}
+
+const variablesFlag = args.indexOf('--variables');
+if (target === 'figma' && args.includes('--variables-script')) {
+    // Prints the read-only `use_figma` script that names the bound variables the catalogue lacks.
+    console.log((await figmaVariablesScript(ROOT)) ?? 'Every bound Figma variable is named; nothing to export.');
+    process.exit(0);
+}
+if (target === 'figma' && variablesFlag !== -1) {
+    const [file, checksum] = args.slice(variablesFlag + 1);
+    if (!file || !checksum) {
+        console.error("Usage: pnpm vrt figma --variables <file with the script's lines> <fnv from the script>");
+        process.exit(2);
+    }
+    try {
+        console.log(`[vrt:figma] named ${await mergeFigmaVariables(ROOT, path.resolve(file), checksum)} variables.`);
+    } catch (error) {
+        console.error(`[vrt:figma] ${(error as Error).message}`);
+        process.exit(1);
+    }
+    process.exit(0);
 }
 
 if (doctor && target === 'figma') {

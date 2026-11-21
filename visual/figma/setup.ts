@@ -8,13 +8,16 @@ import type {
     FigmaApproval,
     FigmaBlockResult,
     FigmaCellResult,
+    FigmaIssue,
     FigmaMatrixParameter,
     FigmaStoryResult,
 } from './types.ts';
 import { afterEach, beforeEach, expect } from 'vitest';
 import { commands, page } from 'vitest/browser';
+import { loadDiffMap } from './diff-map.ts';
+import { figmaIssueText } from './issues.ts';
 import { figmaSet } from './manifests.ts';
-import { figmaSpecMismatches, textMasks } from './spec.ts';
+import { figmaSpecMismatches, pathFrom, textMasks } from './spec.ts';
 import { FIGMA_FLAT_REFS_DIR, FIGMA_REFS_DIR, FIGMA_RESULTS_DIR, FIGMA_SCALE, variantSlug } from './types.ts';
 
 declare module 'vitest/browser' {
@@ -148,7 +151,127 @@ function maskCell(cell: HTMLElement, masks: Box[]): () => void {
 function frameCell(cell: HTMLElement, root: Element, width: number, height: number) {
     Object.assign(cell.style, { width: `${width}px`, height: `${height}px`, overflow: 'hidden' });
     const rect = root.getBoundingClientRect();
-    cell.style.translate = `${Math.round(rect.x) - rect.x}px ${Math.round(rect.y) - rect.y}px`;
+    // A layout offset (the cell is `position: relative`), not `translate`: a fractional transform composites the cell
+    // as a layer, and its absolutely placed text masks then land a device pixel off the canvas masks.
+    cell.style.left = `${Math.round(rect.x) - rect.x}px`;
+    cell.style.top = `${Math.round(rect.y) - rect.y}px`;
+}
+
+/** Points sampled over the cell, as fractions of its box: centre plus inset corners and edge midpoints. */
+const PROBES = [0.5, 0.05, 0.95].flatMap((fx) => {
+    return [0.5, 0.05, 0.95].map((fy) => {
+        return [fx, fy] as const;
+    });
+});
+
+/** Elements outside the cell drawn over it at a probe point (the matrix's sticky header, an open popup). */
+function occluders(cell: HTMLElement): Element[] {
+    const rect = cell.getBoundingClientRect();
+    const found = new Set<Element>();
+    for (const [fx, fy] of PROBES) {
+        const hit = document.elementFromPoint(rect.x + rect.width * fx, rect.y + rect.height * fy);
+        if (hit && !cell.contains(hit) && !hit.contains(cell)) {
+            found.add(hit);
+        }
+    }
+
+    return [...found];
+}
+
+/**
+ * Clears the cell for capture: centres it in the viewport, then hides whatever still covers it (the screenshot is a
+ * viewport crop, so an overlapping sticky header lands in the image). Returns the restore and anything left covering.
+ */
+function uncover(cell: HTMLElement): { restore: () => void; covered: string | null } {
+    cell.scrollIntoView({ block: 'center', inline: 'center' });
+    const hidden: { element: HTMLElement; visibility: string }[] = [];
+    for (let pass = 0; pass < 5; pass++) {
+        const hits = occluders(cell);
+        if (hits.length === 0) {
+            break;
+        }
+        for (const hit of hits) {
+            if (hit instanceof HTMLElement || hit instanceof SVGElement) {
+                const element = hit as HTMLElement;
+                hidden.push({ element, visibility: element.style.visibility });
+                element.style.visibility = 'hidden';
+            }
+        }
+    }
+    const left = occluders(cell)[0];
+
+    return {
+        restore: () => {
+            for (const { element, visibility } of hidden.reverse()) {
+                element.style.visibility = visibility;
+            }
+        },
+        covered: left ? describe(left) : null,
+    };
+}
+
+function describe(element: Element): string {
+    const id = element.id ? `#${element.id}` : '';
+    const classes = [...element.classList]
+        .slice(0, 2)
+        .map((name) => {
+            return `.${name}`;
+        })
+        .join('');
+
+    return `${element.tagName.toLowerCase()}${id}${classes}`;
+}
+
+/**
+ * Explains a pixel difference while the cell is still framed and uncovered: the difference by kind (with the masked
+ * area) and its largest region with the element drawn there (diff-map.ts, same classes as the panel map).
+ */
+async function explainPixels(
+    cell: HTMLElement,
+    root: Element,
+    referenceBase64: string,
+    actualBase64: string
+): Promise<Pick<FigmaCellResult['image'], 'classes' | 'blob'> | null> {
+    const map = await loadDiffMap(`data:image/png;base64,${referenceBase64}`, `data:image/png;base64,${actualBase64}`);
+    if (!map) {
+        return null;
+    }
+    let blob: FigmaCellResult['image']['blob'] = null;
+    if (map.blob) {
+        const box = {
+            x: map.blob.x / FIGMA_SCALE,
+            y: map.blob.y / FIGMA_SCALE,
+            width: map.blob.width / FIGMA_SCALE,
+            height: map.blob.height / FIGMA_SCALE,
+        };
+        // Geometric hit test, not elementsFromPoint: glyph layers are often `pointer-events: none`.
+        const rect = cell.getBoundingClientRect();
+        const x = rect.x + box.x + box.width / 2;
+        const y = rect.y + box.y + box.height / 2;
+        const owner = [root, ...root.querySelectorAll('*')]
+            .filter((element) => {
+                const r = element.getBoundingClientRect();
+
+                return (
+                    element.checkVisibility() &&
+                    r.width > 0 &&
+                    r.height > 0 &&
+                    x >= r.left &&
+                    x <= r.right &&
+                    y >= r.top &&
+                    y <= r.bottom
+                );
+            })
+            .sort((a, b) => {
+                const ra = a.getBoundingClientRect();
+                const rb = b.getBoundingClientRect();
+
+                return ra.width * ra.height - rb.width * rb.height;
+            })[0];
+        blob = { area: map.blob.pixels / FIGMA_SCALE ** 2, box, element: owner ? pathFrom(root, owner) : null };
+    }
+
+    return { classes: map.counts, blob };
 }
 
 type MatrixStory = { parameters: { figmaMatrix?: FigmaMatrixParameter } };
@@ -164,10 +287,12 @@ afterEach(async (context) => {
     await document.fonts.ready;
     const backdrop = getComputedStyle(document.documentElement).backgroundColor;
     const maxRatio = matrix.maxDiffRatio ?? DEFAULT_MAX_DIFF_RATIO;
-    const isApproved = (line: string) => {
+    const isIgnored = (issue: FigmaIssue) => {
         return (
-            matrix.ignore?.some((approved) => {
-                return line.includes(approved);
+            matrix.ignore?.some((rule) => {
+                return (
+                    rule.property === issue.property && (rule.element === undefined || rule.element === issue.element)
+                );
             }) ?? false
         );
     };
@@ -212,21 +337,34 @@ afterEach(async (context) => {
             }
             // Spec first, on the unframed layout; then frame the cell for the pixel comparison.
             const all = figmaSpecMismatches(root, variant.spec);
+            // Visible first: frameCell's sub-pixel shift reads the on-screen box.
+            const view = uncover(cell);
             frameCell(cell, root, variant.spec.root.width, variant.spec.root.height);
             const refName = `${entry.slug}-${variantSlug(variant.id)}`;
             const cellName = `${storyId}-${variantSlug(variant.id)}`;
             // Text is judged by spec; pixels judge everything else (textMasks).
             const masks = textMasks(root, variant.spec);
-            await commands.figmaSaveFlatRef(refName, await flattenOnBackdrop(entry.pngUrl(variant), backdrop, masks));
+            const flatRef = await flattenOnBackdrop(entry.pngUrl(variant), backdrop, masks);
+            await commands.figmaSaveFlatRef(refName, flatRef);
 
-            const mismatches = all.filter((line) => {
-                return !isApproved(line);
+            const mismatches = all.filter((issue) => {
+                return !isIgnored(issue);
             });
             const unmask = maskCell(cell, masks);
-            const { pixels, error } = await measureImage(cell, refName);
+            // A covered cell would compare the cover, not the component: report it instead of a pixel share.
+            const { pixels, error } = view.covered
+                ? {
+                      pixels: null,
+                      error: `Capture blocked: ${view.covered} covers the cell. Harness issue, not a design diff.`,
+                  }
+                : await measureImage(cell, refName);
             unmask();
             const area = variant.spec.root.width * variant.spec.root.height * FIGMA_SCALE ** 2;
-            const ratio = pixels === null ? null : pixels / area;
+            const actualPngBase64 = await page.screenshot({ element: cell, save: false });
+            const explained = pixels ? await explainPixels(cell, root, flatRef, actualPngBase64) : null;
+            // Share of what pixels judge: the area outside text masks, so masked text can't dilute a real difference.
+            const judged = Math.max(1, area - (explained?.classes?.masked ?? 0));
+            const ratio = pixels === null ? null : pixels / judged;
             const actual = `${FIGMA_RESULTS_DIR}/${cellName}-actual.png`;
             const matches = mismatches.length === 0 && ratio !== null && ratio <= maxRatio;
             const approval = matches ? null : approvalFor(block.approved, variant.props);
@@ -241,8 +379,15 @@ afterEach(async (context) => {
                 variant: { id: variant.id, name: variant.name, props: variant.props },
                 status,
                 approval,
-                spec: { mismatches, ignored: all.filter(isApproved) },
-                image: { mismatchedPixels: pixels, ratio, maxRatio, error },
+                spec: { mismatches, ignored: all.filter(isIgnored) },
+                image: {
+                    mismatchedPixels: pixels,
+                    ratio,
+                    maxRatio,
+                    error,
+                    classes: explained?.classes ?? null,
+                    blob: explained?.blob ?? null,
+                },
                 files: {
                     reference: `${FIGMA_FLAT_REFS_DIR}/${refName}.png`,
                     figma: figmaFile,
@@ -250,7 +395,8 @@ afterEach(async (context) => {
                     diff: pixels ? `${FIGMA_RESULTS_DIR}/${cellName}-diff.png` : null,
                 },
             });
-            captures.push({ actual, refName, actualPngBase64: await page.screenshot({ element: cell, save: false }) });
+            captures.push({ actual, refName, actualPngBase64 });
+            view.restore();
         }
         blocks.push({
             set: { name: entry.manifest.source.name, url: block.set, version: entry.manifest.source.version },
@@ -282,7 +428,7 @@ afterEach(async (context) => {
         return candidate.status !== 'approved';
     })) {
         const label = cell.variant.name;
-        expect.soft(cell.spec.mismatches, `Figma spec: ${label}`).toEqual([]);
+        expect.soft(cell.spec.mismatches.map(figmaIssueText), `Figma spec: ${label}`).toEqual([]);
         expect.soft(cell.image.error, `Figma image: ${label}`).toBeNull();
         if (cell.image.ratio !== null) {
             expect

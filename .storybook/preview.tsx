@@ -5,7 +5,7 @@ import { definePreview } from '@storybook/react-vite';
 import { themes } from 'storybook/theming';
 import { Toast } from '@/components/ui/Toast';
 import { FIGMA_COMPARE_GLOBAL } from '../visual/figma/types';
-import '@/styles/index.css';
+import './preview.css';
 
 // CSF Next: story files build on this via `preview.meta()` → `meta.story()` → `story.test()`.
 export default definePreview({

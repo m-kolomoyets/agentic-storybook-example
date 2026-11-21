@@ -48,13 +48,24 @@
                     "name": "State=Default, Status=Unchecked, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -66,6 +77,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.12
+                        },
+                        "vars": {
+                            "color": "8017:322"
                         }
                     }
                 ]
@@ -84,13 +104,24 @@
                     "name": "State=Default, Status=Unchecked, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -102,6 +133,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.12
+                        },
+                        "vars": {
+                            "color": "8017:322"
                         }
                     }
                 ]
@@ -120,13 +160,24 @@
                     "name": "State=Hover, Status=Unchecked, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -138,6 +189,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.3
+                        },
+                        "vars": {
+                            "color": "8890:16208"
                         }
                     }
                 ]
@@ -156,13 +216,24 @@
                     "name": "State=Active, Status=Unchecked, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -174,6 +245,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8691:11862"
                         }
                     }
                 ]
@@ -192,13 +272,24 @@
                     "name": "State=Disabled, Status=Unchecked, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -210,6 +301,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.06
+                        },
+                        "vars": {
+                            "color": "8696:11861"
                         }
                     }
                 ]
@@ -228,13 +328,24 @@
                     "name": "State=Hover, Status=Unchecked, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -246,6 +357,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.3
+                        },
+                        "vars": {
+                            "color": "8890:16208"
                         }
                     }
                 ]
@@ -264,13 +384,24 @@
                     "name": "State=Active, Status=Unchecked, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -282,6 +413,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8691:11862"
                         }
                     }
                 ]
@@ -300,13 +440,24 @@
                     "name": "State=Disabled, Status=Unchecked, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -318,6 +469,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.06
+                        },
+                        "vars": {
+                            "color": "8696:11861"
                         }
                     }
                 ]
@@ -336,13 +496,24 @@
                     "name": "State=Default, Status=Checked, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -354,6 +525,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.12
+                        },
+                        "vars": {
+                            "color": "8017:322"
                         }
                     }
                 ]
@@ -372,13 +552,24 @@
                     "name": "State=Default, Status=Checked, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -390,6 +581,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.12
+                        },
+                        "vars": {
+                            "color": "8017:322"
                         }
                     }
                 ]
@@ -408,13 +608,24 @@
                     "name": "State=Hover, Status=Checked, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -426,6 +637,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.3
+                        },
+                        "vars": {
+                            "color": "8890:16208"
                         }
                     }
                 ]
@@ -444,13 +664,24 @@
                     "name": "State=Hover, Status=Checked, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -462,6 +693,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.3
+                        },
+                        "vars": {
+                            "color": "8890:16208"
                         }
                     }
                 ]
@@ -480,13 +720,24 @@
                     "name": "State=Active, Status=Checked, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -498,6 +749,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8691:11862"
                         }
                     }
                 ]
@@ -516,13 +776,24 @@
                     "name": "State=Active, Status=Checked, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -534,6 +805,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8691:11862"
                         }
                     }
                 ]
@@ -552,13 +832,24 @@
                     "name": "State=Disabled, Status=Checked, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -570,6 +861,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.06
+                        },
+                        "vars": {
+                            "color": "8696:11861"
                         }
                     }
                 ]
@@ -588,13 +888,24 @@
                     "name": "State=Disabled, Status=Checked, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -606,6 +917,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.06
+                        },
+                        "vars": {
+                            "color": "8696:11861"
                         }
                     }
                 ]
@@ -624,13 +944,24 @@
                     "name": "State=Default, Status=Indeterminate, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -642,6 +973,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.12
+                        },
+                        "vars": {
+                            "color": "8017:322"
                         }
                     }
                 ]
@@ -660,13 +1000,24 @@
                     "name": "State=Default, Status=Indeterminate, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -678,6 +1029,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.12
+                        },
+                        "vars": {
+                            "color": "8017:322"
                         }
                     }
                 ]
@@ -696,13 +1056,24 @@
                     "name": "State=Hover, Status=Indeterminate, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -714,6 +1085,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.3
+                        },
+                        "vars": {
+                            "color": "8890:16208"
                         }
                     }
                 ]
@@ -732,13 +1112,24 @@
                     "name": "State=Hover, Status=Indeterminate, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -750,6 +1141,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.3
+                        },
+                        "vars": {
+                            "color": "8890:16208"
                         }
                     }
                 ]
@@ -768,13 +1168,24 @@
                     "name": "State=Active, Status=Indeterminate, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -786,6 +1197,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8691:11862"
                         }
                     }
                 ]
@@ -804,13 +1224,24 @@
                     "name": "State=Active, Status=Indeterminate, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -822,6 +1253,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8691:11862"
                         }
                     }
                 ]
@@ -840,13 +1280,24 @@
                     "name": "State=Disabled, Status=Indeterminate, Size=Big",
                     "width": 20,
                     "height": 20,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -858,6 +1309,15 @@
                             "y": 0,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.06
+                        },
+                        "vars": {
+                            "color": "8696:11861"
                         }
                     }
                 ]
@@ -876,13 +1336,24 @@
                     "name": "State=Disabled, Status=Indeterminate, Size=Medium",
                     "width": 16,
                     "height": 16,
+                    "hugWidth": false,
                     "radius": [
                         0,
                         0,
                         0,
                         0
                     ],
-                    "fill": null
+                    "fill": null,
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": null
                 },
                 "texts": [],
                 "icons": [
@@ -894,6 +1365,15 @@
                             "y": 0,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.06
+                        },
+                        "vars": {
+                            "color": "8696:11861"
                         }
                     }
                 ]

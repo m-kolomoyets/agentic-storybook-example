@@ -2,15 +2,34 @@
 // variant axes and a layout/type spec per variant, plus one 2x PNG per variant. At most three Figma calls per file
 // for any number of sets (version check, batched nodes, batched images): the images endpoint is Tier 1 and
 // rate-limits hard. FIGMA_TOKEN is read here only, never shipped to the browser.
-import type { Box, FigmaCatalog, FigmaSetManifest, FigmaSpec, FigmaVariant, Rgba } from './types.ts';
+import type {
+    Box,
+    FigmaCatalog,
+    FigmaSetManifest,
+    FigmaShadow,
+    FigmaSpec,
+    FigmaStroke,
+    FigmaVariant,
+    Rgba,
+} from './types.ts';
+import type { FigmaVariableCatalog } from './variables.ts';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { FIGMA_SETS, parseFigmaUrl } from './sets.ts';
 import { FIGMA_REFS_DIR, FIGMA_SCALE, figmaSlug, variantSlug } from './types.ts';
+import { FIGMA_VARIABLES_FILE, fnv1a, parseVariableLines, variablesExportScript } from './variables.ts';
 
 const API = 'https://api.figma.com/v1';
 
-type Paint = { type: string; visible?: boolean; opacity?: number; color?: Rgba };
+type Paint = { type: string; visible?: boolean; opacity?: number; color?: Rgba; boundVariables?: { color?: unknown } };
+type Effect = {
+    type: string;
+    visible?: boolean;
+    color?: Rgba;
+    offset?: { x: number; y: number };
+    radius: number;
+    spread?: number;
+};
 type FigmaNode = {
     id: string;
     name: string;
@@ -19,9 +38,38 @@ type FigmaNode = {
     characters?: string;
     absoluteBoundingBox: Box;
     fills?: Paint[];
+    strokes?: Paint[];
+    strokeWeight?: number;
+    individualStrokeWeights?: { top: number; right: number; bottom: number; left: number };
+    strokeAlign?: FigmaStroke['align'];
+    strokeDashes?: number[];
+    effects?: Effect[];
+    opacity?: number;
+    /** Variable aliases per property (`fills` per paint, `rectangleCornerRadii` per corner, …). */
+    boundVariables?: Record<string, unknown>;
+    layoutSizingHorizontal?: 'FIXED' | 'HUG' | 'FILL';
     cornerRadius?: number;
     rectangleCornerRadii?: [number, number, number, number];
-    style?: { fontFamily: string; fontSize: number; fontWeight: number; lineHeightPx: number; letterSpacing: number };
+    style?: {
+        fontFamily: string;
+        fontSize: number;
+        fontWeight: number;
+        lineHeightPx: number;
+        letterSpacing: number;
+        textCase?: string;
+        textDecoration?: string;
+        textAlignHorizontal?: string;
+        textAutoResize?: string;
+        textTruncation?: string;
+    };
+    textTruncation?: string;
+    blendMode?: string;
+    layoutMode?: 'NONE' | 'HORIZONTAL' | 'VERTICAL';
+    layoutPositioning?: 'AUTO' | 'ABSOLUTE';
+    layoutWrap?: 'NO_WRAP' | 'WRAP';
+    layoutSizingVertical?: 'FIXED' | 'HUG' | 'FILL';
+    primaryAxisAlignItems?: string;
+    counterAxisAlignItems?: string;
     componentPropertyDefinitions?: Record<string, { type: string; defaultValue: unknown; variantOptions?: string[] }>;
     componentId?: string;
     children?: FigmaNode[];
@@ -67,21 +115,205 @@ async function figmaGet<T>(endpoint: string): Promise<T> {
     return (await response.json()) as T;
 }
 
+function byte(value: number): number {
+    return Math.round(value * 255);
+}
+
+/**
+ * Every visible SOLID paint, composited source-over in array order (Figma lists paints bottom to top), as one colour;
+ * `null` when there's none. Paint `opacity` multiplies the colour's alpha, as Figma draws it.
+ */
 function solidFill(fills: Paint[] | undefined): Rgba | null {
-    const paint = fills?.find((fill) => {
-        return fill.visible !== false && fill.type === 'SOLID';
-    });
-    if (!paint?.color) {
+    let out: Rgba | null = null;
+    for (const paint of fills ?? []) {
+        if (paint.visible !== false && paint.type === 'SOLID' && paint.color) {
+            out = over({ ...paint.color, a: paint.color.a * (paint.opacity ?? 1) }, out);
+        }
+    }
+
+    return out && { r: byte(out.r), g: byte(out.g), b: byte(out.b), a: Math.round(out.a * 1000) / 1000 };
+}
+
+/** Source-over of `top` on `back` (straight alpha, 0–1 channels). */
+function over(top: Rgba, back: Rgba | null): Rgba {
+    if (!back) {
+        return top;
+    }
+    const a = top.a + back.a * (1 - top.a);
+    const mix = (front: number, behind: number): number => {
+        return a === 0 ? 0 : (front * top.a + behind * back.a * (1 - top.a)) / a;
+    };
+
+    return { r: mix(top.r, back.r), g: mix(top.g, back.g), b: mix(top.b, back.b), a };
+}
+
+function visibleTypes(paints: Paint[] | undefined): string[] {
+    return (paints ?? [])
+        .filter((paint) => {
+            return paint.visible !== false && paint.type !== 'SOLID';
+        })
+        .map((paint) => {
+            return paint.type;
+        });
+}
+
+function strokeOf(node: FigmaNode): FigmaStroke | null {
+    const color = solidFill(node.strokes);
+    const sides = node.individualStrokeWeights;
+    const weights = sides ? [sides.top, sides.right, sides.bottom, sides.left] : null;
+    const weight = weights ? Math.max(...weights) : (node.strokeWeight ?? 0);
+    if (!color || weight <= 0) {
         return null;
     }
-    const { r, g, b, a } = paint.color;
 
     return {
-        r: Math.round(r * 255),
-        g: Math.round(g * 255),
-        b: Math.round(b * 255),
-        a: Math.round(a * (paint.opacity ?? 1) * 1000) / 1000,
+        weight,
+        sides: weights && new Set(weights).size > 1 ? (weights as FigmaStroke['sides']) : null,
+        align: node.strokeAlign ?? 'INSIDE',
+        color,
+        dashed: (node.strokeDashes?.length ?? 0) > 0,
     };
+}
+
+function shadowsOf(node: FigmaNode): FigmaShadow[] {
+    return (node.effects ?? [])
+        .filter((effect) => {
+            return effect.visible !== false && (effect.type === 'DROP_SHADOW' || effect.type === 'INNER_SHADOW');
+        })
+        .map((effect) => {
+            const color = effect.color ?? { r: 0, g: 0, b: 0, a: 0 };
+
+            return {
+                inset: effect.type === 'INNER_SHADOW',
+                x: effect.offset?.x ?? 0,
+                y: effect.offset?.y ?? 0,
+                blur: effect.radius,
+                spread: effect.spread ?? 0,
+                color: { r: byte(color.r), g: byte(color.g), b: byte(color.b), a: Math.round(color.a * 1000) / 1000 },
+            };
+        });
+}
+
+function blendOf(node: FigmaNode): string | null {
+    return node.blendMode && node.blendMode !== 'NORMAL' && node.blendMode !== 'PASS_THROUGH' ? node.blendMode : null;
+}
+
+function blurOf(node: FigmaNode): { layer: number | null; background: number | null } {
+    const radius = (type: string) => {
+        return (
+            (node.effects ?? []).find((effect) => {
+                return effect.visible !== false && effect.type === type;
+            })?.radius ?? null
+        );
+    };
+
+    return { layer: radius('LAYER_BLUR'), background: radius('BACKGROUND_BLUR') };
+}
+
+function inFlow(node: FigmaNode): FigmaNode[] {
+    return (node.children ?? []).filter((child) => {
+        return child.visible !== false && child.layoutPositioning !== 'ABSOLUTE';
+    });
+}
+
+/** The auto-layout frame arranging the content: through single-child auto-layout FRAME wrappers from the root. */
+/** The auto-layout container (see layoutOf): the root, or reached through single-child auto-layout FRAME wrappers. */
+function layoutNode(root: FigmaNode): FigmaNode {
+    let node = root;
+    for (;;) {
+        const children = inFlow(node);
+        const only = children.length === 1 ? children[0] : undefined;
+        if (only?.type !== 'FRAME' || !only.layoutMode || only.layoutMode === 'NONE') {
+            return node;
+        }
+        node = only;
+    }
+}
+
+function layoutOf(root: FigmaNode, origin: Box): FigmaSpec['root']['layout'] {
+    const node = layoutNode(root);
+    if (!node.layoutMode || node.layoutMode === 'NONE') {
+        return null;
+    }
+    const direction = node.layoutMode;
+
+    return {
+        direction,
+        primaryAlign: node.primaryAxisAlignItems ?? 'MIN',
+        counterAlign: node.counterAxisAlignItems ?? 'MIN',
+        wrap: node.layoutWrap === 'WRAP',
+        hugPrimary: (direction === 'HORIZONTAL' ? node.layoutSizingHorizontal : node.layoutSizingVertical) === 'HUG',
+        children: inFlow(node).map((child) => {
+            return {
+                name: child.name,
+                text: child.type === 'TEXT',
+                box: relativeBox(child.absoluteBoundingBox, origin),
+            };
+        }),
+    };
+}
+
+/**
+ * A glyph's visible colour: its topmost painted shape (last in paint order), fill else stroke, alpha multiplied by
+ * every node opacity from the instance down to that shape.
+ */
+function glyphColor(instance: FigmaNode): { color: Rgba; variable: string | undefined } | null {
+    let found: { color: Rgba; variable: string | undefined } | null = null;
+    function walk(node: FigmaNode, opacity: number) {
+        if (node.visible === false) {
+            return;
+        }
+        const own = opacity * (node.opacity ?? 1);
+        if (node.children?.length) {
+            node.children.forEach((child) => {
+                walk(child, own);
+            });
+
+            return;
+        }
+        const fill = solidFill(node.fills);
+        const color = fill ?? solidFill(node.strokes);
+        if (color && color.a > 0) {
+            found = {
+                color: { ...color, a: Math.round(color.a * own * 1000) / 1000 },
+                variable: paintVariable(node, fill ? 'fills' : 'strokes'),
+            };
+        }
+    }
+    walk(instance, 1);
+
+    return found;
+}
+
+/** The variable id (`8019:325`) an alias, or the first alias inside a value, points at. */
+function aliasId(value: unknown): string | undefined {
+    return /"VariableID:([^"]+)"/.exec(JSON.stringify(value ?? null))?.[1];
+}
+
+/** The variable bound to a node's topmost visible solid paint (paint-level binding, else the node's per-paint one). */
+function paintVariable(node: FigmaNode, key: 'fills' | 'strokes'): string | undefined {
+    const paints = node[key] ?? [];
+    for (let index = paints.length - 1; index >= 0; index--) {
+        const paint = paints[index];
+        if (paint && paint.visible !== false && paint.type === 'SOLID') {
+            const perPaint = node.boundVariables?.[key];
+
+            return (
+                aliasId(paint.boundVariables?.color) ?? aliasId(Array.isArray(perPaint) ? perPaint[index] : undefined)
+            );
+        }
+    }
+
+    return undefined;
+}
+
+/** Drops unbound keys, so manifests only list what Figma binds. */
+function bound<T extends Record<string, string | undefined>>(vars: T): Partial<Record<keyof T, string>> | undefined {
+    const entries = Object.entries(vars).filter(([, id]) => {
+        return id !== undefined;
+    });
+
+    return entries.length ? (Object.fromEntries(entries) as Partial<Record<keyof T, string>>) : undefined;
 }
 
 function relativeBox(box: Box, origin: Box): Box {
@@ -100,36 +332,62 @@ function sameBox(a: Box, b: Box): boolean {
 
 /**
  * The node that paints the variant's box. Figma often wraps it: a paint-less root whose single visible child covers
- * the same box carries the fill and radius, while the DOM puts them on the root element.
+ * the same box carries the fill and radius, while the DOM puts them on the root element. `opacity`: the product along
+ * that path, as the DOM root carries it.
  */
-function surface(root: FigmaNode): FigmaNode {
+function surface(root: FigmaNode): { node: FigmaNode; opacity: number } {
     let current = root;
+    let opacity = root.opacity ?? 1;
     for (;;) {
         const children = (current.children ?? []).filter((child) => {
             return child.visible !== false;
         });
         const only = children.length === 1 ? children[0] : undefined;
         const painted =
-            solidFill(current.fills) !== null || (current.cornerRadius ?? 0) > 0 || current.rectangleCornerRadii;
+            solidFill(current.fills) !== null ||
+            visibleTypes(current.fills).length > 0 ||
+            strokeOf(current) !== null ||
+            shadowsOf(current).length > 0 ||
+            (current.cornerRadius ?? 0) > 0 ||
+            current.rectangleCornerRadii;
         if (painted || !only || !sameBox(only.absoluteBoundingBox, current.absoluteBoundingBox)) {
-            return current;
+            return { node: current, opacity: Math.round(opacity * 1000) / 1000 };
         }
         current = only;
+        opacity *= current.opacity ?? 1;
     }
 }
 
 function toSpec(root: FigmaNode, componentName: ComponentName): FigmaSpec {
     const origin = root.absoluteBoundingBox;
-    const paint = surface(root);
+    const { node: paint, opacity } = surface(root);
     const spec: FigmaSpec = {
         root: {
             name: root.name,
             width: origin.width,
             height: origin.height,
+            hugWidth: root.layoutSizingHorizontal === 'HUG',
             radius:
                 paint.rectangleCornerRadii ??
                 ([0, 0, 0, 0].fill(paint.cornerRadius ?? 0) as FigmaSpec['root']['radius']),
             fill: solidFill(paint.fills),
+            fillTypes: visibleTypes(paint.fills),
+            opacity,
+            stroke: strokeOf(paint),
+            shadows: shadowsOf(paint),
+            blendMode: blendOf(root),
+            blur: blurOf(paint),
+            layout: layoutOf(root, origin),
+            vars: bound({
+                fill: paintVariable(paint, 'fills'),
+                stroke: paintVariable(paint, 'strokes'),
+                radius: aliasId(paint.boundVariables?.rectangleCornerRadii ?? paint.boundVariables?.topLeftRadius),
+                gap: aliasId(layoutNode(root).boundVariables?.itemSpacing),
+                paddingTop: aliasId(root.boundVariables?.paddingTop),
+                paddingRight: aliasId(root.boundVariables?.paddingRight),
+                paddingBottom: aliasId(root.boundVariables?.paddingBottom),
+                paddingLeft: aliasId(root.boundVariables?.paddingLeft),
+            }),
         },
         texts: [],
         icons: [],
@@ -149,16 +407,32 @@ function toSpec(root: FigmaNode, componentName: ComponentName): FigmaSpec {
                 lineHeightPx: node.style.lineHeightPx,
                 letterSpacing: node.style.letterSpacing,
                 color: solidFill(node.fills),
+                textCase: node.style.textCase ?? 'ORIGINAL',
+                textDecoration: node.style.textDecoration ?? 'NONE',
+                textAlign: node.style.textAlignHorizontal ?? 'LEFT',
+                autoResize: node.style.textAutoResize ?? 'NONE',
+                truncate: (node.textTruncation ?? node.style.textTruncation) === 'ENDING',
+                vars: bound({
+                    color: paintVariable(node, 'fills'),
+                    fontSize: aliasId(node.boundVariables?.fontSize),
+                    lineHeight: aliasId(node.boundVariables?.lineHeight),
+                    letterSpacing: aliasId(node.boundVariables?.letterSpacing),
+                    fontFamily: aliasId(node.boundVariables?.fontFamily),
+                    fontWeight: aliasId(node.boundVariables?.fontStyle ?? node.boundVariables?.fontWeight),
+                }),
             });
 
             return;
         }
         // An instance with no text inside is a glyph (icon, spinner, avatar): compare its box, not its insides.
         if (node !== root && node.type === 'INSTANCE' && !JSON.stringify(node.children ?? []).includes('"TEXT"')) {
+            const glyph = glyphColor(node);
             spec.icons.push({
                 name: node.name,
                 component: componentName(node.componentId),
                 box: relativeBox(node.absoluteBoundingBox, origin),
+                color: glyph?.color ?? null,
+                vars: bound({ color: glyph?.variable }),
             });
 
             return;
@@ -435,4 +709,71 @@ export async function syncFigmaCatalog(root: string, refresh: boolean): Promise<
     await writeFile(file, `${JSON.stringify(catalog, null, 4)}\n`);
 
     return 'fetched';
+}
+
+async function readCatalogue(root: string): Promise<FigmaVariableCatalog> {
+    try {
+        return JSON.parse(await readFile(path.join(root, FIGMA_VARIABLES_FILE), 'utf8')) as FigmaVariableCatalog;
+    } catch {
+        return {
+            source: { fileKey: '', via: 'Figma Plugin API through the Figma MCP use_figma tool', updatedAt: '' },
+            variables: {},
+        };
+    }
+}
+
+/** Variable ids bound in the synced manifests that `variables.json` can't name yet (sorted). */
+export async function unnamedFigmaVariables(root: string): Promise<string[]> {
+    const catalogue = await readCatalogue(root);
+    const ids = new Set<string>();
+    for (const url of Object.values(FIGMA_SETS)) {
+        const { fileKey, nodeId } = parseFigmaUrl(url);
+        const manifest = await readManifest(path.join(root, FIGMA_REFS_DIR, figmaSlug(fileKey, nodeId)));
+        for (const match of JSON.stringify(manifest?.variants ?? []).matchAll(/"vars":\{([^}]*)\}/g)) {
+            for (const id of (match[1] ?? '').matchAll(/"(\d+:\d+)"/g)) {
+                ids.add(id[1] ?? '');
+            }
+        }
+    }
+
+    return [...ids]
+        .filter((id) => {
+            return !catalogue.variables[id];
+        })
+        .sort((a, b) => {
+            return a.localeCompare(b, 'en', { numeric: true });
+        });
+}
+
+/** The read-only `use_figma` script naming every unnamed bound variable (empty when all are named). */
+export async function figmaVariablesScript(root: string): Promise<string | null> {
+    const ids = await unnamedFigmaVariables(root);
+
+    return ids.length ? variablesExportScript(ids) : null;
+}
+
+/**
+ * Merges the export script's `lines` (saved to `file`) into `variables.json`, after checking them against the
+ * checksum the script returned: a hand-copied export must arrive byte for byte.
+ */
+export async function mergeFigmaVariables(root: string, file: string, checksum: string): Promise<number> {
+    const text = (await readFile(file, 'utf8')).replace(/\n+$/, '');
+    if (fnv1a(text) !== checksum) {
+        throw new Error(`Checksum mismatch: ${fnv1a(text)} ≠ ${checksum}. Save the script's \`lines\` value exactly.`);
+    }
+    const catalogue = await readCatalogue(root);
+    const added = parseVariableLines(text);
+    const variables = Object.fromEntries(
+        Object.entries({ ...catalogue.variables, ...added }).sort(([a], [b]) => {
+            return a.localeCompare(b, 'en', { numeric: true });
+        })
+    );
+    const { fileKey } = parseFigmaUrl(Object.values(FIGMA_SETS)[0] ?? '');
+    const next: FigmaVariableCatalog = {
+        source: { ...catalogue.source, fileKey, updatedAt: new Date().toISOString().slice(0, 10) },
+        variables,
+    };
+    await writeFile(path.join(root, FIGMA_VARIABLES_FILE), `${JSON.stringify(next, null, 4)}\n`);
+
+    return Object.keys(added).length;
 }

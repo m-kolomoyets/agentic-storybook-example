@@ -1,0 +1,814 @@
+{
+    "source": {
+        "fileKey": "GPPlxspxcbP4kc13YwNJTH",
+        "via": "Figma Plugin API (figma.variables) through the Figma MCP use_figma tool, read-only",
+        "updatedAt": "2026-11-21"
+    },
+    "variables": {
+        "8011:700": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Spacings/0"
+        },
+        "8011:701": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Spacings/2"
+        },
+        "8011:702": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Spacings/4"
+        },
+        "8011:703": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Spacings/8"
+        },
+        "8011:704": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Spacings/12"
+        },
+        "8011:705": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Spacings/16"
+        },
+        "8011:706": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Spacings/24"
+        },
+        "8011:712": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Spacings/6"
+        },
+        "8011:715": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Radius/xs"
+        },
+        "8011:717": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Radius/m"
+        },
+        "8011:721": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Radius/full"
+        },
+        "8011:722": {
+            "collection": "Primitives",
+            "type": "STRING",
+            "name": "Font/family/Title"
+        },
+        "8011:725": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Font/size/xxs"
+        },
+        "8011:726": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Font/size/xs"
+        },
+        "8011:727": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Font/size/s"
+        },
+        "8011:728": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Font/size/m"
+        },
+        "8012:58": {
+            "collection": "Primitives",
+            "type": "STRING",
+            "name": "Font/weight/Regular"
+        },
+        "8012:59": {
+            "collection": "Primitives",
+            "type": "STRING",
+            "name": "Font/weight/Medium"
+        },
+        "8012:60": {
+            "collection": "Primitives",
+            "type": "STRING",
+            "name": "Font/weight/Semibold"
+        },
+        "8012:61": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Font/line-height/xxs"
+        },
+        "8012:62": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Font/line-height/xs"
+        },
+        "8012:63": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Font/line-height/s"
+        },
+        "8012:64": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Font/line-height/m"
+        },
+        "8013:352": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/grey/300"
+        },
+        "8015:8071": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/primary"
+        },
+        "8016:312": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/primary"
+        },
+        "8017:322": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Border/primary"
+        },
+        "8019:325": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/control"
+        },
+        "8019:330": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/secondary"
+        },
+        "8019:331": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/secondary"
+        },
+        "8019:367": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-default"
+        },
+        "8019:446": {
+            "collection": "Tokens",
+            "type": "FLOAT",
+            "name": "Spacings/spacing-300"
+        },
+        "8019:447": {
+            "collection": "Tokens",
+            "type": "FLOAT",
+            "name": "Spacings/spacing-400"
+        },
+        "8019:448": {
+            "collection": "Tokens",
+            "type": "FLOAT",
+            "name": "Spacings/spacing-600"
+        },
+        "8019:449": {
+            "collection": "Tokens",
+            "type": "FLOAT",
+            "name": "Spacings/spacing-700"
+        },
+        "8019:450": {
+            "collection": "Tokens",
+            "type": "FLOAT",
+            "name": "Spacings/spacing-900"
+        },
+        "8030:149": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-default"
+        },
+        "8191:4515": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-hover"
+        },
+        "8191:4516": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-loading"
+        },
+        "8191:4517": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-focused"
+        },
+        "8191:4518": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-pressed"
+        },
+        "8191:4519": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-disabled"
+        },
+        "8196:325": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-hover"
+        },
+        "8196:326": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-loading"
+        },
+        "8196:327": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-focused"
+        },
+        "8196:328": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-pressed"
+        },
+        "8196:329": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-disabled"
+        },
+        "8274:18684": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/destructive-default"
+        },
+        "8274:18770": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/destructive-hover"
+        },
+        "8274:18771": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/destructive-loading"
+        },
+        "8274:18772": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/destructive-focused"
+        },
+        "8274:18774": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/destructive-pressed"
+        },
+        "8274:18775": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/destructive-disabled"
+        },
+        "8373:10261": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/white-alfa/12%"
+        },
+        "8663:11850": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/white-alfa/100%"
+        },
+        "8672:12081": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/tag-quinary"
+        },
+        "8674:11624": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/tag-senary"
+        },
+        "8674:11627": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/tag-positive"
+        },
+        "8678:11669": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/tertiary"
+        },
+        "8691:11862": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Border/focused"
+        },
+        "8693:11849": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/tag-quaternary"
+        },
+        "8693:11850": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/warning"
+        },
+        "8696:11861": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Border/control-disabled"
+        },
+        "8711:12151": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/negative"
+        },
+        "8711:12152": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/positive"
+        },
+        "8726:12948": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/tag-negative"
+        },
+        "8726:13110": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/tag-senary"
+        },
+        "8726:13114": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/quaternary"
+        },
+        "8726:13116": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/tag-septenary"
+        },
+        "8815:24838": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/card"
+        },
+        "8836:25526": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/datavis/dotindicator-negative"
+        },
+        "8836:25632": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/datavis/dotindicator-positive"
+        },
+        "8881:18176": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/positive"
+        },
+        "8881:18177": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/negative"
+        },
+        "8881:18180": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/warning"
+        },
+        "8882:16090": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/on-surface-primary"
+        },
+        "8882:16092": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/on-surface-disabled"
+        },
+        "8882:16352": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/on-surface-primary"
+        },
+        "8882:16353": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/on-surface-secondary"
+        },
+        "8882:16354": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/on-surface-disabled"
+        },
+        "8884:20466": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Border/secondary-button"
+        },
+        "8884:21163": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Border/secondary-disabled"
+        },
+        "8885:21167": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/destructive-button-disabled"
+        },
+        "8885:21168": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/detructive-button-disabled"
+        },
+        "8887:16200": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-primary-default"
+        },
+        "8887:16201": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-primary-hover"
+        },
+        "8887:16202": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-primary-pressed"
+        },
+        "8887:16203": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-primary-focused"
+        },
+        "8887:16204": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-primary-disabled"
+        },
+        "8887:16219": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-primary-default"
+        },
+        "8887:16220": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-primary-hover"
+        },
+        "8887:16221": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-primary-pressed"
+        },
+        "8887:16222": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-primary-focused"
+        },
+        "8887:16223": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-primary-disabled"
+        },
+        "8887:18278": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-primary-loading"
+        },
+        "8890:16208": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Border/control-hover"
+        },
+        "9152:31889": {
+            "collection": "Primitives",
+            "type": "FLOAT",
+            "name": "Spacings/10"
+        },
+        "9152:31890": {
+            "collection": "Tokens",
+            "type": "FLOAT",
+            "name": "Spacings/spacing-500"
+        },
+        "9263:8088": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/remote-default"
+        },
+        "9263:8089": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/remote-pressed"
+        },
+        "9263:8090": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/remote-disabled"
+        },
+        "9263:9029": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/remote-hover"
+        },
+        "9263:9030": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/remote-loading"
+        },
+        "9263:9031": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/remote-focused"
+        },
+        "9263:9117": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Border/remote-default"
+        },
+        "9263:9118": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Border/remote-disabled"
+        },
+        "9275:43891": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-secondary-default"
+        },
+        "9275:43892": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-secondary-hover"
+        },
+        "9275:43893": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-secondary-loading"
+        },
+        "9275:43894": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-secondary-pressed"
+        },
+        "9275:43895": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-secondary-focused"
+        },
+        "9275:43896": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-secondary-disabled"
+        },
+        "9275:43939": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-secondary-default"
+        },
+        "9275:43940": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-secondary-hover"
+        },
+        "9275:43941": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-secondary-pressed"
+        },
+        "9275:43943": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-secondary-focused"
+        },
+        "9275:43944": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-secondary-disabled"
+        },
+        "9312:64484": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/red-alpha/500 - 12%"
+        },
+        "9314:64599": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/green-alpha/500 - 12%"
+        },
+        "9315:49812": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-tertiary-default"
+        },
+        "9315:49813": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-tertiary-default"
+        },
+        "9420:63763": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-tertiary-hover"
+        },
+        "9420:63764": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-tertiary-hover"
+        },
+        "9420:63766": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-tertiary-pressed"
+        },
+        "9420:63767": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-tertiary-focused"
+        },
+        "9420:63768": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/link-tertiary-disabled"
+        },
+        "9420:63770": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-tertiary-loading"
+        },
+        "9420:63771": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-tertiary-pressed"
+        },
+        "9420:63772": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-tertiary-focused"
+        },
+        "9420:63773": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/link-tertiary-disabled"
+        },
+        "9644:178967": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-on surface-default"
+        },
+        "9644:178968": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-on surface-hover"
+        },
+        "9644:178969": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-on surface-loading"
+        },
+        "9644:178973": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-on surface-focused"
+        },
+        "9644:178974": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-on surface-disabled"
+        },
+        "9644:178975": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/primary-on surface-pressed"
+        },
+        "10116:155536": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/warning"
+        },
+        "10252:183735": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Icons/on-surface-quaternary"
+        },
+        "10610:212859": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Text/tag-septenary"
+        },
+        "10610:212860": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Surface/tag-octenary"
+        },
+        "10648:215436": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/blue/50"
+        },
+        "10648:215438": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/grey/250"
+        },
+        "10650:6946": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/purple/450"
+        },
+        "10651:22000": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/white-alfa/0%"
+        },
+        "10652:20745": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/blue/600"
+        },
+        "10664:17144": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/orange/600"
+        },
+        "10664:17145": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/yellow/300"
+        },
+        "10664:17148": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/light-blue/250"
+        },
+        "10664:17149": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/blue/200"
+        },
+        "10848:219548": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/cyan/500"
+        },
+        "10851:214412": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/dark-violet/900"
+        },
+        "10851:214413": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/dark-violet-alpha/950 - 0%"
+        },
+        "10864:220047": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/neutral-grey/450"
+        },
+        "11446:9981": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/chartreuse/200"
+        },
+        "11446:9984": {
+            "collection": "Primitives",
+            "type": "COLOR",
+            "name": "Colors/green/750"
+        },
+        "12988:8594": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-on surface-default"
+        },
+        "12988:8595": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-on surface-hover"
+        },
+        "12988:8596": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-on surface-loading"
+        },
+        "12988:8597": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-on surface-focused"
+        },
+        "12988:8598": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-on surface-pressed"
+        },
+        "12988:8599": {
+            "collection": "Tokens",
+            "type": "COLOR",
+            "name": "Button/secondary-on surface-disabled"
+        }
+    }
+}

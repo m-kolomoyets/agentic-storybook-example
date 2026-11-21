@@ -42,6 +42,7 @@
                     "name": "State=Default",
                     "width": 139,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -53,6 +54,115 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.04
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": -2,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.2
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 0,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 3,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Custom Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Custom Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 55,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Custom Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 103,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "9263:8088",
+                        "stroke": "9263:9117",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8011:704",
+                        "paddingRight": "8011:705",
+                        "paddingBottom": "8011:704",
+                        "paddingLeft": "8011:705"
                     }
                 },
                 "texts": [
@@ -74,6 +184,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -86,6 +208,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -96,6 +227,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -112,6 +252,7 @@
                     "name": "State=Hover",
                     "width": 139,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -123,6 +264,115 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.06
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.04
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": -2,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.2
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 0,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 3,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Custom Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Custom Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 55,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Custom Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 103,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "9263:9029",
+                        "stroke": "9263:9117",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8011:704",
+                        "paddingRight": "8011:705",
+                        "paddingBottom": "8011:704",
+                        "paddingLeft": "8011:705"
                     }
                 },
                 "texts": [
@@ -144,6 +394,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -156,6 +418,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -166,6 +437,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -182,6 +462,7 @@
                     "name": "State=Loading",
                     "width": 139,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -193,6 +474,115 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.04
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": -2,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.2
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 0,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 3,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Loader Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Custom Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 55,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Loader Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 103,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "9263:9030",
+                        "stroke": "9263:9117",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8011:704",
+                        "paddingRight": "8011:705",
+                        "paddingBottom": "8011:704",
+                        "paddingLeft": "8011:705"
                     }
                 },
                 "texts": [
@@ -214,6 +604,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -226,6 +628,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -236,6 +647,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -252,6 +672,7 @@
                     "name": "State=Focused",
                     "width": 139,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -263,6 +684,115 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": -2,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.2
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 0,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 3,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Custom Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Custom Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 55,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Custom Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 103,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "9263:9031",
+                        "stroke": "8691:11862",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8011:704",
+                        "paddingRight": "8011:705",
+                        "paddingBottom": "8011:704",
+                        "paddingLeft": "8011:705"
                     }
                 },
                 "texts": [
@@ -284,6 +814,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -296,6 +838,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -306,6 +857,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -322,6 +882,7 @@
                     "name": "State=Pressed",
                     "width": 139,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -333,6 +894,115 @@
                         "g": 21,
                         "b": 24,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.04
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": -2,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.2
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 0,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 3,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Custom Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Custom Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 55,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Custom Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 103,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "9263:8089",
+                        "stroke": "9263:9117",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8011:704",
+                        "paddingRight": "8011:705",
+                        "paddingBottom": "8011:704",
+                        "paddingLeft": "8011:705"
                     }
                 },
                 "texts": [
@@ -354,6 +1024,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -366,6 +1048,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -376,6 +1067,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -392,6 +1092,7 @@
                     "name": "State=Disabled",
                     "width": 139,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -403,6 +1104,115 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.02
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.02
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": -2,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.2
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 0,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 3,
+                            "blur": 6,
+                            "spread": 0,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Custom Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Custom Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 55,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Custom Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 103,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "9263:8090",
+                        "stroke": "9263:9118",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8011:704",
+                        "paddingRight": "8011:705",
+                        "paddingBottom": "8011:704",
+                        "paddingLeft": "8011:705"
                     }
                 },
                 "texts": [
@@ -424,6 +1234,18 @@
                             "g": 89,
                             "b": 89,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8882:16092",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -436,6 +1258,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8882:16354"
                         }
                     },
                     {
@@ -446,6 +1277,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8882:16354"
                         }
                     }
                 ]

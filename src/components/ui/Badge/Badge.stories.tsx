@@ -8,7 +8,6 @@ import { Badge } from '.';
 import { figmaContent, KitIcon } from '../../../../visual/figma/content';
 import { FigmaMatrix as FigmaMatrixGrid } from '../../../../visual/figma/FigmaMatrix';
 import { FIGMA_SETS } from '../../../../visual/figma/sets';
-import { FIGMA_COMPARE_GLOBAL } from '../../../../visual/figma/types';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
@@ -297,16 +296,11 @@ function figmaBadge(cell: FigmaVariant) {
 export const FigmaMatrix = meta.story({
     tags: ['figma', '!autodocs'],
     parameters: {
-        layout: 'padded',
+        layout: 'fullscreen',
         design: { type: 'figma', url: FIGMA_SETS.badge },
         figmaMatrix: { blocks: [FIGMA_BLOCK] },
     },
-    render: function FigmaMatrixStory(_args, { globals }) {
-        return (
-            <FigmaMatrixGrid
-                compare={globals[FIGMA_COMPARE_GLOBAL]}
-                blocks={[{ ...FIGMA_BLOCK, renderCell: figmaBadge }]}
-            />
-        );
+    render: function FigmaMatrixStory(_args, context) {
+        return <FigmaMatrixGrid context={context} blocks={[{ ...FIGMA_BLOCK, renderCell: figmaBadge }]} />;
     },
 });

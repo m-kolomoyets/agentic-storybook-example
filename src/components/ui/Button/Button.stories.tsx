@@ -9,7 +9,6 @@ import { Button } from '.';
 import { figmaContent, KitIcon } from '../../../../visual/figma/content';
 import { FigmaMatrix as FigmaMatrixGrid } from '../../../../visual/figma/FigmaMatrix';
 import { FIGMA_SETS } from '../../../../visual/figma/sets';
-import { FIGMA_COMPARE_GLOBAL } from '../../../../visual/figma/types';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
@@ -127,54 +126,11 @@ type StateName = 'default' | 'hover' | 'focused' | 'pressed' | 'loading' | 'disa
 
 const STATES: StateName[] = ['default', 'hover', 'focused', 'pressed', 'loading', 'disabled'];
 
-/* Pointer states can't be triggered statically, so they are pinned with the same tokens the cva cell uses. */
-const FORCED: Record<ButtonVariant, Partial<Record<StateName, string>>> = {
-    primary: {
-        hover: 'bg-button-primary-hover',
-        focused: 'bg-button-primary-focused inset-ring-1 inset-ring-border-focused',
-        pressed: 'bg-button-primary-pressed',
-    },
-    'primary-on-surface': {
-        hover: 'bg-button-primary-on-surface-hover',
-        focused: 'bg-button-primary-on-surface-focused inset-ring-1 inset-ring-border-focused',
-        pressed: 'bg-button-primary-on-surface-pressed',
-    },
-    secondary: {
-        hover: 'bg-button-secondary-hover',
-        focused: 'bg-button-secondary-focused inset-ring-border-focused',
-        pressed: 'bg-button-secondary-pressed',
-    },
-    'secondary-elevated': {
-        hover: 'bg-button-secondary-on-surface-hover',
-        focused: 'bg-button-secondary-on-surface-focused inset-ring-border-focused',
-        pressed: 'bg-button-secondary-on-surface-pressed',
-    },
-    destructive: {
-        hover: 'bg-button-destructive-hover',
-        focused: 'bg-button-destructive-focused inset-ring-1 inset-ring-border-focused',
-        pressed: 'bg-button-destructive-pressed',
-    },
-    remote: {
-        hover: 'bg-button-remote-hover',
-        focused: 'bg-button-remote-focused inset-ring-border-focused',
-        pressed: 'bg-button-remote-pressed',
-    },
-    'link-primary': {
-        hover: 'text-text-link-primary-hover',
-        focused: 'text-text-link-primary-focused inset-ring-1 inset-ring-border-focused',
-        pressed: 'text-text-link-primary-pressed',
-    },
-    'link-secondary': {
-        hover: 'text-text-link-secondary-hover',
-        focused: 'text-text-link-secondary-focused inset-ring-1 inset-ring-border-focused',
-        pressed: 'text-text-link-secondary-pressed',
-    },
-    'link-tertiary': {
-        hover: 'text-text-link-tertiary-hover',
-        focused: 'text-text-link-tertiary-focused inset-ring-1 inset-ring-border-focused',
-        pressed: 'text-text-link-tertiary-pressed',
-    },
-};
+/*
+ * Pointer states can't be triggered statically: `data-force` turns on the component's own `hover:` / `active:` /
+ * `focus-visible:` classes, gates included (.storybook/preview.css), so no tokens are copied here.
+ */
+const FORCE: Partial<Record<StateName, string>> = { hover: 'hover', focused: 'focus-visible', pressed: 'active' };
 
 type RowProps = ButtonProps & { label: string; onLight?: boolean };
 
@@ -190,7 +146,8 @@ function StateRow({ label, onLight = false, ...props }: RowProps) {
                         {...props}
                         loading={state === 'loading'}
                         disabled={state === 'disabled'}
-                        className={`justify-self-start ${FORCED[props.variant ?? 'primary'][state] ?? ''}`}
+                        data-force={FORCE[state]}
+                        className="justify-self-start"
                     >
                         {state}
                     </Button>
@@ -267,7 +224,7 @@ export const Matrix = meta.story({
     },
 });
 
-/** Figma `Size` / `State` → props. Pointer states reuse the `FORCED` pins of `Matrix`. */
+/** Figma `Size` / `State` → props. Pointer states use the `FORCE` attribute of `Matrix`. */
 const FIGMA_SIZE: Record<string, ButtonSize> = { Big: 'lg', Medium: 'md', Small: 'sm' };
 const FIGMA_STATE: Record<string, StateName> = {
     Default: 'default',
@@ -330,10 +287,13 @@ function figmaButton(variant: ButtonVariant) {
             disabled: state === 'disabled',
             startIcon: content.leading ? <KitIcon figma={content.leading} /> : undefined,
             endIcon: content.trailing ? <KitIcon figma={content.trailing} /> : undefined,
-            className: FORCED[variant][state] ?? '',
         } as ButtonProps;
 
-        return <Button {...props}>{content.text ?? cell.name}</Button>;
+        return (
+            <Button {...props} data-force={FORCE[state]}>
+                {content.text ?? cell.name}
+            </Button>
+        );
     };
 }
 
@@ -345,7 +305,7 @@ function figmaButton(variant: ButtonVariant) {
 export const FigmaMatrix = meta.story({
     tags: ['figma', '!autodocs'],
     parameters: {
-        layout: 'padded',
+        layout: 'fullscreen',
         design: FIGMA_BUTTONS.map(({ variant, set }) => {
             return { name: variant, type: 'figma', url: set };
         }),
@@ -353,10 +313,10 @@ export const FigmaMatrix = meta.story({
         // Same contrast exception as `Matrix`: Figma-drawn white on `button-destructive-default`.
         a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } },
     },
-    render: function FigmaMatrixStory(_args, { globals }) {
+    render: function FigmaMatrixStory(_args, context) {
         return (
             <FigmaMatrixGrid
-                compare={globals[FIGMA_COMPARE_GLOBAL]}
+                context={context}
                 blocks={FIGMA_BUTTONS.map((block) => {
                     return {
                         ...block,

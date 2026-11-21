@@ -33,6 +33,7 @@
                     "name": "State=Default",
                     "width": 142,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -44,6 +45,77 @@
                         "g": 44,
                         "b": 47,
                         "a": 0.85
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.12
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 6,
+                            "blur": 18,
+                            "spread": -4,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 2,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.04
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "MIN",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 0,
+                                    "y": 0,
+                                    "width": 142,
+                                    "height": 40
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "12988:8594",
+                        "stroke": "8884:20466",
+                        "radius": "8011:717"
                     }
                 },
                 "texts": [
@@ -65,6 +137,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -77,6 +161,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -93,6 +186,7 @@
                     "name": "State=Hover",
                     "width": 142,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -104,6 +198,77 @@
                         "g": 44,
                         "b": 47,
                         "a": 0.95
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.12
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 6,
+                            "blur": 18,
+                            "spread": -4,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 2,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.04
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "MIN",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 0,
+                                    "y": 0,
+                                    "width": 142,
+                                    "height": 40
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "12988:8595",
+                        "stroke": "8884:20466",
+                        "radius": "8011:717"
                     }
                 },
                 "texts": [
@@ -125,6 +290,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -137,6 +314,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -153,6 +339,7 @@
                     "name": "State=Loading",
                     "width": 142,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -164,6 +351,77 @@
                         "g": 44,
                         "b": 47,
                         "a": 0.95
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.12
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 6,
+                            "blur": 18,
+                            "spread": -4,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 2,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.04
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "MIN",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 0,
+                                    "y": 0,
+                                    "width": 142,
+                                    "height": 40
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "12988:8596",
+                        "stroke": "8884:20466",
+                        "radius": "8011:717"
                     }
                 },
                 "texts": [
@@ -185,6 +443,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -197,6 +467,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -213,6 +492,7 @@
                     "name": "State=Focus",
                     "width": 142,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -224,6 +504,77 @@
                         "g": 44,
                         "b": 47,
                         "a": 0.95
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 6,
+                            "blur": 18,
+                            "spread": -4,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 2,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.04
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "MIN",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 0,
+                                    "y": 0,
+                                    "width": 142,
+                                    "height": 40
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "12988:8597",
+                        "stroke": "8691:11862",
+                        "radius": "8011:717"
                     }
                 },
                 "texts": [
@@ -245,6 +596,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -257,6 +620,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -273,6 +645,7 @@
                     "name": "State=Pressed",
                     "width": 142,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -284,6 +657,77 @@
                         "g": 44,
                         "b": 47,
                         "a": 0.9
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.12
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 6,
+                            "blur": 18,
+                            "spread": -4,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 2,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.04
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "MIN",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 0,
+                                    "y": 0,
+                                    "width": 142,
+                                    "height": 40
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "12988:8598",
+                        "stroke": "8884:20466",
+                        "radius": "8011:717"
                     }
                 },
                 "texts": [
@@ -305,6 +749,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -317,6 +773,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -333,6 +798,7 @@
                     "name": "State=Disabled",
                     "width": 142,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -344,6 +810,77 @@
                         "g": 44,
                         "b": 47,
                         "a": 0.85
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.12
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [
+                        {
+                            "inset": false,
+                            "x": 0,
+                            "y": 6,
+                            "blur": 18,
+                            "spread": -4,
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "inset": true,
+                            "x": 0,
+                            "y": 1,
+                            "blur": 2,
+                            "spread": 0,
+                            "color": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 0.04
+                            }
+                        }
+                    ],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "MIN",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 0,
+                                    "y": 0,
+                                    "width": 142,
+                                    "height": 40
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "12988:8599",
+                        "stroke": "8884:20466",
+                        "radius": "8011:717"
                     }
                 },
                 "texts": [
@@ -365,6 +902,18 @@
                             "g": 89,
                             "b": 89,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8882:16092",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -377,6 +926,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8882:16354"
                         }
                     }
                 ]

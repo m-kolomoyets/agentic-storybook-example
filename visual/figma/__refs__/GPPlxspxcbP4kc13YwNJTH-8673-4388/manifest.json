@@ -93,6 +93,7 @@
                     "name": "Size=Small, State=Default, Tone=Neutral, Type=Label, Leading=None, Mode=None",
                     "width": 70,
                     "height": 18,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -104,6 +105,43 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 4,
+                                    "y": 2,
+                                    "width": 62,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8019:325",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:701",
+                        "paddingRight": "8011:702",
+                        "paddingBottom": "8011:701",
+                        "paddingLeft": "8011:702"
                     }
                 },
                 "texts": [
@@ -125,6 +163,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -147,6 +197,7 @@
                     "name": "Size=Small, State=Disabled, Tone=Neutral, Type=Label, Leading=None, Mode=None",
                     "width": 70,
                     "height": 18,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -158,6 +209,43 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 4,
+                                    "y": 2,
+                                    "width": 62,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8019:325",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:701",
+                        "paddingRight": "8011:702",
+                        "paddingBottom": "8011:701",
+                        "paddingLeft": "8011:702"
                     }
                 },
                 "texts": [
@@ -179,6 +267,18 @@
                             "g": 89,
                             "b": 89,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8882:16092",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -201,6 +301,7 @@
                     "name": "Size=Medium, State=Default, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
                     "width": 94,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -212,6 +313,53 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 24,
+                                    "y": 4,
+                                    "width": 62,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8019:325",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -233,6 +381,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -245,6 +405,15 @@
                             "y": 4,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -266,6 +435,7 @@
                     "name": "Size=Medium, State=Default, Tone=Neutral, Type=Label, Leading=None, Mode=None",
                     "width": 78,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -277,6 +447,43 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 62,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8019:325",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -298,6 +505,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -320,6 +539,7 @@
                     "name": "Size=Medium, State=Default, Tone=Info, Type=Label, Leading=Icon, Mode=None",
                     "width": 87,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -331,6 +551,53 @@
                         "g": 187,
                         "b": 242,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 24,
+                                    "y": 4,
+                                    "width": 55,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8726:13116",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -352,6 +619,18 @@
                             "g": 187,
                             "b": 242,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8726:13110",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -364,6 +643,15 @@
                             "y": 4,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 182,
+                            "g": 187,
+                            "b": 242,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8726:13114"
                         }
                     }
                 ]
@@ -385,6 +673,7 @@
                     "name": "Size=Medium, State=Default, Tone=Warning, Type=Label, Leading=Icon, Mode=None",
                     "width": 75,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -396,6 +685,53 @@
                         "g": 211,
                         "b": 79,
                         "a": 0.06
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 24,
+                                    "y": 4,
+                                    "width": 43,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "10116:155536",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -417,6 +753,18 @@
                             "g": 211,
                             "b": 79,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8693:11850",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -429,6 +777,15 @@
                             "y": 4,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 255,
+                            "g": 211,
+                            "b": 79,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8881:18180"
                         }
                     }
                 ]
@@ -450,6 +807,7 @@
                     "name": "Size=Big, State=Off, Tone=Off, Type=Label, Leading=Icon, Mode=None",
                     "width": 65,
                     "height": 24,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -461,6 +819,53 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 31,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 43,
+                                    "y": 5,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8019:325",
+                        "radius": "8011:715",
+                        "gap": "8011:702",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -482,6 +887,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 0.6
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8019:331",
+                            "fontSize": "8011:726",
+                            "lineHeight": "8012:62",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -494,6 +911,15 @@
                             "y": 5,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.6
+                        },
+                        "vars": {
+                            "color": "8882:16353"
                         }
                     }
                 ]
@@ -515,6 +941,7 @@
                     "name": "Size=Medium, State=Default, Tone=Negative, Type=Label, Leading=Icon, Mode=None",
                     "width": 65,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -526,6 +953,53 @@
                         "g": 59,
                         "b": 68,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 24,
+                                    "y": 4,
+                                    "width": 33,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8726:12948",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -547,6 +1021,18 @@
                             "g": 59,
                             "b": 68,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8711:12151",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -559,6 +1045,15 @@
                             "y": 4,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 248,
+                            "g": 59,
+                            "b": 68,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8881:18177"
                         }
                     }
                 ]
@@ -580,6 +1075,7 @@
                     "name": "Size=Big, State=Error, Tone=Negative, Type=Label, Leading=Icon, Mode=None",
                     "width": 62,
                     "height": 24,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -591,6 +1087,53 @@
                         "g": 59,
                         "b": 68,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 28,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 40,
+                                    "y": 5,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8726:12948",
+                        "radius": "8011:715",
+                        "gap": "8011:702",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -612,6 +1155,18 @@
                             "g": 59,
                             "b": 68,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8711:12151",
+                            "fontSize": "8011:726",
+                            "lineHeight": "8012:62",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -624,6 +1179,15 @@
                             "y": 5,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 248,
+                            "g": 59,
+                            "b": 68,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8881:18177"
                         }
                     }
                 ]
@@ -645,6 +1209,7 @@
                     "name": "Size=Medium, State=Default, Tone=Positive, Type=Label, Leading=Icon, Mode=None",
                     "width": 70,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -656,6 +1221,53 @@
                         "g": 204,
                         "b": 113,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 24,
+                                    "y": 4,
+                                    "width": 38,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8674:11627",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -677,6 +1289,18 @@
                             "g": 204,
                             "b": 113,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8711:12152",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -689,6 +1313,15 @@
                             "y": 4,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 45,
+                            "g": 204,
+                            "b": 113,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8881:18176"
                         }
                     }
                 ]
@@ -710,6 +1343,7 @@
                     "name": "Size=Big, State=Running, Tone=Positive, Type=Label, Leading=Icon, Mode=None",
                     "width": 65,
                     "height": 24,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -721,6 +1355,53 @@
                         "g": 204,
                         "b": 113,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 31,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 43,
+                                    "y": 5,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8674:11627",
+                        "radius": "8011:715",
+                        "gap": "8011:702",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -742,6 +1423,18 @@
                             "g": 204,
                             "b": 113,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8711:12152",
+                            "fontSize": "8011:726",
+                            "lineHeight": "8012:62",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -754,6 +1447,15 @@
                             "y": 5,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 45,
+                            "g": 204,
+                            "b": 113,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8881:18176"
                         }
                     }
                 ]
@@ -775,6 +1477,7 @@
                     "name": "Size=Medium, State=Default, Tone=Positive, Type=Metric, Leading=None, Mode=None",
                     "width": 49,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -786,6 +1489,43 @@
                         "g": 204,
                         "b": 113,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 33,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8674:11627",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -807,6 +1547,18 @@
                             "g": 204,
                             "b": 113,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8711:12152",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -829,6 +1581,7 @@
                     "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Cool",
                     "width": 61,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -840,6 +1593,53 @@
                         "g": 204,
                         "b": 255,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 24,
+                                    "y": 4,
+                                    "width": 29,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8693:11849",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -861,6 +1661,18 @@
                             "g": 204,
                             "b": 255,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8672:12081",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -873,7 +1685,8 @@
                             "y": 4,
                             "width": 14,
                             "height": 14
-                        }
+                        },
+                        "color": null
                     }
                 ]
             }
@@ -894,6 +1707,7 @@
                     "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Dry",
                     "width": 52,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -905,6 +1719,53 @@
                         "g": 211,
                         "b": 79,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 24,
+                                    "y": 4,
+                                    "width": 20,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "10610:212860",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -926,6 +1787,18 @@
                             "g": 189,
                             "b": 32,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "10610:212859",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -938,7 +1811,8 @@
                             "y": 4,
                             "width": 14,
                             "height": 14
-                        }
+                        },
+                        "color": null
                     }
                 ]
             }
@@ -959,6 +1833,7 @@
                     "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Custom",
                     "width": 77,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -970,6 +1845,53 @@
                         "g": 204,
                         "b": 113,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 24,
+                                    "y": 4,
+                                    "width": 45,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8674:11627",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -991,6 +1913,18 @@
                             "g": 204,
                             "b": 113,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8711:12152",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1003,7 +1937,8 @@
                             "y": 4,
                             "width": 14,
                             "height": 14
-                        }
+                        },
+                        "color": null
                     }
                 ]
             }
@@ -1024,6 +1959,7 @@
                     "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Manual",
                     "width": 75,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -1035,6 +1971,53 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 24,
+                                    "y": 4,
+                                    "width": 43,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8674:11624",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -1056,6 +2039,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1068,7 +2063,8 @@
                             "y": 4,
                             "width": 14,
                             "height": 14
-                        }
+                        },
+                        "color": null
                     }
                 ]
             }
@@ -1089,6 +2085,7 @@
                     "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Time Out",
                     "width": 88,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -1100,6 +2097,53 @@
                         "g": 211,
                         "b": 79,
                         "a": 0.06
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 24,
+                                    "y": 4,
+                                    "width": 56,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "10116:155536",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -1121,6 +2165,18 @@
                             "g": 211,
                             "b": 79,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8693:11850",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1133,6 +2189,15 @@
                             "y": 4,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 255,
+                            "g": 211,
+                            "b": 79,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8881:18180"
                         }
                     }
                 ]
@@ -1154,6 +2219,7 @@
                     "name": "Size=Medium, State=Default, Tone=Positive, Type=Mode, Leading=Dot, Mode=Recondition",
                     "width": 101,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -1165,6 +2231,53 @@
                         "g": 187,
                         "b": 242,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 24,
+                                    "y": 4,
+                                    "width": 69,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8726:13116",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -1186,6 +2299,18 @@
                             "g": 187,
                             "b": 242,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8726:13110",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1198,7 +2323,8 @@
                             "y": 4,
                             "width": 14,
                             "height": 14
-                        }
+                        },
+                        "color": null
                     }
                 ]
             }
@@ -1219,6 +2345,7 @@
                     "name": "Size=Medium, State=Default, Tone=Negative, Type=Metric, Leading=None, Mode=None",
                     "width": 48,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -1230,6 +2357,43 @@
                         "g": 59,
                         "b": 68,
                         "a": 0.1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 32,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8726:12948",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -1251,6 +2415,18 @@
                             "g": 59,
                             "b": 68,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8711:12151",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1273,6 +2449,7 @@
                     "name": "Size=Medium, State=Default, Tone=Neutral, Type=Metric, Leading=None, Mode=None",
                     "width": 30,
                     "height": 22,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -1284,6 +2461,43 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8019:325",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -1305,6 +2519,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1327,6 +2553,7 @@
                     "name": "Size=Big, State=Default, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
                     "width": 98,
                     "height": 30,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -1338,6 +2565,53 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 10,
+                                    "y": 8,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 26,
+                                    "y": 8,
+                                    "width": 62,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8019:325",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:703",
+                        "paddingRight": "9152:31889",
+                        "paddingBottom": "8011:703",
+                        "paddingLeft": "9152:31889"
                     }
                 },
                 "texts": [
@@ -1359,6 +2633,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1371,6 +2657,15 @@
                             "y": 8,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -1392,6 +2687,7 @@
                     "name": "Size=Big, State=Updating, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
                     "width": 64,
                     "height": 24,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -1403,6 +2699,52 @@
                         "g": 95,
                         "b": 105,
                         "a": 0.06
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 30,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Frame 6",
+                                "text": false,
+                                "box": {
+                                    "x": 42,
+                                    "y": 5,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "radius": "8011:715",
+                        "gap": "8011:702",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:703",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:703"
                     }
                 },
                 "texts": [
@@ -1424,6 +2766,18 @@
                             "g": 200,
                             "b": 211,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "10648:215438",
+                            "fontSize": "8011:726",
+                            "lineHeight": "8012:62",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1436,6 +2790,12 @@
                             "y": 6,
                             "width": 12,
                             "height": 12
+                        },
+                        "color": {
+                            "r": 127,
+                            "g": 136,
+                            "b": 145,
+                            "a": 0.6
                         }
                     }
                 ]
@@ -1457,6 +2817,7 @@
                     "name": "Size=Big, State=Selected, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
                     "width": 98,
                     "height": 30,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -1468,6 +2829,53 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.95
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 10,
+                                    "y": 8,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 26,
+                                    "y": 8,
+                                    "width": 62,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8678:11669",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:703",
+                        "paddingRight": "9152:31889",
+                        "paddingBottom": "8011:703",
+                        "paddingLeft": "9152:31889"
                     }
                 },
                 "texts": [
@@ -1489,6 +2897,18 @@
                             "g": 21,
                             "b": 24,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8882:16090",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1501,6 +2921,15 @@
                             "y": 8,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 20,
+                            "g": 21,
+                            "b": 24,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8882:16352"
                         }
                     }
                 ]
@@ -1522,6 +2951,7 @@
                     "name": "Size=Big, State=Disabled, Tone=Neutral, Type=Label, Leading=Icon, Mode=None",
                     "width": 98,
                     "height": 30,
+                    "hugWidth": true,
                     "radius": [
                         4,
                         4,
@@ -1533,6 +2963,53 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "CENTER",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 10,
+                                    "y": 8,
+                                    "width": 14,
+                                    "height": 14
+                                }
+                            },
+                            {
+                                "name": "Label",
+                                "text": true,
+                                "box": {
+                                    "x": 26,
+                                    "y": 8,
+                                    "width": 62,
+                                    "height": 14
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8019:325",
+                        "radius": "8011:715",
+                        "gap": "8011:701",
+                        "paddingTop": "8011:703",
+                        "paddingRight": "9152:31889",
+                        "paddingBottom": "8011:703",
+                        "paddingLeft": "9152:31889"
                     }
                 },
                 "texts": [
@@ -1554,6 +3031,18 @@
                             "g": 89,
                             "b": 89,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8882:16092",
+                            "fontSize": "8011:725",
+                            "lineHeight": "8012:61",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1566,6 +3055,15 @@
                             "y": 8,
                             "width": 14,
                             "height": 14
+                        },
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8882:16354"
                         }
                     }
                 ]
@@ -1587,6 +3085,7 @@
                     "name": "Size=Medium, State=Default, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
                     "width": 39,
                     "height": 24,
+                    "hugWidth": true,
                     "radius": [
                         1000,
                         1000,
@@ -1598,6 +3097,53 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Container",
+                                "text": false,
+                                "box": {
+                                    "x": 6,
+                                    "y": 4,
+                                    "width": 11,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Chevron Container",
+                                "text": false,
+                                "box": {
+                                    "x": 17,
+                                    "y": 2,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8815:24838",
+                        "radius": "8011:721",
+                        "gap": "8011:700",
+                        "paddingTop": "8011:701",
+                        "paddingRight": "8011:701",
+                        "paddingBottom": "8011:701",
+                        "paddingLeft": "8011:712"
                     }
                 },
                 "texts": [
@@ -1619,6 +3165,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:726",
+                            "lineHeight": "8012:62",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1631,6 +3189,15 @@
                             "y": 2,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -1652,6 +3219,7 @@
                     "name": "Size=Medium, State=Default, Tone=Neutral, Type=Count, Leading=without Chevron, Mode=None",
                     "width": 24,
                     "height": 24,
+                    "hugWidth": false,
                     "radius": [
                         1000,
                         1000,
@@ -1663,6 +3231,42 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "SPACE_BETWEEN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": false,
+                        "children": [
+                            {
+                                "name": "Section Title",
+                                "text": true,
+                                "box": {
+                                    "x": 8,
+                                    "y": 4,
+                                    "width": 8,
+                                    "height": 16
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8815:24838",
+                        "radius": "8011:721",
+                        "paddingTop": "8011:702",
+                        "paddingRight": "8011:712",
+                        "paddingBottom": "8011:702",
+                        "paddingLeft": "8011:712"
                     }
                 },
                 "texts": [
@@ -1684,6 +3288,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:726",
+                            "lineHeight": "8012:62",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1706,6 +3322,7 @@
                     "name": "Size=Medium, State=Hover, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
                     "width": 39,
                     "height": 24,
+                    "hugWidth": true,
                     "radius": [
                         1000,
                         1000,
@@ -1717,6 +3334,53 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.06
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Container",
+                                "text": false,
+                                "box": {
+                                    "x": 6,
+                                    "y": 4,
+                                    "width": 11,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Chevron Container",
+                                "text": false,
+                                "box": {
+                                    "x": 17,
+                                    "y": 2,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8196:325",
+                        "radius": "8011:721",
+                        "gap": "8011:700",
+                        "paddingTop": "8011:701",
+                        "paddingRight": "8011:701",
+                        "paddingBottom": "8011:701",
+                        "paddingLeft": "8011:712"
                     }
                 },
                 "texts": [
@@ -1738,6 +3402,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:726",
+                            "lineHeight": "8012:62",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1750,6 +3426,15 @@
                             "y": 2,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -1771,6 +3456,7 @@
                     "name": "Size=Medium, State=Pressed, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
                     "width": 39,
                     "height": 24,
+                    "hugWidth": true,
                     "radius": [
                         1000,
                         1000,
@@ -1782,6 +3468,53 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.08
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Container",
+                                "text": false,
+                                "box": {
+                                    "x": 6,
+                                    "y": 4,
+                                    "width": 11,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Chevron Container",
+                                "text": false,
+                                "box": {
+                                    "x": 17,
+                                    "y": 2,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8196:328",
+                        "radius": "8011:721",
+                        "gap": "8011:700",
+                        "paddingTop": "8011:701",
+                        "paddingRight": "8011:701",
+                        "paddingBottom": "8011:701",
+                        "paddingLeft": "8011:712"
                     }
                 },
                 "texts": [
@@ -1803,6 +3536,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:726",
+                            "lineHeight": "8012:62",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1815,6 +3560,15 @@
                             "y": 2,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -1836,6 +3590,7 @@
                     "name": "Size=Medium, State=Focus, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
                     "width": 39,
                     "height": 24,
+                    "hugWidth": true,
                     "radius": [
                         1000,
                         1000,
@@ -1847,6 +3602,65 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Container",
+                                "text": false,
+                                "box": {
+                                    "x": 6,
+                                    "y": 4,
+                                    "width": 11,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Chevron Container",
+                                "text": false,
+                                "box": {
+                                    "x": 17,
+                                    "y": 2,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8196:327",
+                        "stroke": "8691:11862",
+                        "radius": "8011:721",
+                        "gap": "8011:700",
+                        "paddingTop": "8011:701",
+                        "paddingRight": "8011:701",
+                        "paddingBottom": "8011:701",
+                        "paddingLeft": "8011:712"
                     }
                 },
                 "texts": [
@@ -1868,6 +3682,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:726",
+                            "lineHeight": "8012:62",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1880,6 +3706,15 @@
                             "y": 2,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -1901,6 +3736,7 @@
                     "name": "Size=Medium, State=Expanded, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
                     "width": 39,
                     "height": 24,
+                    "hugWidth": true,
                     "radius": [
                         1000,
                         1000,
@@ -1912,6 +3748,53 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Container",
+                                "text": false,
+                                "box": {
+                                    "x": 6,
+                                    "y": 4,
+                                    "width": 11,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Chevron Container",
+                                "text": false,
+                                "box": {
+                                    "x": 17,
+                                    "y": 2,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8815:24838",
+                        "radius": "8011:721",
+                        "gap": "8011:700",
+                        "paddingTop": "8011:701",
+                        "paddingRight": "8011:701",
+                        "paddingBottom": "8011:701",
+                        "paddingLeft": "8011:712"
                     }
                 },
                 "texts": [
@@ -1933,6 +3816,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:726",
+                            "lineHeight": "8012:62",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -1945,6 +3840,15 @@
                             "y": 2,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -1966,6 +3870,7 @@
                     "name": "Size=Medium, State=Disabled, Tone=Neutral, Type=Count, Leading=Chevron, Mode=None",
                     "width": 39,
                     "height": 24,
+                    "hugWidth": true,
                     "radius": [
                         1000,
                         1000,
@@ -1977,6 +3882,53 @@
                         "g": 254,
                         "b": 254,
                         "a": 0.04
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Container",
+                                "text": false,
+                                "box": {
+                                    "x": 6,
+                                    "y": 4,
+                                    "width": 11,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Chevron Container",
+                                "text": false,
+                                "box": {
+                                    "x": 17,
+                                    "y": 2,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8196:329",
+                        "radius": "8011:721",
+                        "gap": "8011:700",
+                        "paddingTop": "8011:701",
+                        "paddingRight": "8011:701",
+                        "paddingBottom": "8011:701",
+                        "paddingLeft": "8011:712"
                     }
                 },
                 "texts": [
@@ -1998,6 +3950,18 @@
                             "g": 89,
                             "b": 89,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8882:16092",
+                            "fontSize": "8011:726",
+                            "lineHeight": "8012:62",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:59"
                         }
                     }
                 ],
@@ -2010,6 +3974,15 @@
                             "y": 2,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 89,
+                            "g": 89,
+                            "b": 89,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8882:16354"
                         }
                     }
                 ]

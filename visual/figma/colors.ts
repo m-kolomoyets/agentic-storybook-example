@@ -8,8 +8,48 @@ import tokensCss from '../../src/styles/tokens.css?raw';
 
 const canvas = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
 
-/** Any CSS colour (hsl, oklch, color-mix, …) → sRGB bytes, via the canvas so the browser does the conversion. */
+/** `rgb(1, 2, 3)`, `rgba(1, 2, 3, 0.1)`, `rgb(1 2 3 / 10%)`: the computed-value form of legacy sRGB colours. */
+function parseRgb(value: string): Rgba | null {
+    const match = /^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)(?:\s*[,/]\s*([\d.]+)(%?))?\s*\)$/.exec(value.trim());
+    if (!match) {
+        return null;
+    }
+    const [, r = '0', g = '0', b = '0', alpha, unit] = match;
+    const a = alpha === undefined ? 1 : Number(alpha) / (unit ? 100 : 1);
+
+    return {
+        r: Math.round(Number(r)),
+        g: Math.round(Number(g)),
+        b: Math.round(Number(b)),
+        a: Math.round(a * 1000) / 1000,
+    };
+}
+
+/** Resolves a colour to its computed value (hsl/hex/named → `rgb[a]()`), on a probe in the document. */
+let probe: HTMLElement | null = null;
+function computedColor(cssColor: string): string {
+    probe ??= document.createElement('span');
+    if (!probe.isConnected) {
+        // Tests reset the body between stories.
+        probe.hidden = true;
+        document.body.append(probe);
+    }
+    probe.style.color = '';
+    probe.style.color = cssColor;
+
+    return probe.style.color ? getComputedStyle(probe).color : cssColor;
+}
+
+/**
+ * Any CSS colour → sRGB bytes. Legacy sRGB syntaxes are parsed exactly from their computed value; others (oklch,
+ * color-mix, …) go through a canvas. The canvas stores premultiplied bytes, so a translucent colour comes back with
+ * channels off by up to 255/(255·α) (≈10 at α 0.1): exact parsing first keeps those from reading as mismatches.
+ */
 export function toRgba(cssColor: string): Rgba {
+    const exact = parseRgb(cssColor) ?? parseRgb(computedColor(cssColor));
+    if (exact) {
+        return exact;
+    }
     if (!canvas) {
         throw new Error('2d canvas unavailable');
     }
@@ -82,7 +122,18 @@ function parseTokens(): Token[] {
 
 let tokenCache: Token[] | null = null;
 
-function distance(a: Rgba, b: Rgba): number {
+/** A kit colour token's value, aliases resolved; null when the kit has no such token. */
+export function tokenColor(name: string): Rgba | null {
+    tokenCache ??= parseTokens();
+
+    return (
+        tokenCache.find((token) => {
+            return token.name === name;
+        })?.rgba ?? null
+    );
+}
+
+export function distance(a: Rgba, b: Rgba): number {
     return Math.max(Math.abs(a.r - b.r), Math.abs(a.g - b.g), Math.abs(a.b - b.b), Math.abs(a.a - b.a) * 255);
 }
 
@@ -90,8 +141,17 @@ function distance(a: Rgba, b: Rgba): number {
  * The kit token nearest to a colour: `= --alias → --primitive` within `exact` per channel, else `≈ … (Δn)` with the
  * largest channel difference. Several tokens share a value: the first semantic alias is named, then the primitive.
  */
-export function nearestToken(color: Rgba, exact: number): string {
+export function nearestToken(color: Rgba, exact: number, prefer?: string | null): string {
     tokenCache ??= parseTokens();
+    // Several tokens can share a value: when the one Figma binds is among them, name it.
+    const preferred = prefer
+        ? tokenCache.find((token) => {
+              return token.name === prefer;
+          })
+        : undefined;
+    if (preferred && distance(color, preferred.rgba) <= exact) {
+        return `= ${preferred.name}`;
+    }
     let best = Infinity;
     for (const token of tokenCache) {
         best = Math.min(best, distance(color, token.rgba));
@@ -109,4 +169,55 @@ export function nearestToken(color: Rgba, exact: number): string {
     const more = matches.length > 2 ? ` +${matches.length - 2}` : '';
 
     return best <= exact ? `= ${names}${more}` : `≈ ${names}${more} (Δ${Math.round(best)})`;
+}
+
+/** Source-over of `top` (straight alpha) on `under`, which is treated as opaque: what the eye sees. */
+export function over(top: Rgba, under: Rgba): Rgba {
+    const mix = (front: number, back: number) => {
+        return front * top.a + back * (1 - top.a);
+    };
+
+    return { r: mix(top.r, under.r), g: mix(top.g, under.g), b: mix(top.b, under.b), a: 1 };
+}
+
+function linear(channel: number): number {
+    const value = channel / 255;
+
+    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+}
+
+/** WCAG relative luminance of an opaque colour. */
+export function luminance(color: Rgba): number {
+    return 0.2126 * linear(color.r) + 0.7152 * linear(color.g) + 0.0722 * linear(color.b);
+}
+
+/** WCAG contrast ratio of two opaque colours, 1–21. */
+export function contrastRatio(a: Rgba, b: Rgba): number {
+    const [light = 0, dark = 0] = [luminance(a), luminance(b)].sort((x, y) => {
+        return y - x;
+    });
+
+    return (light + 0.05) / (dark + 0.05);
+}
+
+/** sRGB → OKLab (Björn Ottosson's matrices, as CSS Color 4 uses them). */
+function oklab(color: Rgba): [number, number, number] {
+    const [r, g, b] = [linear(color.r), linear(color.g), linear(color.b)];
+    const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+    const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+    const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+
+    return [
+        0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s,
+        1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s,
+        0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s,
+    ];
+}
+
+/** CSS Color 4 `deltaEOK`: Euclidean distance in OKLab between two opaque colours (0 same, ~1 black vs white). */
+export function deltaEOK(a: Rgba, b: Rgba): number {
+    const [l1, a1, b1] = oklab(a);
+    const [l2, a2, b2] = oklab(b);
+
+    return Math.hypot(l1 - l2, a1 - a2, b1 - b2);
 }

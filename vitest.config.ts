@@ -116,29 +116,34 @@ function vrtProjects(): TestProjectInlineConfiguration[] {
         }),
         // Not regression: compares stories against Figma itself (visual/README.md → "Figma reference").
         // Reference PNGs are Figma's 2x exports, so the page renders at DPR 2.
-        vrtProject('vrt-figma', {
-            tag: FIGMA_TAG,
-            deviceScaleFactor: FIGMA_SCALE,
-            test: {
-                setupFiles: ['./visual/figma/setup.ts'],
-                // Every cell of a matrix is captured in one afterEach (Button: ~120 cells).
-                hookTimeout: 300_000,
-                attachmentsDir: FIGMA_RESULTS_DIR,
-                api: { allowWrite: true },
-                browser: {
-                    commands: { figmaSaveFlatRef, figmaSaveStoryResult },
-                    expect: {
-                        toMatchScreenshot: {
-                            resolveScreenshotPath: ({ arg, ext, root }) => {
-                                return path.join(root, FIGMA_FLAT_REFS_DIR, `${arg}${ext}`);
-                            },
-                            resolveDiffPath: ({ arg, ext, root }) => {
-                                return path.join(root, FIGMA_RESULTS_DIR, `${arg}${ext}`);
+        {
+            ...vrtProject('vrt-figma', {
+                tag: FIGMA_TAG,
+                deviceScaleFactor: FIGMA_SCALE,
+                test: {
+                    setupFiles: ['./visual/figma/setup.ts'],
+                    // Every cell of a matrix is captured in one afterEach (Button: ~120 cells).
+                    hookTimeout: 300_000,
+                    attachmentsDir: FIGMA_RESULTS_DIR,
+                    api: { allowWrite: true },
+                    browser: {
+                        commands: { figmaSaveFlatRef, figmaSaveStoryResult },
+                        expect: {
+                            toMatchScreenshot: {
+                                resolveScreenshotPath: ({ arg, ext, root }) => {
+                                    return path.join(root, FIGMA_FLAT_REFS_DIR, `${arg}${ext}`);
+                                },
+                                resolveDiffPath: ({ arg, ext, root }) => {
+                                    return path.join(root, FIGMA_RESULTS_DIR, `${arg}${ext}`);
+                                },
                             },
                         },
                     },
                 },
-            },
-        }),
+            }),
+            // spec.ts fingerprints kit icons with react-dom/server: pre-bundle it, or the first run re-optimises
+            // mid-test and the run fails on missing optimised chunks.
+            optimizeDeps: { include: ['react-dom/server'] },
+        },
     ];
 }

@@ -51,6 +51,7 @@
                     "name": "State=Default, Size=Medium",
                     "width": 205,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -62,6 +63,63 @@
                         "g": 59,
                         "b": 68,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 169,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18684",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8019:448",
+                        "paddingRight": "8019:449",
+                        "paddingBottom": "8019:448",
+                        "paddingLeft": "8019:449"
                     }
                 },
                 "texts": [
@@ -83,6 +141,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -95,6 +165,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -105,6 +184,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -122,6 +210,7 @@
                     "name": "State=Default, Size=Big",
                     "width": 221,
                     "height": 56,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -133,6 +222,63 @@
                         "g": 59,
                         "b": 68,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 24,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 50,
+                                    "y": 16,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 177,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18684",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8019:449",
+                        "paddingRight": "8019:450",
+                        "paddingBottom": "8019:449",
+                        "paddingLeft": "8019:450"
                     }
                 },
                 "texts": [
@@ -154,6 +300,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -166,6 +324,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -176,6 +343,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -193,6 +369,7 @@
                     "name": "State=Default, Size=Small",
                     "width": 174,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -204,6 +381,63 @@
                         "g": 59,
                         "b": 68,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 12,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 34,
+                                    "y": 10,
+                                    "width": 106,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 146,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18684",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "9152:31890",
+                        "paddingRight": "8019:448",
+                        "paddingBottom": "9152:31890",
+                        "paddingLeft": "8011:704"
                     }
                 },
                 "texts": [
@@ -225,6 +459,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -237,6 +483,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -247,6 +502,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -264,6 +528,7 @@
                     "name": "State=Hover, Size=Small",
                     "width": 174,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -275,6 +540,63 @@
                         "g": 29,
                         "b": 38,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 12,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 34,
+                                    "y": 10,
+                                    "width": 106,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 146,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18770",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "9152:31890",
+                        "paddingRight": "8019:448",
+                        "paddingBottom": "9152:31890",
+                        "paddingLeft": "8011:704"
                     }
                 },
                 "texts": [
@@ -296,6 +618,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -308,6 +642,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -318,6 +661,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -335,6 +687,7 @@
                     "name": "State=Focused, Size=Small",
                     "width": 174,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -346,6 +699,75 @@
                         "g": 59,
                         "b": 68,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 12,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 34,
+                                    "y": 10,
+                                    "width": 106,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 146,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18772",
+                        "stroke": "8691:11862",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "9152:31890",
+                        "paddingRight": "8019:448",
+                        "paddingBottom": "9152:31890",
+                        "paddingLeft": "8011:704"
                     }
                 },
                 "texts": [
@@ -367,6 +789,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -379,6 +813,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -389,6 +832,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -406,6 +858,7 @@
                     "name": "State=Pressed, Size=Small",
                     "width": 174,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -417,6 +870,63 @@
                         "g": 20,
                         "b": 28,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 12,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 34,
+                                    "y": 10,
+                                    "width": 106,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 146,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18774",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "9152:31890",
+                        "paddingRight": "8019:448",
+                        "paddingBottom": "9152:31890",
+                        "paddingLeft": "8011:704"
                     }
                 },
                 "texts": [
@@ -438,6 +948,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -450,6 +972,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -460,6 +991,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -477,6 +1017,7 @@
                     "name": "State=Disabled, Size=Small",
                     "width": 174,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -488,6 +1029,63 @@
                         "g": 59,
                         "b": 68,
                         "a": 0.6
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 12,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 34,
+                                    "y": 10,
+                                    "width": 106,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 146,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18775",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "9152:31890",
+                        "paddingRight": "8019:448",
+                        "paddingBottom": "9152:31890",
+                        "paddingLeft": "8011:704"
                     }
                 },
                 "texts": [
@@ -509,6 +1107,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 0.5
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8885:21167",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -521,6 +1131,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        },
+                        "vars": {
+                            "color": "8885:21168"
                         }
                     },
                     {
@@ -531,6 +1150,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        },
+                        "vars": {
+                            "color": "8885:21168"
                         }
                     }
                 ]
@@ -548,6 +1176,7 @@
                     "name": "State=Loading, Size=Small",
                     "width": 174,
                     "height": 40,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -559,6 +1188,63 @@
                         "g": 59,
                         "b": 68,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Loader Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 12,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 34,
+                                    "y": 10,
+                                    "width": 106,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Loader Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 146,
+                                    "y": 12,
+                                    "width": 16,
+                                    "height": 16
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18771",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "9152:31890",
+                        "paddingRight": "8019:448",
+                        "paddingBottom": "9152:31890",
+                        "paddingLeft": "8011:704"
                     }
                 },
                 "texts": [
@@ -580,6 +1266,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:727",
+                            "lineHeight": "8012:63",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -592,6 +1290,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -602,6 +1309,15 @@
                             "y": 12,
                             "width": 16,
                             "height": 16
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -619,6 +1335,7 @@
                     "name": "State=Hover, Size=Medium",
                     "width": 205,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -630,6 +1347,63 @@
                         "g": 29,
                         "b": 38,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 169,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18770",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8019:448",
+                        "paddingRight": "8019:449",
+                        "paddingBottom": "8019:448",
+                        "paddingLeft": "8011:705"
                     }
                 },
                 "texts": [
@@ -651,6 +1425,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -663,6 +1449,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -673,6 +1468,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -690,6 +1494,7 @@
                     "name": "State=Hover, Size=Big",
                     "width": 221,
                     "height": 56,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -701,6 +1506,63 @@
                         "g": 29,
                         "b": 38,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 24,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 50,
+                                    "y": 16,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 177,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18770",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8019:449",
+                        "paddingRight": "8019:450",
+                        "paddingBottom": "8019:449",
+                        "paddingLeft": "8011:706"
                     }
                 },
                 "texts": [
@@ -722,6 +1584,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -734,6 +1608,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -744,6 +1627,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -761,6 +1653,7 @@
                     "name": "State=Loading, Size=Medium",
                     "width": 205,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -772,6 +1665,63 @@
                         "g": 59,
                         "b": 68,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Loader Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Loader Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 169,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18771",
+                        "radius": "8011:717",
+                        "gap": "8019:446",
+                        "paddingTop": "8019:448",
+                        "paddingRight": "8019:449",
+                        "paddingBottom": "8019:448",
+                        "paddingLeft": "8011:705"
                     }
                 },
                 "texts": [
@@ -793,6 +1743,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -805,6 +1767,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -815,6 +1786,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -832,6 +1812,7 @@
                     "name": "State=Loading, Size=Big",
                     "width": 221,
                     "height": 56,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -843,6 +1824,63 @@
                         "g": 59,
                         "b": 68,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Loader Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 24,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 50,
+                                    "y": 16,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Loader Secondary Button",
+                                "text": false,
+                                "box": {
+                                    "x": 177,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18771",
+                        "radius": "8011:717",
+                        "gap": "8019:446",
+                        "paddingTop": "8019:449",
+                        "paddingRight": "8019:450",
+                        "paddingBottom": "8019:449",
+                        "paddingLeft": "8011:706"
                     }
                 },
                 "texts": [
@@ -864,6 +1902,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -876,6 +1926,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -886,6 +1945,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -903,6 +1971,7 @@
                     "name": "State=Focused, Size=Medium",
                     "width": 205,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -914,6 +1983,75 @@
                         "g": 59,
                         "b": 68,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 169,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18772",
+                        "stroke": "8691:11862",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8019:448",
+                        "paddingRight": "8019:449",
+                        "paddingBottom": "8019:448",
+                        "paddingLeft": "8011:705"
                     }
                 },
                 "texts": [
@@ -935,6 +2073,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -947,6 +2097,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -957,6 +2116,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -974,6 +2142,7 @@
                     "name": "State=Focused, Size=Big",
                     "width": 221,
                     "height": 56,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -985,6 +2154,75 @@
                         "g": 59,
                         "b": 68,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": {
+                        "weight": 1,
+                        "sides": null,
+                        "align": "INSIDE",
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "dashed": false
+                    },
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 24,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 50,
+                                    "y": 16,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 177,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18772",
+                        "stroke": "8691:11862",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8019:449",
+                        "paddingRight": "8019:450",
+                        "paddingBottom": "8019:449",
+                        "paddingLeft": "8011:706"
                     }
                 },
                 "texts": [
@@ -1006,6 +2244,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -1018,6 +2268,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -1028,6 +2287,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -1045,6 +2313,7 @@
                     "name": "State=Pressed, Size=Medium",
                     "width": 205,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -1056,6 +2325,63 @@
                         "g": 20,
                         "b": 28,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 169,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18774",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8019:448",
+                        "paddingRight": "8019:449",
+                        "paddingBottom": "8019:448",
+                        "paddingLeft": "8011:705"
                     }
                 },
                 "texts": [
@@ -1077,6 +2403,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -1089,6 +2427,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -1099,6 +2446,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -1116,6 +2472,7 @@
                     "name": "State=Pressed, Size=Big",
                     "width": 221,
                     "height": 56,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -1127,6 +2484,63 @@
                         "g": 20,
                         "b": 28,
                         "a": 1
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 24,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 50,
+                                    "y": 16,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 177,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18774",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8019:449",
+                        "paddingRight": "8019:450",
+                        "paddingBottom": "8019:449",
+                        "paddingLeft": "8011:706"
                     }
                 },
                 "texts": [
@@ -1148,6 +2562,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 1
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8016:312",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -1160,6 +2586,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     },
                     {
@@ -1170,6 +2605,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 1
+                        },
+                        "vars": {
+                            "color": "8015:8071"
                         }
                     }
                 ]
@@ -1187,6 +2631,7 @@
                     "name": "State=Disabled, Size=Medium",
                     "width": 205,
                     "height": 48,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -1198,6 +2643,63 @@
                         "g": 59,
                         "b": 68,
                         "a": 0.6
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 16,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 42,
+                                    "y": 12,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 169,
+                                    "y": 14,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18775",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8019:448",
+                        "paddingRight": "8019:449",
+                        "paddingBottom": "8019:448",
+                        "paddingLeft": "8011:705"
                     }
                 },
                 "texts": [
@@ -1219,6 +2721,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 0.5
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8885:21167",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -1231,6 +2745,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        },
+                        "vars": {
+                            "color": "8885:21167"
                         }
                     },
                     {
@@ -1241,6 +2764,15 @@
                             "y": 14,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        },
+                        "vars": {
+                            "color": "8885:21167"
                         }
                     }
                 ]
@@ -1258,6 +2790,7 @@
                     "name": "State=Disabled, Size=Big",
                     "width": 221,
                     "height": 56,
+                    "hugWidth": true,
                     "radius": [
                         8,
                         8,
@@ -1269,6 +2802,63 @@
                         "g": 59,
                         "b": 68,
                         "a": 0.6
+                    },
+                    "fillTypes": [],
+                    "opacity": 1,
+                    "stroke": null,
+                    "shadows": [],
+                    "blendMode": null,
+                    "blur": {
+                        "layer": null,
+                        "background": null
+                    },
+                    "layout": {
+                        "direction": "HORIZONTAL",
+                        "primaryAlign": "MIN",
+                        "counterAlign": "CENTER",
+                        "wrap": false,
+                        "hugPrimary": true,
+                        "children": [
+                            {
+                                "name": "Destructive Button Left Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 24,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Text",
+                                "text": true,
+                                "box": {
+                                    "x": 50,
+                                    "y": 16,
+                                    "width": 121,
+                                    "height": 24
+                                }
+                            },
+                            {
+                                "name": "Destructive Button Right Icon",
+                                "text": false,
+                                "box": {
+                                    "x": 177,
+                                    "y": 18,
+                                    "width": 20,
+                                    "height": 20
+                                }
+                            }
+                        ]
+                    },
+                    "vars": {
+                        "fill": "8274:18775",
+                        "radius": "8011:717",
+                        "gap": "8011:712",
+                        "paddingTop": "8019:449",
+                        "paddingRight": "8019:450",
+                        "paddingBottom": "8019:449",
+                        "paddingLeft": "8011:706"
                     }
                 },
                 "texts": [
@@ -1290,6 +2880,18 @@
                             "g": 254,
                             "b": 254,
                             "a": 0.5
+                        },
+                        "textCase": "ORIGINAL",
+                        "textDecoration": "NONE",
+                        "textAlign": "CENTER",
+                        "autoResize": "WIDTH_AND_HEIGHT",
+                        "truncate": false,
+                        "vars": {
+                            "color": "8885:21167",
+                            "fontSize": "8011:728",
+                            "lineHeight": "8012:64",
+                            "fontFamily": "8011:722",
+                            "fontWeight": "8012:60"
                         }
                     }
                 ],
@@ -1302,6 +2904,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        },
+                        "vars": {
+                            "color": "8885:21167"
                         }
                     },
                     {
@@ -1312,6 +2923,15 @@
                             "y": 18,
                             "width": 20,
                             "height": 20
+                        },
+                        "color": {
+                            "r": 254,
+                            "g": 254,
+                            "b": 254,
+                            "a": 0.5
+                        },
+                        "vars": {
+                            "color": "8885:21167"
                         }
                     }
                 ]

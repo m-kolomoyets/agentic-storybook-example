@@ -51,6 +51,16 @@ Mapping legwork, per block: read the set's `axes` in `visual/figma/__refs__/<fil
 
 **Done when** every changed set has a one-line summary of what moved in Figma.
 
+### Variables
+
+When a sync warns `N bound Figma variables have no name` (new bindings after a refresh or a new set), name them; rows show those by id until then. The REST variables endpoint is Enterprise-only, so names come from the Plugin API:
+
+1. `pnpm vrt figma --variables-script` prints a read-only script for the unnamed ids.
+2. Run it with the Figma MCP `use_figma` on file `GPPlxspxcbP4kc13YwNJTH` (load `figma-use` first; it only reads `figma.variables`).
+3. Save the returned `lines` value verbatim to a scratch file, then `pnpm vrt figma --variables <file> <fnv>` with the returned `fnv`. A checksum mismatch means the lines changed in transit: copy them again, never edit them.
+
+**Done when** the sync prints no unnamed-variables warning and `visual/figma/__refs__/variables.json` is updated.
+
 ## 5. Run
 
 `pnpm vrt figma`, then MCP `test-run` on the touched stories (play functions and axe; the Figma run doesn't cover a11y).

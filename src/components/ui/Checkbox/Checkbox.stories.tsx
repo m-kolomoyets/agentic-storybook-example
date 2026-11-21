@@ -7,7 +7,6 @@ import { expect, fn } from 'storybook/test';
 import { Checkbox } from '.';
 import { FigmaMatrix as FigmaMatrixGrid } from '../../../../visual/figma/FigmaMatrix';
 import { FIGMA_SETS } from '../../../../visual/figma/sets';
-import { FIGMA_COMPARE_GLOBAL } from '../../../../visual/figma/types';
 
 const FIGMA = 'https://www.figma.com/design/GPPlxspxcbP4kc13YwNJTH/Amber-UI-kit?node-id=';
 
@@ -138,15 +137,14 @@ const STATES = ['default', 'hover', 'pressed', 'focused', 'disabled'] as const;
 const STATUSES = ['unchecked', 'checked', 'indeterminate'] as const;
 const SIZES: CheckboxSize[] = ['lg', 'md'];
 
-/** Pins for states a static canvas can't trigger — the same tokens the component's gates apply. */
-const FORCED: Record<(typeof STATES)[number], string> = {
-    default: '',
-    hover: 'text-border-control-hover',
-    // No Figma cell binds this token; without it there is no pointer-down feedback.
-    pressed: 'text-border-control-pressed',
-    // Figma `State=Active` (9183:5532), shipped as `focus-visible`.
-    focused: 'text-border-focused',
-    disabled: '',
+/**
+ * States a static canvas can't trigger: `data-force` turns on the component's own state classes, gates included
+ * (.storybook/preview.css). Figma `State=Active` ships as `focus-visible`; `pressed` has no Figma cell.
+ */
+const FORCE: Partial<Record<(typeof STATES)[number], string>> = {
+    hover: 'hover',
+    pressed: 'active',
+    focused: 'focus-visible',
 };
 
 /**
@@ -191,7 +189,7 @@ export const Matrix = meta.story({
                                                     checked={status === 'checked'}
                                                     indeterminate={status === 'indeterminate'}
                                                     disabled={state === 'disabled'}
-                                                    className={FORCED[state]}
+                                                    data-force={FORCE[state]}
                                                 />
                                                 <span className="sr-only">{`${size} ${status} ${state}`}</span>
                                             </CheckboxLabel>
@@ -207,7 +205,7 @@ export const Matrix = meta.story({
     },
 });
 
-/** Figma `State` → the `FORCED` pin of `Matrix` (Figma `Active` ships as focus-visible). */
+/** Figma `State` → the `FORCE` attribute of `Matrix` (Figma `Active` ships as focus-visible). */
 const FIGMA_STATE: Record<string, (typeof STATES)[number]> = {
     Default: 'default',
     Hover: 'hover',
@@ -224,16 +222,13 @@ const FIGMA_BLOCK = { set: FIGMA_SETS.checkbox, layout: { sections: 'Size', colu
 export const FigmaMatrix = meta.story({
     tags: ['figma', '!autodocs'],
     parameters: {
+        // Full width: the card grid sizes its columns from the canvas.
+        layout: 'fullscreen',
         design: { type: 'figma', url: FIGMA_SETS.checkbox },
         figmaMatrix: { blocks: [FIGMA_BLOCK] },
     },
-    render: function FigmaMatrixStory(_args, { globals }) {
-        return (
-            <FigmaMatrixGrid
-                compare={globals[FIGMA_COMPARE_GLOBAL]}
-                blocks={[{ ...FIGMA_BLOCK, renderCell: figmaCheckbox }]}
-            />
-        );
+    render: function FigmaMatrixStory(_args, context) {
+        return <FigmaMatrixGrid context={context} blocks={[{ ...FIGMA_BLOCK, renderCell: figmaCheckbox }]} />;
     },
 });
 
@@ -249,7 +244,7 @@ function figmaCheckbox(variant: FigmaVariant) {
                 checked={status === 'Checked'}
                 indeterminate={status === 'Indeterminate'}
                 disabled={state === 'disabled'}
-                className={FORCED[state]}
+                data-force={FORCE[state]}
             />
             <span className="sr-only">{variant.name}</span>
         </CheckboxLabel>

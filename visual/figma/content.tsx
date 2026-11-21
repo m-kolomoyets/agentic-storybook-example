@@ -3,12 +3,16 @@
 // `Icons/Chevron Down`) → kebab-case kit SVG (`star-four.svg`, `chevron-down.svg`).
 import type { FC, SVGProps } from 'react';
 import type { FigmaVariant } from './types.ts';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 const ICONS = import.meta.glob<FC<SVGProps<SVGSVGElement>>>('../../src/assets/icons/*.svg', {
     eager: true,
     query: '?react',
     import: 'default',
 });
+
+const PREFIX = '../../src/assets/icons/';
 
 /** `Icons/Chevron Down` → `chevron-down`; `StarFour` → `star-four`. */
 function kebab(figmaName: string): string {
@@ -21,9 +25,46 @@ function kebab(figmaName: string): string {
 
 /** The kit icon a Figma glyph names, or null (spinners and other non-icon glyphs have no kit SVG). */
 export function KitIcon({ figma }: { figma: string | null }) {
-    const Icon = figma ? ICONS[`../../src/assets/icons/${kebab(figma)}.svg`] : undefined;
+    const Icon = figma ? ICONS[`${PREFIX}${kebab(figma)}.svg`] : undefined;
 
     return Icon ? <Icon /> : null;
+}
+
+const SHAPES = 'path, circle, ellipse, rect, polygon, polyline, line';
+const GEOMETRY = ['d', 'cx', 'cy', 'r', 'rx', 'ry', 'x', 'y', 'width', 'height', 'points', 'x1', 'y1', 'x2', 'y2'];
+
+/** viewBox + every shape's geometry: identical for two renders of one kit SVG, whatever their size or colour. */
+function fingerprint(svg: Element): string {
+    const shapes = [...svg.querySelectorAll(SHAPES)].map((shape) => {
+        return `${shape.tagName}:${GEOMETRY.map((name) => {
+            return shape.getAttribute(name) ?? '';
+        }).join(',')}`;
+    });
+
+    return `${svg.getAttribute('viewBox') ?? ''}|${shapes.join(';')}`;
+}
+
+let prints: Map<string, string> | null = null;
+
+/** The kit SVG file a Figma glyph names (`StarFour` → `star-four.svg`), or null when the kit has none. */
+export function kitIconFile(figma: string | null): string | null {
+    const file = figma ? `${kebab(figma)}.svg` : null;
+
+    return file && ICONS[`${PREFIX}${file}`] ? file : null;
+}
+
+/** The kit SVG file a rendered `<svg>` was made from, matched by geometry; null when it isn't a kit icon. */
+export function kitIconOf(svg: Element): string | null {
+    if (!prints) {
+        prints = new Map();
+        for (const [path, Icon] of Object.entries(ICONS)) {
+            const markup = renderToStaticMarkup(createElement(Icon));
+            const parsed = new DOMParser().parseFromString(markup, 'image/svg+xml').documentElement;
+            prints.set(fingerprint(parsed), path.slice(PREFIX.length));
+        }
+    }
+
+    return prints.get(fingerprint(svg)) ?? null;
 }
 
 export type FigmaContent = {

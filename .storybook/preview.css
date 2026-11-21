@@ -1,0 +1,24 @@
+/* Storybook entry: the kit CSS plus test-only state forcing. Not shipped — the app imports src/styles/index.css. */
+@import "../src/styles/index.css";
+
+/*
+ * `data-force="hover active focus-visible"` (any subset) turns on those state variants statically, so Matrix and
+ * FigmaMatrix cells paint the component's own state classes — gates included — instead of copied pins.
+ * Same variant order as Tailwind's built-ins, so precedence is unchanged; `group-*` and `not-*` compose as usual.
+ */
+/* stylelint-disable nesting-selector-no-missing-scoping-root -- `&` is the variant's target in Tailwind's block form. */
+@custom-variant hover {
+    @media (hover: hover) {
+        &:hover {
+            @slot;
+        }
+    }
+
+    &[data-force~="hover"] {
+        @slot;
+    }
+}
+/* stylelint-enable nesting-selector-no-missing-scoping-root */
+
+@custom-variant active (&:active, &[data-force~="active"]);
+@custom-variant focus-visible (&:focus-visible, &[data-force~="focus-visible"]);
