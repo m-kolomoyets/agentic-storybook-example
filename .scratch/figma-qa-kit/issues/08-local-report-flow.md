@@ -18,12 +18,12 @@ Spec: [Figma QA kit](../spec.md)
 
 ## Answer
 
-Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` `main`, commit `c078566` (not pushed yet, so no CI run). Typecheck is green on the kit and both fixtures. `pnpm test` passes 126/126. New: `test/local-report.test.ts` (real CLI in `fixtures/sb10` and `fixtures/sb11`) and `test/story-scan.test.ts` (pure scan and filter rules). A real pinned-image run on Docker 29 passes in both fixtures with the same verdicts as host Chromium.
+Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` `main`, commits `c078566` and `8834957` (browser server secret path) (not pushed yet, so no CI run). Typecheck is green on the kit and both fixtures. `pnpm test` passes 126/126. New: `test/local-report.test.ts` (real CLI in `fixtures/sb10` and `fixtures/sb11`) and `test/story-scan.test.ts` (pure scan and filter rules). A real pinned-image run on Docker 29 passes in both fixtures with the same verdicts as host Chromium.
 
 Decisions later tickets need:
 
 - **Pinned image.** `mcr.microsoft.com/playwright:v<project's installed playwright>-noble`, not a version the kit fixes: a remote Playwright server only accepts clients of its own version, and the lockfile pins it for CI too. Ticket 17's service container should use the same rule. The spec line is updated.
-  - Compose comes from stdin (`docker compose -p figma-qa -f - up --wait`), with no file shipped. It runs `npx -y playwright@<v> run-server` on container port 3100, mapped to `127.0.0.1:3100`, and a node TCP healthcheck. The container stays up between runs; a warm `up` takes about 2.5 s.
+  - Compose comes from stdin (`docker compose -p figma-qa -f - up --wait`), with no file shipped. It runs `npx -y playwright@<v> run-server` on container port 3100, mapped to `127.0.0.1:3100`, with a node TCP healthcheck. The endpoint sits behind a secret `--path`: the token is per user, in `$XDG_CACHE_HOME` or `~/.cache/figma-qa/browser-token` (mode 0600). The server outlives the run, so without the token any local process or web page could drive its Chromium. CI (ticket 17) runs the container per job and needs no token. The container stays up between runs; a warm `up` takes about 2.5 s.
   - `figmaQa()` connects with `exposeNetwork: '<loopback>'` when the CLI sets `FIGMA_QA_BROWSER_WS`. `FIGMA_QA_BROWSER_PORT` moves the host port (tests).
   - "Docker present" means the `docker info` daemon answers; a stopped Docker counts as absent. If Docker is present but `compose up` fails, the run exits 2 and the message names Docker's own cause plus `--host-browser`.
   - On this machine the in-tree `visual-playwright-1` container already holds 3100, so parity (ticket 19) must stop it or set `FIGMA_QA_BROWSER_PORT`.
