@@ -136,7 +136,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 ### Package and repo
 - New internal org monorepo (readable by all enterprise members, so any project can install the package and call the reusable workflow) `Phenomenon-Studio/storybook-figma-qa`: the published package plus `fixtures/sb10` and `fixtures/sb11` react-vite projects. The first implementation ticket creates it; the kit is seeded by copying and reshaping this repo's in-tree Figma pipeline.
 - One ESM-only package `@phenomenon-studio/storybook-figma-qa` on GitHub Packages. Peers: `storybook ^10.6.0 || ^11.0.0-0`, `vitest ^4 || ^5`, `react`, `@storybook/addon-vitest`, `@vitest/browser-playwright`. Engines: Node ≥ 22.12, Vite ≥ 6.3.
-- Exports: `./preset` (`viteFinal` adds the results dev route and the config / icons virtual modules), `./manager` (Figma diff panel), `./preview` (`definePreviewAddon` with the compare global), `./vitest` (plugin with browser commands and the Figma project factory, composed around `storybookTest()`), bin `figma-qa`, bundled `skills/`. Heavy CLI deps lazy-loaded.
+- Exports: `./preset` (`viteFinal` adds the results dev route and the config / icons virtual modules), `./manager` (Figma diff panel), `./preview` (`definePreviewAddon` with the compare global, `FigmaMatrix`, `FigmaIcon`), `./config` (`defineConfig`, `iconName`), `./vitest` (plugin with browser commands and the Figma project factory, composed around `storybookTest()`), bin `figma-qa`, bundled `skills/`. Heavy CLI deps lazy-loaded.
 - Under CSF Next `definePreview`, preset `previewAnnotations` are ignored: the preview side must be in `definePreview({ addons })`. Never call `setProjectAnnotations` in the setup file (throws on 11). Never use `storybook/internal/*` AST APIs (changed in 11); use magicast.
 - Versioning: semver; any `figma-qa.config.ts` or committed refs format change is a major and ships a `figma-qa migrate` step run by `init` on upgrade.
 
@@ -176,8 +176,8 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 - CI reads committed names; unnamed ids → value-match fallback labelled as guess, one warning line.
 
 ### Project config
-- Optional `figma-qa.config.ts` via `defineConfig`: `tokens.prefix` (default `--color-`), `tokenName(variable)` (default kebab of full path + prefix; null/miss → value match), `icons { glob, name }` (default name = kebab of last segment), `refsDir`, `maxDiffRatio` (stories override). Unknown keys → error, exit 2.
-- Tokens read at runtime from preview CSSOM with `var()` aliases resolved. Icons via a kit Vite virtual module, SVGs loaded `?raw`.
+- Optional `figma-qa.config.ts` via `defineConfig`: `tokens.prefix` (default `--color-`), `tokenName(variable)` (default kebab of full path + prefix; null/miss → value match), `icons { glob, name }` (default glob `src/assets/icons/*.svg`, inside the project; default name = kebab of last segment), `refsDir` (default `figma-qa/__refs__`), `maxDiffRatio` (default 0.05; stories override). Unknown keys → error, exit 2.
+- Tokens read at runtime from preview CSSOM with `var()` aliases resolved. Icons via a kit Vite virtual module, SVGs loaded `?raw`; cells render them with `FigmaIcon`, identity matched by SVG geometry. No icons found → glyph-less cells + doctor warning.
 - Config file exposed to the preview through a virtual module (functions run in preview); CLI loads it with Vite `loadConfigFromFile`.
 - Not config: backdrop (derived from computed background), QA UI theme (kit-owned, dark), pointer-state pins (story-owned class maps), file keys, CI, Docker.
 
