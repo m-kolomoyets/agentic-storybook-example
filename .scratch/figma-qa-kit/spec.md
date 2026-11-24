@@ -176,7 +176,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 - CI reads committed names; unnamed ids → value-match fallback labelled as guess, one warning line.
 
 ### Project config
-- Optional `figma-qa.config.ts` via `defineConfig`: `tokens.prefix` (default `--color-`), `tokenName(variable)` (default kebab of full path + prefix; null/miss → value match), `icons { glob, name }` (default glob `src/assets/icons/*.svg`, inside the project; default name = kebab of last segment), `refsDir` (default `figma-qa/__refs__`), `maxDiffRatio` (default 0.05; stories override). Unknown keys → error, exit 2.
+- Optional `figma-qa.config.ts` via `defineConfig`: `tokens.prefix` (default `--color-`), `tokenName(variable)` (default kebab of full path + prefix; null/miss → value match), `icons { glob, name }` (default glob `src/icons/*.svg`, inside the project; default name = kebab of last segment), `refsDir` (default `figma-qa/__refs__`), `maxDiffRatio` (default 0.05; stories override). Unknown keys → error, exit 2.
 - Tokens read at runtime from preview CSSOM with `var()` aliases resolved. Icons via a kit Vite virtual module, SVGs loaded `?raw`; cells render them with `FigmaIcon`, identity matched by SVG geometry. No icons found → glyph-less cells + doctor warning.
 - Config file exposed to the preview through a virtual module (functions run in preview); CLI loads it with Vite `loadConfigFromFile`.
 - Not config: backdrop (derived from computed background), QA UI theme (kit-owned, dark), pointer-state pins (story-owned class maps), file keys, CI, Docker.

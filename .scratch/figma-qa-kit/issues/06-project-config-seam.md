@@ -17,12 +17,12 @@ Spec: [Figma QA kit](../spec.md)
 
 ## Answer
 
-Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` branch `ci/storybook-tests`, commits `4a41569` (feature) and `1e7b599` (review fixes), not pushed yet, so no CI run. Typecheck is green on the kit and both fixtures. `pnpm test` passes 66/66: 20 unit tests for config resolution plus 16 new CLI tests in `fixtures/sb10` and `fixtures/sb11`. Storybook build and panel smoke pass on both, including with an invalid config present.
+Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` branch `ci/storybook-tests`, commits `4a41569` (feature), `1e7b599` (review fixes) and `87bbeb9` (icons glob default), not pushed yet, so no CI run. Typecheck is green on the kit and both fixtures. `pnpm test` passes 66/66: 20 unit tests for config resolution plus 16 new CLI tests in `fixtures/sb10` and `fixtures/sb11`. Storybook build and panel smoke pass on both, including with an invalid config present.
 
 Decisions later tickets need:
 
 - **Public surface.** `./config` exports only `defineConfig`, `iconName` and the `FigmaQaConfig` / `FigmaVariable` types. Resolution and validation live in the internal `figma/config.ts`. `./preview` gains `FigmaIcon({ figma })`, which renders the project SVG a Figma glyph names, inline so it inherits `currentColor`.
-- **Defaults.** The spec named no icons glob; the default is `src/assets/icons/*.svg`. The default `tokenName` is unchanged (kebab of the full path after the prefix). `tokenName` may return `null` to fall back to value matching (that's ticket 07's path).
+- **Defaults.** The icons glob defaults to `src/icons/*.svg` (user decision; configurable via `icons.glob`). The default `tokenName` is unchanged (kebab of the full path after the prefix). `tokenName` may return `null` to fall back to value matching (that's ticket 07's path).
 - **Validation.** Unknown keys at any depth and wrong types throw `FigmaQaConfigError`. `report` and `doctor` exit 2 before Vitest starts. Beyond the spec: `tokens.prefix` must start with `--`, `maxDiffRatio` must be within 0..1, and `icons.glob` must be relative and inside the project, because Vite serves it root-relative while doctor globs from the root.
 - **Loading.**
   - Node: Vite `loadConfigFromFile` on `figma-qa.config.ts` only, memoized per root per process, so the CLI, browser commands and preset share one load.
