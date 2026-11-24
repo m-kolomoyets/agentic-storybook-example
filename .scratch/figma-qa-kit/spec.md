@@ -144,6 +144,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 - `figma-qa report` (default), `doctor`, `init`, `variables`, `scaffold`, `migrate`. Only `init` prompts.
 - `report` flags: positional filters (component name / story-id glob), `--changed [base]`, `--refresh`, `--ci`, `--host-browser`, `--no-open`, `--json`. No `--update`, no tolerance flags.
 - Exit codes: 0 pass / approved / no-code only; 1 any fail cell; 2 harness or setup error. Warnings never change the exit code.
+- Every command and flag is documented in the kit README with a real example of its output and how to read each line or field; a change to what a command prints updates the example.
 - `--ci`: no open, no Docker start (browser = `FIGMA_QA_BROWSER_WS`, the job's service container, else host Chromium with a warning), writes `figma-qa/.results/summary.md` for the PR comment (first line `<!-- figma-qa -->`) and the HTML report directory as artifact.
 - Figma REST base URL overridable by environment variable (test double for the network edge).
 

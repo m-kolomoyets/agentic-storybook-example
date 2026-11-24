@@ -16,3 +16,4 @@ Spec: [Figma QA kit](../spec.md)
 - [ ] Re-run appends only sets not already linked (file key + node id); never renames/reorders/removes; vanished sets → warning
 - [ ] `--dry-run` prints the diff; no token → exit 2 + wizard hint; fetch warms refs cache
 - [ ] Generated story passes `report` as all-missing (exit 0) until cells written
+- [ ] README "Reading the output" gains `scaffold` (write and `--dry-run`): a real fixture run and how to read it (AGENTS.md rule)

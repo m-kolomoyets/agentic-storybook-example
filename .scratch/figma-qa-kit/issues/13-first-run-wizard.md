@@ -16,3 +16,4 @@ Spec: [Figma QA kit](../spec.md)
 - [ ] `--yes` / non-TTY: no prompts, no secrets written, no pull; checklist; exit 0
 - [ ] Complete setup → all green, no prompts, no changes
 - [ ] Install docs: `gh auth refresh -s read:packages` + user `~/.npmrc` token line; classic PAT fallback
+- [ ] README "Reading the output" updated with a real wizard run and its checklist (AGENTS.md rule)
