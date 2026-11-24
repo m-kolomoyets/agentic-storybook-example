@@ -168,7 +168,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 - Diff map computed once in Node when results are written, persisted in results JSON; panel and HTML report only render it; panel uses one shared QueryClient.
 - CLI statically scans story files for a `figma` tag literal and runs only those files (Vitest file filters); filters and `--changed` intersect it; non-literal tags (Storybook allows a same-file const) → file included.
 - Spec extraction and comparison logic unchanged.
-- Auto-triage by code where deterministic (harness: capture blocked / size differs; token: colour equals another kit token; value: spec number off), written to results JSON and report.
+- Auto-triage by code where deterministic (harness: capture blocked / size differs; token: colour equals another kit token than the one Figma names or equals; value: spec number off; any other differing row or pixel-only → uncategorised), written to results JSON and report. Harness cells get no approval entry.
 - Target: warm run of 4 stories / 180 cells ≤ 25 s wall; per-cell afterEach ≤ 150 ms; timings reported, not gated.
 
 ### Variables
