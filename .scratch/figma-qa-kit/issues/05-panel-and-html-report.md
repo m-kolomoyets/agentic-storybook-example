@@ -16,7 +16,7 @@ Spec: [Figma QA kit](../spec.md)
 
 ## Answer
 
-Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` `main`, commit `4976ac6` (not pushed yet, so no CI run). Typecheck is green on the kit and both fixtures. `pnpm test` passes 85/85: new `test/results-model.test.ts` runs the CLI in `fixtures/sb10` and `fixtures/sb11`, and the new `ui` Vitest project runs the panel and report stories with play functions and axe. `pnpm smoke:panel --dev fixtures/sb10|sb11` passes: after a report, `storybook dev` shows the CLI's verdict in the panel, the diff map image loads from the dev route, and the canvas renders the matrix. Static builds and the static panel smoke pass on both.
+Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` `main`, commits `4976ac6` and `a6c3d17` (dev route guard) (not pushed yet, so no CI run). Typecheck is green on the kit and both fixtures. `pnpm test` passes 85/85: new `test/results-model.test.ts` runs the CLI in `fixtures/sb10` and `fixtures/sb11`, and the new `ui` Vitest project runs the panel and report stories with play functions and axe. `pnpm smoke:panel --dev fixtures/sb10|sb11` passes: after a report, `storybook dev` shows the CLI's verdict in the panel, the diff map image loads from the dev route, and the canvas renders the matrix. Static builds and the static panel smoke pass on both.
 
 Decisions later tickets need:
 
@@ -28,6 +28,7 @@ Decisions later tickets need:
 - **Dev route** (preset `viteFinal`, `DEV_ROUTE = /__figma-qa`):
   - `GET files/<project path>` serves only PNG/JSON under `refsDir` and `.results`.
   - `POST sets` feeds the preview loader in a running Storybook, as ticket 03 asked. It is **offline** (`SyncPaths.offline`): only a report run calls Figma or writes refs, and an uncached set shows its error in the canvas.
+  - The route runs before Vite's host and CORS checks, so it makes its own: Host must be local, an IP or in Vite's `allowedHosts`; `Sec-Fetch-Site` must not be cross-site; POST must be JSON; bodies capped at 64 KiB.
   - In a static build the loader finds no route and the matrix says refs load in a run or in `storybook dev`.
 - **UI stories.** The kit has its own Storybook (SB 10.6, dev only) in `packages/storybook-figma-qa/.storybook` and `stories/`. It covers pass, fail, approved, harness error, render failure, host-browser banner, Figma-changed warning, no results and non-Figma story, plus a story where panel and report agree on every verdict. SB 11 coverage of the UI comes from `smoke-panel --dev`.
 - **Not ported from the in-tree panel:** cell selection synced with the matrix, the compare overlay, the lightbox, live a11y rows and the fix prompt. The spec keeps a11y out of the report; the rest is out of scope until asked for.
