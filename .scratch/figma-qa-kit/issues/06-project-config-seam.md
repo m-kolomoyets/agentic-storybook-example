@@ -17,7 +17,7 @@ Spec: [Figma QA kit](../spec.md)
 
 ## Answer
 
-Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` branch `ci/storybook-tests`, commits `4a41569` (feature), `1e7b599` (review fixes) and `87bbeb9` (icons glob default), not pushed yet, so no CI run. Typecheck is green on the kit and both fixtures. `pnpm test` passes 66/66: 20 unit tests for config resolution plus 16 new CLI tests in `fixtures/sb10` and `fixtures/sb11`. Storybook build and panel smoke pass on both, including with an invalid config present.
+Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` `main`, commits `4a41569` (feature), `1e7b599` (review fixes) and `87bbeb9` (icons glob default). CI green on all four jobs (sb10 and sb11 × Node 22.12.0 and LTS): [run 45432849658](https://github.com/Phenomenon-Studio/storybook-figma-qa/actions/runs/45432849658). Typecheck is green on the kit and both fixtures. `pnpm test` passes 66/66: 20 unit tests for config resolution plus 16 new CLI tests in `fixtures/sb10` and `fixtures/sb11`. Storybook build and panel smoke pass on both, including with an invalid config present.
 
 Decisions later tickets need:
 

@@ -19,7 +19,7 @@ Spec: [Figma QA kit](../spec.md)
 
 ## Answer
 
-Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` branch `ci/storybook-tests`, commit `5845f12` (not pushed yet, so no CI run). Typecheck is green on the kit and both fixtures. `pnpm test` passes 30/30, including 18 new sync tests that run the real CLI against a REST stub in `fixtures/sb10` and `fixtures/sb11`.
+Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` `main`, commit `5845f12`. Pushed 2026-11-24 with ticket 06; CI green in [run 45432849658](https://github.com/Phenomenon-Studio/storybook-figma-qa/actions/runs/45432849658). Typecheck is green on the kit and both fixtures. `pnpm test` passes 30/30, including 18 new sync tests that run the real CLI against a REST stub in `fixtures/sb10` and `fixtures/sb11`.
 
 Decisions later tickets need:
 
