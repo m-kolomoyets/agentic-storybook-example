@@ -166,7 +166,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 - One `page.screenshot` per cell, sent to Node command `figmaPixelDiff`; Node flattens the ref once per (ref hash, backdrop), memoized in memory and on disk, then pixelmatches. Replaces browser canvas flatten and the second screenshot / `toMatchScreenshot`.
 - Pipelined: capture cell N, fire the Node diff unawaited, continue; the story awaits all diffs at the end. File-level Vitest parallelism kept; no sharding, no per-block capture.
 - Diff map computed once in Node when results are written, persisted in results JSON; panel and HTML report only render it; panel uses one shared QueryClient.
-- CLI statically scans story files for a `figma` tag literal and passes the list as Vitest `include`; filters and `--changed` intersect it; non-literal tags → file included.
+- CLI statically scans story files for a `figma` tag literal and runs only those files (Vitest file filters); filters and `--changed` intersect it; non-literal tags (Storybook allows a same-file const) → file included.
 - Spec extraction and comparison logic unchanged.
 - Auto-triage by code where deterministic (harness: capture blocked / size differs; token: colour equals another kit token; value: spec number off), written to results JSON and report.
 - Target: warm run of 4 stories / 180 cells ≤ 25 s wall; per-cell afterEach ≤ 150 ms; timings reported, not gated.
@@ -212,7 +212,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 
 ### GitHub Actions
 - Reusable workflow `Phenomenon-Studio/storybook-figma-qa/.github/workflows/figma-qa.yml@v1`; kit repo Actions access = organization repositories.
-- Consumer: every `pull_request`, `fetch-depth: 0`, `figma-qa report --ci --changed <base.sha>`; optional `paths` input, default empty. Browser = `services:` container with kit-pinned Playwright image (`run-server` on :3100). `FIGMA_TOKEN` per-repo secret passed explicitly; missing → job skipped with notice. Registry via `GITHUB_TOKEN` `packages: read` + package "Manage Actions access".
+- Consumer: every `pull_request`, `fetch-depth: 0`, `figma-qa report --ci --changed <base.sha>`; optional `paths` input, default empty. Browser = `services:` container with the pinned Playwright image (`mcr.microsoft.com/playwright:v<project's playwright>-noble`: the tag follows the project's installed `playwright`, as a remote server only accepts same-version clients; `run-server` on :3100). `FIGMA_TOKEN` per-repo secret passed explicitly; missing → job skipped with notice. Registry via `GITHUB_TOKEN` `packages: read` + package "Manage Actions access".
 - Exit 1 and 2 both fail the job; not a required check in v1.
 - One sticky comment (marker `<!-- figma-qa -->`) created / updated via `gh api`; body = `--ci` summary (per-story pass / fail / approved, triage category, artifact link; harness errors labelled "not a design verdict"; 401/403 → rotate-secret message; nothing affected → "no Figma stories affected"). `pull-requests: write`.
 - HTML report artifact, `if: always()`, 14-day retention.
