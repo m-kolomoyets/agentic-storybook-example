@@ -20,7 +20,7 @@ Spec: [Figma QA kit](../spec.md)
 
 ## Answer
 
-Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` `main`, commit `227dba0` (not pushed yet, so no CI run). Typecheck is green on the kit and both fixtures, and `pnpm test` passes 176/176 locally. That count includes `test/init-cli.test.ts`, which strips the kit out of a copy of `fixtures/sb10` and of `fixtures/sb11` and runs `init --yes` on it for real (skills via npx), then `doctor`, then a re-run. The test runs again in CI through `pnpm test`, in each fixture × Node job. After the review fixes I re-ran only the init, merge and text tests (50/50), not the whole suite.
+Done 2026-11-24 in `Phenomenon-Studio/storybook-figma-qa` `main`, commits `227dba0` (feature) and `d21fa77`. CI is green on all four jobs: [run 45460464732](https://github.com/Phenomenon-Studio/storybook-figma-qa/actions/runs/45460464732). `d21fa77` fixes the browser tests from `8834957`, which had been red on CI since that commit: their temp `XDG_CACHE_HOME` hid Linux Playwright's browsers. `pnpm test` passes 176/176. That includes `test/init-cli.test.ts`, which removes the kit from a copy of each fixture and then runs `init --yes` for real (skills via npx), `doctor` and a re-run. CI runs it in every fixture × Node job.
 
 Decisions later tickets need:
 
