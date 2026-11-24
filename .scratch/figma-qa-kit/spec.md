@@ -156,8 +156,8 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 - Cell binding derived: manifest variants laid out by `layout`, stamped `data-figma-variant` by the matrix grid; authors write only `renderCell(props)`; no code equivalent → `data-figma-missing`.
 
 ### Figma fetch and caching
-- Cache key = `version` from `/meta`. Unchanged version → zero Tier-1 calls; `--refresh` rebuilds offline from locally kept raw `/nodes` JSON.
-- Changed version → one full `/nodes` (no `depth`, no `geometry`), hash each set's subtree, request `/images` (png, scale 2, absolute bounds) only for sets whose hash changed. Chunk ids only as a fallback.
+- Cache key = `version` from `/meta`. Unchanged version → zero Tier-1 calls; `--refresh` (needs a token for `/meta`) rebuilds without `/nodes` / `/images` from locally kept raw `/nodes` JSON, else keeps the committed refs.
+- Changed version with `--refresh` (or an uncached set) → one full `/nodes` (no `depth`, no `geometry`), hash each set's subtree, request `/images` (png, scale 2, absolute bounds) only for sets whose hash changed. Chunk ids only as a fallback.
 - Committed `refsDir` (default `figma-qa/__refs__`): variant PNGs, per-set manifest (gains subtree hash + file `version`, enabling "Figma changed since sync" without refetch), `catalog.json`, `variables.json`.
 - Gitignored local cache under `node_modules/.cache/figma-qa/`: raw `/nodes` JSON, flattened refs. No Figma-specific CI cache.
 - Token owner needs a Dev/Full seat on the UI kit file's plan; on 429 log `X-Figma-Rate-Limit-Type`.
