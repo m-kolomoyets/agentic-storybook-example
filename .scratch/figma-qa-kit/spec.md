@@ -48,6 +48,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 18. As a developer, I want each failing cell pre-classified (harness / token / value) where the category is deterministic, so that I spend judgment only on design-vs-code decisions.
 19. As a developer, I want a ready-to-paste `approved` entry printed for each failing cell, so that recording a deliberate deviation is a copy-paste plus a reason.
 20. As a developer, I want a11y checks to stay in the existing story test run, so that the Figma report has one job.
+79. As a developer, I want each failing cell's differing spec rows printed in the terminal as a git-style `-` Figma / `+` story diff, with the pixel share and the diff image path, so that I see what differs without opening the report.
 
 ### Linking stories to Figma
 
@@ -144,6 +145,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 - `figma-qa report` (default), `doctor`, `init`, `variables`, `scaffold`, `migrate`. Only `init` prompts.
 - `report` flags: positional filters (component name / story-id glob), `--changed [base]`, `--refresh`, `--ci`, `--host-browser`, `--no-open`, `--json`. No `--update`, no tolerance flags.
 - Exit codes: 0 pass / approved / no-code only; 1 any fail cell; 2 harness or setup error. Warnings never change the exit code.
+- Human `report` output prints, under each failing cell, its differing spec rows as `-` Figma / `+` story lines and its pixel share with the diff image path. It is on by default with no flag, and coloured only on a TTY. `--json` is unchanged: the rows are already in the per-story results JSON.
 - Every command and flag is documented in the kit README with a real example of its output and how to read each line or field; a change to what a command prints updates the example.
 - `--ci`: no open, no Docker start (browser = `FIGMA_QA_BROWSER_WS`, the job's service container, else host Chromium with a warning), writes `figma-qa/.results/summary.md` for the PR comment (first line `<!-- figma-qa -->`) and the HTML report directory as artifact.
 - Figma REST base URL overridable by environment variable (test double for the network edge).
