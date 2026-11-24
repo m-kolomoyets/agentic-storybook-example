@@ -49,6 +49,8 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 19. As a developer, I want a ready-to-paste `approved` entry printed for each failing cell, so that recording a deliberate deviation is a copy-paste plus a reason.
 20. As a developer, I want a11y checks to stay in the existing story test run, so that the Figma report has one job.
 79. As a developer, I want each failing cell's differing spec rows printed in the terminal as a git-style `-` Figma / `+` story diff, with the pixel share and the diff image path, so that I see what differs without opening the report.
+80. As a developer, I want the designer's Dev Mode annotations inside each linked set shown beside their cell or block in the report and `--json`, so that the behaviour the designer wrote down reaches me with the design.
+81. As a developer, I want the report skill to fact-check each annotation against the code and recorded decisions and report it as applied, conflict, open or out of scope, so that a note never silently overrides a project decision or gets lost.
 
 ### Linking stories to Figma
 
@@ -163,6 +165,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 - Changed version with `--refresh` (or an uncached set) → one full `/nodes` (no `depth`, no `geometry`), hash each set's subtree, request `/images` (png, scale 2, absolute bounds) only for sets whose hash changed. Chunk ids only as a fallback.
 - Committed `refsDir` (default `figma-qa/__refs__`): variant PNGs, per-set manifest (gains subtree hash + file `version`, enabling "Figma changed since sync" without refetch), `catalog.json`, `variables.json`.
 - Gitignored local cache under `node_modules/.cache/figma-qa/`: raw `/nodes` JSON, flattened refs. No Figma-specific CI cache.
+- Annotations: REST `/nodes` carries `annotations[].label` on any node (plain text, no category). Sync stores each set's annotations in its manifest (node, path, variant); an annotation-only edit re-requests no `/images`. They never change a verdict or exit code.
 - Token owner needs a Dev/Full seat on the UI kit file's plan; on 429 log `X-Figma-Rate-Limit-Type`.
 
 ### Comparison and pixel diff
@@ -212,6 +215,7 @@ A **QA kit**: one npm package, `@phenomenon-studio/storybook-figma-qa`, publishe
 - Code over prose: skills call CLI commands and keep only judgment. One entry point: scope → `figma-qa report --json` → read per-story results JSON → triage deliberate-vs-fix → act (fix code, or add an approval to the story for human confirmation; no AST `approve` command).
 - Scaffold follow-up skill: rename entries to real code variants, write `renderCell` bodies.
 - Variable naming skill: run the printed Plugin API script via `use_figma`, feed output to `figma-qa variables`.
+- Report skill checks annotations: category via read-only `use_figma` when available, else `unknown`; each claim fact-checked against code, decision records, cells and other notes; verdict `applied` / `conflict` / `open` / `out of scope` per annotation, code and records win a conflict until the user rules.
 
 ### GitHub Actions
 - Reusable workflow `Phenomenon-Studio/storybook-figma-qa/.github/workflows/figma-qa.yml@v1`; kit repo Actions access = organization repositories.
